@@ -1,0 +1,26 @@
+#chatFieldSet {
+    position:absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 300px !important;
+    resize: none;
+    max-width: 300px !important;
+    max-height: 700px !important;;
+}
+
+#chatFieldSet .fieldset-auto-width{
+    display: inline-block;
+    resize: none;
+}
+
+#message{
+    width: 300px !important;
+    white-space: pre-wrap !important;
+}
+
+#outputMessage{
+    overflow-y: auto;
+    max-width: 500px !important;
+    max-height: 500px !important;;
+}
+

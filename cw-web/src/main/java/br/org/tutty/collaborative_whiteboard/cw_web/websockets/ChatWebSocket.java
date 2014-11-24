@@ -17,8 +17,8 @@ import javax.websocket.server.ServerEndpoint;
 public class ChatWebSocket extends WebSocket{
 
 	@OnMessage
-	public void send(String message, Session session) throws IOException {
-        broadcast(message, session);
+	public void send(String dataMessage, Session session) throws IOException {
+        broadcast(dataMessage, session);
     }
 
     @OnOpen

@@ -4,23 +4,25 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <script type="text/javascript" src="../js/chat.js"></script>
-    <script type="text/javascript" src="../js/websocket.js"></script>
+    <script type="text/javascript" src="../js/chat.js" />
+    <script type="text/javascript" src="../js/websocket.js" />
+    <link type="text/css" rel="stylesheet" href="../styles/chat.css" />
 
-    <p:fieldset id="chatFieldSet" toggleable="true" legend="Chat">
+    <p:fieldset id="chatFieldSet" toggleable="true" legend="Chat" widgetVar="widget" collapsed="true">
         <p:outputPanel id="outputMessage">
-
-            <h:outputLabel value="AREA DE MENSAGENS" />
-
-
+            <p:outputPanel id="messagePanel">
+                <h:panelGrid id="messagePanelTable" columns="1">
+                </h:panelGrid>
+            </p:outputPanel>
         </p:outputPanel>
 
+        <p:separator />
+
         <h:panelGrid columns="1">
-            <p:inputTextarea id="message" rows="1"/>
+            <p:inputTextarea id="message" autoResize="false"/>
             <p:commandButton id="sendBtn" value="Send" onclick="commit('message')"/>
         </h:panelGrid>
     </p:fieldset>
-
 </ui:composition>
 
 
