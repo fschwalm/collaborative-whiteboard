@@ -23,13 +23,11 @@ public class ChatWebSocket extends WebSocket{
 
     @OnOpen
 	public void open(Session session){
-		sessions.add(session);
 		System.out.println("Conexão realizada (id) : "+session.getId());
 	}
 
 	@OnClose
 	public void close(Session session){
-		sessions.remove(session);
         System.out.println("Conexão finalizada (id) : "+session.getId());
 	}
 

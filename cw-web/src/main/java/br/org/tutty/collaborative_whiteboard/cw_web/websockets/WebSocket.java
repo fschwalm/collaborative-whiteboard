@@ -11,5 +11,4 @@ import java.util.Set;
  */
 public class WebSocket implements Serializable{
 
-    protected Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 }

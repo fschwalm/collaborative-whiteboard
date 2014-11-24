@@ -9,5 +9,12 @@ function sendMessage(message){
 }
 
 function closeSocket() {
-    ws.close();
+
+    if(isConnect()){
+        ws.close();
+    }
+}
+
+function isConnect(){
+    return ws != null;
 }

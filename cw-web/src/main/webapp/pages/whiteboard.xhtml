@@ -1,32 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../templates/generic.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <f:facet name="first">
-        <meta name="google" content="notranslate"/>
-    </f:facet>
-    <title>Collaborative-Whiteboard</title>
-    <script type="text/javascript" src="../js/websocket.js"></script>
-</h:head>
+    <ui:define name="pageContent">
 
-<f:view>
+        <ui:include src="chat.xhtml"/>
 
-    <h:panelGrid columns="1">
-        <p:inputTextarea id="outputMessage" readonly="true"/>
-        <p:inputTextarea id="message"/>
-        <p:commandButton value="Send" onclick="sendMessage(document.getElementById('message').value)"/>
-    </h:panelGrid>
+    </ui:define>
 
-    <h:panelGrid columns="2">
-        <p:commandButton onclick="connect()" value="Connect To WebSocket"/>
-        <p:commandButton onclick="closeSocket()" value="Close WebSocket"/>
-    </h:panelGrid>
-
-</f:view>
-
-</html>
+</ui:composition>
