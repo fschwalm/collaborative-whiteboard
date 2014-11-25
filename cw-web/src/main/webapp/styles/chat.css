@@ -5,7 +5,8 @@
     width: 300px !important;
     resize: none;
     max-width: 300px !important;
-    max-height: 700px !important;;
+    max-height: 700px !important;
+    background-color: #F8F4F0;
 }
 
 #chatFieldSet .fieldset-auto-width{
@@ -19,8 +20,22 @@
 }
 
 #outputMessage{
+    font-size: small;
+    color: #534A40;
     overflow-y: auto;
     max-width: 500px !important;
-    max-height: 500px !important;;
+    max-height: 500px !important;
+}
+
+.myMessages{
+    width: 100%;
+    background-color: gainsboro;
+    float: right;
+}
+
+.receivedMessages{
+    width: 100%;
+    background-color: #CBC9C6;
+    float: left;
 }
 

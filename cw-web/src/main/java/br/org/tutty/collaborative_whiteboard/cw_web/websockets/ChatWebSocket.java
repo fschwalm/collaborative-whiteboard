@@ -1,23 +1,21 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import javax.websocket.CloseReason;
+import javax.json.JsonObject;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 
 @ServerEndpoint("/chat")
 public class ChatWebSocket extends WebSocket{
 
 	@OnMessage
-	public void send(String dataMessage, Session session) throws IOException {
+	public void send(String dataMessage, Session session) throws IOException, JSONException {
         broadcast(dataMessage, session);
     }
 
@@ -31,15 +29,23 @@ public class ChatWebSocket extends WebSocket{
         System.out.println("Conexão finalizada (id) : "+session.getId());
 	}
 
-    private void broadcast(String message, Session session) throws IOException {
-        for (Session loggedSession : session.getOpenSessions()){
+    private void broadcast(String message, Session session) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            jsonObject.putOpt("user", "Usuario");
 
-            synchronized (loggedSession){
-                loggedSession.getBasicRemote().sendText(message);
+            for (Session loggedSession : session.getOpenSessions()) {
+
+                synchronized (loggedSession) {
+                    if(! session.getId().equals(loggedSession.getId())){
+                        loggedSession.getBasicRemote().sendText(jsonObject.toString());
+                    }
+                }
+
+                System.out.println("Mensagem de " + session.getId() + " para " + loggedSession.getId() + " Mensagem : " + message);
             }
-
-            System.out.println("Mensagem de " +session.getId()+ " para " +loggedSession.getId()+ " Mensagem : " + message);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
-
 }

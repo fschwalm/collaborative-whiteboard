@@ -1,36 +1,55 @@
 $(document).ready(function () {
     connect();
-    ws.onmessage = function(evt){
-        printMessages(evt);
+    ws.onmessage = function (evt) {
+        printReceivedMessages(JSON.parse(evt.data));
     }
 });
 
-function printMessages(evt){
-    var $outputList = $('#messagePanelTable').find('tbody')
-    var jsonObj = JSON.parse(evt.data);
+function printReceivedMessages(jsonObj) {
+    var $outputList = $('#messagePanel')
 
     var date = jsonObj['date'];
     var messageValue = jsonObj['messageValue'];
+    var user = jsonObj['user'];
+    var formattedDate = moment(date).locale("pt-br").format('DD/MM/YYYY HH:mm');
 
-    $outputList.append('<tr>')
-        .append('<td>')
-            .append('<span>'+date+'</span>')
-            .append('<span>'+messageValue+'</span>');
+    $outputList.append(
+        '<span class="receivedMessages"><b> ' + formattedDate + ' </b></span>' +
+        '<span class="receivedMessages">' + user + '</span><br>' +
+        '<span class="receivedMessages">' + messageValue + '</span><br><br>');
 }
+
+function printMyMessages(jsonObj) {
+    var $outputList = $('#messagePanel');
+
+    var date = jsonObj['date'];
+    var messageValue = jsonObj['messageValue'];
+    var user = jsonObj['user'];
+    var formattedDate = moment(date).locale("pt-br").format('DD/MM/YYYY HH:mm');
+
+    $outputList.append(
+            '<span class="myMessages"><b> ' + formattedDate + ' </b></span>' +
+            '<span class="myMessages">Eu</span><br>' +
+            '<span class="myMessages">' + messageValue + '</span><br><br>');
+}
+
 
 function commit(inputTextId) {
     if (isValidMessage(inputTextId)) {
         var $messageData = createMessage(inputTextId)
-        sendMessage(JSON.stringify($messageData));
+        var jsonObject = JSON.stringify($messageData)
+
+        sendMessage(jsonObject);
+        printMyMessages(JSON.parse(jsonObject));
     }
 };
 
 function createMessage(inputTextId) {
-    var $inputText = jQuery('#'+inputTextId);
+    var $inputText = jQuery('#' + inputTextId);
 
     var $messageData = {
-        'messageValue' : $inputText.val(),
-        'date' : new Date()
+        'messageValue': $inputText.val(),
+        'date': new Date()
     };
 
     clearMessage(inputTextId);
@@ -40,16 +59,17 @@ function createMessage(inputTextId) {
 };
 
 function isValidMessage(inputTextId) {
-    var $inputText = jQuery('#'+inputTextId);
-    if($inputText.val().trim().length > 0) {
+    var $inputText = jQuery('#' + inputTextId);
+    if ($inputText.val().trim().length > 0) {
         return true;
-    }else{
+    } else {
         return false
-    };
+    }
+    ;
 };
 
 function clearMessage(inputTextId) {
-    var $inputText = jQuery('#'+inputTextId);
+    var $inputText = jQuery('#' + inputTextId);
     $inputText.val('');
 };
 
