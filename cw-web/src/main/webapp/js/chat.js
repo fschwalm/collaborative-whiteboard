@@ -2,6 +2,7 @@ $(document).ready(function () {
     connect();
     ws.onmessage = function (evt) {
         printReceivedMessages(JSON.parse(evt.data));
+        flagReceipt();
     }
 });
 
@@ -11,12 +12,13 @@ function printReceivedMessages(jsonObj) {
     var date = jsonObj['date'];
     var messageValue = jsonObj['messageValue'];
     var user = jsonObj['user'];
-    var formattedDate = moment(date).locale("pt-br").format('DD/MM/YYYY HH:mm');
+    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
     $outputList.append(
-        '<span class="receivedMessages"><b> ' + formattedDate + ' </b></span>' +
-        '<span class="receivedMessages">' + user + '</span><br>' +
-        '<span class="receivedMessages">' + messageValue + '</span><br><br>');
+        '<div class="receivedMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
+        '<span class="user">' + user + '</span><br>' +
+        '<span class="message">' + messageValue + '</span><br><br></div>');
+
 }
 
 function printMyMessages(jsonObj) {
@@ -25,12 +27,12 @@ function printMyMessages(jsonObj) {
     var date = jsonObj['date'];
     var messageValue = jsonObj['messageValue'];
     var user = jsonObj['user'];
-    var formattedDate = moment(date).locale("pt-br").format('DD/MM/YYYY HH:mm');
+    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
     $outputList.append(
-            '<span class="myMessages"><b> ' + formattedDate + ' </b></span>' +
-            '<span class="myMessages">Eu</span><br>' +
-            '<span class="myMessages">' + messageValue + '</span><br><br>');
+            '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
+            '<span class="user">Eu</span><br>' +
+            '<span class="message">' + messageValue + '</span><br><br></div>');
 }
 
 
@@ -73,4 +75,6 @@ function clearMessage(inputTextId) {
     $inputText.val('');
 };
 
-
+function flagReceipt(){
+    $('chatFieldSet').addClass('.flagReceipt');
+}

@@ -15,11 +15,9 @@
             </p:outputPanel>
         </p:outputPanel>
 
-        <p:separator />
-
         <h:panelGrid columns="1">
-            <p:inputTextarea id="message" autoResize="false"/>
-            <p:commandButton id="sendBtn" value="Send" onclick="commit('message')"/>
+            <p:inputTextarea id="messageInput" autoResize="false"/>
+            <p:commandButton id="sendBtn" value="Send" onclick="commit('messageInput')"/>
         </h:panelGrid>
     </p:fieldset>
 </ui:composition>

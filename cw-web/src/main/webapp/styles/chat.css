@@ -4,7 +4,7 @@
     right: 0 !important;
     width: 300px !important;
     resize: none;
-    max-width: 300px !important;
+    max-width: 500px !important;
     max-height: 700px !important;
     background-color: #F8F4F0;
 }
@@ -14,28 +14,55 @@
     resize: none;
 }
 
-#message{
+#messageInput{
     width: 300px !important;
     white-space: pre-wrap !important;
+}
+
+#messagePanel{
+    align-content: center;
 }
 
 #outputMessage{
     font-size: small;
     color: #534A40;
     overflow-y: auto;
-    max-width: 500px !important;
-    max-height: 500px !important;
+    overflow-x: hidden;
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+
+.receivedMessages{
+    background-image: url(../images/background_message.png) ;
+    border-radius: 10px;
+    width: 100%;
 }
 
 .myMessages{
+    border-radius: 10px;
     width: 100%;
-    background-color: gainsboro;
-    float: right;
 }
 
-.receivedMessages{
-    width: 100%;
-    background-color: #CBC9C6;
-    float: left;
+.hour{
+    float: right;
+    margin-right: 7%;
 }
+
+.user{
+    font-weight: bold;
+    margin-top: -05%;
+    float: left;
+    margin-left: 7%;
+
+}
+
+.message{
+    margin-left: 7%;
+}
+
+.flagReceipt{
+    color: deepskyblue;
+}
+
 
