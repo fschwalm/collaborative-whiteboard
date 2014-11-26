@@ -4,6 +4,10 @@ $(document).ready(function () {
         printReceivedMessages(JSON.parse(evt.data));
         flagReceipt();
     }
+
+    $('#outputMessage').bind('mouseover', function(){
+        $('#chatFieldSet').removeClass('receivedMessageFlag');
+    })
 });
 
 function printReceivedMessages(jsonObj) {
@@ -76,5 +80,5 @@ function clearMessage(inputTextId) {
 };
 
 function flagReceipt(){
-    $('chatFieldSet').addClass('.flagReceipt');
+    $('#chatFieldSet').addClass('receivedMessageFlag');
 }

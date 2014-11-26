@@ -65,4 +65,8 @@
     color: deepskyblue;
 }
 
+.receivedMessageFlag legend {
+    background-color: skyblue !important;
+}
+
 
