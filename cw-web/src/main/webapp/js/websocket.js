@@ -1,7 +1,7 @@
 var ws;
 
 function connect() {
-    ws = new WebSocket("ws://localhost:8080/collaborative-whiteboard/chat");
+    ws = new WebSocket("ws://localhost:8080/cw/chat");
 }
 
 function sendMessage(message){
@@ -9,12 +9,16 @@ function sendMessage(message){
 }
 
 function closeSocket() {
-
     if(isConnect()){
         ws.close();
     }
 }
 
 function isConnect(){
-    return ws != null;
+    if(ws.readyState == ws.OPEN){
+        return true;
+    }else{
+        return false;
+    }
 }
+

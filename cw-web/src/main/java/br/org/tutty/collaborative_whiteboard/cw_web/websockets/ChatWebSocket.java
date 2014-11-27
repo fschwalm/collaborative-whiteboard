@@ -1,8 +1,10 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
+import br.org.tutty.collaborative_whiteboard.context.ChatContextService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -13,6 +15,9 @@ import java.io.IOException;
 
 @ServerEndpoint("/chat")
 public class ChatWebSocket extends WebSocket{
+
+    @Inject
+    private ChatContextService chatContextService;
 
 	@OnMessage
 	public void send(String dataMessage, Session session) throws IOException, JSONException {
@@ -41,8 +46,6 @@ public class ChatWebSocket extends WebSocket{
                         loggedSession.getBasicRemote().sendText(jsonObject.toString());
                     }
                 }
-
-                System.out.println("Mensagem de " + session.getId() + " para " + loggedSession.getId() + " Mensagem : " + message);
             }
         }catch (Exception e){
             e.printStackTrace();

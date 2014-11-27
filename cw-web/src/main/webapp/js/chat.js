@@ -1,14 +1,47 @@
 $(document).ready(function () {
-    connect();
+    initChat();
+});
+
+function initChat(){
+    try{
+        connect();
+        registerCloseConnection();
+        registerReceiptsMessages();
+        registerErrorHandling();
+        registerRemovalReceivingFlag();
+    }catch (exception){
+        alert("Sem comunicação com o Servidor");
+    }
+}
+
+function registerCloseConnection(){
+    ws.onclose = function(evt){
+        alert('Conexão finalizada')
+    }
+}
+
+function registerErrorHandling(){
+    ws.onerror = function(evt){
+        alert("Erro ao comunicar com o servidor");
+    }
+}
+
+function registerReceiptsMessages(){
     ws.onmessage = function (evt) {
         printReceivedMessages(JSON.parse(evt.data));
         flagReceipt();
     }
+}
 
+function registerRemovalReceivingFlag(){
     $('#outputMessage').bind('mouseover', function(){
         $('#chatFieldSet').removeClass('receivedMessageFlag');
     })
-});
+
+    $('#messageInput').bind('mouseover', function(){
+        $('#chatFieldSet').removeClass('receivedMessageFlag');
+    })
+}
 
 function printReceivedMessages(jsonObj) {
     var $outputList = $('#messagePanel')
@@ -45,8 +78,12 @@ function commit(inputTextId) {
         var $messageData = createMessage(inputTextId)
         var jsonObject = JSON.stringify($messageData)
 
-        sendMessage(jsonObject);
-        printMyMessages(JSON.parse(jsonObject));
+        if(isConnect()){
+            sendMessage(jsonObject);
+            printMyMessages(JSON.parse(jsonObject));
+        }else{
+            alert('Sem conexão');
+        }
     }
 };
 
@@ -82,3 +119,4 @@ function clearMessage(inputTextId) {
 function flagReceipt(){
     $('#chatFieldSet').addClass('receivedMessageFlag');
 }
+

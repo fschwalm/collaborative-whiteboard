@@ -18,6 +18,7 @@
         <h:panelGrid columns="1">
             <p:inputTextarea id="messageInput" autoResize="false"/>
             <p:commandButton id="sendBtn" value="Send" onclick="commit('messageInput')"/>
+            <h:outputText id="errorMessage" value="Falha na conexão" rendered="false"/>
         </h:panelGrid>
     </p:fieldset>
 </ui:composition>

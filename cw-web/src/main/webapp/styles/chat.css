@@ -5,7 +5,6 @@
     width: 300px !important;
     resize: none;
     max-width: 500px !important;
-    max-height: 700px !important;
     background-color: #F8F4F0;
 }
 
@@ -29,12 +28,14 @@
     overflow-y: auto;
     overflow-x: hidden;
     max-width: 100% !important;
-    max-height: 100% !important;
+    max-height: 700px !important;
 }
 
 
 .receivedMessages{
     background-image: url(../images/background_message.png) ;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     border-radius: 10px;
     width: 100%;
 }
