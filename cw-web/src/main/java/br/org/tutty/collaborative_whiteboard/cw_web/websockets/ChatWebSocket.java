@@ -1,11 +1,10 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import br.org.tutty.collaborative_whiteboard.context.ChatContextService;
+import br.org.tutty.collaborative_whiteboard.context.ChatService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
-import javax.json.JsonObject;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -17,21 +16,21 @@ import java.io.IOException;
 public class ChatWebSocket extends WebSocket{
 
     @Inject
-    private ChatContextService chatContextService;
+    private ChatService chatService;
 
 	@OnMessage
-	public void send(String dataMessage, Session session) throws IOException, JSONException {
+	public void send(String dataMessage, Session session){
         broadcast(dataMessage, session);
     }
 
     @OnOpen
 	public void open(Session session){
-		System.out.println("Conexão realizada (id) : "+session.getId());
+        chatService.connect(session);
 	}
 
 	@OnClose
 	public void close(Session session){
-        System.out.println("Conexão finalizada (id) : "+session.getId());
+        chatService.disconect(session);
 	}
 
     private void broadcast(String message, Session session) {
@@ -39,16 +38,9 @@ public class ChatWebSocket extends WebSocket{
             JSONObject jsonObject = new JSONObject(message);
             jsonObject.putOpt("user", "Usuario");
 
-            for (Session loggedSession : session.getOpenSessions()) {
-
-                synchronized (loggedSession) {
-                    if(! session.getId().equals(loggedSession.getId())){
-                        loggedSession.getBasicRemote().sendText(jsonObject.toString());
-                    }
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+            chatService.broadcast(jsonObject, session);
+        }catch (JSONException e){
+            // TODO Mensagem de ERRO ao enviar
         }
     }
 }
