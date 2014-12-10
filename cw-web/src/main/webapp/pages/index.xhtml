@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:cw="http://locahost:8080">
+
+<h:head>
+	<title>CW App</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<link rel="stylesheet" href="../resources/css/layout.css" />
+</h:head>
+<h:body>
+	<p:outputPanel layout="block" id="system-container">
+		<p:outputPanel id="system-header">
+			<h3>Colaborative Whiteboard</h3>
+		</p:outputPanel>
+		<p:outputPanel id="system-control-panel">
+			<p:outputPanel id="fixed-content">
+				<ul id="system-control-panel-options">
+					<li>
+						<button id="toogle-control-pannel-button">
+							<img src="../resources/image/gear_24x.png" />
+						</button>
+					</li>
+					<li></li>
+				</ul>
+			</p:outputPanel>
+			<p:outputPanel id="toggleable-control-pannel-content"></p:outputPanel>
+		</p:outputPanel>
+		<script type="text/javascript">
+	            jQuery('#toogle-control-pannel-button').click(function () {
+	                var content = jQuery('#toggleable-control-pannel-content');
+	                if (content.is(':hidden')) {
+	                    content.slideDown('fast');
+	                } else {
+	                    content.slideUp('fast');
+	                }
+	            });
+	        </script>
+		<p:outputPanel id="system-content">
+			<h:form prependId="false">
+				<p:outputPanel layout="block" id="system-board">
+					<p:dataList id="column-list" value="#{boardController.columns}"
+						var="column" rowIndexVar="itemIndex">
+
+						<cw:boardColumn model="#{column}" ajaxHandler="#{boardController}"></cw:boardColumn>
+
+					</p:dataList>
+				</p:outputPanel>
+			</h:form>
+		</p:outputPanel>
+	</p:outputPanel>
+</h:body>
+</html>

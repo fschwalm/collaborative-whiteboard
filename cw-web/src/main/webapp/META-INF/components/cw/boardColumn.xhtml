@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:component>
+
+	<p:outputPanel id="#{model.id}" class="board-column">
+		<h3>#{model.title}</h3>
+
+		<p:dataList id="#{model.id}-content" class="droppable-container"
+			value="#{model.tickets}" var="ticket">
+			<p:panel id="#{model.id}Panel" header="Panel" style="width: 100px;">
+				<h:outputText value="#{ticket}" />
+				<p:draggable axis="x" />
+				<p:droppable tolerance="touch" datasource=":column-list">
+					<p:ajax listener="#{ajaxHandler.onTicketDrop}" />
+				</p:droppable>
+			</p:panel>
+		</p:dataList>
+	</p:outputPanel>
+
+	<p:outputPanel id="doing" class="board-column">
+		<h3>Fazendo</h3>
+		<p:dataList id="doing-content" class="droppable-container"
+			value="#{boardController.doingTickets}" var="ticket">
+			<p:panel id="pnl" header="Panel" style="width: 100px;">
+				<h:outputText value="#{ticket}" />
+			</p:panel>
+			<p:draggable for="pnl" axis="x" />
+		</p:dataList>
+		<p:droppable for="doing-content" tolerance="touch">
+			<p:ajax listener="#{boardController.onTicketDrop}" />
+		</p:droppable>
+	</p:outputPanel>
+
+</ui:component>
+</html>

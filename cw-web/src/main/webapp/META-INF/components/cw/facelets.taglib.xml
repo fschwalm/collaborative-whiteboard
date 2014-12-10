@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib>
+	<namespace>http://linda.ufrgs.br</namespace>
+
+	<tag>
+		<tag-name>boardColumn</tag-name>
+		<source>boardColumn.xhtml</source>
+	</tag>
+	
+</facelet-taglib>
