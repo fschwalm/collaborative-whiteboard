@@ -1,46 +1,48 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import br.org.tutty.collaborative_whiteboard.context.ChatService;
-import org.json.JSONException;
-import org.json.JSONObject;
+import br.org.tutty.collaborative_whiteboard.transmition.ChatMessageBuilder;
+import br.org.tutty.collaborative_whiteboard.transmition.services.TransmitionsService;
+import br.org.tutty.collaborative_whiteboard.transmition.exceptions.MessageMountException;
 
 import javax.inject.Inject;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.servlet.http.HttpSession;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 
-@ServerEndpoint("/chat")
+@ServerEndpoint(value = "/chat", configurator = GetHttpSessionConfigurator.class)
 public class ChatWebSocket extends WebSocket{
 
     @Inject
-    private ChatService chatService;
+    private TransmitionsService transmitionsService;
 
 	@OnMessage
-	public void send(String dataMessage, Session session){
+	public void send(String dataMessage, final Session session){
         broadcast(dataMessage, session);
     }
 
     @OnOpen
-	public void open(Session session){
-        chatService.connect(session);
+	public void open(final Session websocketSession, final EndpointConfig endpointConfig){
+        HttpSession httpSession = (HttpSession) endpointConfig.getUserProperties()
+                .get(HttpSession.class.getName());
+
+        System.out.println("HTTP SESSION ID :" + httpSession.getId());
+        System.out.println("WEBSOCKET ID :" + websocketSession.getId());
+
+        transmitionsService.connect(websocketSession, httpSession);
 	}
 
 	@OnClose
-	public void close(Session session){
-        chatService.disconect(session);
+	public void close(final Session session){
+        transmitionsService.disconect(session);
 	}
 
-    private void broadcast(String message, Session session) {
-        try {
-            JSONObject jsonObject = new JSONObject(message);
-            jsonObject.putOpt("user", "Usuario");
+    private void broadcast(String message, final Session senderSession) {
+        ChatMessageBuilder chatMessageBuilder = new ChatMessageBuilder(message, , senderSession);
 
-            chatService.broadcast(jsonObject, session);
-        }catch (JSONException e){
-            // TODO Mensagem de ERRO ao enviar
+        try {
+            transmitionsService.broadcast(chatMessageBuilder, senderSession);
+        } catch (MessageMountException e) {
+            e.printStackTrace();
         }
     }
 }

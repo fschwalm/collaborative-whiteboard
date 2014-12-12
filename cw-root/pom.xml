@@ -12,7 +12,7 @@
             ../cw-ear
         </module>
         <module>
-            ../cw-chat-business
+            ../cw-business
         </module>
         <module>
             ../cw-web
