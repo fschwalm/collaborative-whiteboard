@@ -31,10 +31,22 @@ function sendData(data) {
 	sendMessage(JSON.stringify(data));
 }
 
-function callback() {
+function registerOnMessageEvent() {
     ws.onmessage = function (evt) {
-        log(JSON.parse(evt.data));
+        var data =JSON.parse(evt.data);
+        drawTask(data);
+        log(data);
     }
+}
+
+function drawTask(data) {
+	var receptor = $('#' + data.to),
+		ticket = $('#' + data.id);
+	
+	ticket.css('top', data.top - ticket.height());
+	ticket.css('left', data.left - 20);
+	
+	receptor.append(ticket);
 }
 
 function log(object) {

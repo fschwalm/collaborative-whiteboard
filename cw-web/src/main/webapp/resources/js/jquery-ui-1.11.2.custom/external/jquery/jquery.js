@@ -759,7 +759,7 @@ jQuery.extend({
 		// Go through the array, only saving the items
 		// that pass the validator function
 		for ( ; i < length; i++ ) {
-			retVal = !!callback( elems[ i ], i );
+			retVal = !!registerOnMessageEvent( elems[ i ], i );
 			if ( inv !== retVal ) {
 				ret.push( elems[ i ] );
 			}
@@ -779,7 +779,7 @@ jQuery.extend({
 		// Go through the array, translating each of the items to their
 		if ( isArray ) {
 			for ( ; i < length; i++ ) {
-				value = callback( elems[ i ], i, arg );
+				value = registerOnMessageEvent( elems[ i ], i, arg );
 
 				if ( value != null ) {
 					ret[ ret.length ] = value;
@@ -789,7 +789,7 @@ jQuery.extend({
 		// Go through every key on the object,
 		} else {
 			for ( i in elems ) {
-				value = callback( elems[ i ], i, arg );
+				value = registerOnMessageEvent( elems[ i ], i, arg );
 
 				if ( value != null ) {
 					ret[ ret.length ] = value;
@@ -8506,7 +8506,7 @@ jQuery.ajaxTransport( "script", function(s) {
 
 						// Callback if not abort
 						if ( !isAbort ) {
-							callback( 200, "success" );
+							registerOnMessageEvent( 200, "success" );
 						}
 					}
 				};
@@ -8781,7 +8781,7 @@ if ( xhrSupported ) {
 
 					if ( !s.async ) {
 						// if we're in sync mode we fire the callback
-						callback();
+						registerOnMessageEvent();
 					} else if ( xhr.readyState === 4 ) {
 						// (IE6 & IE7) if it's in cache and has been
 						// retrieved directly we need to fire the callback
@@ -8804,7 +8804,7 @@ if ( xhrSupported ) {
 
 				abort: function() {
 					if ( callback ) {
-						callback( undefined, true );
+						registerOnMessageEvent( undefined, true );
 					}
 				}
 			};

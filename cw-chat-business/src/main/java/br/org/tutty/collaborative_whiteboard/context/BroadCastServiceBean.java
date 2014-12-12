@@ -26,8 +26,6 @@ public class BroadCastServiceBean implements BroadCastService {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		// System.out.println("Falha ao atualizar clientes.");
 	}
 
 	@Override

@@ -20,7 +20,6 @@ public class TaskBoardWebSocket extends WebSocket {
 	@OnMessage
 	public void send(String dataMessage, Session session) {
 		broadCastService.updateClients(dataMessage, session);
-		System.out.println("Dados: " + dataMessage + " Sessão: " + session.getId());
 	}
 
 	@OnOpen
