@@ -6,7 +6,6 @@ function handleDrop(objectToDrag, receptor) {
 	} else {
 		console.log('Sem conexão.')
 	}
-    closeSocket();
 }
 
 function createData(objectToDrag, receptor) {
@@ -30,6 +29,12 @@ function createData(objectToDrag, receptor) {
 
 function sendData(data) {
 	sendMessage(JSON.stringify(data));
+}
+
+function callback() {
+    ws.onmessage = function (evt) {
+        log(JSON.parse(evt.data));
+    }
 }
 
 function log(object) {
