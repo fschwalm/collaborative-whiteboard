@@ -88,14 +88,15 @@ html, body {
 	width: 100%;
 }
 
-ul {
-	background: none;
-	border: none;
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.board-column-content {
+	height: 90%;
+	width: 100%;
 }
 
-#column-list li {
-	float: left;
+.ticket {
+	position: absolute;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	height: 100px;
+	width: 150px;
 }

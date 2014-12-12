@@ -6,4 +6,5 @@
 *.metadata
 **/.idea
 *.iml
+*.tern-project
 

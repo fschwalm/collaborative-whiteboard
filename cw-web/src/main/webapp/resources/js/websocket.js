@@ -1,14 +1,28 @@
- var ws = new WebSocket("ws://localhost:8080/collaborative-whiteboard/whiteboard");
-	 ws.onopen = function()
-	 {
-		alert("Web Socket is connected!!");			        
-	 };
-	 ws.onmessage = function (evt) 
-	 { 			     	
-		var msg = evt.data;
-		alert("Message received:" +  msg);
-	 };
-	 ws.onclose = function()
-	 { 
-		alert("Connection is closed..."); 
-	 };
+var ws;
+
+function connect() {
+    ws = new WebSocket("ws://localhost:8080/cw/chat");
+}
+
+function connectTaskBoard() {
+	ws = new WebSocket("ws://localhost:8080/cw/taskboard");
+}
+
+function sendMessage(message){
+    ws.send(message);
+}
+
+function closeSocket() {
+    if(isConnect()){
+        ws.close();
+    }
+}
+
+function isConnect(){
+    if(ws.readyState == ws.OPEN){
+        return true;
+    }else{
+        return false;
+    }
+}
+

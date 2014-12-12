@@ -2,21 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:cw="http://locahost:8080">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>CW App</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-	<link rel="stylesheet" href="../resources/css/layout.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<h:outputStylesheet library="css" name="layout.css" />
+
+	<h:outputScript library="js" name="jquery.js" />
+	<h:outputScript library="js/jquery-ui-1.11.2.custom"
+		name="jquery-ui.js" />
+
+	<h:outputScript library="js" name="websocket.js" />
+	<h:outputScript library="js" name="taskboard.js" />
 </h:head>
 <h:body>
-	<p:outputPanel layout="block" id="system-container">
-		<p:outputPanel id="system-header">
+	<div id="system-container">
+		<div id="system-header">
 			<h3>Colaborative Whiteboard</h3>
-		</p:outputPanel>
-		<p:outputPanel id="system-control-panel">
-			<p:outputPanel id="fixed-content">
+		</div>
+		<div id="system-control-panel">
+			<div id="fixed-content">
 				<ul id="system-control-panel-options">
 					<li>
 						<button id="toogle-control-pannel-button">
@@ -25,31 +32,59 @@
 					</li>
 					<li></li>
 				</ul>
-			</p:outputPanel>
-			<p:outputPanel id="toggleable-control-pannel-content"></p:outputPanel>
-		</p:outputPanel>
+			</div>
+			<div id="toggleable-control-pannel-content"></div>
+		</div>
 		<script type="text/javascript">
-	            jQuery('#toogle-control-pannel-button').click(function () {
-	                var content = jQuery('#toggleable-control-pannel-content');
-	                if (content.is(':hidden')) {
-	                    content.slideDown('fast');
-	                } else {
-	                    content.slideUp('fast');
-	                }
-	            });
-	        </script>
-		<p:outputPanel id="system-content">
-			<h:form prependId="false">
-				<p:outputPanel layout="block" id="system-board">
-					<p:dataList id="column-list" value="#{boardController.columns}"
-						var="column" rowIndexVar="itemIndex">
-
-						<cw:boardColumn model="#{column}" ajaxHandler="#{boardController}"></cw:boardColumn>
-
-					</p:dataList>
-				</p:outputPanel>
-			</h:form>
-		</p:outputPanel>
-	</p:outputPanel>
+            jQuery('#toogle-control-pannel-button').click(function () {
+                var content = jQuery('#toggleable-control-pannel-content');
+                if (content.is(':hidden')) {
+                    content.slideDown('fast');
+                } else {
+                    content.slideUp('fast');
+                }
+            });
+        </script>
+		<div id="system-content">
+			<div id="system-board">
+				<div id="todo" class="board-column">
+					<h3>A Fazer</h3>
+					<div class="board-column-content">
+						<div id="ticket1" class="ticket">Tarefa 1</div>
+						<div id="ticket2" class="ticket">Tarefa 2</div>
+						<div id="ticket3" class="ticket">Tarefa 3</div>
+						<div id="ticket4" class="ticket">Tarefa 4</div>
+						<div id="ticket5" class="ticket">Tarefa 5</div>
+					</div>
+				</div>
+				<div id="doing" class="board-column">
+					<h3>Fazendo</h3>
+					<div class="board-column-content"></div>
+				</div>
+				<div id="done" class="board-column">
+					<h3>Feito</h3>
+					<div class="board-column-content"></div>
+				</div>
+				<div id="accepted" class="board-column">
+					<h3>Aceito</h3>
+					<div class="board-column-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+        $(document).ready(function () {
+        	connectTaskBoard();
+        	
+            $('.ticket').draggable();
+            
+            $('.board-column-content').droppable({
+                tolerance : 'fit',
+                drop : function (event, ui) {
+                    handleDrop(ui, $(this));
+                }
+            });
+        });
+    </script>
 </h:body>
 </html>
