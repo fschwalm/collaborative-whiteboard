@@ -6,7 +6,12 @@ package br.org.tutty.collaborative_whiteboard.model;
 public class User {
     private String name;
 
+
     public String getName() {
         return name;
+    }
+
+    public void disconectTransmition() {
+
     }
 }

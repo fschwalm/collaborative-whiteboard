@@ -4,20 +4,20 @@ function connect() {
     ws = new WebSocket("ws://localhost:8080/cw/chat");
 }
 
-function sendMessage(message){
+function sendMessage(message) {
     ws.send(message);
 }
 
 function closeSocket() {
-    if(isConnect()){
+    if (isConnect()) {
         ws.close();
     }
 }
 
-function isConnect(){
-    if(ws.readyState == ws.OPEN){
+function isConnect() {
+    if (ws != null && ws.readyState == 1) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }

@@ -37,11 +37,16 @@ public class LoggedUser {
         return websocketSession;
     }
 
-    public Boolean isActivityChat(){
-        return websocketSession.isOpen();
+    public Boolean isActivityTransmition(){
+        return websocketSession != null && websocketSession.isOpen();
     }
 
-    public Boolean isActivityBrowser(){
-        return httpSession == null ? false : true;
+    public void activateTransmition(Session websocketSession) {
+        this.websocketSession = websocketSession;
     }
+
+    public void disableTransmition() {
+        this.websocketSession = null;
+    }
+
 }

@@ -1,22 +1,40 @@
 $(document).ready(function () {
+
+    $("#chatHeader").click(function() {
+        $("#chatField").slideToggle('slow');
+    });
+
     initChat();
+
 });
 
 function initChat(){
     try{
-        connect();
-        registerCloseConnection();
-        registerReceiptsMessages();
-        registerErrorHandling();
-        registerRemovalReceivingFlag();
+        if(! isConnect()){
+            connect();
+            registerCloseConnection();
+            registerReceiptsMessages();
+            registerErrorHandling();
+            registerRemovalReceivingFlag();
+            setStatus();
+        }
+
     }catch (exception){
-        alert("Sem comunicação com o Servidor");
+        setStatus();
+    }
+}
+
+function setStatus(){
+    if(isConnect()){
+        $('#chatField').prop('legend', 'Online');
+    }else{
+        $('#chatField').prop('legend', 'Offline');
     }
 }
 
 function registerCloseConnection(){
     ws.onclose = function(evt){
-        alert('Conexão finalizada')
+        setStatus();
     }
 }
 
@@ -35,11 +53,11 @@ function registerReceiptsMessages(){
 
 function registerRemovalReceivingFlag(){
     $('#outputMessage').bind('mouseover', function(){
-        $('#chatFieldSet').removeClass('receivedMessageFlag');
+        $('#chatField').removeClass('receivedMessageFlag');
     })
 
     $('#messageInput').bind('mouseover', function(){
-        $('#chatFieldSet').removeClass('receivedMessageFlag');
+        $('#chatField').removeClass('receivedMessageFlag');
     })
 }
 
@@ -117,6 +135,6 @@ function clearMessage(inputTextId) {
 };
 
 function flagReceipt(){
-    $('#chatFieldSet').addClass('receivedMessageFlag');
+    $('#chatField').addClass('receivedMessageFlag');
 }
 

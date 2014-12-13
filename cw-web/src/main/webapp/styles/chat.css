@@ -1,21 +1,11 @@
-#chatFieldSet {
-    position:absolute !important;
-    top: 0 !important;
-    right: 0 !important;
-    width: 300px !important;
-    resize: none;
-    max-width: 500px !important;
+#chatField {
     background-color: #F8F4F0;
 }
 
-#chatFieldSet .fieldset-auto-width{
-    display: inline-block;
-    resize: none;
-}
-
 #messageInput{
-    width: 300px !important;
-    white-space: pre-wrap !important;
+    width: 85% !important;
+    margin-left: 5%;
+    margin-left: 5%;
 }
 
 #messagePanel{
@@ -69,5 +59,27 @@
 .receivedMessageFlag legend {
     background-color: skyblue !important;
 }
+
+#chat{
+    display: inline-block;
+    resize: none;
+    top: 0 !important;
+    right: 0 !important;
+    width: 300px !important;
+    resize: none;
+    max-width: 500px !important;
+}
+
+#chatHeader{
+    background-color: dimgray;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+#sendBtn{
+    margin-left: 5% ;
+}
+
 
 
