@@ -1,7 +1,12 @@
 $(document).ready(function () {
+    $("#chatField").hide();
 
     $("#chatHeader").click(function() {
         $("#chatField").slideToggle('slow');
+    });
+
+    $("#sendBtn").click(function() {
+        // DESCER BARRA DE ROLAGEM
     });
 
     initChat();
@@ -26,9 +31,13 @@ function initChat(){
 
 function setStatus(){
     if(isConnect()){
-        $('#chatField').prop('legend', 'Online');
+        $('#chatHeader').text('Online');
+        $('#chatHeader').css("color", "green");
+        $('#chatHeader').css("background-color", "blue");
     }else{
-        $('#chatField').prop('legend', 'Offline');
+        $('#chatHeader').text('Offline');
+        $('#chatHeader').css("color", "white");
+        $('#chatHeader').css("background-color", "gray");
     }
 }
 
@@ -53,11 +62,11 @@ function registerReceiptsMessages(){
 
 function registerRemovalReceivingFlag(){
     $('#outputMessage').bind('mouseover', function(){
-        $('#chatField').removeClass('receivedMessageFlag');
+        $('#chatHeader').removeClass('receivedMessageFlag');
     })
 
     $('#messageInput').bind('mouseover', function(){
-        $('#chatField').removeClass('receivedMessageFlag');
+        $('#chatHeader').removeClass('receivedMessageFlag');
     })
 }
 
@@ -135,6 +144,6 @@ function clearMessage(inputTextId) {
 };
 
 function flagReceipt(){
-    $('#chatField').addClass('receivedMessageFlag');
+    $('#chatHeader').addClass('receivedMessageFlag');
 }
 
