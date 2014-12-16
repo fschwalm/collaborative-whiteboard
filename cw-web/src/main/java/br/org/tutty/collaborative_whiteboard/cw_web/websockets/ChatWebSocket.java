@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
+import br.org.tutty.collaborative_whiteboard.transmition.model.UserMessage;
 import br.org.tutty.collaborative_whiteboard.transmition.services.TransmitionsService;
 
 import javax.inject.Inject;
@@ -15,7 +16,8 @@ public class ChatWebSocket extends WebSocket {
 
     @OnMessage
     public void send(String dataMessage, final Session senderSession) {
-        transmitionsService.broadcast(dataMessage, senderSession);
+        UserMessage userMessage = new UserMessage(transmitionsService)
+        transmitionsService.broadcast(new UserMessage(), senderSession);
     }
 
     @OnOpen

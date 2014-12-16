@@ -1,10 +1,13 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
-import br.org.tutty.collaborative_whiteboard.context.Context;
-import br.org.tutty.collaborative_whiteboard.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.model.LoggedUser;
-import br.org.tutty.collaborative_whiteboard.model.User;
+import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
+import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
+import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
+import br.org.tutty.collaborative_whiteboard.cw.model.User;
 import br.org.tutty.collaborative_whiteboard.transmition.exceptions.MessageMountException;
+import br.org.tutty.collaborative_whiteboard.transmition.model.Message;
+import br.org.tutty.collaborative_whiteboard.transmition.model.OfflineMessage;
+import br.org.tutty.collaborative_whiteboard.transmition.model.OnlineMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,58 +25,46 @@ import java.io.Serializable;
 public class TransmitionsServiceBean implements TransmitionsService, Serializable {
 
     @Inject
-    private Context context;
+    private UserContext userContext;
 
     @Override
     public void connect(Session webSocketSession, HttpSession httpSession) {
         try {
-            LoggedUser loggedUser = context.fetch(httpSession);
+            LoggedUser loggedUser = userContext.fetch(httpSession);
 
             if (!loggedUser.isActivityTransmition()) {
                 loggedUser.activateTransmition(webSocketSession);
+
+                OnlineMessage onlineMessage = new OnlineMessage();
+                sendMessage(onlineMessage.toJSon(), webSocketSession);
             }
 
         } catch (DataNotFoundException e) {
-            sendMessage(MessageProblemsBuilder.getMessage(e), webSocketSession);
+            OfflineMessage offlineMessage = new OfflineMessage();
+            sendMessage(offlineMessage.toJSon(), webSocketSession);
         }
     }
 
     @Override
     public void disconect(Session webSocketSession) {
         try {
-            LoggedUser loggedUser = context.fetch(webSocketSession);
+            LoggedUser loggedUser = userContext.fetch(webSocketSession);
             loggedUser.disableTransmition();
 
-        } catch (DataNotFoundException e) {
-            sendMessage(MessageProblemsBuilder.getMessage(e), webSocketSession);
-        }
+        } catch (DataNotFoundException e) {}
+
+        OfflineMessage offlineMessage = new OfflineMessage();
+        sendMessage(offlineMessage.toJSon(), webSocketSession);
     }
+
 
     @Override
-    public void broadcast(String dataMessage, Session webSocketSessionSender) {
-        try {
-            final JSONObject messageFinal = putSenderData(dataMessage, webSocketSessionSender);
+    public void broadcast(Message message, Session webSocketSessionSender) {
+        webSocketSessionSender.getOpenSessions().forEach(s -> {
+            if (!s.getId().equals(webSocketSessionSender.getId()))
+                sendMessage(message.toJSon(), s);
+        });
 
-            webSocketSessionSender.getOpenSessions().forEach(s -> {
-                if (!s.getId().equals(webSocketSessionSender.getId()))
-                   sendMessage(messageFinal, s);
-            });
-
-        } catch (Exception e) {
-            sendMessage(MessageProblemsBuilder.getMessage(e), webSocketSessionSender);
-        }
-    }
-
-    private JSONObject putSenderData(String message, Session websocketSession) throws MessageMountException, DataNotFoundException {
-
-        try {
-            JSONObject dataMessage = new JSONObject(message);
-            User loggedUser = context.fetch(websocketSession).getUser();
-
-            return dataMessage.putOpt("user", loggedUser.getName());
-        } catch (JSONException exception) {
-            throw new MessageMountException(exception);
-        }
     }
 
     private void sendMessage(JSONObject dataMessage,Session target){

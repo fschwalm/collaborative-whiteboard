@@ -17,33 +17,33 @@ function initChat(){
     try{
         if(! isConnect()){
             connect();
-            registerCloseConnection();
-            registerReceiptsMessages();
-            registerErrorHandling();
-            registerRemovalReceivingFlag();
-            setStatus();
         }
 
+        registerCloseConnection();
+        registerReceiptsMessages();
+        registerErrorHandling();
+        registerRemovalReceivingFlag();
+
     }catch (exception){
-        setStatus();
+        stayOffline();
     }
 }
 
-function setStatus(){
-    if(isConnect()){
-        $('#chatHeader').text('Online');
-        $('#chatHeader').css("color", "green");
-        $('#chatHeader').css("background-color", "blue");
-    }else{
-        $('#chatHeader').text('Offline');
-        $('#chatHeader').css("color", "white");
-        $('#chatHeader').css("background-color", "gray");
-    }
+function stayOnline(){
+    $('#chatHeader').text('Online');
+    $('#chatHeader').css("color", "green");
+    $('#chatHeader').css("background-color", "blue");
+}
+
+function stayOffline(){
+    $('#chatHeader').text('Offline');
+    $('#chatHeader').css("color", "white");
+    $('#chatHeader').css("background-color", "gray");
 }
 
 function registerCloseConnection(){
     ws.onclose = function(evt){
-        setStatus();
+        stayOffline();
     }
 }
 

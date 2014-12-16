@@ -1,4 +1,4 @@
-package br.org.tutty.collaborative_whiteboard.exceptions;
+package br.org.tutty.collaborative_whiteboard.cw.exceptions;
 
 /**
  * Created by drferreira on 12/12/14.

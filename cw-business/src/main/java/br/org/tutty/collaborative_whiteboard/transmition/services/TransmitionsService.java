@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
+import br.org.tutty.collaborative_whiteboard.transmition.model.Message;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpSession;
@@ -14,5 +15,5 @@ public interface TransmitionsService{
 
     public void disconect(Session session);
 
-    public void broadcast(String dataMessage, Session webSocketSessionSender);
+    public void broadcast(Message message, Session webSocketSessionSender);
 }

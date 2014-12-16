@@ -19,21 +19,7 @@
             </p:outputPanel>
 
             <p:inputTextarea id="messageInput" autoResize="false"/>
-            <p:commandButton id="sendBtn" value="Send" onclick="commit('messageInput')"/>
+            <p:commandButton id="sendBtn" value="#{chat['button.send']}" onclick="commit('messageInput')"/>
         </div>
     </div>
-
-
-    <!--<p:fieldset id="chatFieldSet" toggleable="true" legend="Chat" widgetVar="widget" collapsed="true">-->
-    <!--<p:outputPanel id="outputMessage">-->
-    <!--<p:outputPanel id="messagePanel">-->
-    <!--</p:outputPanel>-->
-    <!--</p:outputPanel>-->
-
-    <!--<h:panelGrid columns="1">-->
-    <!--<p:inputTextarea id="messageInput" autoResize="false"/>-->
-    <!--<p:commandButton id="sendBtn" value="Send" onclick="commit('messageInput')"/>-->
-    <!--<h:outputText id="errorMessage" value="Falha na conexão" rendered="false"/>-->
-    <!--</h:panelGrid>-->
-    <!--</p:fieldset>-->
 </ui:composition>
