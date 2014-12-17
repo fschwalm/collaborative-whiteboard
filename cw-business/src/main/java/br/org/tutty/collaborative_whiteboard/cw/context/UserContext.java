@@ -42,7 +42,7 @@ public class UserContext implements Serializable {
     }
 
     public LoggedUser fetch(Session websocketSession) throws DataNotFoundException {
-        return fetch(lUser -> lUser.getWebsocketSessionId().equals(websocketSession.getId()));
+        return fetch(lUser -> lUser.hasWebsocketSessionId(websocketSession.getId()));
     }
 
     public LoggedUser fetch(HttpSession httpSession) throws DataNotFoundException {

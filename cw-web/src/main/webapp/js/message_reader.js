@@ -2,8 +2,6 @@ var USER_MESSAGE = 'USER_MESSAGE';
 var STATUS_MESSAGE = 'STATUS_MESSAGE';
 var SERVER_MESSAGE = 'SERVER_MESSAGE';
 
-var $outputList = $('#messagePanel');
-
 function messageWriter(jsonData){
 
     var typeMessage = jsonData['TYPE_MESSAGE'];
@@ -23,6 +21,8 @@ function messageWriter(jsonData){
 }
 
 function printUserMessage(jsonObject){
+    var $outputList = $('#messagePanel');
+
     var date = jsonObject['DATE'];
     var messageValue = jsonObject['MESSAGE'];
     var user = jsonObject['USERNAME'];
@@ -41,6 +41,8 @@ function printStatusMessage(jsonObject){
 }
 
 function printServerMessage(jsonObject){
+    var $outputList = $('#messagePanel');
+
     var date = jsonObject['date'];
     var messageValue = jsonObject['MESSAGE'];
     var user = jsonObject['USERNAME'];

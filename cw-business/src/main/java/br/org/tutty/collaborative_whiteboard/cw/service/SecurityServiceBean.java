@@ -67,7 +67,13 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     }
 
     @Override
-    public void isLogged(HttpSession httpSession) {
-        // TODO VERIFICAR SE FOI AUTENTICADO
+    public Boolean isLogged(HttpSession httpSession) {
+        try {
+            userContext.fetch(httpSession);
+            return true;
+
+        } catch (DataNotFoundException e) {
+            return false;
+        }
     }
 }

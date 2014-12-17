@@ -30,10 +30,10 @@ public class LoginController extends GenericController {
 
         } catch (EncryptedException e) {
             e.printStackTrace();
-            return null;
+            return "";
         } catch (LoginException e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 

@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
 import br.org.tutty.collaborative_whiteboard.transmition.services.TransmitionsService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -14,8 +16,13 @@ public class ChatWebSocket extends WebSocket {
     private TransmitionsService transmitionsService;
 
     @OnMessage
-    public void send(String dataMessage, final Session senderSession) {
-        transmitionsService.send(dataMessage, senderSession);
+    public void send(String dataMessage, final Session senderSession){
+        try {
+            String messageValue = new JSONObject(dataMessage).getString("messageValue");
+            transmitionsService.send(messageValue, senderSession);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnOpen

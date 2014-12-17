@@ -13,5 +13,5 @@ public interface SecurityService {
 
     void logout(HttpSession httpSession);
 
-    void isLogged(HttpSession httpSession);
+    Boolean isLogged(HttpSession httpSession);
 }

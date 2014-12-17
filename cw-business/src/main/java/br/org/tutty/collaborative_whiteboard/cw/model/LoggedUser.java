@@ -3,6 +3,9 @@ package br.org.tutty.collaborative_whiteboard.cw.model;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by drferreira on 12/12/14.
@@ -11,20 +14,23 @@ public class LoggedUser {
 
     private User user;
     private String httpSessionId;
-    private String websocketSessionId;
+    private Set<String> websocketSessionIds;
     private Date loginDate;
 
     public LoggedUser(User user, HttpSession httpSession, Session websocketSession) {
+        websocketSessionIds = new HashSet<>();
+
         this.user = user;
         this.httpSessionId = httpSession.getId();
-        this.websocketSessionId = websocketSession.getId();
+        this.websocketSessionIds.add(websocketSession.getId());
         this.loginDate = new Date();
     }
 
     public LoggedUser(User user, HttpSession httpSession) {
+        websocketSessionIds = new HashSet<>();
+
         this.user = user;
         this.httpSessionId = httpSession.getId();
-        this.websocketSessionId = null;
         this.loginDate = new Date();
     }
 
@@ -40,20 +46,20 @@ public class LoggedUser {
         return httpSessionId;
     }
 
-    public String getWebsocketSessionId() {
-        return websocketSessionId;
+    public Boolean hasWebsocketSessionId(String websocketSessionId) {
+        return websocketSessionIds.contains(websocketSessionId);
     }
 
     public Boolean isActivityTransmition(){
-        return websocketSessionId != null;
+        return ! websocketSessionIds.isEmpty();
     }
 
     public void activateTransmition(Session websocketSession) {
-        this.websocketSessionId = websocketSession.getId();
+        this.websocketSessionIds.add(websocketSession.getId());
     }
 
     public void disableTransmition() {
-        this.websocketSessionId = null;
+        this.websocketSessionIds = new HashSet<>();
     }
 
 }

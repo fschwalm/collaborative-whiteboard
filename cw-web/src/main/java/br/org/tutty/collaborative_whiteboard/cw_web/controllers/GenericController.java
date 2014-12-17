@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class GenericController implements Serializable {
 
-    protected static final String HOME_PAGE = "";
+    protected static final String HOME_PAGE = "HOME_PAGE";
     protected static final String CREATE_ACCOUNT_PAGE = "";
     protected static final String RECOVERY_PAGE = "";
 

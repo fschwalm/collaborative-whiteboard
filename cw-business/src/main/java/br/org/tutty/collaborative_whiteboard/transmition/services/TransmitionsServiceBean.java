@@ -33,16 +33,17 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         try {
             LoggedUser loggedUser = userContext.fetch(httpSession);
 
+            // TODO refatorar para uso de multiplas conex WEBSOCKET
             if (!loggedUser.isActivityTransmition()) {
                 loggedUser.activateTransmition(webSocketSession);
-
-                OnlineMessage onlineMessage = new OnlineMessage();
-                sendMessage(onlineMessage.toJSon(), webSocketSession);
             }
+
+            OnlineMessage onlineMessage = new OnlineMessage();
+            sendMessage(onlineMessage, webSocketSession);
 
         } catch (DataNotFoundException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
-            sendMessage(offlineMessage.toJSon(), webSocketSession);
+            sendMessage(offlineMessage, webSocketSession);
         }
     }
 
@@ -57,7 +58,7 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
 
         } catch (DataNotFoundException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
-            sendMessage(offlineMessage.toJSon(), webSocketSessionSender);
+            sendMessage(offlineMessage, webSocketSessionSender);
         }
     }
 
@@ -71,19 +72,17 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         }
 
         OfflineMessage offlineMessage = new OfflineMessage();
-        sendMessage(offlineMessage.toJSon(), webSocketSession);
+        sendMessage(offlineMessage, webSocketSession);
     }
 
     private void broadcast(Message message, Session webSocketSessionSender) {
-        String websocketIdSender = webSocketSessionSender.getId();
-
         webSocketSessionSender.getOpenSessions().stream()
-                .forEach(s -> sendMessage(message.toJSon(), s));
+                .forEach(s -> sendMessage(message, s));
     }
 
-    private void sendMessage(JSONObject dataMessage, Session target) {
+    private void sendMessage(Message message, Session target) {
         try {
-            target.getBasicRemote().sendText(dataMessage.toString());
+            target.getBasicRemote().sendText(message.toJSon().toString());
         } catch (IOException e) {
         }
     }

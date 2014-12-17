@@ -18,4 +18,13 @@
             <var>login</var>
         </resource-bundle>
     </application>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>HOME_PAGE</from-outcome>
+            <to-view-id>/pages/session/whiteboard.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

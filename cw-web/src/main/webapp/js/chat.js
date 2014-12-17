@@ -5,9 +5,7 @@ $(document).ready(function () {
         $("#chatField").slideToggle('slow');
     });
 
-    $("#sendBtn").click(function() {
-        // DESCER BARRA DE ROLAGEM
-    });
+    registerScrollBottomChatPanel();
 
     initChat();
 
@@ -24,12 +22,22 @@ function initChat(){
         registerErrorHandling();
         registerRemovalReceivingFlag();
 
-    }catch (exception){}
+    }catch (exception){
+        alert('Sem conexão');
+    }
+}
+
+function registerScrollBottomChatPanel(){
+    $('#sendBtn').click(function() {
+        var height = $('#outputMessage')[0].scrollHeight;
+
+        $('#outputMessage').scrollTo(height);
+    });
 }
 
 function registerCloseConnection(){
     ws.onclose = function(evt){
-        stayOffline();
+        alert('Conexão finalizada');
     }
 }
 
