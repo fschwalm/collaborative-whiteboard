@@ -13,7 +13,7 @@ public interface TransmitionsService{
 
     public void connect(Session session, HttpSession httpSession);
 
-    public void disconect(Session session);
+    void send(String messageData, Session webSocketSessionSender);
 
-    public void broadcast(Message message, Session webSocketSessionSender);
+    public void disconect(Session session);
 }

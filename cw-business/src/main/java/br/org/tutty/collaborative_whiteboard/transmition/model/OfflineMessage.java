@@ -7,6 +7,6 @@ public class OfflineMessage extends StatusMessage {
     private static final String STATUS = "Offline";
 
     public OfflineMessage() {
-        super(STATUS, null);
+        super(STATUS);
     }
 }

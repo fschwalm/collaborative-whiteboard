@@ -24,21 +24,7 @@ function initChat(){
         registerErrorHandling();
         registerRemovalReceivingFlag();
 
-    }catch (exception){
-        stayOffline();
-    }
-}
-
-function stayOnline(){
-    $('#chatHeader').text('Online');
-    $('#chatHeader').css("color", "green");
-    $('#chatHeader').css("background-color", "blue");
-}
-
-function stayOffline(){
-    $('#chatHeader').text('Offline');
-    $('#chatHeader').css("color", "white");
-    $('#chatHeader').css("background-color", "gray");
+    }catch (exception){}
 }
 
 function registerCloseConnection(){
@@ -55,7 +41,7 @@ function registerErrorHandling(){
 
 function registerReceiptsMessages(){
     ws.onmessage = function (evt) {
-        printReceivedMessages(JSON.parse(evt.data));
+        messageWriter(JSON.parse(evt.data));
         flagReceipt();
     }
 }
@@ -70,35 +56,6 @@ function registerRemovalReceivingFlag(){
     })
 }
 
-function printReceivedMessages(jsonObj) {
-    var $outputList = $('#messagePanel')
-
-    var date = jsonObj['date'];
-    var messageValue = jsonObj['messageValue'];
-    var user = jsonObj['user'];
-    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
-
-    $outputList.append(
-        '<div class="receivedMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
-        '<span class="user">' + user + '</span><br>' +
-        '<span class="message">' + messageValue + '</span><br><br></div>');
-
-}
-
-function printMyMessages(jsonObj) {
-    var $outputList = $('#messagePanel');
-
-    var date = jsonObj['date'];
-    var messageValue = jsonObj['messageValue'];
-    var user = jsonObj['user'];
-    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
-
-    $outputList.append(
-            '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
-            '<span class="user">Eu</span><br>' +
-            '<span class="message">' + messageValue + '</span><br><br></div>');
-}
-
 
 function commit(inputTextId) {
     if (isValidMessage(inputTextId)) {
@@ -107,7 +64,6 @@ function commit(inputTextId) {
 
         if(isConnect()){
             sendMessage(jsonObject);
-            printMyMessages(JSON.parse(jsonObject));
         }else{
             alert('Sem conexão');
         }

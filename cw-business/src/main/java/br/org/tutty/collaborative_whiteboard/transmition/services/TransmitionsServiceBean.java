@@ -8,6 +8,7 @@ import br.org.tutty.collaborative_whiteboard.transmition.exceptions.MessageMount
 import br.org.tutty.collaborative_whiteboard.transmition.model.Message;
 import br.org.tutty.collaborative_whiteboard.transmition.model.OfflineMessage;
 import br.org.tutty.collaborative_whiteboard.transmition.model.OnlineMessage;
+import br.org.tutty.collaborative_whiteboard.transmition.model.UserMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,31 +47,44 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     }
 
     @Override
+    public void send(String messageData, Session webSocketSessionSender) {
+        try {
+            LoggedUser loggedUser = userContext.fetch(webSocketSessionSender);
+            String userName = loggedUser.getUser().getName();
+
+            UserMessage userMessage = new UserMessage(userName, messageData);
+            broadcast(userMessage, webSocketSessionSender);
+
+        } catch (DataNotFoundException e) {
+            OfflineMessage offlineMessage = new OfflineMessage();
+            sendMessage(offlineMessage.toJSon(), webSocketSessionSender);
+        }
+    }
+
+    @Override
     public void disconect(Session webSocketSession) {
         try {
             LoggedUser loggedUser = userContext.fetch(webSocketSession);
             loggedUser.disableTransmition();
 
-        } catch (DataNotFoundException e) {}
+        } catch (DataNotFoundException e) {
+        }
 
         OfflineMessage offlineMessage = new OfflineMessage();
         sendMessage(offlineMessage.toJSon(), webSocketSession);
     }
 
+    private void broadcast(Message message, Session webSocketSessionSender) {
+        String websocketIdSender = webSocketSessionSender.getId();
 
-    @Override
-    public void broadcast(Message message, Session webSocketSessionSender) {
-        webSocketSessionSender.getOpenSessions().forEach(s -> {
-            if (!s.getId().equals(webSocketSessionSender.getId()))
-                sendMessage(message.toJSon(), s);
-        });
-
+        webSocketSessionSender.getOpenSessions().stream()
+                .forEach(s -> sendMessage(message.toJSon(), s));
     }
 
-    private void sendMessage(JSONObject dataMessage,Session target){
+    private void sendMessage(JSONObject dataMessage, Session target) {
         try {
             target.getBasicRemote().sendText(dataMessage.toString());
-
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 }

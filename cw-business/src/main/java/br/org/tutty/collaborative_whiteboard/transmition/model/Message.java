@@ -37,12 +37,12 @@ public abstract class Message {
     }
 
     public JSONObject toJSon() {
+        aditionalWrite();
         write("TYPE_MESSAGE", typeMessage);
         write("DATE", date);
 
         return jsonObject;
     }
-
 
     enum TypeMessage {
         STATUS_MESSAGE("STATUS_MESSAGE"),

@@ -7,6 +7,6 @@ public class OnlineMessage extends StatusMessage {
     private static final String STATUS = "Online";
 
     public OnlineMessage() {
-        super(STATUS, null);
+        super(STATUS);
     }
 }

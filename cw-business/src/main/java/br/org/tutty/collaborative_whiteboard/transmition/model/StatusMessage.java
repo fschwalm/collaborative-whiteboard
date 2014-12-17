@@ -5,15 +5,14 @@ package br.org.tutty.collaborative_whiteboard.transmition.model;
  */
 public class StatusMessage extends Message{
     private String status;
-    private String message;
 
-    public StatusMessage(String status, String message) {
+    public StatusMessage(String status) {
         super(TypeMessage.STATUS_MESSAGE);
+        this.status = status;
     }
 
     @Override
     public void aditionalWrite() {
         write("STATUS", status);
-        write("MESSAGE", message);
     }
 }
