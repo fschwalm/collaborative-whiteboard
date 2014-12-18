@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw.context;
 
 import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
 import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
+import br.org.tutty.collaborative_whiteboard.cw.model.User;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -33,19 +34,11 @@ public class UserContext implements Serializable {
         loggedUsers.remove(loggedUser);
     }
 
-    private LoggedUser fetch(Predicate<LoggedUser> predicate) throws DataNotFoundException {
+    public LoggedUser fetch(Predicate<LoggedUser> predicate) throws DataNotFoundException {
         try{
             return loggedUsers.stream().filter(predicate).findFirst().get();
         }catch (NoSuchElementException exception){
             throw new DataNotFoundException();
         }
-    }
-
-    public LoggedUser fetch(Session websocketSession) throws DataNotFoundException {
-        return fetch(lUser -> lUser.hasWebsocketSessionId(websocketSession.getId()));
-    }
-
-    public LoggedUser fetch(HttpSession httpSession) throws DataNotFoundException {
-        return fetch(lUser -> lUser.getHttpSessionId().equals(httpSession.getId()));
     }
 }

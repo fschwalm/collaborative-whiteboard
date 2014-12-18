@@ -29,7 +29,7 @@ function printUserMessage(jsonObject){
 
     $outputList.append(
             '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
-            '<span class="user">Eu</span><br>' +
+            '<span class="user">user</span><br>' +
             '<span class="message">' + messageValue + '</span><br><br></div>');
 }
 

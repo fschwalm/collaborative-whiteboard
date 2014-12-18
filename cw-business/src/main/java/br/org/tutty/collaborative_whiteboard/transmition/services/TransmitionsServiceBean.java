@@ -3,14 +3,8 @@ package br.org.tutty.collaborative_whiteboard.transmition.services;
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
 import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
 import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
-import br.org.tutty.collaborative_whiteboard.cw.model.User;
-import br.org.tutty.collaborative_whiteboard.transmition.exceptions.MessageMountException;
-import br.org.tutty.collaborative_whiteboard.transmition.model.Message;
-import br.org.tutty.collaborative_whiteboard.transmition.model.OfflineMessage;
-import br.org.tutty.collaborative_whiteboard.transmition.model.OnlineMessage;
-import br.org.tutty.collaborative_whiteboard.transmition.model.UserMessage;
-import org.json.JSONException;
-import org.json.JSONObject;
+import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
+import br.org.tutty.collaborative_whiteboard.transmition.model.*;
 
 import javax.ejb.Local;
 import javax.inject.Inject;
@@ -28,12 +22,17 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     @Inject
     private UserContext userContext;
 
+    @Inject
+    private TransmitionContext transmitionContext;
+
     @Override
     public void connect(Session webSocketSession, HttpSession httpSession) {
         try {
             LoggedUser loggedUser = userContext.fetch(httpSession);
 
-            loggedUser.activateTransmition(webSocketSession);
+            // TODO ATRELAR ID TRANSMISSAO COM ID USUARIO
+
+            transmitionContext.start(httpSession, webSocketSession);
 
             OnlineMessage onlineMessage = new OnlineMessage();
             sendMessage(onlineMessage, webSocketSession);
@@ -47,11 +46,10 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     @Override
     public void send(String messageData, Session webSocketSessionSender) {
         try {
-            LoggedUser loggedUser = userContext.fetch(webSocketSessionSender);
-            String userName = loggedUser.getUser().getName();
+        LoggedUser loggedUser = userContext.fetch(webSocketSessionSender);
 
-            UserMessage userMessage = new UserMessage(userName, messageData);
-            broadcast(userMessage, webSocketSessionSender);
+
+            // TODO CONTINUAR MECANISMO DE ENVIO
 
         } catch (DataNotFoundException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
@@ -60,16 +58,15 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     }
 
     @Override
-    public void disconect(Session webSocketSession) {
+    public void disconect(Session socketSession) {
         try {
-            LoggedUser loggedUser = userContext.fetch(webSocketSession);
-            loggedUser.disableTransmition();
+            transmitionContext.end(socketSession);
 
         } catch (DataNotFoundException e) {
         }
 
         OfflineMessage offlineMessage = new OfflineMessage();
-        sendMessage(offlineMessage, webSocketSession);
+        sendMessage(offlineMessage, socketSession);
     }
 
     private void broadcast(Message message, Session webSocketSessionSender) {
