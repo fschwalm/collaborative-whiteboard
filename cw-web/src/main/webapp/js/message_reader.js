@@ -26,10 +26,9 @@ function printUserMessage(jsonObject){
     var date = jsonObject['DATE'];
     var messageValue = jsonObject['MESSAGE'];
     var user = jsonObject['USERNAME'];
-    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
     $outputList.append(
-            '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
+            '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
             '<span class="user">Eu</span><br>' +
             '<span class="message">' + messageValue + '</span><br><br></div>');
 }

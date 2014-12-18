@@ -33,10 +33,7 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         try {
             LoggedUser loggedUser = userContext.fetch(httpSession);
 
-            // TODO refatorar para uso de multiplas conex WEBSOCKET
-            if (!loggedUser.isActivityTransmition()) {
-                loggedUser.activateTransmition(webSocketSession);
-            }
+            loggedUser.activateTransmition(webSocketSession);
 
             OnlineMessage onlineMessage = new OnlineMessage();
             sendMessage(onlineMessage, webSocketSession);

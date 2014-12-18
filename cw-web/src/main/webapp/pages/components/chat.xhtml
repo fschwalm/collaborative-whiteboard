@@ -20,7 +20,7 @@
             </p:outputPanel>
 
             <p:inputTextarea id="messageInput" autoResize="false"/>
-            <p:commandButton id="sendBtn" value="#{chat['button.send']}" onclick="commit('messageInput')"/>
+            <p:commandButton id="sendBtn" value="#{chat['button.send']}" onclick="commit('messageInput'), scrollChat()"/>
         </div>
     </div>
 </ui:composition>

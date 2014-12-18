@@ -5,8 +5,6 @@ $(document).ready(function () {
         $("#chatField").slideToggle('slow');
     });
 
-    registerScrollBottomChatPanel();
-
     initChat();
 
 });
@@ -27,12 +25,8 @@ function initChat(){
     }
 }
 
-function registerScrollBottomChatPanel(){
-    $('#sendBtn').click(function() {
-        var height = $('#outputMessage')[0].scrollHeight;
-
-        $('#outputMessage').scrollTo(height);
-    });
+function scrollChat(){
+        $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
 }
 
 function registerCloseConnection(){
@@ -62,8 +56,11 @@ function registerRemovalReceivingFlag(){
     $('#messageInput').bind('mouseover', function(){
         $('#chatHeader').removeClass('receivedMessageFlag');
     })
-}
 
+    $('#chatField').bind('mouseover', function(){
+        $('#chatHeader').removeClass('receivedMessageFlag');
+    })
+}
 
 function commit(inputTextId) {
     if (isValidMessage(inputTextId)) {
@@ -109,5 +106,23 @@ function clearMessage(inputTextId) {
 
 function flagReceipt(){
     $('#chatHeader').addClass('receivedMessageFlag');
+}
+
+$.fn.scrollTo = function( target, options, callback ){
+    if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
+    var settings = $.extend({
+        scrollTarget  : target,
+        offsetTop     : 50,
+        duration      : 500,
+        easing        : 'swing'
+    }, options);
+    return this.each(function(){
+        var scrollPane = $(this);
+        var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+        var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+        scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
+            if (typeof callback == 'function') { callback.call(this); }
+        });
+    });
 }
 

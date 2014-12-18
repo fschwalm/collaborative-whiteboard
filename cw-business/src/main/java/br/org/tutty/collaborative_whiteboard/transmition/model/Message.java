@@ -20,11 +20,6 @@ public abstract class Message {
         this.jsonObject = new JSONObject();
     }
 
-
-    public TypeMessage getTypeMessage() {
-        return typeMessage;
-    }
-
     public abstract void aditionalWrite();
 
     public void write(String key, Object value) {
@@ -57,7 +52,6 @@ public abstract class Message {
     }
 
     protected String formatDate(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH:mm dd/mm/yyyy");
-        return simpleDateFormat.format(date);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
     }
 }
