@@ -5,12 +5,14 @@ import br.org.tutty.collaborative_whiteboard.cw.exceptions.EncryptedException;
 import br.org.tutty.collaborative_whiteboard.cw.model.User;
 
 import javax.ejb.Local;
+import javax.ejb.Stateless;
+import java.io.Serializable;
 
 /**
  * Created by drferreira on 16/12/14.
  */
 @Local(UserService.class)
-public class UserServiceBean implements UserService {
+public class UserServiceBean implements UserService, Serializable {
 
     @Override
     public User fetch(String email) throws DataNotFoundException {

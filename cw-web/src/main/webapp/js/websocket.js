@@ -15,14 +15,10 @@ function closeSocket() {
 }
 
 function isConnect() {
-    if (isNotNull(ws) && ws.readyState === ws.OPEN) {
+    if (ws != null && ws != undefined && ws.readyState == WebSocket.OPEN) {
         return true;
     } else {
         return false;
     }
-}
-
-function isNotNull(variable) {
-    return (variable !== null && variable !== undefined);
 }
 

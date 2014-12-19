@@ -14,7 +14,6 @@ function initChat(){
         if(! isConnect()){
             connect();
         }
-
         registerCloseConnection();
         registerReceiptsMessages();
         registerErrorHandling();

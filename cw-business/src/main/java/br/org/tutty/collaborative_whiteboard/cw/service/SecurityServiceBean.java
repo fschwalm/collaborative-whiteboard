@@ -58,7 +58,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     @Override
     public void logout(HttpSession httpSession) {
         try {
-            LoggedUser loggedUser = userContext.fetch(httpSession);
+            LoggedUser loggedUser = userContext.fetch(httpSession.getId());
             userContext.removeUser(loggedUser);
 
         } catch (DataNotFoundException e) {
@@ -69,7 +69,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     @Override
     public Boolean isLogged(HttpSession httpSession) {
         try {
-            userContext.fetch(httpSession);
+            userContext.fetch(httpSession.getId());
             return true;
 
         } catch (DataNotFoundException e) {

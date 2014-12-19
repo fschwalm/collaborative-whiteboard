@@ -1,13 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.model;
 
-import br.org.tutty.collaborative_whiteboard.transmition.model.Transmition;
-
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by drferreira on 12/12/14.
@@ -15,9 +9,11 @@ import java.util.Set;
 public class LoggedUser {
     private User user;
     private Date loginDate;
+    private String httpSessionId;
 
-    public LoggedUser(User user) {
+    public LoggedUser(User user, HttpSession httpSession) {
         this.user = user;
+        this.httpSessionId = httpSession.getId();
         this.loginDate = new Date();
     }
 
@@ -25,7 +21,7 @@ public class LoggedUser {
         return user;
     }
 
-    public Date getLoginDate() {
-        return loginDate;
+    public String getHttpSessionId() {
+        return httpSessionId;
     }
 }

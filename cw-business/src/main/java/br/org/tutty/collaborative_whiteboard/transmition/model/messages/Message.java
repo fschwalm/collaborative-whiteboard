@@ -1,4 +1,4 @@
-package br.org.tutty.collaborative_whiteboard.transmition.model;
+package br.org.tutty.collaborative_whiteboard.transmition.model.messages;
 
 import org.json.JSONException;
 import org.json.JSONObject;

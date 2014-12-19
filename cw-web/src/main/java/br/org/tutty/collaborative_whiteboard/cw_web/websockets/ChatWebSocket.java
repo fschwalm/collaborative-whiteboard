@@ -16,25 +16,29 @@ public class ChatWebSocket extends WebSocket {
     private TransmitionsService transmitionsService;
 
     @OnMessage
-    public void send(String dataMessage, final Session senderSession){
+    public void send(String dataMessage, Session senderSession){
+
         try {
             String messageValue = new JSONObject(dataMessage).getString("messageValue");
             transmitionsService.send(messageValue, senderSession);
+            System.out.println("+++++++++++++++++++++ Mensagem enviada +++++++++++++++++++++");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @OnOpen
-    public void open(final Session websocketSession, final EndpointConfig endpointConfig) {
+    public void open(Session websocketSession, EndpointConfig endpointConfig) {
         HttpSession httpSession = (HttpSession) endpointConfig.getUserProperties()
                 .get(HttpSession.class.getName());
 
         transmitionsService.connect(websocketSession, httpSession);
+        System.out.println("+++++++++++++++++++++ Conectado +++++++++++++++++++++");
     }
 
     @OnClose
-    public void close(final Session session) {
+    public void close(Session session) {
+        System.out.println("+++++++++++++++++++++ Conex Fechada +++++++++++++++++++++");
         transmitionsService.disconect(session);
     }
 }

@@ -5,6 +5,10 @@ import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException
 import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
 import br.org.tutty.collaborative_whiteboard.transmition.model.*;
+import br.org.tutty.collaborative_whiteboard.transmition.model.messages.Message;
+import br.org.tutty.collaborative_whiteboard.transmition.model.messages.OfflineMessage;
+import br.org.tutty.collaborative_whiteboard.transmition.model.messages.OnlineMessage;
+import br.org.tutty.collaborative_whiteboard.transmition.model.messages.UserMessage;
 
 import javax.ejb.Local;
 import javax.inject.Inject;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.ConnectException;
 
 /**
  * Created by drferreira on 27/11/14.
@@ -26,44 +31,40 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     private TransmitionContext transmitionContext;
 
     @Override
-    public void connect(Session webSocketSession, HttpSession httpSession) {
+    public void connect(Session socketSessionSender, HttpSession httpSession) {
         try {
-            LoggedUser loggedUser = userContext.fetch(httpSession);
-
-            // TODO ATRELAR ID TRANSMISSAO COM ID USUARIO
-
-            transmitionContext.start(httpSession, webSocketSession);
+            transmitionContext.start("CODE", httpSession, socketSessionSender);
 
             OnlineMessage onlineMessage = new OnlineMessage();
-            sendMessage(onlineMessage, webSocketSession);
+            sendMessage(onlineMessage, socketSessionSender);
 
-        } catch (DataNotFoundException e) {
+        } catch (ConnectException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
-            sendMessage(offlineMessage, webSocketSession);
+            sendMessage(offlineMessage, socketSessionSender);
         }
     }
 
     @Override
-    public void send(String messageData, Session webSocketSessionSender) {
+    public void send(String messageData, Session socketSessionSender) {
         try {
-        LoggedUser loggedUser = userContext.fetch(webSocketSessionSender);
+            Transmition transmition = transmitionContext.fetch(socketSessionSender);
+            Connection connection = transmition.fetchConnection(socketSessionSender);
+            LoggedUser loggedUser = userContext.fetch(connection.getHttpSessionId());
+            UserMessage userMessage = new UserMessage(loggedUser.getUser().getName(), messageData);
 
-
-            // TODO CONTINUAR MECANISMO DE ENVIO
+            broadcast(userMessage, socketSessionSender);
 
         } catch (DataNotFoundException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
-            sendMessage(offlineMessage, webSocketSessionSender);
+            sendMessage(offlineMessage, socketSessionSender);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     @Override
     public void disconect(Session socketSession) {
-        try {
-            transmitionContext.end(socketSession);
-
-        } catch (DataNotFoundException e) {
-        }
+        transmitionContext.end(socketSession);
 
         OfflineMessage offlineMessage = new OfflineMessage();
         sendMessage(offlineMessage, socketSession);

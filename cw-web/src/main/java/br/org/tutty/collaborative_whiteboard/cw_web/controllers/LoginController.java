@@ -5,6 +5,8 @@ import br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException;
 import br.org.tutty.collaborative_whiteboard.cw.model.Security;
 import br.org.tutty.collaborative_whiteboard.cw.service.SecurityService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,11 +30,12 @@ public class LoginController extends GenericController {
             securityService.login(security);
             return HOME_PAGE;
 
-        } catch (EncryptedException e) {
-            e.printStackTrace();
-            return "";
         } catch (LoginException e) {
-            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao realizar login.", null));
+            return "";
+        }catch (Exception exception){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro inesperado."));
+            exception.printStackTrace();
             return "";
         }
     }

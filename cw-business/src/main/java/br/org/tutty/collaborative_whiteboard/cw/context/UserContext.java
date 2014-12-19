@@ -1,29 +1,23 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
-import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
 import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.cw.model.User;
+import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.function.Predicate;
+import java.util.*;
 
 /**
  * Created by drferreira on 12/12/14.
  */
-@ApplicationScoped
+@javax.enterprise.context.ApplicationScoped
 public class UserContext implements Serializable {
-    private Set<LoggedUser> loggedUsers;
+    private List<LoggedUser> loggedUsers;
 
     @PostConstruct
     public void setUp(){
-        this.loggedUsers = new HashSet<>();
+        this.loggedUsers = new ArrayList<>();
     }
 
     public void addUser(LoggedUser loggedUser){
@@ -34,11 +28,13 @@ public class UserContext implements Serializable {
         loggedUsers.remove(loggedUser);
     }
 
-    public LoggedUser fetch(Predicate<LoggedUser> predicate) throws DataNotFoundException {
-        try{
-            return loggedUsers.stream().filter(predicate).findFirst().get();
-        }catch (NoSuchElementException exception){
-            throw new DataNotFoundException();
+    public LoggedUser fetch(String httpSessionId) throws DataNotFoundException {
+        for (LoggedUser loggedUser : loggedUsers){
+            if(loggedUser.getHttpSessionId().equals(httpSessionId)){
+                return loggedUser;
+            }
         }
+
+        throw new DataNotFoundException();
     }
 }
