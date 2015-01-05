@@ -4,14 +4,14 @@ import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException
 import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
+import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by drferreira on 12/12/14.
  */
-@javax.enterprise.context.ApplicationScoped
+@ApplicationScoped
 public class UserContext implements Serializable {
     private List<LoggedUser> loggedUsers;
 

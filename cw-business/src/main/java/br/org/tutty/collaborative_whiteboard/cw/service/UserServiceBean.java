@@ -17,6 +17,7 @@ public class UserServiceBean implements UserService, Serializable {
     @Override
     public User fetch(String email) throws DataNotFoundException {
         try {
+            // TODO Implementar busca no banco de dados.
             User user = new User
                     (email, "password", "Joao");
             return user;

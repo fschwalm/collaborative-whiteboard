@@ -4,13 +4,18 @@ import br.org.tutty.collaborative_whiteboard.transmition.services.TransmitionsSe
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/chat", configurator = GetHttpSessionConfigurator.class)
 public class ChatWebSocket extends WebSocket {
+
+    private static final String ID_MESSAGE_VALUE = "messageValue";
 
     @Inject
     private TransmitionsService transmitionsService;
@@ -19,9 +24,8 @@ public class ChatWebSocket extends WebSocket {
     public void send(String dataMessage, Session senderSession){
 
         try {
-            String messageValue = new JSONObject(dataMessage).getString("messageValue");
+            String messageValue = new JSONObject(dataMessage).getString(ID_MESSAGE_VALUE);
             transmitionsService.send(messageValue, senderSession);
-            System.out.println("+++++++++++++++++++++ Mensagem enviada +++++++++++++++++++++");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -33,12 +37,10 @@ public class ChatWebSocket extends WebSocket {
                 .get(HttpSession.class.getName());
 
         transmitionsService.connect(websocketSession, httpSession);
-        System.out.println("+++++++++++++++++++++ Conectado +++++++++++++++++++++");
     }
 
     @OnClose
     public void close(Session session) {
-        System.out.println("+++++++++++++++++++++ Conex Fechada +++++++++++++++++++++");
         transmitionsService.disconect(session);
     }
 }

@@ -45,11 +45,11 @@ public class Transmition {
                 .findFirst().get();
     }
 
-    public Boolean getIn(Connection connection) {
+    public Boolean signIn(Connection connection) {
         return connections.add(connection);
     }
 
-    public Boolean getOut(Connection connection) {
+    public Boolean signOut(Connection connection) {
         return connections.remove(connection);
     }
 
@@ -57,4 +57,7 @@ public class Transmition {
         return connections;
     }
 
+    public String getTransmitionCode() {
+        return transmitionCode;
+    }
 }

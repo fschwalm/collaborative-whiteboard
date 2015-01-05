@@ -4,6 +4,7 @@ import br.org.tutty.collaborative_whiteboard.transmition.model.Connection;
 import br.org.tutty.collaborative_whiteboard.transmition.model.Transmition;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by drferreira on 18/12/14.
  */
-@javax.enterprise.context.ApplicationScoped
+@ApplicationScoped
 public class TransmitionContext implements Serializable {
     private List<Transmition> transmitions;
 
@@ -26,8 +27,12 @@ public class TransmitionContext implements Serializable {
     public void start(String transmitionCode, HttpSession httpSession, Session socketSession) throws ConnectException {
         try{
             Connection connection = new Connection(socketSession, httpSession);
-            addTransmition(transmitionCode, connection);
 
+            if(isActive(transmitionCode)){
+                signInExistingTransmission(socketSession, connection);
+            }else {
+                signInNewTransmission(transmitionCode, connection);
+            }
         }catch (Exception e){
             throw new ConnectException();
         }
@@ -39,6 +44,11 @@ public class TransmitionContext implements Serializable {
                 .removeIf(connection -> connection.getSocketSession().getId().equals(socketSession.getId()));
     }
 
+    public Boolean isActive(String transmitionCode) {
+        return transmitions.stream()
+                .anyMatch(transmition -> transmition.getTransmitionCode().equals(transmitionCode));
+    }
+
     public Transmition fetch(Session socketSession) {
         return transmitions.stream()
                 .filter(transmition -> transmition.isParticipating(socketSession))
@@ -46,9 +56,14 @@ public class TransmitionContext implements Serializable {
                 .get();
     }
 
-    private void addTransmition(String transmitionCode, Connection connection){
+    private void signInExistingTransmission(Session socketSession, Connection connection){
+        Transmition transmition = fetch(socketSession);
+        transmition.signIn(connection);
+    }
+
+    private void signInNewTransmission(String transmitionCode, Connection connection){
         Transmition transmition = new Transmition(transmitionCode);
-        transmition.getIn(connection);
+        transmition.signIn(connection);
         transmitions.add(transmition);
     }
 }

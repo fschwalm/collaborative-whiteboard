@@ -1,8 +1,10 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
+import br.org.tutty.collaborative_whiteboard.cw.context.SelectedDataContext;
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
 import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
 import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
+import br.org.tutty.collaborative_whiteboard.cw.model.Project;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
 import br.org.tutty.collaborative_whiteboard.transmition.model.*;
 import br.org.tutty.collaborative_whiteboard.transmition.model.messages.Message;
@@ -11,6 +13,7 @@ import br.org.tutty.collaborative_whiteboard.transmition.model.messages.OnlineMe
 import br.org.tutty.collaborative_whiteboard.transmition.model.messages.UserMessage;
 
 import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
@@ -21,6 +24,7 @@ import java.net.ConnectException;
 /**
  * Created by drferreira on 27/11/14.
  */
+@Stateless
 @Local(TransmitionsService.class)
 public class TransmitionsServiceBean implements TransmitionsService, Serializable {
 
@@ -28,17 +32,23 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     private UserContext userContext;
 
     @Inject
+    private SelectedDataContext selectedDataContext;
+
+    @Inject
     private TransmitionContext transmitionContext;
 
     @Override
     public void connect(Session socketSessionSender, HttpSession httpSession) {
         try {
-            transmitionContext.start("CODE", httpSession, socketSessionSender);
+            Project selectedProject = selectedDataContext.getSelectedProject();
+            String identificationCode = selectedProject.getIdentificationCode();
+
+            transmitionContext.start(identificationCode, httpSession, socketSessionSender);
 
             OnlineMessage onlineMessage = new OnlineMessage();
             sendMessage(onlineMessage, socketSessionSender);
 
-        } catch (ConnectException e) {
+        } catch (ConnectException | SelectedDataContext.UnselectedException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
             sendMessage(offlineMessage, socketSessionSender);
         }
