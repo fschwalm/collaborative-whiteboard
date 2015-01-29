@@ -1,0 +1,18 @@
+package transmition.messages;
+
+/**
+ * Created by drferreira on 16/12/14.
+ */
+public class StatusMessage extends Message{
+    private String status;
+
+    public StatusMessage(String status) {
+        super(TypeMessage.STATUS_MESSAGE);
+        this.status = status;
+    }
+
+    @Override
+    public void aditionalWrite() {
+        write("STATUS", status);
+    }
+}

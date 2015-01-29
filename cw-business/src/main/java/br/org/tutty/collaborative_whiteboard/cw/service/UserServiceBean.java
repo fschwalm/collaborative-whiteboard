@@ -1,28 +1,26 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.EncryptedException;
-import br.org.tutty.collaborative_whiteboard.cw.model.User;
+import br.org.tutty.collaborative_whiteboard.UserDao;
+import cw.exceptions.DataNotFoundException;
+import cw.entities.User;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.io.Serializable;
 
 /**
  * Created by drferreira on 16/12/14.
  */
+@Stateless
 @Local(UserService.class)
 public class UserServiceBean implements UserService, Serializable {
 
+    @Inject
+    private UserDao userDao;
+
     @Override
     public User fetch(String email) throws DataNotFoundException {
-        try {
-            User user = new User
-                    (email, "password", "Joao");
-            return user;
-        } catch (EncryptedException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return userDao.fetch(email);
     }
 }

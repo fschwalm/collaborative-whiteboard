@@ -1,14 +1,15 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
+import cw.entities.LoggedUser;
+import cw.exceptions.DataNotFoundException;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
-import br.org.tutty.collaborative_whiteboard.transmition.model.*;
-import br.org.tutty.collaborative_whiteboard.transmition.model.messages.Message;
-import br.org.tutty.collaborative_whiteboard.transmition.model.messages.OfflineMessage;
-import br.org.tutty.collaborative_whiteboard.transmition.model.messages.OnlineMessage;
-import br.org.tutty.collaborative_whiteboard.transmition.model.messages.UserMessage;
+import transmition.Connection;
+import transmition.Transmition;
+import transmition.messages.Message;
+import transmition.messages.OfflineMessage;
+import transmition.messages.OnlineMessage;
+import transmition.messages.UserMessage;
 
 import javax.ejb.Local;
 import javax.inject.Inject;

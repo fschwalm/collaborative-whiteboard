@@ -40,6 +40,10 @@
                             <groupId>br.org.tutty.collaborative-whiteboard</groupId>
                             <artifactId>cw-business</artifactId>
                         </ejbModule>
+                        <ejbModule>
+                            <groupId>br.org.tutty.collaborative-whiteboard</groupId>
+                            <artifactId>cw-persistence</artifactId>
+                        </ejbModule>
                     </modules>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
@@ -56,6 +60,12 @@
         </dependency>
         <dependency>
             <groupId>br.org.tutty.collaborative-whiteboard</groupId>
+            <artifactId>cw-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>br.org.tutty.collaborative-whiteboard</groupId>
             <artifactId>cw-web</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>war</type>
@@ -63,6 +73,12 @@
         <dependency>
             <groupId>br.org.tutty.collaborative-whiteboard</groupId>
             <artifactId>cw-business</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>br.org.tutty.collaborative-whiteboard</groupId>
+            <artifactId>cw-persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>

@@ -1,7 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.transmition.context;
 
-import br.org.tutty.collaborative_whiteboard.transmition.model.Connection;
-import br.org.tutty.collaborative_whiteboard.transmition.model.Transmition;
+
+import transmition.Connection;
+import transmition.Transmition;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;

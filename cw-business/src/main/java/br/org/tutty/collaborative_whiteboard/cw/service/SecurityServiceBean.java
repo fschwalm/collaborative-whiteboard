@@ -1,12 +1,12 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.AuthenticationException;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException;
-import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
-import br.org.tutty.collaborative_whiteboard.cw.model.Security;
-import br.org.tutty.collaborative_whiteboard.cw.model.User;
+import cw.dtos.Security;
+import cw.entities.LoggedUser;
+import cw.entities.User;
+import cw.exceptions.AuthenticationException;
+import cw.exceptions.DataNotFoundException;
+import cw.exceptions.LoginException;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -28,12 +28,12 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 
     /**
      * Verifica se existe um usuário com o email informado.
-     * Caso não exista {@link br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException}
-     * composto por {@link br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException}.
+     * Caso não exista {@link cw.exceptions.LoginException}
+     * composto por {@link cw.exceptions.DataNotFoundException}.
      *
      * Sera feita a comparação entre senhas (valores já encriptados). Caso não seja positiva a igualdade
-     * {@link br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException} composto por
-     * {@link br.org.tutty.collaborative_whiteboard.cw.exceptions.AuthenticationException}
+     * {@link cw.exceptions.LoginException} composto por
+     * {@link cw.exceptions.AuthenticationException}
      *
      * Após as devidas verificações o resultado positivo será adicionado ao contexto para consulta posterior.
      * @param security
@@ -43,11 +43,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     public void login(Security security) throws LoginException {
         try{
             User foundUser = userService.fetch(security.getEmail());
-
-            if(! security.checkPassword(foundUser.getPassword())){
-                throw new AuthenticationException();
-            }
-
+            security.checkAuthentication(foundUser);
             userContext.addUser(new LoggedUser(foundUser, security.getHttpSession()));
 
         }catch (DataNotFoundException | AuthenticationException exception){

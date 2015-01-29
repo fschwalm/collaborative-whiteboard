@@ -1,7 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException;
-import br.org.tutty.collaborative_whiteboard.cw.model.Security;
+import cw.dtos.Security;
+import cw.exceptions.LoginException;
 
 import javax.servlet.http.HttpSession;
 

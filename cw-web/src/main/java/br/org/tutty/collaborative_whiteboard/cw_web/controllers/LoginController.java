@@ -1,12 +1,10 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.EncryptedException;
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.LoginException;
-import br.org.tutty.collaborative_whiteboard.cw.model.Security;
 import br.org.tutty.collaborative_whiteboard.cw.service.SecurityService;
+import cw.dtos.Security;
+import cw.exceptions.LoginException;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,12 +29,13 @@ public class LoginController extends GenericController {
             return HOME_PAGE;
 
         } catch (LoginException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao realizar login.", null));
-            return "";
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "login.error");
+            return RECOVERY_PAGE;
+
         }catch (Exception exception){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Erro inesperado."));
+            showGlobalMessage(FacesMessage.SEVERITY_FATAL, "unexpected.error", "unexpected.error.detail");
             exception.printStackTrace();
-            return "";
+            return RECOVERY_PAGE;
         }
     }
 

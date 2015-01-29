@@ -1,12 +1,12 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
-import br.org.tutty.collaborative_whiteboard.cw.exceptions.DataNotFoundException;
-import br.org.tutty.collaborative_whiteboard.cw.model.LoggedUser;
+import cw.entities.LoggedUser;
+import cw.exceptions.DataNotFoundException;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by drferreira on 12/12/14.

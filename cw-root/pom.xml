@@ -17,5 +17,11 @@
         <module>
             ../cw-web
         </module>
+        <module>
+            ../cw-persistence
+        </module>
+        <module>
+            ../cw-model
+        </module>
     </modules>
 </project>
