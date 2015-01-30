@@ -1,6 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
-import cw.entities.LoggedUser;
+import cw.dtos.LoggedUser;
 import cw.exceptions.DataNotFoundException;
 
 import javax.annotation.PostConstruct;

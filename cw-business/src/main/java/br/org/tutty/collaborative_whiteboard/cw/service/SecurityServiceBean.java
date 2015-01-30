@@ -2,7 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw.service;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
 import cw.dtos.Security;
-import cw.entities.LoggedUser;
+import cw.dtos.LoggedUser;
 import cw.entities.User;
 import cw.exceptions.AuthenticationException;
 import cw.exceptions.DataNotFoundException;
@@ -26,19 +26,6 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     @Inject
     private UserService userService;
 
-    /**
-     * Verifica se existe um usuário com o email informado.
-     * Caso não exista {@link cw.exceptions.LoginException}
-     * composto por {@link cw.exceptions.DataNotFoundException}.
-     *
-     * Sera feita a comparação entre senhas (valores já encriptados). Caso não seja positiva a igualdade
-     * {@link cw.exceptions.LoginException} composto por
-     * {@link cw.exceptions.AuthenticationException}
-     *
-     * Após as devidas verificações o resultado positivo será adicionado ao contexto para consulta posterior.
-     * @param security
-     * @throws LoginException
-     */
     @Override
     public void login(Security security) throws LoginException {
         try{

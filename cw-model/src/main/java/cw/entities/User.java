@@ -10,23 +10,31 @@ import java.util.List;
  * Created by drferreira on 12/12/14.
  */
 @Entity
-@Table(name = "user", catalog = "cw", schema = "cw")
+@Table(name = "user", catalog = "cw")
 public class User {
 
-    @Column
+    @Id
+    private Long id;
+
+    @Column(nullable = false)
     private String email;
-    @Column
+
+    @Column(nullable = false)
     private String password;
-    @Column
+
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @ManyToMany
     private List<Project> projects;
 
     public User(String email, String password, String name) throws EncryptedException {
         this.email = email;
         this.password = EncryptorResources.encrypt(password);
         this.name = name;
+    }
+
+    protected User() {
     }
 
     public String getName() {

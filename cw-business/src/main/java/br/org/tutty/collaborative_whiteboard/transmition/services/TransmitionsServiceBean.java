@@ -1,7 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
-import cw.entities.LoggedUser;
+import cw.dtos.LoggedUser;
 import cw.exceptions.DataNotFoundException;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
 import transmition.Connection;

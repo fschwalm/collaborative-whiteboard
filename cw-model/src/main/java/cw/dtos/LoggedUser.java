@@ -1,4 +1,6 @@
-package cw.entities;
+package cw.dtos;
+
+import cw.entities.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;

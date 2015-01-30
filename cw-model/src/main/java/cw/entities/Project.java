@@ -1,22 +1,26 @@
 package cw.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by drferreira on 19/12/14.
  */
 @Entity
-@Table(name = "project", catalog = "cw", schema = "cw")
+@Table(name = "project", catalog = "cw")
 public class Project implements Serializable{
 
     @Id
-    private String id;
+    private Long projectId;
 
     @Transient
     private String identificationCode;
+
+    @ManyToOne
+    @NotNull
+    private User owner;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,8 +33,10 @@ public class Project implements Serializable{
         this.nameProject = nameProject;
     }
 
-    public String getId() {
-        return id;
+    protected Project() {}
+
+    public Long getId() {
+        return projectId;
     }
 
     public Date getCreationDate() {
