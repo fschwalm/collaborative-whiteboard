@@ -37,4 +37,9 @@ public class UserContext implements Serializable {
 
         throw new DataNotFoundException();
     }
+
+    public int countLoggedUsers(){
+        return loggedUsers.size();
+    }
+
 }
