@@ -34,12 +34,13 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     @Override
     public void connect(Session socketSessionSender, HttpSession httpSession) {
         try {
-            transmitionContext.start("CODE", httpSession, socketSessionSender);
+            LoggedUser loggedUser = userContext.fetch(httpSession.getId());
+            transmitionContext.start(loggedUser, httpSession, socketSessionSender);
 
             OnlineMessage onlineMessage = new OnlineMessage();
             sendMessage(onlineMessage, socketSessionSender);
 
-        } catch (ConnectException e) {
+        } catch (ConnectException | DataNotFoundException e) {
             OfflineMessage offlineMessage = new OfflineMessage();
             sendMessage(offlineMessage, socketSessionSender);
         }

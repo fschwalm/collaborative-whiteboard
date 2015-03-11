@@ -4,6 +4,7 @@ import cw.dtos.EncryptorResources;
 import cw.exceptions.EncryptedException;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user", catalog = "cw")
-public class User {
+public class User implements Serializable{
 
     @Id
     private Long id;

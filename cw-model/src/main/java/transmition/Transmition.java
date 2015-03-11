@@ -1,5 +1,8 @@
 package transmition;
 
+import cw.dtos.LoggedUser;
+import cw.entities.User;
+
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.util.*;
@@ -9,23 +12,12 @@ import java.util.function.Predicate;
  * Created by drferreira on 18/12/14.
  */
 public class Transmition {
-    private String transmitionCode;
+    private LoggedUser loggedUser;
     private List<Connection> connections;
 
-    public Transmition(String transmitionCode) {
-        this.transmitionCode = transmitionCode;
+    public Transmition(LoggedUser loggedUser) {
+        this.loggedUser = loggedUser;
         this.connections = new ArrayList<>();
-    }
-
-    public Boolean isParticipating(HttpSession httpSession) {
-        Predicate<Connection> predicate = con -> con.getHttpSessionId().equals(httpSession.getId());
-
-        try {
-            connections.stream().filter(predicate).findFirst().get();
-            return true;
-        } catch (NoSuchElementException exception) {
-            return false;
-        }
     }
 
     public Boolean isParticipating(Session socketSession) {

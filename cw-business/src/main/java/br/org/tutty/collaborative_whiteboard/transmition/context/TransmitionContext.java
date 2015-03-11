@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.transmition.context;
 
 
+import cw.dtos.LoggedUser;
+import cw.entities.User;
 import transmition.Connection;
 import transmition.Transmition;
 
@@ -24,10 +26,10 @@ public class TransmitionContext implements Serializable {
         this.transmitions = new ArrayList<>();
     }
 
-    public void start(String transmitionCode, HttpSession httpSession, Session socketSession) throws ConnectException {
+    public void start(LoggedUser loggedUser, HttpSession httpSession, Session socketSession) throws ConnectException {
         try{
             Connection connection = new Connection(socketSession, httpSession);
-            addTransmition(transmitionCode, connection);
+            addTransmition(loggedUser, connection);
 
         }catch (Exception e){
             throw new ConnectException();
@@ -47,8 +49,8 @@ public class TransmitionContext implements Serializable {
                 .get();
     }
 
-    private void addTransmition(String transmitionCode, Connection connection){
-        Transmition transmition = new Transmition(transmitionCode);
+    private void addTransmition(LoggedUser loggedUser, Connection connection){
+        Transmition transmition = new Transmition(loggedUser);
         transmition.getIn(connection);
         transmitions.add(transmition);
     }
