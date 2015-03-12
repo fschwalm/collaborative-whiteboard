@@ -6,6 +6,7 @@ import cw.entities.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,9 @@ import java.util.List;
 public class Story implements Serializable{
     @Id
     private String code;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     @ManyToOne
     private User author;
@@ -35,6 +39,7 @@ public class Story implements Serializable{
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
+        this.creationDate = new Date();
     }
 
     public String getCode() {
@@ -83,5 +88,9 @@ public class Story implements Serializable{
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
     }
 }

@@ -2,7 +2,10 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import cw.entities.Project;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
+import cw.exceptions.EncryptedException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -24,10 +27,28 @@ public class BacklogController implements Serializable {
     private List<Story> stories;
     private Story selectedStory;
 
+    private Integer priorityControl;
 
     @PostConstruct
-    public void setUp(){
+    public void setUp() throws EncryptedException {
+        initPriorityCounter();
+        User user = new User("email@email", "senha", "Joao");
+        Project project = new Project("Linda");
+
         stories = fetchStories();
+        Story story = new Story(user,project);
+        story.setCode("SMK01");
+        stories.add(story);
+        story.setCode("SMK02");
+        stories.add(story);
+        story.setCode("SMK03");
+        stories.add(story);
+        story.setCode("SMK04");
+        stories.add(story);
+    }
+
+    private void initPriorityCounter(){
+        priorityControl = 1;
     }
 
     public List<Story> fetchStories(){
@@ -39,16 +60,12 @@ public class BacklogController implements Serializable {
         }
     }
 
-    public void createStory(){
-
-    }
-
-    public void removeStory(){
-
-    }
-
     public void orderBacklog(){
 
+    }
+
+    public Integer getPriority(){
+        return priorityControl++;
     }
 
     public List<Story> getStories() {

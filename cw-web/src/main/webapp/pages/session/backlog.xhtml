@@ -6,10 +6,55 @@
 
     <ui:define name="pageContent">
         <ui:include src="../components/chat.xhtml"/>
+        <h:form prependId="false">
+            <p:commandButton update="storyDetailPanel" icon="ui-icon-search" value="Abrir"
+                             oncomplete="PF('storyDetail').show();"/>
 
-        <p:orderList value="#{backlogController.stories}" var="selectedStory" itemValue="#{backlogController.selectedStory}">
-            <f:facet name="caption">Storias</f:facet>
-        </p:orderList>
+            <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
+                         rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}">
+                <p:ajax event="rowReorder" listener="#{backlogController.orderBacklog}"/>
+
+                <p:column selectionMode="single" style="width:16px;text-align:center"/>
+
+                <f:facet name="header">
+                    Backlog list
+                </f:facet>
+                <p:column headerText="Prioridade">
+                    <h:outputText value="#{backlogController.getPriority()}"/>
+                </p:column>
+                <p:column headerText="Projeto">
+                    <h:outputText value="#{story.project.nameProject}"/>
+                </p:column>
+                <p:column headerText="Codigo Tarefa">
+                    <h:outputText value="#{story.code}"/>
+                </p:column>
+                <p:column headerText="Assunto">
+                    <h:outputText value="#{story.subject}"/>
+                </p:column>
+                <p:column headerText="Autor">
+                    <h:outputText value="#{story.author.name}"/>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog widgetVar="storyDetail" modal="true" resizable="false" height="800" width="600"
+                      appendToBody="false">
+                <p:outputPanel id="storyDetailPanel">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Data de Criação:" for="creationDate"/>
+                        <h:outputText id="creationDate" value="#{backlogController.selectedStory.creationDate}"/>
+
+                        <h:outputLabel value="Codigo:" for="code"/>
+                        <h:outputText id="code" value="#{backlogController.selectedStory.code}"/>
+
+                        <h:outputLabel value="Autor:" for="author"/>
+                        <h:outputText id="author" value="#{backlogController.selectedStory.author.name}"/>
+
+                        <h:outputLabel value="Assunto:" for="subject"/>
+                        <h:outputText id="subject" value="#{backlogController.selectedStory.subject}"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>
