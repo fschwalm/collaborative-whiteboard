@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.Project;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
@@ -23,48 +24,48 @@ import java.util.List;
 public class BacklogController implements Serializable {
     @Inject
     private BacklogManagerService backlogManagerService;
+    @Inject
+    private SessionContext sessionContext;
 
     private List<Story> stories;
     private Story selectedStory;
-
     private Integer priorityControl;
 
-    @PostConstruct
-    public void setUp() throws EncryptedException {
-        initPriorityCounter();
-        User user = new User("email@email", "senha", "Joao");
-        Project project = new Project("Linda");
+    private Project projectForNewStory;
+    private String subjectForNewStory;
+    private String descriptionForNewStory;
 
+
+    @PostConstruct
+    public void setUp() throws EncryptedException, DataNotFoundException {
+        initPriorityCounter();
         stories = fetchStories();
-        Story story = new Story(user,project);
-        story.setCode("SMK01");
-        stories.add(story);
-        story.setCode("SMK02");
-        stories.add(story);
-        story.setCode("SMK03");
-        stories.add(story);
-        story.setCode("SMK04");
-        stories.add(story);
     }
 
-    private void initPriorityCounter(){
+    private void initPriorityCounter() {
         priorityControl = 1;
     }
 
-    public List<Story> fetchStories(){
-        try {
-            return backlogManagerService.fetchAllStories();
-
-        } catch (DataNotFoundException e) {
-            return new ArrayList<>();
-        }
+    public List<Story> fetchStories() throws DataNotFoundException {
+        return backlogManagerService.fetchAllStories();
     }
 
-    public void orderBacklog(){
+    public List<Project> fetchProjects() {
+        // TODO DUMMY
+        List<Project> projects = new ArrayList<>();
+        projects.add(new Project("LINDA"));
+        projects.add(new Project("ELSA"));
+        projects.add(new Project("CCEM"));
+
+        return projects;
+    }
+
+
+    public void orderBacklog() {
 
     }
 
-    public Integer getPriority(){
+    public Integer getPriority() {
         return priorityControl++;
     }
 
@@ -82,5 +83,29 @@ public class BacklogController implements Serializable {
 
     public void setSelectedStory(Story selectedStory) {
         this.selectedStory = selectedStory;
+    }
+
+    public void setProjectForNewStory(Project projectForNewStory) {
+        this.projectForNewStory = projectForNewStory;
+    }
+
+    public Project getProjectForNewStory() {
+        return projectForNewStory;
+    }
+
+    public String getSubjectForNewStory() {
+        return subjectForNewStory;
+    }
+
+    public void setSubjectForNewStory(String subjectForNewStory) {
+        this.subjectForNewStory = subjectForNewStory;
+    }
+
+    public String getDescriptionForNewStory() {
+        return descriptionForNewStory;
+    }
+
+    public void setDescriptionForNewStory(String descriptionForNewStory) {
+        this.descriptionForNewStory = descriptionForNewStory;
     }
 }

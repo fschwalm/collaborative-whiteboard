@@ -1,13 +1,13 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
+import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
 import cw.dtos.LoggedUser;
 import cw.dtos.Security;
 import cw.entities.User;
 import cw.exceptions.AuthenticationException;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.LoginException;
-import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,10 @@ public class SecurityServiceBeanTest {
     private SecurityServiceBean securityServiceBean;
 
     @Mock
-    private UserContext userContext;
+    private UserGlobalContext userGlobalContext;
+
+    @Mock
+    private SessionContext sessionContext;
 
     @Mock
     private UserServiceBean userServiceBean;
@@ -80,7 +83,7 @@ public class SecurityServiceBeanTest {
 
         securityServiceBean.login(security);
 
-        Mockito.verify(userContext).addUser(Matchers.any());
+        Mockito.verify(userGlobalContext).addUser(Matchers.any());
     }
 
     @Test(expected = LoginException.class)
@@ -104,31 +107,31 @@ public class SecurityServiceBeanTest {
     public void logoutShouldFetchSpecificUser() throws DataNotFoundException {
         String httpSessionId = "httpSessionId";
 
-        Mockito.when(userContext.fetch(httpSessionId)).thenReturn(loggedUser);
+        Mockito.when(userGlobalContext.fetch(httpSessionId)).thenReturn(loggedUser);
         Mockito.when(httpSession.getId()).thenReturn(httpSessionId);
 
         securityServiceBean.logout(httpSession);
 
-        Mockito.verify(userContext).fetch(httpSessionId);
+        Mockito.verify(userGlobalContext).fetch(httpSessionId);
     }
 
     @Test
     public void logoutShouldRemoveUserInContext() throws DataNotFoundException {
         String httpSessionId = "httpSessionId";
 
-        Mockito.when(userContext.fetch(httpSessionId)).thenReturn(loggedUser);
+        Mockito.when(userGlobalContext.fetch(httpSessionId)).thenReturn(loggedUser);
         Mockito.when(httpSession.getId()).thenReturn(httpSessionId);
 
         securityServiceBean.logout(httpSession);
 
-        Mockito.verify(userContext).removeUser(loggedUser);
+        Mockito.verify(userGlobalContext).removeUser(loggedUser);
     }
 
     @Test
     public void logoutShouldCatchAndPrintDataNotFoundExceptionWhenDontHaveUserInContext() throws DataNotFoundException {
         String httpSessionId = "httpSessionId";
 
-        Mockito.when(userContext.fetch(httpSessionId)).thenThrow(DataNotFoundException.class);
+        Mockito.when(userGlobalContext.fetch(httpSessionId)).thenThrow(DataNotFoundException.class);
         Mockito.when(httpSession.getId()).thenReturn(httpSessionId);
 
         securityServiceBean.logout(httpSession);
@@ -139,7 +142,7 @@ public class SecurityServiceBeanTest {
         String httpSessionId = "httpSessionId";
 
         Mockito.when(httpSession.getId()).thenReturn(httpSessionId);
-        Mockito.when(userContext.fetch(httpSessionId)).thenReturn(loggedUser);
+        Mockito.when(userGlobalContext.fetch(httpSessionId)).thenReturn(loggedUser);
 
         assertTrue(securityServiceBean.isLogged(httpSession));
     }
@@ -149,7 +152,7 @@ public class SecurityServiceBeanTest {
         String httpSessionId = "httpSessionId";
 
         Mockito.when(httpSession.getId()).thenReturn(httpSessionId);
-        Mockito.when(userContext.fetch(httpSessionId)).thenThrow(DataNotFoundException.class);
+        Mockito.when(userGlobalContext.fetch(httpSessionId)).thenThrow(DataNotFoundException.class);
 
         assertFalse(securityServiceBean.isLogged(httpSession));
     }

@@ -42,6 +42,11 @@ public class Story implements Serializable{
         this.creationDate = new Date();
     }
 
+    public Story(User author) {
+        this.author = author;
+        this.creationDate = new Date();
+    }
+
     public String getCode() {
         return code;
     }

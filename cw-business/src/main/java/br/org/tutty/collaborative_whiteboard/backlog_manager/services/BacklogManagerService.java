@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface BacklogManagerService {
     List<Story> fetchAllStories() throws DataNotFoundException;
+
+    Story getEmptyStory();
 }

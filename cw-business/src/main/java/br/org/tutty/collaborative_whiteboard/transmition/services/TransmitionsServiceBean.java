@@ -1,6 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.transmition.services;
 
-import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
+import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
 import cw.dtos.LoggedUser;
 import cw.exceptions.DataNotFoundException;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
@@ -26,7 +26,7 @@ import java.net.ConnectException;
 public class TransmitionsServiceBean implements TransmitionsService, Serializable {
 
     @Inject
-    private UserContext userContext;
+    private UserGlobalContext userGlobalContext;
 
     @Inject
     private TransmitionContext transmitionContext;
@@ -34,7 +34,7 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     @Override
     public void connect(Session socketSessionSender, HttpSession httpSession) {
         try {
-            LoggedUser loggedUser = userContext.fetch(httpSession.getId());
+            LoggedUser loggedUser = userGlobalContext.fetch(httpSession.getId());
             transmitionContext.start(loggedUser, httpSession, socketSessionSender);
 
             OnlineMessage onlineMessage = new OnlineMessage();
@@ -51,7 +51,7 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         try {
             Transmition transmition = transmitionContext.fetch(socketSessionSender);
             Connection connection = transmition.fetchConnection(socketSessionSender);
-            LoggedUser loggedUser = userContext.fetch(connection.getHttpSessionId());
+            LoggedUser loggedUser = userGlobalContext.fetch(connection.getHttpSessionId());
             UserMessage userMessage = new UserMessage(loggedUser.getUser().getName(), messageData);
 
             broadcast(userMessage, socketSessionSender);

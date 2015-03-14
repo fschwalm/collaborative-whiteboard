@@ -13,9 +13,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * Created by drferreira on 06/02/15.
  */
 @RunWith(PowerMockRunner.class)
-public class UserContextTest {
+public class UserGlobalContextTest {
 
-    private UserContext userContext;
+    private UserGlobalContext userGlobalContext;
 
     @Mock
     private LoggedUser loggedUser;
@@ -25,22 +25,22 @@ public class UserContextTest {
 
     @Test
     public void addUserShouldAddUserToList(){
-        userContext = new UserContext();
-        userContext.setUp();
+        userGlobalContext = new UserGlobalContext();
+        userGlobalContext.setUp();
 
-        userContext.addUser(loggedUser);
-        Assert.assertEquals(1, userContext.countLoggedUsers());
+        userGlobalContext.addUser(loggedUser);
+        Assert.assertEquals(1, userGlobalContext.countLoggedUsers());
     }
 
     @Test
     public void removeUserShouldRemoveUserToList(){
-        userContext = new UserContext();
-        userContext.setUp();
+        userGlobalContext = new UserGlobalContext();
+        userGlobalContext.setUp();
 
-        userContext.addUser(loggedUser);
-        userContext.removeUser(loggedUser);
+        userGlobalContext.addUser(loggedUser);
+        userGlobalContext.removeUser(loggedUser);
 
-        Assert.assertEquals(0, userContext.countLoggedUsers());
+        Assert.assertEquals(0, userGlobalContext.countLoggedUsers());
     }
 
     @Test
@@ -51,16 +51,16 @@ public class UserContextTest {
         Mockito.when(loggedUser.getHttpSessionId()).thenReturn(idLoggedUser);
         Mockito.when(otherLoggedUser.getHttpSessionId()).thenReturn(idOtherLoggedUser);
 
-        userContext = new UserContext();
-        userContext.setUp();
+        userGlobalContext = new UserGlobalContext();
+        userGlobalContext.setUp();
 
-        userContext.addUser(loggedUser);
-        userContext.addUser(otherLoggedUser);
+        userGlobalContext.addUser(loggedUser);
+        userGlobalContext.addUser(otherLoggedUser);
 
-        LoggedUser loggedFounded = userContext.fetch(idLoggedUser);
+        LoggedUser loggedFounded = userGlobalContext.fetch(idLoggedUser);
         Assert.assertTrue(loggedFounded.getHttpSessionId().equals(idLoggedUser));
 
-        loggedFounded = userContext.fetch(idOtherLoggedUser);
+        loggedFounded = userGlobalContext.fetch(idOtherLoggedUser);
         Assert.assertTrue(loggedFounded.getHttpSessionId().equals(idOtherLoggedUser));
     }
 
@@ -68,22 +68,22 @@ public class UserContextTest {
     public void fetchShouldThrowDataNotFoundWhenDontHaveSpecificUser() throws DataNotFoundException {
         String idLoggedUser = "loggedUser";
 
-        userContext = new UserContext();
-        userContext.setUp();
+        userGlobalContext = new UserGlobalContext();
+        userGlobalContext.setUp();
 
-        userContext.fetch(idLoggedUser);
+        userGlobalContext.fetch(idLoggedUser);
     }
 
     @Test
     public void countLoggedUsers(){
-        userContext = new UserContext();
-        userContext.setUp();
+        userGlobalContext = new UserGlobalContext();
+        userGlobalContext.setUp();
 
-        userContext.addUser(loggedUser);
-        userContext.addUser(loggedUser);
-        userContext.addUser(loggedUser);
-        userContext.addUser(loggedUser);
+        userGlobalContext.addUser(loggedUser);
+        userGlobalContext.addUser(loggedUser);
+        userGlobalContext.addUser(loggedUser);
+        userGlobalContext.addUser(loggedUser);
 
-        Assert.assertEquals(4, userContext.countLoggedUsers());
+        Assert.assertEquals(4, userGlobalContext.countLoggedUsers());
     }
 }

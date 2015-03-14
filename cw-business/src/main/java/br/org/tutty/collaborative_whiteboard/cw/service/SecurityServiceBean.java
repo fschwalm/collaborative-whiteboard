@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import br.org.tutty.collaborative_whiteboard.cw.context.UserContext;
+import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
 import cw.dtos.Security;
 import cw.dtos.LoggedUser;
 import cw.entities.User;
@@ -21,7 +22,10 @@ import java.io.Serializable;
 @Stateless
 public class SecurityServiceBean implements SecurityService, Serializable {
     @Inject
-    private UserContext userContext;
+    private UserGlobalContext userGlobalContext;
+
+    @Inject
+    private SessionContext sessionContext;
 
     @Inject
     private UserService userService;
@@ -31,7 +35,11 @@ public class SecurityServiceBean implements SecurityService, Serializable {
         try{
             User foundUser = userService.fetch(security.getEmail());
             security.checkAuthentication(foundUser);
-            userContext.addUser(new LoggedUser(foundUser, security.getHttpSession()));
+
+            LoggedUser loggedUser = new LoggedUser(foundUser, security.getHttpSession());
+
+            userGlobalContext.addUser(loggedUser);
+            sessionContext.setLoggedUser(loggedUser);
 
         }catch (DataNotFoundException | AuthenticationException exception){
             throw new LoginException(exception);
@@ -41,8 +49,8 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     @Override
     public void logout(HttpSession httpSession) {
         try {
-            LoggedUser loggedUser = userContext.fetch(httpSession.getId());
-            userContext.removeUser(loggedUser);
+            LoggedUser loggedUser = userGlobalContext.fetch(httpSession.getId());
+            userGlobalContext.removeUser(loggedUser);
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -52,7 +60,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     @Override
     public Boolean isLogged(HttpSession httpSession) {
         try {
-            userContext.fetch(httpSession.getId());
+            userGlobalContext.fetch(httpSession.getId());
             return true;
 
         } catch (DataNotFoundException e) {

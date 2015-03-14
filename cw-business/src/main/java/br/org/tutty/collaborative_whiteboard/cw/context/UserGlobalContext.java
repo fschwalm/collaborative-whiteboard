@@ -12,7 +12,7 @@ import java.util.List;
  * Created by drferreira on 12/12/14.
  */
 @javax.enterprise.context.ApplicationScoped
-public class UserContext implements Serializable {
+public class UserGlobalContext implements Serializable {
     private List<LoggedUser> loggedUsers;
 
     @PostConstruct
