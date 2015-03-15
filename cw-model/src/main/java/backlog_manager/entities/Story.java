@@ -30,6 +30,9 @@ public class Story implements Serializable{
     @Column(nullable = false)
     private String subject;
 
+    @Column(nullable = false)
+    private String description;
+
     @OneToMany(mappedBy = "story")
     private List<Task> tasks;
 
@@ -97,5 +100,13 @@ public class Story implements Serializable{
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

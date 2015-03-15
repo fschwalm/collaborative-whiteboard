@@ -7,76 +7,93 @@
     <ui:define name="pageContent">
         <ui:include src="../components/chat.xhtml"/>
 
-        <h:form prependId="false">
-            <p:outputPanel id="createStoryPanel">
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="Projeto:" for="projectNewStory"/>
-                    <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}">
-                        <f:selectItems value="#{backlogController.fetchProjects()}"/>
-                    </p:selectOneMenu>
+        <p:outputPanel>
+            <h:form id="backlogForm" prependId="false">
+                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
+                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}">
+                    <p:ajax event="rowReorder" listener="#{backlogController.orderBacklog}"/>
 
-                    <h:outputLabel value="Assunto:" for="subjecNewStory"/>
-                    <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"/>
+                    <f:facet name="header">
+                        Backlog list
+                    </f:facet>
 
-                    <h:outputLabel value="Assunto:" for="textNewStory"/>
-                    <p:inputTextarea id="textNewStory" value="#{backlogController.descriptionForNewStory}"/>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:form>
+                    <p:column selectionMode="single" style="width:16px;text-align:center" />
 
-        <h:form prependId="false">
-            <p:commandButton icon="ui-icon-search" value="Adicionar"/>
+                    <p:column headerText="Projeto">
+                        <h:outputText value="#{story.project.nameProject}"/>
+                    </p:column>
 
-            <p:commandButton update="storyDetailPanel" icon="ui-icon-search" value="Abrir"
-                             oncomplete="PF('storyDetail').show();" actionListener="#{backlogController.initStory()}"/>
+                    <p:column headerText="Codigo Tarefa">
+                        <h:outputText value="#{story.code}"/>
+                    </p:column>
 
-            <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
-                         rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}">
-                <p:ajax event="rowReorder" listener="#{backlogController.orderBacklog}"/>
+                    <p:column headerText="Assunto">
+                        <h:outputText value="#{story.subject}"/>
+                    </p:column>
 
-                <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                    <p:column headerText="Autor">
+                        <h:outputText value="#{story.author.name}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton icon="ui-icon-search" value="Adicionar"
+                                         oncomplete="PF('storyCreation').show();"/>
 
-                <f:facet name="header">
-                    Backlog list
-                </f:facet>
-                <p:column headerText="Prioridade">
-                    <h:outputText value="#{backlogController.getPriority()}"/>
-                </p:column>
-                <p:column headerText="Projeto">
-                    <h:outputText value="#{story.project.nameProject}"/>
-                </p:column>
-                <p:column headerText="Codigo Tarefa">
-                    <h:outputText value="#{story.code}"/>
-                </p:column>
-                <p:column headerText="Assunto">
-                    <h:outputText value="#{story.subject}"/>
-                </p:column>
-                <p:column headerText="Autor">
-                    <h:outputText value="#{story.author.name}"/>
-                </p:column>
-            </p:dataTable>
+                        <p:commandButton icon="ui-icon-search" value="Abrir"
+                                         oncomplete="PF('storyDetail').show();"/>
 
-            <p:dialog widgetVar="storyDetail" modal="true" resizable="false" height="800" width="600"
-                      appendToBody="false">
-                <p:outputPanel id="storyDetailPanel">
-                    <h:panelGrid columns="2">
-                        <h:outputLabel value="Data de Criação:" for="creationDate"/>
-                        <h:outputText id="creationDate" value="#{backlogController.selectedStory.creationDate}"/>
+                    </f:facet>
+                </p:dataTable>
 
-                        <h:outputLabel value="Codigo:" for="code"/>
-                        <h:outputText id="code" value="#{backlogController.selectedStory.code}"/>
+                <p:dialog widgetVar="storyDetail" modal="true" resizable="false" height="800" width="600"
+                          appendToBody="false">
+                    <p:outputPanel id="storyDetailPanel">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Data de Criação:" for="creationDate"/>
+                            <h:outputText id="creationDate" value="#{backlogController.selectedStory.creationDate}"/>
 
-                        <h:outputLabel value="Autor:" for="author"/>
-                        <h:outputText id="author" value="#{backlogController.selectedStory.author.name}"/>
+                            <h:outputLabel value="Codigo:" for="code"/>
+                            <h:outputText id="code" value="#{backlogController.selectedStory.code}"/>
 
-                        <h:outputLabel value="Assunto:" for="subject"/>
-                        <h:outputText id="subject" value="#{backlogController.selectedStory.subject}"/>
-                    </h:panelGrid>
+                            <h:outputLabel value="Autor:" for="author"/>
+                            <h:outputText id="author" value="#{backlogController.selectedStory.author.name}"/>
+
+                            <h:outputLabel value="Assunto:" for="subject"/>
+                            <h:outputText id="subject" value="#{backlogController.selectedStory.subject}"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+
+            <p:dialog widgetVar="storyCreation" modal="true" resizable="false" height="600" width="600">
+                <p:outputPanel>
+                    <h:form prependId="false">
+                        <p:outputPanel id="createStoryPanel">
+                            <p:selectOneMenu id="projectNewStory"
+                                             value="#{backlogController.projectForNewStory}">
+                                <f:selectItems value="#{backlogController.fetchProjects()}" var="project"
+                                               itemLabel="#{project.nameProject}"/>
+                            </p:selectOneMenu>
+
+
+                            <p:watermark value="Assunto" for="subjecNewStory"/>
+                            <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"
+                                         size="50"/>
+
+
+                            <p:watermark value="Descrição completa da estória ..." for="descriptionNewStory"/>
+                            <p:inputTextarea id="descriptionNewStory"
+                                             value="#{backlogController.descriptionForNewStory}"
+                                             cols="50" rows="20"/>
+
+                            <p:commandButton id="save" value="Salvar" oncomplete="PF('storyCreation').hide()">
+                                <p:ajax update=":backlogForm:backlogTable" listener="#{backlogController.createStory}" />
+                            </p:commandButton>
+                            <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
+                        </p:outputPanel>
+                    </h:form>
                 </p:outputPanel>
             </p:dialog>
-        </h:form>
+        </p:outputPanel>
 
     </ui:define>
-
-
 </ui:composition>

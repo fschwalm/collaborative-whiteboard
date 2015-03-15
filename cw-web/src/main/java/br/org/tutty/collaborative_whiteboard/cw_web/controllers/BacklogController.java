@@ -7,8 +7,10 @@ import cw.entities.Project;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 @Named
 @ViewScoped
-public class BacklogController implements Serializable {
+public class BacklogController extends GenericController implements Serializable {
     @Inject
     private BacklogManagerService backlogManagerService;
     @Inject
@@ -38,17 +40,36 @@ public class BacklogController implements Serializable {
 
     @PostConstruct
     public void setUp() throws EncryptedException, DataNotFoundException {
-        initPriorityCounter();
         stories = fetchStories();
     }
 
-    private void initPriorityCounter() {
-        priorityControl = 1;
+    public List<Story> fetchStories(){
+        try{
+            return backlogManagerService.fetchAllStories();
+        }catch (DataNotFoundException e){
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.not_found");
+            populateEmptyStoryList();
+            return stories;
+        }
     }
 
-    public List<Story> fetchStories() throws DataNotFoundException {
-        return backlogManagerService.fetchAllStories();
+    private void populateEmptyStoryList(){
+        stories = new ArrayList<Story>();
+        Story story = new Story(sessionContext.getLoggedUser().getUser());
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
+        stories.add(story);
     }
+
 
     public List<Project> fetchProjects() {
         // TODO DUMMY
@@ -63,6 +84,16 @@ public class BacklogController implements Serializable {
 
     public void orderBacklog() {
 
+    }
+
+    public void createStory(){
+        // TODO Nao esta preenchendo campos
+        Story story = new Story(sessionContext.getLoggedUser().getUser());
+        story.setProject(projectForNewStory);
+        story.setSubject(subjectForNewStory);
+        story.setDescription(descriptionForNewStory);
+
+        stories.add(story);
     }
 
     public Integer getPriority() {
@@ -83,6 +114,7 @@ public class BacklogController implements Serializable {
 
     public void setSelectedStory(Story selectedStory) {
         this.selectedStory = selectedStory;
+        RequestContext.getCurrentInstance().update("storyDetailPanel");
     }
 
     public void setProjectForNewStory(Project projectForNewStory) {
