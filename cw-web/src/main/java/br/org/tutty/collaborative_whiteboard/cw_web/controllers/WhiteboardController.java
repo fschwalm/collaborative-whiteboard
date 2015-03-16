@@ -16,8 +16,6 @@ public class WhiteboardController extends GenericController implements Serializa
     @Inject
     private UserService userService;
 
-    private static final String GO_TO_BACKLOG = "BACKLOG_PAGE";
-
     public String goToBacklog(){
         return GO_TO_BACKLOG;
     }
@@ -25,9 +23,4 @@ public class WhiteboardController extends GenericController implements Serializa
     public Boolean hasSomeProject(){
         return userService.hasSomeProject();
     }
-
-
-
-
-
 }
