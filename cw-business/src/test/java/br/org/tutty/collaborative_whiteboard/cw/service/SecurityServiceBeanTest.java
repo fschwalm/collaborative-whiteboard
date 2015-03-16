@@ -18,7 +18,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.servlet.http.HttpSession;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by drferreira on 06/02/15.

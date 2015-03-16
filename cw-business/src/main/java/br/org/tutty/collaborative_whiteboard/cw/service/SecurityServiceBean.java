@@ -2,8 +2,8 @@ package br.org.tutty.collaborative_whiteboard.cw.service;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
-import cw.dtos.Security;
 import cw.dtos.LoggedUser;
+import cw.dtos.Security;
 import cw.entities.User;
 import cw.exceptions.AuthenticationException;
 import cw.exceptions.DataNotFoundException;

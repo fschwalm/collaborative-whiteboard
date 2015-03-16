@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.websocket.HandshakeResponse;
 import javax.websocket.server.HandshakeRequest;

@@ -1,11 +1,11 @@
 package transmition;
 
 import cw.dtos.LoggedUser;
-import cw.entities.User;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 /**

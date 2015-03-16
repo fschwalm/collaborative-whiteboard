@@ -1,9 +1,11 @@
 package cw.entities;
 
 import cw.dtos.EncryptorResources;
+import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Predicate;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class User implements Serializable{
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Project> projects;
 
     public User(String email, String password, String name) throws EncryptedException {
@@ -50,7 +52,21 @@ public class User implements Serializable{
         return password;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public List<Project> getProjects() throws DataNotFoundException {
+        if(hasSomeProject()){
+            return projects;
+        }else {
+            throw new DataNotFoundException();
+        }
     }
+
+    public Boolean hasSomeProject(){
+        if(projects != null || projects.isEmpty()){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+
 }

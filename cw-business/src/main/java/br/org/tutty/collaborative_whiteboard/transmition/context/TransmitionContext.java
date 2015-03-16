@@ -2,7 +2,6 @@ package br.org.tutty.collaborative_whiteboard.transmition.context;
 
 
 import cw.dtos.LoggedUser;
-import cw.entities.User;
 import transmition.Connection;
 import transmition.Transmition;
 

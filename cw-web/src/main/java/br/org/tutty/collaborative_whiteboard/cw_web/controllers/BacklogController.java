@@ -3,6 +3,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import cw.entities.Project;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
@@ -29,6 +30,8 @@ public class BacklogController extends GenericController implements Serializable
     private BacklogManagerService backlogManagerService;
     @Inject
     private SessionContext sessionContext;
+    @Inject
+    private UserService userService;
 
     private List<Story> stories;
     private List<Project> projects;
@@ -46,70 +49,46 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public List<Story> fetchStoriesInOrder() throws IOException {
-        try{
+        try {
             List<Story> storiesUnordered = backlogManagerService.fetchAllStories();
             return backlogManagerService.sortStoriesByPriority(storiesUnordered);
-        }catch (DataNotFoundException e){
-            populateEmptyStoryList();
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.not_found");
+        } catch (DataNotFoundException e) {
+            stories = new ArrayList<>();
             return stories;
         }
     }
 
-    public List<Project> fetchProjects() {
-        // TODO DUMMY
-        List<Project> projects = new ArrayList<>();
-        projects.add(new Project("LINDA"));
-        projects.add(new Project("ELSA"));
-        projects.add(new Project("CCEM"));
-
-        return projects;
-    }
-
-    private void populateEmptyStoryList(){
-        stories = new ArrayList<Story>();
-        Story story = new Story(sessionContext.getLoggedUser().getUser());
-        story.setCode("SMK1");
-        story.setPriority(1);
-        stories.add(story);
-
-
-        Story story1 = new Story(sessionContext.getLoggedUser().getUser());
-        story1.setCode("SMK2");
-        story1.setPriority(2);
-        stories.add(story1);
-
-
-        Story story2 = new Story(sessionContext.getLoggedUser().getUser());
-        story2.setCode("SMK3");
-        story2.setPriority(3);
-        stories.add(story2);
-
-
-        Story story3 = new Story(sessionContext.getLoggedUser().getUser());
-        story3.setCode("SMK4");
-        story3.setPriority(4);
-        stories.add(story3);
-
-
-        Story story4 = new Story(sessionContext.getLoggedUser().getUser());
-        story4.setCode("SMK5");
-        story4.setPriority(5);
-        stories.add(story4);
+    public List<Project> fetchProjects() throws DataNotFoundException {
+        return userService.fetchProjects();
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
         showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
     }
 
-    public void createStory(){
-        // TODO Nao esta preenchendo campo projeto
+    public void createStory() {
         Story story = new Story(sessionContext.getLoggedUser().getUser());
         story.setProject(projectForNewStory);
         story.setSubject(subjectForNewStory);
         story.setDescription(descriptionForNewStory);
 
         stories.add(story);
+    }
+
+    public String getProjectForNewStory() {
+        if (projectForNewStory != null) {
+            return projectForNewStory.getNameProject();
+        } else {
+            return null;
+        }
+    }
+
+    public void setProjectForNewStory(String projectForNewStory) {
+        for (Project project : projects) {
+            if (project.getNameProject().equals(projectForNewStory)) {
+                this.projectForNewStory = project;
+            }
+        }
     }
 
     public List<Story> getStories() {
@@ -129,13 +108,6 @@ public class BacklogController extends GenericController implements Serializable
         RequestContext.getCurrentInstance().update("storyDetailPanel");
     }
 
-    public void setProjectForNewStory(Project projectForNewStory) {
-        this.projectForNewStory = projectForNewStory;
-    }
-
-    public Project getProjectForNewStory() {
-        return projectForNewStory;
-    }
 
     public String getSubjectForNewStory() {
         return subjectForNewStory;
@@ -153,8 +125,13 @@ public class BacklogController extends GenericController implements Serializable
         this.descriptionForNewStory = descriptionForNewStory;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public List<String> getProjects() {
+        List<String> projectsNames = new ArrayList<>();
+
+        for (Project project : projects) {
+            projectsNames.add(project.getNameProject());
+        }
+        return projectsNames;
     }
 
     public void setProjects(List<Project> projects) {

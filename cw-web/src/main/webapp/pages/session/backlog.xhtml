@@ -17,7 +17,7 @@
                         Backlog list
                     </f:facet>
 
-                    <p:column selectionMode="single" style="width:16px;text-align:center" />
+                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
 
                     <p:column headerText="Projeto">
                         <h:outputText value="#{story.project.nameProject}"/>
@@ -64,30 +64,31 @@
                 </p:dialog>
             </h:form>
 
-            <p:dialog widgetVar="storyCreation" modal="true" resizable="false" height="600" width="600">
+            <p:dialog widgetVar="storyCreation" modal="true" resizable="false" height="600" width="580">
                 <p:outputPanel>
                     <h:form id="createStoryForm" prependId="false">
-                        <p:panel id="createStoryPanel">
+                        <h:panelGrid columns="1">
                             <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}">
-                                <f:selectItems value="#{backlogController.projects}" var="project" itemLabel="#{project.nameProject}" itemValue="#{project.nameProject}"/>
+                                <f:selectItems value="#{backlogController.projects}" var="projectName"
+                                               itemLabel="#{projectName}" itemValue="#{projectName}"/>
+                                <p:ajax process="projectNewStory"/>
                             </p:selectOneMenu>
-
 
                             <p:watermark value="Assunto" for="subjecNewStory"/>
                             <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"
-                                         size="50" required="true"/>
-
+                                         size="60" required="true"/>
 
                             <p:watermark value="Descrição completa da estória ..." for="descriptionNewStory"/>
                             <p:inputTextarea id="descriptionNewStory"
                                              value="#{backlogController.descriptionForNewStory}"
-                                             cols="50" rows="20" required="true"/>
+                                             cols="63" rows="20" required="true"/>
+                        </h:panelGrid>
 
-                            <h:panelGrid columns="2">
-                                <p:commandButton id="save" value="Salvar" process="createStoryForm" update="createStoryPanel :backlogForm:backlogTable" actionListener="#{backlogController.createStory()}" />
-                                <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
-                            </h:panelGrid>
-                        </p:panel>
+                        <h:panelGrid columns="2">
+                            <p:commandButton id="save" value="Salvar" update="createStoryForm :backlogForm:backlogTable"
+                                             actionListener="#{backlogController.createStory()}"/>
+                            <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
+                        </h:panelGrid>
                     </h:form>
                 </p:outputPanel>
             </p:dialog>
