@@ -26,5 +26,10 @@
             <to-view-id>/pages/session/whiteboard.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>BACKLOG_PAGE</from-outcome>
+            <to-view-id>/pages/session/backlog.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

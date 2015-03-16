@@ -4,7 +4,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Properties;
 
 /**
  * Created by drferreira on 12/12/14.
@@ -23,15 +26,31 @@ public class GenericController implements Serializable {
         return httpSession;
     }
 
-    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage, String keyPropertyMessageDetail){
-        showMessage(null, severity, keyPropertyMessage, keyPropertyMessageDetail);
+    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage, String keyPropertyMessageDetail) throws IOException {
+        String message = readPropertyMessage(keyPropertyMessage);
+        String messageDetail = readPropertyMessage(keyPropertyMessageDetail);
+
+        showMessage(null, severity, message, messageDetail);
     }
 
-    public void showGlobalMessageWithoutDetail(FacesMessage.Severity severity, String keyPropertyMessage){
-        showMessage(null, severity, keyPropertyMessage, null);
+    public void showGlobalMessageWithoutDetail(FacesMessage.Severity severity, String keyPropertyMessage) throws IOException {
+        String message = readPropertyMessage(keyPropertyMessage);
+        showMessage(null, severity, message, null);
     }
 
-    public void showMessage(String target, FacesMessage.Severity severity, String keyPropertyMessage, String keyPropertyMessageDetail){
-        FacesContext.getCurrentInstance().addMessage(target, new FacesMessage(severity, keyPropertyMessage, keyPropertyMessageDetail));
+    public void showMessage(String target, FacesMessage.Severity severity, String message, String messageDetail) throws IOException {
+        FacesContext.getCurrentInstance().addMessage(target, new FacesMessage(severity, message, messageDetail));
     }
+
+    private String readPropertyMessage(String keyPropertie) throws IOException {
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("/properties/messages.properties");
+        Properties properties = new Properties();
+        properties.load(resourceAsStream);
+
+        String property = properties.getProperty(keyPropertie);
+        resourceAsStream.close();
+
+        return property;
+    }
+
 }

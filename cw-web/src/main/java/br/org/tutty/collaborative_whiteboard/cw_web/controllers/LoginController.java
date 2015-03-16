@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 /**
  * Created by drferreira on 16/12/14.
@@ -22,7 +23,7 @@ public class LoginController extends GenericController {
     private String email;
     private String password;
 
-    public String login(){
+    public String login() throws IOException {
         try {
             Security security = new Security(getSession(), email, password);
             securityService.login(security);

@@ -14,9 +14,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "story", catalog = "cw")
+@SequenceGenerator(name="Priority_seq", sequenceName="Story_Priority_Seq", allocationSize=1)
 public class Story implements Serializable{
     @Id
     private String code;
+
+    @Column
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Story_Priority_Seq")
+    private Integer priority;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -108,5 +113,13 @@ public class Story implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

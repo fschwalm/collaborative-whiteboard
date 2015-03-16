@@ -6,6 +6,14 @@
 
     <ui:define name="pageContent">
         <ui:include src="../components/chat.xhtml"/>
+
+        <h:form>
+            <p:commandLink id="backlog" action="#{whiteboardController.goToBacklog()}" ajax="false">
+                <p:graphicImage url="http://localhost:8080/cw/images/backlog_icon.png"/>
+            </p:commandLink>
+        </h:form>
+
+
     </ui:define>
 
 </ui:composition>

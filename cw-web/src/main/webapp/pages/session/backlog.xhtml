@@ -11,7 +11,7 @@
             <h:form id="backlogForm" prependId="false">
                 <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
                              rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}">
-                    <p:ajax event="rowReorder" listener="#{backlogController.orderBacklog}"/>
+                    <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
                     <f:facet name="header">
                         Backlog list
@@ -66,30 +66,28 @@
 
             <p:dialog widgetVar="storyCreation" modal="true" resizable="false" height="600" width="600">
                 <p:outputPanel>
-                    <h:form prependId="false">
-                        <p:outputPanel id="createStoryPanel">
-                            <p:selectOneMenu id="projectNewStory"
-                                             value="#{backlogController.projectForNewStory}">
-                                <f:selectItems value="#{backlogController.fetchProjects()}" var="project"
-                                               itemLabel="#{project.nameProject}"/>
+                    <h:form id="createStoryForm" prependId="false">
+                        <p:panel id="createStoryPanel">
+                            <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}">
+                                <f:selectItems value="#{backlogController.projects}" var="project" itemLabel="#{project.nameProject}" itemValue="#{project.nameProject}"/>
                             </p:selectOneMenu>
 
 
                             <p:watermark value="Assunto" for="subjecNewStory"/>
                             <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"
-                                         size="50"/>
+                                         size="50" required="true"/>
 
 
                             <p:watermark value="Descrição completa da estória ..." for="descriptionNewStory"/>
                             <p:inputTextarea id="descriptionNewStory"
                                              value="#{backlogController.descriptionForNewStory}"
-                                             cols="50" rows="20"/>
+                                             cols="50" rows="20" required="true"/>
 
-                            <p:commandButton id="save" value="Salvar" oncomplete="PF('storyCreation').hide()">
-                                <p:ajax update=":backlogForm:backlogTable" listener="#{backlogController.createStory}" />
-                            </p:commandButton>
-                            <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
-                        </p:outputPanel>
+                            <h:panelGrid columns="2">
+                                <p:commandButton id="save" value="Salvar" process="createStoryForm" update="createStoryPanel :backlogForm:backlogTable" actionListener="#{backlogController.createStory()}" />
+                                <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
+                            </h:panelGrid>
+                        </p:panel>
                     </h:form>
                 </p:outputPanel>
             </p:dialog>

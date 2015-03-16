@@ -32,6 +32,12 @@
                 <configuration>
                     <warName>collaborative-whiteboard</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>src/main/resources</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>

@@ -12,4 +12,8 @@ public interface BacklogManagerService {
     List<Story> fetchAllStories() throws DataNotFoundException;
 
     Story getEmptyStory();
+
+    List<Story> reformulatePriorities(List<Story> stories);
+
+    List<Story> sortStoriesByPriority(List<Story> stories);
 }

@@ -9,7 +9,11 @@ import cw.exceptions.DataNotFoundException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -35,4 +39,29 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         story.setCode("TESTE CODE");
         return story;
     }
+
+    @Override
+    public List<Story> reformulatePriorities(List<Story> stories){
+        stories.stream().forEach(story ->
+                {
+                    Integer priorityCounter = 1;
+                    story.setPriority(priorityCounter);
+                    priorityCounter++;
+                }
+        );
+
+        return stories;
+    }
+
+
+    @Override
+    public List<Story> sortStoriesByPriority(List<Story> stories) {
+        Comparator<Story> byPriority = (elementOne, elementTwo) -> Integer.compare(
+                elementOne.getPriority(), elementTwo.getPriority());
+
+        return stories.stream().sorted(byPriority).collect(Collectors.toList());
+    }
+
+
+
 }
