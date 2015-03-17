@@ -16,4 +16,6 @@ public interface UserService {
     public List<Project> fetchProjects() throws DataNotFoundException;
 
     Boolean hasSomeProject();
+
+    void create(User user);
 }

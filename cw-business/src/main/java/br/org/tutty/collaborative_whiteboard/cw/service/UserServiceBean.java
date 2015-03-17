@@ -40,4 +40,9 @@ public class UserServiceBean implements UserService, Serializable {
         User user = sessionContext.getLoggedUser().getUser();
         return user.hasSomeProject();
     }
+
+    @Override
+    public void create(User user) {
+        userDao.persist(user);
+    }
 }

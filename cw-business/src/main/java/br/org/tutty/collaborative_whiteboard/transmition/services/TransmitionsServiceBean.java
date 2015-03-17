@@ -52,7 +52,7 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
             Transmition transmition = transmitionContext.fetch(socketSessionSender);
             Connection connection = transmition.fetchConnection(socketSessionSender);
             LoggedUser loggedUser = userGlobalContext.fetch(connection.getHttpSessionId());
-            UserMessage userMessage = new UserMessage(loggedUser.getUser().getName(), messageData);
+            UserMessage userMessage = new UserMessage(loggedUser.getUser().getFirstName(), messageData);
 
             broadcast(userMessage, socketSessionSender);
 

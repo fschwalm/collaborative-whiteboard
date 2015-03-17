@@ -17,6 +17,7 @@ public abstract class GenericDao implements Dao, Serializable{
     @PersistenceContext
     protected EntityManager entityManager;
 
+    @Override
     public void persist(Object entity) {
         entityManager.persist(entity);
     }

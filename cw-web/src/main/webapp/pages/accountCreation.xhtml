@@ -1,21 +1,46 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="../templates/generic.xhtml" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-
         <h:form id="creationForm">
-            <p:inputText id="email"/>
-            <p:inputText id="firstName"/>
-            <p:inputText id="lastName"/>
-            <p:calendar id="birthdate"/>
-            <p:password id="password"/>
-            <p:password id="passwordConfirmation"/>
 
-            <p:commandButton id="save" value="Salvar" update=":creationForm" actionListener="#{accountCreationController.create()}"/>
+            <p:panel header="#{accountCreation['welcome']}">
+                <p:messages/>
+                <h:panelGrid>
+                    <p:watermark value="#{accountCreation['email']}" for="email"/>
+                    <p:inputText id="email" required="true" requiredMessage="#{accountCreation['required.email']}" value="#{accountCreationController.email}"/>
+
+                    <p:watermark value="#{accountCreation['first_name']}" for="firstName"/>
+                    <p:inputText id="firstName" required="true"
+                                 requiredMessage="#{accountCreation['required.first_name']}" value="#{accountCreationController.firstName}"/>
+
+                    <p:watermark value="#{accountCreation['last_name']}" for="lastName"/>
+                    <p:inputText id="lastName" required="true"
+                                 requiredMessage="#{accountCreation['required.last_name']}" value="#{accountCreationController.lastName}"/>
+
+                    <p:watermark value="#{accountCreation['birthdate']}" for="birthdate"/>
+                    <p:calendar id="birthdate" required="true"
+                                requiredMessage="#{accountCreation['required.birthdate']}" value="#{accountCreationController.birthdate}"/>
+
+                    <p:watermark value="#{accountCreation['password']}" for="password"/>
+                    <p:password id="password" match="passwordConfirmation" feedback="false" required="true"
+                                validatorMessage="#{accountCreation['password.equals.validator']}"
+                                requiredMessage="#{accountCreation['required.password']}" value="#{accountCreationController.password}"/>
+
+                    <p:watermark value="#{accountCreation['password_comfirmation']}" for="passwordConfirmation"/>
+                    <p:password id="passwordConfirmation" feedback="false" required="true"
+                                requiredMessage="#{accountCreation['required.password_confirmation']}"/>
+
+                    <p:spacer height="7"/>
+
+                    <p:commandButton id="save" value="#{accountCreation['button.save']}" update=":creationForm"
+                                     actionListener="#{accountCreationController.create()}"/>
+                </h:panelGrid>
+            </p:panel>
         </h:form>
-
     </ui:define>
 
 </ui:composition>

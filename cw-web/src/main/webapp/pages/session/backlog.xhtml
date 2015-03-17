@@ -32,7 +32,7 @@
                     </p:column>
 
                     <p:column headerText="Autor">
-                        <h:outputText value="#{story.author.name}"/>
+                        <h:outputText value="#{story.author.firstName}"/>
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton icon="ui-icon-search" value="Adicionar"
@@ -55,7 +55,7 @@
                             <h:outputText id="code" value="#{backlogController.selectedStory.code}"/>
 
                             <h:outputLabel value="Autor:" for="author"/>
-                            <h:outputText id="author" value="#{backlogController.selectedStory.author.name}"/>
+                            <h:outputText id="author" value="#{backlogController.selectedStory.author.firstName}"/>
 
                             <h:outputLabel value="Assunto:" for="subject"/>
                             <h:outputText id="subject" value="#{backlogController.selectedStory.subject}"/>

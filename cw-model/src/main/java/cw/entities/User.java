@@ -5,7 +5,6 @@ import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Predicate;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,22 +25,26 @@ public class User implements Serializable{
     private String password;
 
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Project> projects;
 
-    public User(String email, String password, String name) throws EncryptedException {
+    public User(String email, String password, String firstName, String lastName) throws EncryptedException {
+        this.lastName = lastName;
         this.email = email;
         this.password = EncryptorResources.encrypt(password);
-        this.name = name;
+        this.firstName = firstName;
     }
 
     protected User() {
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getEmail() {
@@ -68,5 +71,11 @@ public class User implements Serializable{
         }
     }
 
+    public String getLastName() {
+        return lastName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

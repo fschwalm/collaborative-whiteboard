@@ -17,6 +17,10 @@
             <base-name>properties/login</base-name>
             <var>login</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/account_creation</base-name>
+            <var>accountCreation</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>
