@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
-import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 
 import javax.inject.Inject;
@@ -15,6 +14,11 @@ public class WhiteboardController extends GenericController implements Serializa
 
     @Inject
     private UserService userService;
+
+    public String createProject(){
+        // TODO
+        return GO_TO_CREATE_PROJECT;
+    }
 
     public String goToBacklog(){
         return GO_TO_BACKLOG;

@@ -34,7 +34,7 @@ public class AccountCreationController extends GenericController implements Seri
     private String password;
 
     public String create() throws EncryptedException, LoginException {
-        User user = new User(email, EncryptorResources.encrypt(password), firstName, lastName);
+        User user = new User(email, password, firstName, lastName);
         userService.create(user);
 
         authenticateUser();
@@ -44,6 +44,10 @@ public class AccountCreationController extends GenericController implements Seri
     private void authenticateUser() throws EncryptedException, LoginException {
         Security security = new Security(getSession(), email, password);
         securityService.login(security);
+    }
+
+    public String cancel(){
+        return WELCOME_PAGE;
     }
 
     public String getEmail() {

@@ -18,6 +18,8 @@ public class GenericController implements Serializable {
     protected static final String CREATE_ACCOUNT_PAGE = "ACCOUNT_CREATION_PAGE";
     protected static final String RECOVERY_PAGE = "";
     protected static final String GO_TO_BACKLOG = "BACKLOG_PAGE";
+    protected static final String WELCOME_PAGE = "WELCOME_PAGE";
+    protected static final String GO_TO_CREATE_PROJECT = "";
 
     @Inject
     private HttpSession httpSession;

@@ -44,7 +44,8 @@ public class LoginController extends GenericController {
         return CREATE_ACCOUNT_PAGE;
     }
 
-    public String recovery(){
+    public String recovery() throws IOException {
+        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "feature.not_implemented");
         return RECOVERY_PAGE;
     }
 

@@ -21,6 +21,14 @@
             <base-name>properties/account_creation</base-name>
             <var>accountCreation</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/backlog</base-name>
+            <var>backlog</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/whiteboard</base-name>
+            <var>whiteboard</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>
@@ -38,6 +46,11 @@
         <navigation-case>
             <from-outcome>ACCOUNT_CREATION_PAGE</from-outcome>
             <to-view-id>/pages/accountCreation.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>WELCOME_PAGE</from-outcome>
+            <to-view-id>/pages/index.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

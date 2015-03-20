@@ -48,16 +48,16 @@
                           appendToBody="false">
                     <p:outputPanel id="storyDetailPanel">
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="Data de Criação:" for="creationDate"/>
+                            <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
                             <h:outputText id="creationDate" value="#{backlogController.selectedStory.creationDate}"/>
 
-                            <h:outputLabel value="Codigo:" for="code"/>
+                            <h:outputLabel value="#{backlog['label.code']}" for="code"/>
                             <h:outputText id="code" value="#{backlogController.selectedStory.code}"/>
 
-                            <h:outputLabel value="Autor:" for="author"/>
+                            <h:outputLabel value="#{backlog['label.author']}" for="author"/>
                             <h:outputText id="author" value="#{backlogController.selectedStory.author.firstName}"/>
 
-                            <h:outputLabel value="Assunto:" for="subject"/>
+                            <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
                             <h:outputText id="subject" value="#{backlogController.selectedStory.subject}"/>
                         </h:panelGrid>
                     </p:outputPanel>
@@ -74,18 +74,18 @@
                                 <p:ajax process="projectNewStory"/>
                             </p:selectOneMenu>
 
-                            <p:watermark value="Assunto" for="subjecNewStory"/>
+                            <p:watermark  value="#{backlog['label.subject']}" for="subjecNewStory"/>
                             <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"
                                          size="60" required="true"/>
 
-                            <p:watermark value="Descrição completa da estória ..." for="descriptionNewStory"/>
+                            <p:watermark value="#{backlog['label.description']}" for="descriptionNewStory"/>
                             <p:inputTextarea id="descriptionNewStory"
                                              value="#{backlogController.descriptionForNewStory}"
                                              cols="63" rows="20" required="true"/>
                         </h:panelGrid>
 
                         <h:panelGrid columns="2">
-                            <p:commandButton id="save" value="Salvar" update="createStoryForm :backlogForm:backlogTable"
+                            <p:commandButton id="save" value="#{backlog['label.save']}" update="createStoryForm :backlogForm:backlogTable"
                                              actionListener="#{backlogController.createStory()}"/>
                             <p:commandButton id="cancel" value="Cancelar" onclick="PF('storyCreation').hide()"/>
                         </h:panelGrid>

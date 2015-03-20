@@ -14,7 +14,7 @@
 
         <h:panelGrid columns="3">
             <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}" ajax="false"/>
-            <p:commandButton id="createBtn" value="#{login['button.create_account']}" action="#{loginController.createAccount()}" ajax="false"/>
+            <p:commandButton id="createBtn" value="#{login['button.create_account']}" action="#{loginController.createAccount()}" ajax="false" immediate="true"/>
             <p:commandLink id="recoveryAccount"  value="#{login['button.recovery_account']}" action="#{loginController.recovery()}" ajax="false"/>
         </h:panelGrid>
         </h:form>
