@@ -21,7 +21,6 @@ public class ChatWebSocket extends WebSocket {
         try {
             String messageValue = new JSONObject(dataMessage).getString("messageValue");
             transmitionsService.send(messageValue, senderSession);
-            System.out.println("+++++++++++++++++++++ Mensagem enviada +++++++++++++++++++++");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -33,12 +32,10 @@ public class ChatWebSocket extends WebSocket {
                 .get(HttpSession.class.getName());
 
         transmitionsService.connect(websocketSession, httpSession);
-        System.out.println("+++++++++++++++++++++ Conectado +++++++++++++++++++++");
     }
 
     @OnClose
     public void close(Session session) {
-        System.out.println("+++++++++++++++++++++ Conex Fechada +++++++++++++++++++++");
         transmitionsService.disconect(session);
     }
 }

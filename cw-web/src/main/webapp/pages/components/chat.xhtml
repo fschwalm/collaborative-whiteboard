@@ -18,8 +18,7 @@
                 </p:outputPanel>
             </p:outputPanel>
 
-            <p:inputTextarea id="messageInput" autoResize="false"/>
-            <p:commandButton id="sendBtn" value="#{chat['button.send']}" onclick="commit('messageInput'), scrollChat()"/>
+            <p:inputTextarea id="messageInput" autoResize="false" onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
         </div>
     </div>
 </ui:composition>

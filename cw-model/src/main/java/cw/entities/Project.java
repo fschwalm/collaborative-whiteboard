@@ -13,6 +13,7 @@ import java.util.Date;
 public class Project implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long projectId;
 
     @Transient
@@ -29,8 +30,10 @@ public class Project implements Serializable{
     @Column(nullable = false)
     private String nameProject;
 
-    public Project(String nameProject) {
+    public Project(String nameProject, User owner) {
         this.nameProject = nameProject;
+        this.creationDate = new Date();
+        this.owner = owner;
     }
 
     protected Project() {}

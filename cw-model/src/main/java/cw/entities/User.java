@@ -31,7 +31,7 @@ public class User implements Serializable{
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Project> projects;
 
     public User(String email, String password, String firstName, String lastName) throws EncryptedException {
@@ -42,6 +42,10 @@ public class User implements Serializable{
     }
 
     protected User() {
+    }
+
+    public String getFullName(){
+        return getFirstName()+" "+getLastName();
     }
 
     public String getFirstName() {
@@ -56,6 +60,10 @@ public class User implements Serializable{
         return password;
     }
 
+    public void addProject(Project project){
+        projects.add(project);
+    }
+
     public List<Project> getProjects() throws DataNotFoundException {
         if(hasSomeProject()){
             return projects;
@@ -65,10 +73,10 @@ public class User implements Serializable{
     }
 
     public Boolean hasSomeProject(){
-        if(projects != null || projects.isEmpty()){
-            return false;
-        }else {
+        if(projects != null && !projects.isEmpty()){
             return true;
+        }else {
+            return false;
         }
     }
 

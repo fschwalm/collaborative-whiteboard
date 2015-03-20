@@ -1,8 +1,11 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
+import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.dtos.LoggedUser;
+import cw.entities.User;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import java.io.Serializable;
 
 /**
@@ -10,6 +13,10 @@ import java.io.Serializable;
  */
 @SessionScoped
 public class SessionContext implements Serializable {
+
+    @Inject
+    private GenericDao genericDao;
+
     private LoggedUser loggedUser;
 
     public LoggedUser getLoggedUser() {

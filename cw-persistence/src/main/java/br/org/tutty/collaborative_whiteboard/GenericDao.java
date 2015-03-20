@@ -19,11 +19,15 @@ public abstract class GenericDao implements Dao, Serializable{
 
     @Override
     public void persist(Object entity) {
-        entityManager.persist(entity);
+        entityManager.persist(entityManager.merge(entity));
     }
 
     public Object update(Object entity) {
         return entityManager.merge(entity);
+    }
+
+    public void refresh(Object entity) {
+        entityManager.refresh(entity);
     }
 
     public void remove(Object entity) {

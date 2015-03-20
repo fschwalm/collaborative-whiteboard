@@ -9,19 +9,18 @@
         <div style="width: 450px">
             <h:outputText value="#{whiteboard['text.project']}"/>
             <p:spacer height="4"/>
-            <h:form>
+            <h:form prependId="false">
                 <h:panelGrid columns="3">
                     <p:watermark value="Novo Projeto" for="createProjectShortcut"/>
-                    <p:inputText id="createProjectShortcut"/>
-                    <p:commandButton value="Criar" action="#{whiteboardController.createProject()}"/>
+                    <p:inputText id="createProjectShortcut" value="#{whiteboardController.projectName}" required="true" />
+                    <p:commandButton value="Criar" action="#{whiteboardController.createProject()}" update="createProjectShortcut,:accessForm"/>
                 </h:panelGrid>
             </h:form>
         </div>
 
-
         <div>
-            <h:form>
-                <p:commandLink id="backlog" action="#{whiteboardController.goToBacklog()}" ajax="false">
+            <h:form id="accessForm" prependId="false">
+                <p:commandLink id="backlog" action="#{whiteboardController.goToBacklog()}" ajax="false" rendered="#{whiteboardController.hasSomeProject()}">
                     <p:graphicImage url="http://localhost:8080/cw/images/backlog_icon.png"/>
                 </p:commandLink>
             </h:form>

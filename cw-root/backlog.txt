@@ -1,0 +1,5 @@
+ - Corrigir botão de abrir para somente funcionar quando estiver selecionado
+
+ - Limpar dados da dialog de adicionar apos ser adicionada a estoria
+
+ - Adicionar dependencia para verificar mudança em entidade de Story
