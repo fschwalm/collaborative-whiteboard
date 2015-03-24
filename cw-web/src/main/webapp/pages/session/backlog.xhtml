@@ -10,14 +10,15 @@
         <p:outputPanel>
             <h:form id="backlogForm" prependId="false">
                 <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
-                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}">
+                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}" selectionMode="single">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
+
+                    <p:ajax event="rowSelect" update="openButton"/>
+                    <p:ajax event="rowUnselect" update="openButton"/>
 
                     <f:facet name="header">
                         Backlog list
                     </f:facet>
-
-                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
 
                     <p:column headerText="#{backlog['header.table.project']}">
                         <h:outputText value="#{story.project.nameProject}"/>
@@ -38,8 +39,8 @@
                         <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                          oncomplete="PF('storyCreation').show();"/>
 
-                        <p:commandButton icon="ui-icon-folder-open" value="#{backlog['btn.open']}"
-                                         oncomplete="PF('storyDetail').show();"/>
+                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}"
+                                         oncomplete="PF('storyDetail').show()" disabled="#{!backlogController.isSelected()}"/>
 
                         <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"/>
 
@@ -72,7 +73,7 @@
                             <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
                                              update="storyDetailForm :backlogForm:backlogTable" icon="ui-icon-disk"/>
                             <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
-                                             onclick="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
+                                             oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
                         </h:panelGrid>
                     </h:form>
                 </p:outputPanel>

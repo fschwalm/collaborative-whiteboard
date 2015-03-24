@@ -41,7 +41,6 @@ public class BacklogController extends GenericController implements Serializable
     private String subjectForNewStory;
     private String descriptionForNewStory;
 
-
     @PostConstruct
     public void setUp() throws EncryptedException, DataNotFoundException, IOException {
         stories = fetchStoriesInOrder();
@@ -89,6 +88,10 @@ public class BacklogController extends GenericController implements Serializable
                 this.projectForNewStory = project;
             }
         }
+    }
+
+    public Boolean isSelected(){
+        return selectedStory != null ? true : false;
     }
 
     public List<Story> getStories() {

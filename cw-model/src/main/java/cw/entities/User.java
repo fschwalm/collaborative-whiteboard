@@ -1,5 +1,6 @@
 package cw.entities;
 
+import br.org.tutty.util.PropertyMonitor;
 import cw.dtos.EncryptorResources;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
@@ -33,6 +34,10 @@ public class User implements Serializable{
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Project> projects;
+
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
+
 
     public User(String email, String password, String firstName, String lastName) throws EncryptedException {
         this.lastName = lastName;
@@ -82,9 +87,5 @@ public class User implements Serializable{
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 }

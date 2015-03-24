@@ -1,6 +1,7 @@
 package backlog_manager.entities;
 
 
+import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.User;
 
@@ -44,6 +45,9 @@ public class Story implements Serializable{
     @OneToMany(mappedBy = "story")
     private List<Comment> comments;
 
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
+
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
@@ -60,7 +64,10 @@ public class Story implements Serializable{
     }
 
     public void setCode(String code) {
+        String oldValue = this.code;
         this.code = code;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("code", oldValue, code);
     }
 
     public User getAuthor() {
@@ -68,7 +75,10 @@ public class Story implements Serializable{
     }
 
     public void setAuthor(User author) {
+        User oldValue = this.author;
         this.author = author;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("author", oldValue, author);
     }
 
     public String getSubject() {
@@ -76,7 +86,10 @@ public class Story implements Serializable{
     }
 
     public void setSubject(String subject) {
+        String oldValue = this.subject;
         this.subject = subject;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("subject", oldValue, subject);
     }
 
     public List<Task> getTasks() {
@@ -84,7 +97,10 @@ public class Story implements Serializable{
     }
 
     public void setTasks(List<Task> tasks) {
+        List<Task> oldValue = this.tasks;
         this.tasks = tasks;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("tasks", oldValue, tasks);
     }
 
     public List<Comment> getComments() {
@@ -92,7 +108,10 @@ public class Story implements Serializable{
     }
 
     public void setComments(List<Comment> comments) {
+        List<Comment> oldValue = this.comments;
         this.comments = comments;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("comments", oldValue, comments);
     }
 
     public Project getProject() {
@@ -100,7 +119,10 @@ public class Story implements Serializable{
     }
 
     public void setProject(Project project) {
+        Project oldValue = this.project;
         this.project = project;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("project", oldValue, project);
     }
 
     public Date getCreationDate() {
@@ -112,7 +134,10 @@ public class Story implements Serializable{
     }
 
     public void setDescription(String description) {
+        String oldValue = this.description;
         this.description = description;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("description", oldValue, description);
     }
 
     public Integer getPriority() {
@@ -120,6 +145,9 @@ public class Story implements Serializable{
     }
 
     public void setPriority(Integer priority) {
+        Integer oldValue = this.priority;
         this.priority = priority;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("priority", oldValue, priority);
     }
 }

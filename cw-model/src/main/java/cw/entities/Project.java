@@ -1,5 +1,7 @@
 package cw.entities;
 
+import br.org.tutty.util.PropertyMonitor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -29,6 +31,9 @@ public class Project implements Serializable{
 
     @Column(nullable = false)
     private String nameProject;
+
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
     public Project(String nameProject, User owner) {
         this.nameProject = nameProject;

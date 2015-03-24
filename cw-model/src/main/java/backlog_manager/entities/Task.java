@@ -1,6 +1,7 @@
 package backlog_manager.entities;
 
 import backlog_manager.enums.TaskStatus;
+import br.org.tutty.util.PropertyMonitor;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -35,48 +36,11 @@ public class Task implements Serializable {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
+
     public Task(User responsible) {
         this.responsible = responsible;
         this.initDate = new Date();
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public User getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(User responsible) {
-        this.responsible = responsible;
-    }
-
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
-    }
-
-    public Date getInitDate() {
-        return initDate;
-    }
-
-    public void setInitDate(Date initDate) {
-        this.initDate = initDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 }
