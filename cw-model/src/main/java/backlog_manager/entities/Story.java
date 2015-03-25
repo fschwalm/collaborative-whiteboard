@@ -48,6 +48,13 @@ public class Story implements Serializable{
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
+    public Story(User author, Project project, Date creationDate) {
+        this.author = author;
+        this.project = project;
+        this.creationDate = creationDate;
+        this.creationDate = new Date();
+    }
+
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
@@ -149,5 +156,18 @@ public class Story implements Serializable{
         this.priority = priority;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("priority", oldValue, priority);
+    }
+
+    @Override
+    public Story clone() throws CloneNotSupportedException {
+        Story story = new Story(author, project, creationDate);
+        story.setCode(code);
+        story.setSubject(subject);
+        story.setDescription(description);
+        story.setPriority(priority);
+        story.setComments(comments);
+        story.setTasks(tasks);
+
+        return story;
     }
 }

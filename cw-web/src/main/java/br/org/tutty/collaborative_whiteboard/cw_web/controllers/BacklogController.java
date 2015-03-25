@@ -4,7 +4,10 @@ import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
+import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryCreation;
+import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.entities.Project;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 import org.primefaces.context.RequestContext;
@@ -37,14 +40,26 @@ public class BacklogController extends GenericController implements Serializable
     private List<Project> projects;
     private Story selectedStory;
 
-    private Project projectForNewStory;
-    private String subjectForNewStory;
-    private String descriptionForNewStory;
+    @Inject
+    private StoryCreation storyCreation;
+
+    @Inject
+    private StoryEdition storyEdition;
+
 
     @PostConstruct
     public void setUp() throws EncryptedException, DataNotFoundException, IOException {
         stories = fetchStoriesInOrder();
         projects = fetchProjects();
+    }
+
+    public void prepareNewStory(){
+        User user = sessionContext.getLoggedUser().getUser();
+        storyCreation.setUser(user);
+    }
+
+    public void prepareEditionStory(){
+        storyEdition.init(selectedStory);
     }
 
     public List<Story> fetchStoriesInOrder() throws IOException {
@@ -66,31 +81,12 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void createStory() {
-        Story story = new Story(sessionContext.getLoggedUser().getUser());
-        story.setProject(projectForNewStory);
-        story.setSubject(subjectForNewStory);
-        story.setDescription(descriptionForNewStory);
-
+        Story story = storyCreation.getStory();
         stories.add(story);
     }
 
-    public String getProjectForNewStory() {
-        if (projectForNewStory != null) {
-            return projectForNewStory.getNameProject();
-        } else {
-            return null;
-        }
-    }
 
-    public void setProjectForNewStory(String projectForNewStory) {
-        for (Project project : projects) {
-            if (project.getNameProject().equals(projectForNewStory)) {
-                this.projectForNewStory = project;
-            }
-        }
-    }
-
-    public Boolean isSelected(){
+    public Boolean isSelected() {
         return selectedStory != null ? true : false;
     }
 
@@ -106,26 +102,9 @@ public class BacklogController extends GenericController implements Serializable
         return selectedStory;
     }
 
-    public void setSelectedStory(Story selectedStory) {
+    public void setSelectedStory(Story selectedStory){
         this.selectedStory = selectedStory;
         RequestContext.getCurrentInstance().update("storyDetailPanel");
-    }
-
-
-    public String getSubjectForNewStory() {
-        return subjectForNewStory;
-    }
-
-    public void setSubjectForNewStory(String subjectForNewStory) {
-        this.subjectForNewStory = subjectForNewStory;
-    }
-
-    public String getDescriptionForNewStory() {
-        return descriptionForNewStory;
-    }
-
-    public void setDescriptionForNewStory(String descriptionForNewStory) {
-        this.descriptionForNewStory = descriptionForNewStory;
     }
 
     public List<String> getProjects() {
@@ -139,5 +118,38 @@ public class BacklogController extends GenericController implements Serializable
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public StoryCreation getStoryCreation() {
+        return storyCreation;
+    }
+
+    public void setStoryCreation(StoryCreation storyCreation) {
+        this.storyCreation = storyCreation;
+    }
+
+    public StoryEdition getStoryEdition() {
+        return storyEdition;
+    }
+
+    public void setStoryEdition(StoryEdition storyEdition) {
+        this.storyEdition = storyEdition;
+    }
+
+    public String getProjectForNewStory() {
+        Project selectedProject = storyCreation.getSelectedProject();
+        if (selectedProject != null) {
+            return selectedProject.getNameProject();
+        } else {
+            return null;
+        }
+    }
+
+    public void setProjectForNewStory(String projectForNewStory) {
+        for (Project project : projects) {
+            if (project.getNameProject().equals(projectForNewStory)) {
+                this.storyCreation.setSelectedProject(project);
+            }
+        }
     }
 }

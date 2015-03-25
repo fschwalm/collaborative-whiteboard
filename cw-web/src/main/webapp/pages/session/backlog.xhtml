@@ -37,9 +37,9 @@
                     </p:column>
                     <f:facet name="footer">
                         <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                         oncomplete="PF('storyCreation').show();"/>
+                                         oncomplete="PF('storyCreation').show();" action="#{backlogController.prepareNewStory()}"/>
 
-                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}"
+                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}" action="#{backlogController.prepareEditionStory()}"
                                          oncomplete="PF('storyDetail').show()" disabled="#{!backlogController.isSelected()}"/>
 
                         <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"/>
@@ -52,22 +52,22 @@
                     <h:form id="storyDetailForm" prependId="false">
                         <h:panelGrid columns="2">
                             <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
-                            <p:inputText id="creationDate" value="#{backlogController.selectedStory.creationDate}"
+                            <p:inputText id="creationDate" value="#{backlogController.storyEdition.creationDate}"
                                          readonly="true"/>
 
                             <h:outputLabel value="#{backlog['label.code']}" for="code"/>
-                            <p:inputText id="code" value="#{backlogController.selectedStory.code}" readonly="true"/>
+                            <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
 
                             <h:outputLabel value="#{backlog['label.author']}" for="author"/>
-                            <p:inputText id="author" value="#{backlogController.selectedStory.author.getFullName()}"
+                            <p:inputText id="author" value="#{backlogController.storyEdition.author.fullName}"
                                          readonly="true"/>
 
                             <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
-                            <p:inputText id="subject" value="#{backlogController.selectedStory.subject}"/>
+                            <p:inputText id="subject" value="#{backlogController.storyEdition.subjectChanges}"/>
                         </h:panelGrid>
 
                         <p:inputTextarea id="description"
-                                         value="#{backlogController.selectedStory.description}" cols="63" rows="20"/>
+                                         value="#{backlogController.storyEdition.descriptionChanges}" cols="63" rows="20"/>
 
                         <h:panelGrid columns="2">
                             <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
@@ -91,13 +91,13 @@
                             </p:selectOneMenu>
 
                             <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
-                            <p:inputText id="subjecNewStory" value="#{backlogController.subjectForNewStory}"
+                            <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
                                          size="60" required="true"/>
 
                             <p:watermark value="#{backlog['label.story.creation.description']}"
                                          for="descriptionNewStory"/>
                             <p:inputTextarea id="descriptionNewStory"
-                                             value="#{backlogController.descriptionForNewStory}"
+                                             value="#{backlogController.storyCreation.description}"
                                              cols="63" rows="20" required="true"/>
                         </h:panelGrid>
 

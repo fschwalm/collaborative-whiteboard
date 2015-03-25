@@ -4,24 +4,20 @@ import backlog_manager.entities.Story;
 import cw.entities.Project;
 import cw.entities.User;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by drferreira on 13/03/15.
  */
-public class CreateStory {
-
-    private Story story;
+public class StoryCreation implements Serializable{
 
     private Project selectedProject;
     private String code;
     private Date creationDate;
     private User user;
     private String subject;
-
-    public CreateStory(Story story) {
-        this.story = story;
-    }
+    private String description;
 
     public Project getSelectedProject() {
         return selectedProject;
@@ -61,5 +57,22 @@ public class CreateStory {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Story getStory(){
+        Story story = new Story(user,selectedProject);
+        story.setSubject(subject);
+        story.setCode(code);
+        story.setDescription(description);
+
+        return story;
     }
 }
