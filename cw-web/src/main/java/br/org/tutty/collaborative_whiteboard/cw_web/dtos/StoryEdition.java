@@ -18,16 +18,19 @@ public class StoryEdition implements Serializable{
     private String subjectChanges;
     private String descriptionChanges;
 
-    public void init(Story selectedStory){
+    public void init(Story selectedStory) {
         this.selectedStory = selectedStory;
+        this.code = selectedStory.getCode();
+        this.creationDate = selectedStory.getCreationDate();
+        this.author = selectedStory.getAuthor();
+        this.subjectChanges = selectedStory.getSubject();
+        this.descriptionChanges = selectedStory.getDescription();
     }
 
-    public Story getSelectedStory() {
-        return selectedStory;
-    }
-
-    public void setSelectedStory(Story selectedStory) {
-        this.selectedStory = selectedStory;
+    public void save(){
+        selectedStory.setCode(code);
+        selectedStory.setSubject(subjectChanges);
+        selectedStory.setDescription(descriptionChanges);
     }
 
     public String getCode() {

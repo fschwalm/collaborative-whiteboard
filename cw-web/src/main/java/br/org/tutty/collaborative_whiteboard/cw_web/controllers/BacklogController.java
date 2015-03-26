@@ -37,6 +37,8 @@ public class BacklogController extends GenericController implements Serializable
     private UserService userService;
 
     private List<Story> stories;
+    private List<Story> filteredStories;
+
     private List<Project> projects;
     private Story selectedStory;
 
@@ -51,6 +53,10 @@ public class BacklogController extends GenericController implements Serializable
     public void setUp() throws EncryptedException, DataNotFoundException, IOException {
         stories = fetchStoriesInOrder();
         projects = fetchProjects();
+    }
+
+    public void saveDetailChanges(){
+        storyEdition.save();
     }
 
     public void prepareNewStory(){
@@ -83,6 +89,7 @@ public class BacklogController extends GenericController implements Serializable
     public void createStory() {
         Story story = storyCreation.getStory();
         stories.add(story);
+        storyCreation = new StoryCreation();
     }
 
 
@@ -151,5 +158,13 @@ public class BacklogController extends GenericController implements Serializable
                 this.storyCreation.setSelectedProject(project);
             }
         }
+    }
+
+    public List<Story> getFilteredStories() {
+        return filteredStories;
+    }
+
+    public void setFilteredStories(List<Story> filteredStories) {
+        this.filteredStories = filteredStories;
     }
 }

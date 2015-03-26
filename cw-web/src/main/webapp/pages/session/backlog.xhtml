@@ -9,7 +9,7 @@
 
         <p:outputPanel>
             <h:form id="backlogForm" prependId="false">
-                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
+                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true" widgetVar="backlogTable" stickyHeader="true"
                              rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}" selectionMode="single">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
@@ -17,7 +17,7 @@
                     <p:ajax event="rowUnselect" update="openButton"/>
 
                     <f:facet name="header">
-                        Backlog list
+                        Backlog
                     </f:facet>
 
                     <p:column headerText="#{backlog['header.table.project']}">
@@ -35,6 +35,7 @@
                     <p:column headerText="#{backlog['header.table.author']}">
                         <h:outputText value="#{story.author.firstName}"/>
                     </p:column>
+
                     <f:facet name="footer">
                         <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                          oncomplete="PF('storyCreation').show();" action="#{backlogController.prepareNewStory()}"/>
@@ -70,7 +71,7 @@
                                          value="#{backlogController.storyEdition.descriptionChanges}" cols="63" rows="20"/>
 
                         <h:panelGrid columns="2">
-                            <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
+                            <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}" action="#{backlogController.saveDetailChanges()}"
                                              update="storyDetailForm :backlogForm:backlogTable" icon="ui-icon-disk"/>
                             <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                              oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
