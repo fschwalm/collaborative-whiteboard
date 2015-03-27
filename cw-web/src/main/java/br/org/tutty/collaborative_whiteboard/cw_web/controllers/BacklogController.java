@@ -59,11 +59,6 @@ public class BacklogController extends GenericController implements Serializable
         storyEdition.save();
     }
 
-    public void prepareNewStory(){
-        User user = sessionContext.getLoggedUser().getUser();
-        storyCreation.setUser(user);
-    }
-
     public void prepareEditionStory(){
         storyEdition.init(selectedStory);
     }
@@ -87,9 +82,17 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void createStory() {
-        Story story = storyCreation.getStory();
+        Story story = backlogManagerService.getEmptyStory(storyCreation.getSelectedProject());
+        story.setSubject(storyCreation.getSubject());
+        story.setDescription(storyCreation.getDescription());
+
         stories.add(story);
         storyCreation = new StoryCreation();
+    }
+
+    public void updateBacklog() throws IOException {
+        backlogManagerService.updateBacklog(stories);
+        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
     }
 
 

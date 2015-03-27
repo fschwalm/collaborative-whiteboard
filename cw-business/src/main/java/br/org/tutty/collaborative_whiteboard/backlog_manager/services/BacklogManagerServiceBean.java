@@ -4,6 +4,7 @@ import backlog_manager.entities.Story;
 import br.org.tutty.backlog_manager.BacklogDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.dtos.LoggedUser;
+import cw.entities.Project;
 import cw.exceptions.DataNotFoundException;
 
 import javax.ejb.Local;
@@ -27,13 +28,14 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
-        return backlogDao.fetchStories();
+        return backlogDao.fetchAllStories();
     }
 
     @Override
-    public Story getEmptyStory() {
+    public Story getEmptyStory(Project project) {
         LoggedUser loggedUser = sessionContext.getLoggedUser();
         Story story = new Story(loggedUser.getUser());
+        story.setProject(project);
         story.setCode("TESTE CODE");
         return story;
     }
@@ -51,7 +53,6 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         return stories;
     }
 
-
     @Override
     public List<Story> sortStoriesByPriority(List<Story> stories) {
         Comparator<Story> byPriority = (elementOne, elementTwo) -> Integer.compare(
@@ -60,6 +61,9 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         return stories.stream().sorted(byPriority).collect(Collectors.toList());
     }
 
-
+    @Override
+    public void updateBacklog(List<Story> stories) {
+        backlogDao.updateStories(stories);
+    }
 
 }

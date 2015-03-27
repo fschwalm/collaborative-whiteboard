@@ -25,12 +25,12 @@ public class BacklogServiceBeanTest {
     public void fetchAllStoriesShouldCallDaoWithoutFilters() throws DataNotFoundException {
         backlogManagerServiceBean.fetchAllStories();
 
-        Mockito.verify(backlogDaoBean).fetchStories();
+        Mockito.verify(backlogDaoBean).fetchAllStories();
     }
 
     @Test(expected = DataNotFoundException.class)
     public void fetchAllStoriesShouldThrowDataNotFoundWhenNotFoundStories() throws DataNotFoundException {
-        Mockito.when(backlogDaoBean.fetchStories()).thenThrow(DataNotFoundException.class);
+        Mockito.when(backlogDaoBean.fetchAllStories()).thenThrow(DataNotFoundException.class);
 
         backlogManagerServiceBean.fetchAllStories();
     }

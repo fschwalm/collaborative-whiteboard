@@ -53,5 +53,10 @@
             <to-view-id>/pages/index.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>PROJECT_PAGE</from-outcome>
+            <to-view-id>/pages/session/project.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

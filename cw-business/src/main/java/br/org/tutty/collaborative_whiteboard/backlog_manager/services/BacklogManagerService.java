@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Story;
+import cw.entities.Project;
 import cw.exceptions.DataNotFoundException;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 public interface BacklogManagerService {
     List<Story> fetchAllStories() throws DataNotFoundException;
 
-    Story getEmptyStory();
+    Story getEmptyStory(Project project);
 
     List<Story> reformulatePriorities(List<Story> stories);
 
     List<Story> sortStoriesByPriority(List<Story> stories);
+
+    void updateBacklog(List<Story> stories);
 }

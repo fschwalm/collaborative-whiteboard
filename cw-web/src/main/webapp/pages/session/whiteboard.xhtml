@@ -20,7 +20,8 @@
 
                         <div>
                             <p:dataList id="projectList" value="#{whiteboardController.projects}" var="project">
-                                <h:outputText value="#{project.nameProject}"/>
+                                <p:commandLink value="#{project.nameProject}" action="#{whiteboardController.openProject(project)}" process="@this"/>
+                                <h:outputText />
                                 <hr/>
                             </p:dataList>
                         </div>

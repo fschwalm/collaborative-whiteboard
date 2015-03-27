@@ -13,9 +13,14 @@ import java.util.List;
 public class BacklogDaoBean extends GenericDao implements BacklogDao {
 
     @Override
-    public List<Story> fetchStories() throws DataNotFoundException {
+    public List<Story> fetchAllStories() throws DataNotFoundException {
         Criteria criteria = createCriteria(Story.class);
 
         return listNotWaitingEmpty(criteria);
+    }
+
+    @Override
+    public void updateStories(List<Story> stories) {
+        stories.stream().forEach(story -> persist(story));
     }
 }

@@ -63,6 +63,11 @@ public class WhiteboardController extends GenericController implements Serializa
         }
     }
 
+    public String openProject(Project project){
+        sessionContext.setSelectedProject(project);
+        return GOT_TO_PROJECT_PAGE;
+    }
+
     public String goToBacklog(){
         return GO_TO_BACKLOG;
     }

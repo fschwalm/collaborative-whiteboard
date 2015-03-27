@@ -1,6 +1,6 @@
-  - (ANDAMENTO) Implementar persistencia de backlog
+ - (ANDAMENTO) Pagina para edição do projeto
 
- - Pagina para edição do projeto
+ - (OK) Implementar persistencia de backlog
 
  - (OK) Corrigir botão de abrir para somente funcionar quando estiver selecionado
 
@@ -17,3 +17,7 @@
   - Gerar ID para Estorias
 
   - Corrigir e pensar no modelo de compartilhamento
+
+  - Criar redirect index para pagina principal
+
+  - Corrigir Layout chat

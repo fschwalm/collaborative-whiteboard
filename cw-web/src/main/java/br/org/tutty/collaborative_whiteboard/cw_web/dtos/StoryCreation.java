@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
-import backlog_manager.entities.Story;
 import cw.entities.Project;
 import cw.entities.User;
 
@@ -65,14 +64,5 @@ public class StoryCreation implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Story getStory(){
-        Story story = new Story(user,selectedProject);
-        story.setSubject(subject);
-        story.setCode(code);
-        story.setDescription(description);
-
-        return story;
     }
 }

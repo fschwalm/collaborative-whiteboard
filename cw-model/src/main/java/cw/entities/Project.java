@@ -18,9 +18,6 @@ public class Project implements Serializable{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long projectId;
 
-    @Transient
-    private String identificationCode;
-
     @ManyToOne
     @NotNull
     private User owner;
@@ -59,10 +56,6 @@ public class Project implements Serializable{
         this.nameProject = nameProject;
     }
 
-    public String getIdentificationCode() {
-        return identificationCode;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,11 +65,11 @@ public class Project implements Serializable{
 
         if (creationDate != null ? !creationDate.equals(project.creationDate) : project.creationDate != null)
             return false;
-        if (identificationCode != null ? !identificationCode.equals(project.identificationCode) : project.identificationCode != null)
-            return false;
         if (nameProject != null ? !nameProject.equals(project.nameProject) : project.nameProject != null) return false;
         if (owner != null ? !owner.equals(project.owner) : project.owner != null) return false;
         if (projectId != null ? !projectId.equals(project.projectId) : project.projectId != null) return false;
+        if (propertyMonitor != null ? !propertyMonitor.equals(project.propertyMonitor) : project.propertyMonitor != null)
+            return false;
 
         return true;
     }
@@ -84,10 +77,10 @@ public class Project implements Serializable{
     @Override
     public int hashCode() {
         int result = projectId != null ? projectId.hashCode() : 0;
-        result = 31 * result + (identificationCode != null ? identificationCode.hashCode() : 0);
         result = 31 * result + (owner != null ? owner.hashCode() : 0);
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         result = 31 * result + (nameProject != null ? nameProject.hashCode() : 0);
+        result = 31 * result + (propertyMonitor != null ? propertyMonitor.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,9 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
-import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.dtos.LoggedUser;
-import cw.entities.User;
+import cw.entities.Project;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import java.io.Serializable;
 
 /**
@@ -13,11 +11,8 @@ import java.io.Serializable;
  */
 @SessionScoped
 public class SessionContext implements Serializable {
-
-    @Inject
-    private GenericDao genericDao;
-
     private LoggedUser loggedUser;
+    private Project selectedProject;
 
     public LoggedUser getLoggedUser() {
         return loggedUser;
@@ -25,5 +20,9 @@ public class SessionContext implements Serializable {
 
     public void setLoggedUser(LoggedUser loggedUser) {
         this.loggedUser = loggedUser;
+    }
+
+    public void setSelectedProject(Project selectedProject) {
+        this.selectedProject = selectedProject;
     }
 }

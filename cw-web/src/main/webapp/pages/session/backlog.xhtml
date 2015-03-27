@@ -9,8 +9,10 @@
 
         <p:outputPanel>
             <h:form id="backlogForm" prependId="false">
-                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true" widgetVar="backlogTable" stickyHeader="true"
-                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}" selectionMode="single">
+                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
+                             widgetVar="backlogTable" stickyHeader="true"
+                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}"
+                             selectionMode="single">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
                     <p:ajax event="rowSelect" update="openButton"/>
@@ -38,16 +40,34 @@
 
                     <f:facet name="footer">
                         <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                         oncomplete="PF('storyCreation').show();" action="#{backlogController.prepareNewStory()}"/>
+                                         oncomplete="PF('storyCreation').show();"/>
 
-                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}" action="#{backlogController.prepareEditionStory()}"
-                                         oncomplete="PF('storyDetail').show()" disabled="#{!backlogController.isSelected()}"/>
+                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}"
+                                         action="#{backlogController.prepareEditionStory()}"
+                                         oncomplete="PF('storyDetail').show()"
+                                         disabled="#{!backlogController.isSelected()}"/>
 
-                        <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"/>
-
+                        <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"
+                                         onclick="PF('confirmationUpdateBacklog').show()">
+                            <p:confirm message="#{backlog['confirmation.text']}" icon="ui-icon-alert"/>
+                        </p:commandButton>
                     </f:facet>
                 </p:dataTable>
             </h:form>
+
+            <p:confirmDialog global="true" widgetVar="confirmationUpdateBacklog" modal="true" resizable="false">
+                <p:outputPanel>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{backlog['btn.save']}"
+                                         actionListener="#{backlogController.updateBacklog()}"
+                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="#{backlog['btn.cancel']}"
+                                         onclick="PF('confirmationUpdateBacklog').hide()" type="button"
+                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:confirmDialog>
+
             <p:dialog widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
                 <p:outputPanel id="storyDetailPanel">
                     <h:form id="storyDetailForm" prependId="false">
@@ -68,10 +88,12 @@
                         </h:panelGrid>
 
                         <p:inputTextarea id="description"
-                                         value="#{backlogController.storyEdition.descriptionChanges}" cols="63" rows="20"/>
+                                         value="#{backlogController.storyEdition.descriptionChanges}" cols="63"
+                                         rows="20"/>
 
                         <h:panelGrid columns="2">
-                            <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}" action="#{backlogController.saveDetailChanges()}"
+                            <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
+                                             action="#{backlogController.saveDetailChanges()}"
                                              update="storyDetailForm :backlogForm:backlogTable" icon="ui-icon-disk"/>
                             <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                              oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"/>

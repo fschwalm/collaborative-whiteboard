@@ -40,8 +40,8 @@ public class ProjectServiceBean implements ProjectService {
             User user = sessionContext.getLoggedUser().getUser();
 
             Project project = new Project(projectName, user);
-            user.addProject(project);
             projectDao.persist(project);
+            user.addProject(project);
 
             return project;
 
