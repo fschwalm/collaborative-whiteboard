@@ -1,0 +1,12 @@
+#headerPage {
+    background-image: url(../images/header_blue.png);
+    height: 180px;
+}
+
+#bodyPage{
+    background-color: #F0F0F0;
+}
+
+#myProjects{
+    float: right;
+}

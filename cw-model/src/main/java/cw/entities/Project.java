@@ -29,6 +29,15 @@ public class Project implements Serializable{
     @Column(nullable = false)
     private String nameProject;
 
+    @Column
+    private String description;
+
+    @Column
+    private String prefix;
+
+    @Column
+    private String color;
+
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
@@ -36,6 +45,13 @@ public class Project implements Serializable{
         this.nameProject = nameProject;
         this.creationDate = new Date();
         this.owner = owner;
+        this.description = "";
+        this.prefix = "";
+        initProjectColorWithWhite();
+    }
+
+    private void initProjectColorWithWhite(){
+        this.color = "ffffff";
     }
 
     protected Project() {}
@@ -53,7 +69,10 @@ public class Project implements Serializable{
     }
 
     public void setNameProject(String nameProject) {
+        String oldValue = this.nameProject;
         this.nameProject = nameProject;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("nameProject", oldValue, nameProject);
     }
 
     @Override
@@ -82,5 +101,42 @@ public class Project implements Serializable{
         result = 31 * result + (nameProject != null ? nameProject.hashCode() : 0);
         result = 31 * result + (propertyMonitor != null ? propertyMonitor.hashCode() : 0);
         return result;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        String oldValue = this.description;
+        this.description = description;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("description", oldValue, description);
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        String oldValue = this.prefix;
+        this.prefix = prefix;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("prefix", oldValue, prefix);
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        String oldValue = this.color;
+        this.color = color;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("color", oldValue, color);
     }
 }

@@ -5,32 +5,33 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <ui:include src="../components/chat.xhtml"/>
-
-        <h:form>
+        <h:form prependId="false">
             <h:panelGrid columns="2">
                 <h:outputLabel for="projectCreationDate" value="Data de Criação:"/>
-                <h:outputText id="projectCreationDate" value="22/03/1986"/>
+                <p:inputText id="projectCreationDate" value="#{projectController.creationDate}" readonly="true"/>
 
                 <h:outputLabel for="projectName" value="Nome do Projeto:"/>
-                <p:inplace>
-                    <p:inputText id="projectName" value="Linda"/>
-                </p:inplace>
+                <p:inputText id="projectName" value="#{projectController.projectName}"/>
 
                 <h:outputLabel for="projectColor" value="Cor:"/>
-                <p:colorPicker id="projectColor"/>
+                <p:colorPicker id="projectColor" value="#{projectController.color}"/>
 
                 <h:outputLabel for="owner" value="Criador:"/>
-                <h:outputText id="owner" value="Diogo Rosas Ferreira"/>
+                <p:inputText id="owner" value="#{projectController.ownerName}" readonly="true"/>
 
-                <h:outputLabel for="prefix" value="Criador:"/>
-                <p:inplace>
-                    <h:outputText id="prefix" value="LIN"/>
-                </p:inplace>
+                <h:outputLabel for="prefix" value="Prefix:"/>
+                <p:inputText id="prefix" value="#{projectController.projectPrefix}"/>
 
             </h:panelGrid>
-            <p:inputTextarea id="descriptionProject" cols="120" rows="20" value="Descrição do projeto" readonly="true"/>
+            <p:editor id="descriptionProject" cols="120" rows="20" value="#{projectController.projectDescription}"/>
+            <p:commandButton value="Salvar" update=":confirmationForm:confirmationDialog" process="@all"/>
         </h:form>
+
+        <h:form id="confirmationForm" prependId="false">
+            <p:dialog id="confirmationDialog" visible="#{projectController.hasChanged()}">
+            </p:dialog>
+        </h:form>
+
 
     </ui:define>
 </ui:composition>

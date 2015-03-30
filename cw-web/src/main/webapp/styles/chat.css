@@ -24,7 +24,7 @@
 }
 
 .receivedMessages{
-    background-image: url(../images/background_message.png) ;
+    background-image: url(../../images/background_message.png) ;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     border-radius: 10px;

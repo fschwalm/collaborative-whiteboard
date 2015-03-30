@@ -7,14 +7,20 @@
       xmlns:p="http://primefaces.org/ui">
 
 <f:view>
-
     <h:head>
         <title>Collaborative-Whiteboard</title>
     </h:head>
 
-    <h:body>
+    <link type="text/css" rel="stylesheet" href="../../styles/style.css"/>
+
+
+    <h:body id="bodyPage">
         <p:growl id="globalMessages" globalOnly="true" autoUpdate="true"
                  escape="false"/>
+
+        <div id="headerPage">
+            <ui:include src="../pages/components/chat.xhtml"/>
+        </div>
 
         <ui:insert name="pageContent"/>
     </h:body>

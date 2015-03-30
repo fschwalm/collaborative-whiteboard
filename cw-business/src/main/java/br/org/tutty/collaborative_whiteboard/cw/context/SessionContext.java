@@ -25,4 +25,8 @@ public class SessionContext implements Serializable {
     public void setSelectedProject(Project selectedProject) {
         this.selectedProject = selectedProject;
     }
+
+    public Project getSelectedProject() {
+        return selectedProject;
+    }
 }

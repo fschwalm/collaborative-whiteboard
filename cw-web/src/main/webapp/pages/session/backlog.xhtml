@@ -5,8 +5,6 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <ui:include src="../components/chat.xhtml"/>
-
         <p:outputPanel>
             <h:form id="backlogForm" prependId="false">
                 <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
