@@ -3,6 +3,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryCreation;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
@@ -31,16 +32,12 @@ import java.util.List;
 public class BacklogController extends GenericController implements Serializable {
     @Inject
     private BacklogManagerService backlogManagerService;
+
     @Inject
     private SessionContext sessionContext;
+
     @Inject
     private UserService userService;
-
-    private List<Story> stories;
-    private List<Story> filteredStories;
-
-    private List<Project> projects;
-    private Story selectedStory;
 
     @Inject
     private StoryCreation storyCreation;
@@ -48,6 +45,12 @@ public class BacklogController extends GenericController implements Serializable
     @Inject
     private StoryEdition storyEdition;
 
+    @Inject
+    private ProjectService projectService;
+
+    private List<Story> stories;
+    private List<Project> projects;
+    private Story selectedStory;
 
     @PostConstruct
     public void setUp() throws EncryptedException, DataNotFoundException, IOException {
@@ -74,7 +77,7 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public List<Project> fetchProjects() throws DataNotFoundException {
-        return userService.fetchProjects();
+        return projectService.fetchProjects();
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
@@ -161,13 +164,5 @@ public class BacklogController extends GenericController implements Serializable
                 this.storyCreation.setSelectedProject(project);
             }
         }
-    }
-
-    public List<Story> getFilteredStories() {
-        return filteredStories;
-    }
-
-    public void setFilteredStories(List<Story> filteredStories) {
-        this.filteredStories = filteredStories;
     }
 }

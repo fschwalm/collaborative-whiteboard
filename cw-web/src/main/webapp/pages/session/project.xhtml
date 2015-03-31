@@ -24,14 +24,8 @@
 
             </h:panelGrid>
             <p:editor id="descriptionProject" cols="120" rows="20" value="#{projectController.projectDescription}"/>
-            <p:commandButton value="Salvar" update=":confirmationForm:confirmationDialog" process="@all"/>
+            <p:commandButton value="Salvar" process="@form" action="#{projectController.save()}"/>
+            <p:commandButton value="Cancelar" action="#{projectController.discard()}"/>
         </h:form>
-
-        <h:form id="confirmationForm" prependId="false">
-            <p:dialog id="confirmationDialog" visible="#{projectController.hasChanged()}">
-            </p:dialog>
-        </h:form>
-
-
     </ui:define>
 </ui:composition>

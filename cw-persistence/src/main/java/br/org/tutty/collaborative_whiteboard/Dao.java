@@ -5,4 +5,6 @@ package br.org.tutty.collaborative_whiteboard;
  */
 public interface Dao {
     void persist(Object entity);
+
+    void update(Object entity);
 }

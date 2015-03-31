@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +29,6 @@ public class WhiteboardController extends GenericController implements Serializa
 
     @Inject
     private SessionContext sessionContext;
-
-    @Inject
-    private UserService userService;
 
     @Inject
     private ProjectService projectService;
@@ -56,10 +54,10 @@ public class WhiteboardController extends GenericController implements Serializa
 
     public List<Project> fetchProjects() {
         try {
-            return userService.fetchProjects();
+            return projectService.fetchProjects();
 
         } catch (DataNotFoundException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -73,7 +71,7 @@ public class WhiteboardController extends GenericController implements Serializa
     }
 
     public Boolean hasSomeProject(){
-        return userService.hasSomeProject();
+        return !projects.isEmpty();
     }
 
     public String getProjectName() {

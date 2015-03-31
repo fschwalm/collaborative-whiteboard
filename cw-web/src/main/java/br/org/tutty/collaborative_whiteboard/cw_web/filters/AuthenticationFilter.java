@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.filters;
 
 import br.org.tutty.collaborative_whiteboard.cw.service.SecurityService;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

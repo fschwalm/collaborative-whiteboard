@@ -21,3 +21,5 @@
   - Criar redirect index para pagina principal
 
   - Corrigir Layout chat
+
+  - (OK) Persistir mensagens apos redirect

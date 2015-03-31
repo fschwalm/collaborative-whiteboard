@@ -22,12 +22,9 @@ public abstract class GenericDao implements Dao, Serializable{
         entityManager.persist(entity);
     }
 
-    public void remove(Object entity) {
-        entityManager.remove(entityManager.merge(entity));
-    }
-
-    public Criteria createCriteria(Class<?> clazz, String alias) {
-        return getSession().createCriteria(clazz, alias);
+    @Override
+    public void update(Object entity){
+        entityManager.merge(entity);
     }
 
     public Criteria createCriteria(Class<?> clazz) {

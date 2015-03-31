@@ -30,12 +30,6 @@ public class UserServiceBean implements UserService, Serializable {
     }
 
     @Override
-    public List<Project> fetchProjects() throws DataNotFoundException {
-        User user = sessionContext.getLoggedUser().getUser();
-        return user.getProjects();
-    }
-
-    @Override
     public Boolean hasSomeProject(){
         User user = sessionContext.getLoggedUser().getUser();
         return user.hasSomeProject();

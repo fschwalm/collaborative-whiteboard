@@ -1,12 +1,15 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import cw.entities.Project;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -19,14 +22,27 @@ public class ProjectController extends GenericController implements Serializable
     @Inject
     private SessionContext sessionContext;
 
+    @Inject
+    private ProjectService projectService;
+
     private Project selectedProject;
 
     @PostConstruct
-    public void setUp(){
+    public void setUp() throws CloneNotSupportedException {
         selectedProject = sessionContext.getSelectedProject();
     }
 
-    public void save(){
+    public String save() throws IOException {
+        if(hasChanged()) {
+            projectService.update(selectedProject);
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
+        }
+
+        return HOME_PAGE;
+    }
+
+    public String discard(){
+        return HOME_PAGE;
     }
 
     public Boolean hasChanged(){

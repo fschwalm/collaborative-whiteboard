@@ -139,4 +139,29 @@ public class Project implements Serializable{
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("color", oldValue, color);
     }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public Project clone() throws CloneNotSupportedException {
+        try {
+            Project project = new Project(this.nameProject, owner);
+            project.setProjectId(this.projectId);
+            project.setCreationDate(this.creationDate);
+            project.setNameProject(this.nameProject);
+            project.setDescription(this.description);
+            project.setPrefix(this.prefix);
+            project.setColor(this.color);
+
+            return project;
+        }catch (Exception e){
+            throw new CloneNotSupportedException();
+        }
+    }
 }

@@ -10,6 +10,7 @@ import cw.exceptions.NameInUseException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by drferreira on 20/03/15.
@@ -48,5 +49,16 @@ public class ProjectServiceBean implements ProjectService {
         }else {
             throw new NameInUseException();
         }
+    }
+
+    @Override
+    public void update(Project selectedProjectCloned) {
+        projectDao.update(selectedProjectCloned);
+    }
+
+    @Override
+    public List<Project> fetchProjects() throws DataNotFoundException {
+        User user = sessionContext.getLoggedUser().getUser();
+        return projectDao.fetchAll(user);
     }
 }
