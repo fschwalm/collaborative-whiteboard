@@ -48,10 +48,15 @@ public class Project implements Serializable{
         this.description = "";
         this.prefix = "";
         initProjectColorWithWhite();
+        initProjectPrefix(nameProject);
     }
 
     private void initProjectColorWithWhite(){
         this.color = "ffffff";
+    }
+
+    private void initProjectPrefix(String nameProject){
+        this.prefix = nameProject.toLowerCase();
     }
 
     protected Project() {}

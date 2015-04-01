@@ -1,4 +1,6 @@
- - (ANDAMENTO) Pagina para edição do projeto
+   - (Andamento) Gerar ID para Estorias
+
+  - (ok) Pagina para edição do projeto
 
  - (OK) Implementar persistencia de backlog
 
@@ -13,8 +15,6 @@
   - Cor de linhas do backlog conforme cor do projeto
 
   - Flecha de prioridades ao lado do backlog
-
-  - Gerar ID para Estorias
 
   - Corrigir e pensar no modelo de compartilhamento
 

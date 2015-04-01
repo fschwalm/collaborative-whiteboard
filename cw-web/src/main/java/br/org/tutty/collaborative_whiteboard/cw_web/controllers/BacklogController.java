@@ -8,7 +8,6 @@ import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryCreation;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.entities.Project;
-import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 import org.primefaces.context.RequestContext;
@@ -54,7 +53,7 @@ public class BacklogController extends GenericController implements Serializable
 
     @PostConstruct
     public void setUp() throws EncryptedException, DataNotFoundException, IOException {
-        stories = fetchStoriesInOrder();
+        stories = fetchStories();
         projects = fetchProjects();
     }
 
@@ -66,11 +65,17 @@ public class BacklogController extends GenericController implements Serializable
         storyEdition.init(selectedStory);
     }
 
-    public List<Story> fetchStoriesInOrder() throws IOException {
+    public List<Story> fetchStories() throws IOException {
         try {
-            List<Story> storiesUnordered = backlogManagerService.fetchAllStories();
-            return backlogManagerService.sortStoriesByPriority(storiesUnordered);
+            return backlogManagerService.fetchAllStories();
+
         } catch (DataNotFoundException e) {
+            stories = new ArrayList<>();
+            return stories;
+
+        } catch (Exception e){
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.stories.error");
+
             stories = new ArrayList<>();
             return stories;
         }
@@ -84,12 +89,13 @@ public class BacklogController extends GenericController implements Serializable
         showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
     }
 
-    public void createStory() {
+    public void createStory() throws IOException {
         Story story = backlogManagerService.getEmptyStory(storyCreation.getSelectedProject());
         story.setSubject(storyCreation.getSubject());
         story.setDescription(storyCreation.getDescription());
 
         stories.add(story);
+
         storyCreation = new StoryCreation();
     }
 
@@ -97,7 +103,6 @@ public class BacklogController extends GenericController implements Serializable
         backlogManagerService.updateBacklog(stories);
         showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
     }
-
 
     public Boolean isSelected() {
         return selectedStory != null ? true : false;
