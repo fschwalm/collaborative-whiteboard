@@ -1,6 +1,6 @@
-   - (Andamento) Gerar ID para Estorias
+ - (OK) Gerar ID para Estorias
 
-  - (ok) Pagina para edição do projeto
+ - (ok) Pagina para edição do projeto
 
  - (OK) Implementar persistencia de backlog
 
@@ -12,7 +12,7 @@
 
   - Adicionar Filtro Global a tabela de backlog
 
-  - Cor de linhas do backlog conforme cor do projeto
+  - (Andamento) Cor de linhas do backlog conforme cor do projeto
 
   - Flecha de prioridades ao lado do backlog
 
@@ -21,5 +21,7 @@
   - Criar redirect index para pagina principal
 
   - Corrigir Layout chat
+
+  - Criar 'area sistema' para concatenar ao codigo
 
   - (OK) Persistir mensagens apos redirect

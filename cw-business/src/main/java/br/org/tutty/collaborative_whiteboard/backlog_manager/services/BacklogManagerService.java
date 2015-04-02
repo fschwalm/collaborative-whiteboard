@@ -14,7 +14,5 @@ public interface BacklogManagerService {
 
     Story getEmptyStory(Project project);
 
-    List<Story> sortStoriesByPriority(List<Story> stories);
-
     void updateBacklog(List<Story> stories);
 }

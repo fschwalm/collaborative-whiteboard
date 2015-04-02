@@ -52,20 +52,16 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         String prefix = project.getPrefix();
 
         StringBuffer code = new StringBuffer(prefix);
-        code.append("AREA_DO_SISTEMA");
         code.append(sequence.toString());
 
         return code.toString();
     }
 
     public List<Story> reformulatePriorities(List<Story> stories) {
-        stories.forEach(story ->
-                {
-                    Integer priorityCounter = 1;
-                    story.setPriority(priorityCounter);
-                    priorityCounter++;
-                }
-        );
+        for (Story story : stories){
+            int indexOf = stories.indexOf(story);
+            story.setPriority(indexOf);
+        }
 
         return stories;
     }
@@ -102,13 +98,5 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     public void updateBacklog(List<Story> stories) {
         List<Story> prioritizedStories = reformulatePriorities(stories);
         updateStories(prioritizedStories);
-    }
-
-    @Override
-    public List<Story> sortStoriesByPriority(List<Story> stories) {
-        Comparator<Story> byPriority = (elementOne, elementTwo) -> Integer.compare(
-                elementOne.getPriority(), elementTwo.getPriority());
-
-        return stories.stream().sorted(byPriority).collect(Collectors.toList());
     }
 }
