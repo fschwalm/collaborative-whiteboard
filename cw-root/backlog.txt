@@ -1,3 +1,6 @@
+
+  - (Andamento) Cor de linhas do backlog conforme cor do projeto
+
  - (OK) Gerar ID para Estorias
 
  - (ok) Pagina para edição do projeto
@@ -12,8 +15,6 @@
 
   - Adicionar Filtro Global a tabela de backlog
 
-  - (Andamento) Cor de linhas do backlog conforme cor do projeto
-
   - Flecha de prioridades ao lado do backlog
 
   - Corrigir e pensar no modelo de compartilhamento
@@ -25,3 +26,7 @@
   - Criar 'area sistema' para concatenar ao codigo
 
   - (OK) Persistir mensagens apos redirect
+
+  - Validação de dados para criação de Usuario
+
+  - Confirmação por senha para novo usuário
