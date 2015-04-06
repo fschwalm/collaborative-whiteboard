@@ -28,7 +28,7 @@
                                  requiredMessage="#{accountCreation['required.last_name']}" value="#{accountCreationController.lastName}" size="35"/>
 
                     <p:watermark value="#{accountCreation['birthdate']}" for="birthdate"/>
-                    <p:calendar id="birthdate" required="true" navigator="true" pattern="dd-MM-yyyy" mask="true" size="10"
+                    <p:calendar id="birthdate" required="true" navigator="true" pattern="dd-MM-yyyy" mask="true" size="10" maxdate="#{accountCreationController.birthdateMax()}"
                                 requiredMessage="#{accountCreation['required.birthdate']}" value="#{accountCreationController.birthdate}"/>
 
                     <p:watermark value="#{accountCreation['password']}" for="password"/>

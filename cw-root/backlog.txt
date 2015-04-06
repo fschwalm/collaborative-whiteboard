@@ -1,6 +1,3 @@
-
-  - (Andamento) Cor de linhas do backlog conforme cor do projeto
-
  - (OK) Gerar ID para Estorias
 
  - (ok) Pagina para edição do projeto
@@ -27,6 +24,8 @@
 
   - (OK) Persistir mensagens apos redirect
 
-  - Validação de dados para criação de Usuario
+  - (OK) Validação de dados para criação de Usuario
 
   - Confirmação por senha para novo usuário
+
+  - Cor de linhas do backlog conforme cor do projeto

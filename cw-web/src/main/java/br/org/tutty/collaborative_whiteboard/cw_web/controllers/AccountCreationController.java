@@ -5,12 +5,16 @@ import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import cw.dtos.EncryptorResources;
 import cw.dtos.Security;
 import cw.entities.User;
+import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 import cw.exceptions.LoginException;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -33,17 +37,43 @@ public class AccountCreationController extends GenericController implements Seri
     private Date birthdate;
     private String password;
 
-    public String create() throws EncryptedException, LoginException {
-        User user = new User(email, password, firstName, lastName);
-        userService.create(user);
+    private Date birthdateMax;
 
-        authenticateUser();
-        return HOME_PAGE;
+    @PostConstruct
+    public void setUp(){
+        initCalendarValidation();
+    }
+
+    private void initCalendarValidation() {
+        birthdateMax = new Date();
+    }
+
+    public String create() throws EncryptedException, LoginException, IOException {
+        if(!isAlreadyRegistered(email)){
+            User user = new User(email, password, firstName, lastName);
+            userService.create(user);
+
+            authenticateUser();
+            return HOME_PAGE;
+        }else {
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "create_account.already_registered");
+            return STAY_ON_PAGE;
+        }
     }
 
     private void authenticateUser() throws EncryptedException, LoginException {
         Security security = new Security(getSession(), email, password);
         securityService.login(security);
+    }
+
+    private Boolean isAlreadyRegistered(String email){
+        try {
+            userService.fetch(email);
+            return Boolean.TRUE;
+
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
     }
 
     public String cancel(){
@@ -88,5 +118,9 @@ public class AccountCreationController extends GenericController implements Seri
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date birthdateMax() {
+        return birthdateMax;
     }
 }
