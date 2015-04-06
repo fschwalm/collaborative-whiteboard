@@ -7,50 +7,72 @@
     <ui:define name="pageContent">
         <p:outputPanel>
             <h:form id="backlogForm" prependId="false">
-                <p:dataTable id="backlogTable" var="story" value="#{backlogController.stories}" draggableRows="true"
-                             widgetVar="backlogTable" stickyHeader="true"
-                             rowIndexVar="index" selection="#{backlogController.selectedStory}" rowKey="#{story}"
-                             selectionMode="single">
-                    <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
-                    <p:ajax event="rowSelect" update="openButton"/>
-                    <p:ajax event="rowUnselect" update="openButton"/>
+                <p:spacer height="20"/>
 
-                    <f:facet name="header">
-                        Backlog
-                    </f:facet>
+                <div>
+                    <div class="backlogDiv">
+                        <h:panelGrid columns="2">
+                            <h:column>
+                                <h:panelGrid columns="1">
+                                    <h:graphicImage url="../../images/up_priority.jpg" style="width: 50px;  bottom: 120px; position: relative"/>
+                                    <h:graphicImage url="../../images/down_priority.jpg"
+                                                    style="width: 50px; top: 120px;position: relative"/>
+                                </h:panelGrid>
+                            </h:column>
+                            <h:column>
+                                <p:dataTable id="backlogTable" var="story" scrollable="true" scrollHeight="400"
+                                             value="#{backlogController.stories}"
+                                             draggableRows="true"
+                                             widgetVar="backlogTable"
+                                             rowIndexVar="index" selection="#{backlogController.selectedStory}"
+                                             rowKey="#{story}"
+                                             selectionMode="single">
+                                    <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
-                    <p:column headerText="#{backlog['header.table.project']}">
-                        <h:outputText value="#{story.project.nameProject}"/>
-                    </p:column>
+                                    <p:ajax event="rowSelect" update="openButton"/>
+                                    <p:ajax event="rowUnselect" update="openButton"/>
 
-                    <p:column headerText="#{backlog['header.table.code']}">
-                        <h:outputText value="#{story.code}"/>
-                    </p:column>
+                                    <f:facet name="header">
+                                        Backlog
+                                    </f:facet>
 
-                    <p:column headerText="#{backlog['header.table.subject']}">
-                        <h:outputText value="#{story.subject}"/>
-                    </p:column>
+                                    <p:column headerText="#{backlog['header.table.project']}">
+                                        <h:outputText value="#{story.project.nameProject}"/>
+                                    </p:column>
 
-                    <p:column headerText="#{backlog['header.table.author']}">
-                        <h:outputText value="#{story.author.firstName}"/>
-                    </p:column>
+                                    <p:column headerText="#{backlog['header.table.code']}">
+                                        <h:outputText value="#{story.code}"/>
+                                    </p:column>
 
-                    <f:facet name="footer">
-                        <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                         oncomplete="PF('storyCreation').show();"/>
+                                    <p:column headerText="#{backlog['header.table.subject']}">
+                                        <h:outputText value="#{story.subject}"/>
+                                    </p:column>
 
-                        <p:commandButton id="openButton" icon="ui-icon-folder-open" value="#{backlog['btn.open']}"
-                                         action="#{backlogController.prepareEditionStory()}"
-                                         oncomplete="PF('storyDetail').show()"
-                                         disabled="#{!backlogController.isSelected()}"/>
+                                    <p:column headerText="#{backlog['header.table.author']}">
+                                        <h:outputText value="#{story.author.firstName}"/>
+                                    </p:column>
 
-                        <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"
-                                         onclick="PF('confirmationUpdateBacklog').show()">
-                            <p:confirm message="#{backlog['confirmation.text']}" icon="ui-icon-alert"/>
-                        </p:commandButton>
-                    </f:facet>
-                </p:dataTable>
+                                    <f:facet name="footer">
+                                        <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
+                                                         oncomplete="PF('storyCreation').show();"/>
+
+                                        <p:commandButton id="openButton" icon="ui-icon-folder-open"
+                                                         value="#{backlog['btn.open']}"
+                                                         action="#{backlogController.prepareEditionStory()}"
+                                                         oncomplete="PF('storyDetail').show()"
+                                                         disabled="#{!backlogController.isSelected()}"/>
+
+                                        <p:commandButton icon="ui-icon-disk" value="#{backlog['btn.save_changes']}"
+                                                         onclick="PF('confirmationUpdateBacklog').show()">
+                                            <p:confirm message="#{backlog['confirmation.text']}" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                    </f:facet>
+                                </p:dataTable>
+                            </h:column>
+                        </h:panelGrid>
+                    </div>
+                </div>
             </h:form>
 
             <p:confirmDialog global="true" widgetVar="confirmationUpdateBacklog" modal="true" resizable="false">

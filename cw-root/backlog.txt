@@ -1,22 +1,12 @@
- - (OK) Gerar ID para Estorias
+  - Confirmação por senha para novo usuário
 
- - (ok) Pagina para edição do projeto
-
- - (OK) Implementar persistencia de backlog
-
- - (OK) Corrigir botão de abrir para somente funcionar quando estiver selecionado
-
- - (OK) Adicionar dependencia para verificar mudança em entidade de Story
-
-  - (OK) Limpar dados da dialog de adicionar apos ser adicionada a estoria
+  - Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
 
-  - Flecha de prioridades ao lado do backlog
+  - (Andamento) Flecha de prioridades ao lado do backlog
 
   - Corrigir e pensar no modelo de compartilhamento
-
-  - (ok) Criar redirect index para pagina principal
 
   - Corrigir Layout chat
 
@@ -26,6 +16,16 @@
 
   - (OK) Validação de dados para criação de Usuario
 
-  - Confirmação por senha para novo usuário
+   - (OK) Gerar ID para Estorias
 
-  - Cor de linhas do backlog conforme cor do projeto
+   - (ok) Pagina para edição do projeto
+
+   - (OK) Implementar persistencia de backlog
+
+   - (OK) Corrigir botão de abrir para somente funcionar quando estiver selecionado
+
+   - (OK) Adicionar dependencia para verificar mudança em entidade de Story
+
+    - (OK) Limpar dados da dialog de adicionar apos ser adicionada a estoria
+
+    - (ok) Criar redirect index para pagina principal
