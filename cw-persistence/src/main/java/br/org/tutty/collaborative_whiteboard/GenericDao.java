@@ -45,6 +45,10 @@ public abstract class GenericDao implements Dao, Serializable{
         }
     }
 
+    public List list(Criteria criteria){
+        return  criteria.list();
+    }
+
     public Object uniqueResultNotWaitingEmpty(Criteria criteria) throws DataNotFoundException {
         Object result = criteria.uniqueResult();
 

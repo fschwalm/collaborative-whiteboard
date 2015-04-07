@@ -8,6 +8,7 @@ import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryCreation;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 import org.primefaces.context.RequestContext;
@@ -66,6 +67,10 @@ public class BacklogController extends GenericController implements Serializable
         storyEdition.init(selectedStory);
     }
 
+    public void prepareCreationStory(){
+        storyCreation = new StoryCreation();
+    }
+
     public List<Story> fetchStories() throws IOException {
         try {
             return backlogManagerService.fetchAllStories();
@@ -82,6 +87,13 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
+    public List<ProjectArea> fetchProjectAreas(String query){
+        Project selectedProject = storyCreation.getSelectedProject();
+        List<ProjectArea> projectAreas = projectService.filterProjectAreas(selectedProject, query);
+
+        return projectAreas;
+    }
+
     public List<Project> fetchProjects() throws DataNotFoundException {
         return projectService.fetchProjects();
     }
@@ -94,6 +106,7 @@ public class BacklogController extends GenericController implements Serializable
         Story story = backlogManagerService.getEmptyStory(storyCreation.getSelectedProject());
         story.setSubject(storyCreation.getSubject());
         story.setDescription(storyCreation.getDescription());
+        story.setProjectArea(storyCreation.getProjectArea());
 
         stories.add(story);
 

@@ -6,6 +6,7 @@ import br.org.tutty.backlog_manager.BacklogDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.dtos.LoggedUser;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.id.IdentifierGenerationException;
 

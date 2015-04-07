@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
 
@@ -15,4 +16,6 @@ public interface ProjectService {
     void update(Project selectedProjectCloned);
 
     List<Project> fetchProjects() throws DataNotFoundException;
+
+    List<ProjectArea> filterProjectAreas(Project project, String queryName);
 }

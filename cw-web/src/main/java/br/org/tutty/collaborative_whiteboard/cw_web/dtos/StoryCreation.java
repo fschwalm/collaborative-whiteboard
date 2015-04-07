@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.entities.User;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class StoryCreation implements Serializable{
     private User user;
     private String subject;
     private String description;
+    private ProjectArea projectArea;
 
     public Project getSelectedProject() {
         return selectedProject;
@@ -64,5 +66,13 @@ public class StoryCreation implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ProjectArea getProjectArea() {
+        return projectArea;
+    }
+
+    public void setProjectArea(ProjectArea projectArea) {
+        this.projectArea = projectArea;
     }
 }

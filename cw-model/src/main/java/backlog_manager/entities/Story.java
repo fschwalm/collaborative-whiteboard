@@ -3,6 +3,7 @@ package backlog_manager.entities;
 
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class Story implements Serializable{
 
     @ManyToOne
     private Project project;
+
+    @ManyToOne
+    private ProjectArea projectArea;
 
     @Column(nullable = false)
     private String subject;
@@ -159,6 +163,14 @@ public class Story implements Serializable{
         this.priority = priority;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("priority", oldValue, priority);
+    }
+
+    public ProjectArea getProjectArea() {
+        return projectArea;
+    }
+
+    public void setProjectArea(ProjectArea projectArea) {
+        this.projectArea = projectArea;
     }
 
     @Override

@@ -8,9 +8,7 @@
 
   - Corrigir Layout chat
 
-  - (Andamento) Verificaçãos e houve alteração no backlog ao sair da tela
-
-  - Criar 'area sistema' para concatenar ao codigo
+  - (Andamento) Criar 'area sistema' para concatenar ao codigo
 
   - (OK) Persistir mensagens apos redirect
 
@@ -29,3 +27,5 @@
     - (OK) Limpar dados da dialog de adicionar apos ser adicionada a estoria
 
     - (ok) Criar redirect index para pagina principal
+
+    - Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload

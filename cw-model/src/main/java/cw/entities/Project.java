@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by drferreira on 19/12/14.
@@ -37,6 +38,9 @@ public class Project implements Serializable{
 
     @Column
     private String color;
+
+    @OneToMany(mappedBy = "project")
+    private List<ProjectArea> projectAreas;
 
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
@@ -168,5 +172,13 @@ public class Project implements Serializable{
         }catch (Exception e){
             throw new CloneNotSupportedException();
         }
+    }
+
+    public List<ProjectArea> getProjectAreas() {
+        return projectAreas;
+    }
+
+    public void setProjectAreas(List<ProjectArea> projectAreas) {
+        this.projectAreas = projectAreas;
     }
 }

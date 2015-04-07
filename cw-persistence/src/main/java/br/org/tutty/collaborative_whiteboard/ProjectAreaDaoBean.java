@@ -1,0 +1,27 @@
+package br.org.tutty.collaborative_whiteboard;
+
+import cw.entities.Project;
+import cw.entities.ProjectArea;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import java.util.List;
+
+/**
+ * Created by drferreira on 07/04/15.
+ */
+@Stateless
+@Local(ProjectAreaDao.class)
+public class ProjectAreaDaoBean extends GenericDao implements ProjectAreaDao{
+
+    @Override
+    public List<ProjectArea> filterProjectAreas(Project project, String queryName){
+        Criteria criteria = createCriteria(ProjectArea.class);
+        criteria.add(Restrictions.eq("project", project));
+        criteria.add(Restrictions.ilike("name", "%"+queryName+"%"));
+
+        return list(criteria);
+    }
+}

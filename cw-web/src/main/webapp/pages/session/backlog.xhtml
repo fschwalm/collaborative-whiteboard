@@ -45,7 +45,8 @@
                         <p:toolbar>
                             <f:facet name="left">
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                                 oncomplete="PF('storyCreation').show();"/>
+                                                 action="#{backlogController.prepareCreationStory()}"
+                                                 oncomplete="PF('storyCreation').show();" />
 
                                 <p:commandButton id="openButton" icon="ui-icon-folder-open"
                                                  value="#{backlog['btn.open']}"
@@ -114,15 +115,17 @@
         </p:dialog>
 
 
-        <p:dialog widgetVar="storyCreation" modal="true" resizable="false" height="600" width="580">
-            <p:outputPanel>
+        <p:dialog id="storyCreation" widgetVar="storyCreation" modal="true" resizable="false" height="600" width="580">
                 <h:form id="createStoryForm" prependId="false">
                     <h:panelGrid columns="1">
-                        <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}">
+                        <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}" required="true">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <p:ajax event="change" execute="@this" update="projectArea"/>
                             <f:selectItems value="#{backlogController.projects}" var="projectName"
                                            itemLabel="#{projectName}" itemValue="#{projectName}"/>
-                            <p:ajax process="projectNewStory"/>
                         </p:selectOneMenu>
+
+                        <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area.name}" var="area" value="#{backlogController.storyCreation.projectArea}" completeMethod="#{backlogController.fetchProjectAreas}"/>
 
                         <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
                         <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
@@ -138,12 +141,11 @@
                     <h:panelGrid columns="2">
                         <p:commandButton id="save" value="#{backlog['btn.save']}"
                                          update="createStoryForm :backlogForm:backlogTable"
-                                         actionListener="#{backlogController.createStory()}" icon="ui-icon-disk"/>
+                                         action="#{backlogController.createStory()}" icon="ui-icon-disk"/>
                         <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
-                                         onclick="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
+                                         onsuccess="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"/>
                     </h:panelGrid>
                 </h:form>
-            </p:outputPanel>
         </p:dialog>
     </ui:define>
 </ui:composition>
