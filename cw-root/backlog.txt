@@ -4,11 +4,11 @@
 
   - Adicionar Filtro Global a tabela de backlog
 
-  - (Andamento) Flecha de prioridades ao lado do backlog
-
   - Corrigir e pensar no modelo de compartilhamento
 
   - Corrigir Layout chat
+
+  - (Andamento) Verificaçãos e houve alteração no backlog ao sair da tela
 
   - Criar 'area sistema' para concatenar ao codigo
 

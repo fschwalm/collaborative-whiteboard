@@ -98,6 +98,7 @@ public class BacklogController extends GenericController implements Serializable
         stories.add(story);
 
         storyCreation = new StoryCreation();
+        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.created_story");
     }
 
     public void updateBacklog() throws IOException {
