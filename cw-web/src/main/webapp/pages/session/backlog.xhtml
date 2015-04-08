@@ -119,7 +119,7 @@
                 <h:form id="createStoryForm" prependId="false">
                     <h:panelGrid columns="1">
                         <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}" required="true">
-                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItem itemLabel="#{backlog['label.story.creation.select_empty']}" itemValue="" />
                             <p:ajax event="change" execute="@this" update="projectArea"/>
                             <f:selectItems value="#{backlogController.projects}" var="projectName"
                                            itemLabel="#{projectName}" itemValue="#{projectName}"/>

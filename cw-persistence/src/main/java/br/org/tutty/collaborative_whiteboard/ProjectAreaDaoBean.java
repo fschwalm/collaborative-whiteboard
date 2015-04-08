@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard;
 
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -23,5 +24,13 @@ public class ProjectAreaDaoBean extends GenericDao implements ProjectAreaDao{
         criteria.add(Restrictions.ilike("name", "%"+queryName+"%"));
 
         return list(criteria);
+    }
+
+    @Override
+    public List<ProjectArea> fetch(Project project) throws DataNotFoundException {
+        Criteria criteria = createCriteria(ProjectArea.class);
+        criteria.add(Restrictions.eq("project", project));
+
+        return listNotWaitingEmpty(criteria);
     }
 }

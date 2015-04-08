@@ -29,6 +29,9 @@ public class ProjectServiceBean implements ProjectService {
     private ProjectDao projectDao;
 
     @Inject
+    private ProjectAreaDao projectAreDao;
+
+    @Inject
     private ProjectAreaDao projectAreaDao;
 
     public Boolean checkAvailabilityName(String projectName){
@@ -58,6 +61,11 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
+    public void createProjectArea(List<ProjectArea> projectAreas){
+        projectAreas.forEach(project -> projectAreaDao.update(project));
+    }
+
+    @Override
     public void update(Project selectedProjectCloned) {
         projectDao.update(selectedProjectCloned);
     }
@@ -66,6 +74,19 @@ public class ProjectServiceBean implements ProjectService {
     public List<Project> fetchProjects() throws DataNotFoundException {
         User user = sessionContext.getLoggedUser().getUser();
         return projectDao.fetchAll(user);
+    }
+
+    @Override
+    public List<ProjectArea> fetchProjectAreas() {
+        Project selectedProject = sessionContext.getSelectedProject();
+
+        try{
+            List<ProjectArea> foundedAreas = projectAreDao.fetch(selectedProject);
+            return foundedAreas;
+
+        }catch (DataNotFoundException e){
+            return new ArrayList<>();
+        }
     }
 
     @Override

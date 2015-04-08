@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard;
 
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.exceptions.DataNotFoundException;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
  */
 public interface ProjectAreaDao extends Dao{
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
+
+    List<ProjectArea> fetch(Project project) throws DataNotFoundException;
 }

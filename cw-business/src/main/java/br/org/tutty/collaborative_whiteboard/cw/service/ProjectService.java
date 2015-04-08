@@ -13,9 +13,13 @@ import java.util.List;
 public interface ProjectService {
     public Project createProject(String projectName) throws NameInUseException;
 
+    void createProjectArea(List<ProjectArea> projectAreas);
+
     void update(Project selectedProjectCloned);
 
     List<Project> fetchProjects() throws DataNotFoundException;
+
+    List<ProjectArea> fetchProjectAreas();
 
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
 }

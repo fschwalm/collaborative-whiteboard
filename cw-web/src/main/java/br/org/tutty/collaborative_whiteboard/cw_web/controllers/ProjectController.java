@@ -2,7 +2,9 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
+import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -27,26 +30,47 @@ public class ProjectController extends GenericController implements Serializable
 
     private Project selectedProject;
 
+    private ProjectAreaCreation projectAreaCreation;
+
+
     @PostConstruct
     public void setUp() throws CloneNotSupportedException {
         selectedProject = sessionContext.getSelectedProject();
+        projectAreaCreation = new ProjectAreaCreation(selectedProject, projectService.fetchProjectAreas());
     }
 
     public String save() throws IOException {
-        if(hasChanged()) {
-            projectService.update(selectedProject);
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
+        if(selectedProject.propertyMonitor.hasChanged()) {
+            updateProject();
         }
 
+        if (projectAreaCreation.propertyMonitor.hasChanged()){
+            updateProjectArea();
+        }
+
+        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
         return HOME_PAGE;
+    }
+
+    private void updateProject() throws IOException {
+        projectService.update(selectedProject);
+    }
+
+    private void updateProjectArea() throws IOException {
+        projectService.createProjectArea(projectAreaCreation.getProjectAreas());
+    }
+
+    public void addProjectArea() throws IOException {
+        projectAreaCreation.addArea();
+        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
+    }
+
+    public List<ProjectArea> fetchProjectAreas(){
+        return projectAreaCreation.getProjectAreas();
     }
 
     public String discard(){
         return HOME_PAGE;
-    }
-
-    public Boolean hasChanged(){
-        return selectedProject.propertyMonitor.hasChanged();
     }
 
     public String getOwnerName(){
@@ -89,4 +113,11 @@ public class ProjectController extends GenericController implements Serializable
         selectedProject.setNameProject(projectName);
     }
 
+    public String getProjectAreaName() {
+        return projectAreaCreation.getProjectAreaName();
+    }
+
+    public void setProjectAreaName(String projectAreaName) {
+        this.projectAreaCreation.setProjectAreaName(projectAreaName);
+    }
 }

@@ -9,29 +9,30 @@ import java.io.Serializable;
 @Entity
 @Table(name = "project_area", catalog = "cw")
 public class ProjectArea implements Serializable{
-    @Id
-    private String id;
 
-    @ManyToOne
-    private Project project;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column
     private String name;
 
-    public String getId() {
+    @ManyToOne
+    private Project project;
+
+    public ProjectArea() {
+    }
+
+    public ProjectArea(String projectAreaName) {
+        this.name = projectAreaName;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String project_area_id) {
+    public void setId(Long project_area_id) {
         this.id = project_area_id;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project projectId) {
-        this.project = projectId;
     }
 
     public String getName() {
@@ -40,5 +41,13 @@ public class ProjectArea implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
