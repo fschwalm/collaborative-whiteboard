@@ -8,59 +8,77 @@
 
         <p:toolbar>
             <f:facet name="left">
-                <p:commandButton value="Salvar" process="projectDataForm,@this" action="#{projectController.save()}"/>
-                <p:commandButton value="Cancelar" action="#{projectController.discard()}"/>
+                <p:commandButton value="#{project_bundle['btn.save']}"
+                                 process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
+                                 action="#{projectController.save()}"/>
+                <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
             </f:facet>
         </p:toolbar>
 
-        <h:panelGrid columns="3" columnClasses="project,areas">
-            <h:column>
-                <div>
-                    <h:form id="projectDataForm" prependId="false">
-                        <h:panelGrid columns="2">
-                            <h:outputLabel for="projectCreationDate" value="Data de Criação:"/>
-                            <p:inputText id="projectCreationDate" value="#{projectController.creationDate}"
-                                         readonly="true"/>
+        <div class="project">
+            <p:panel styleClass="project">
+                <h:form id="projectDataForm" prependId="false">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
+                        <p:inputText id="projectCreationDate" value="#{projectController.creationDate}"
+                                     readonly="true"/>
 
-                            <h:outputLabel for="projectName" value="Nome do Projeto:"/>
-                            <p:inputText id="projectName" value="#{projectController.projectName}"/>
+                        <p:spacer height="5px"/> <p:spacer height="5px"/>
 
-                            <h:outputLabel for="projectColor" value="Cor:"/>
-                            <p:colorPicker id="projectColor" value="#{projectController.color}"/>
+                        <h:outputLabel for="projectName" value="#{project_bundle['project_name.label']}"/>
+                        <p:inputText id="projectName" value="#{projectController.projectName}"/>
 
-                            <h:outputLabel for="owner" value="Criador:"/>
-                            <p:inputText id="owner" value="#{projectController.ownerName}" readonly="true"/>
+                        <p:spacer height="5px"/> <p:spacer height="5px"/>
 
-                            <h:outputLabel for="prefix" value="Prefix:"/>
-                            <p:inputText id="prefix" value="#{projectController.projectPrefix}"/>
+                        <h:outputLabel for="projectColor" value="#{project_bundle['project_color.label']}"/>
+                        <p:colorPicker id="projectColor" value="#{projectController.color}"/>
 
-                        </h:panelGrid>
-                        <p:editor id="descriptionProject" rows="20" width="600"
-                                  value="#{projectController.projectDescription}"/>
-                    </h:form>
-                </div>
-            </h:column>
+                        <p:spacer height="5px"/> <p:spacer height="5px"/>
 
-            <h:column>
-                <div>
-                    <h:form prependId="false">
-                        <p:watermark value="Nova Area" for="projectArea"/>
+                        <h:outputLabel for="owner" value="#{project_bundle['project_owner.label']}"/>
+                        <p:inputText id="owner" value="#{projectController.ownerName}" readonly="true"/>
+
+                        <p:spacer height="5px"/> <p:spacer height="5px"/>
+
+                        <h:outputLabel for="prefix" value="#{project_bundle['project_prefix.label']}"/>
+                        <p:inputText id="prefix" value="#{projectController.projectPrefix}"/>
+
+                    </h:panelGrid>
+
+                    <p:spacer height="8px"/>
+
+                    <p:editor id="descriptionProject" rows="20" width="600"
+                              value="#{projectController.projectDescription}"/>
+                </h:form>
+            </p:panel>
+        </div>
+
+        <div class="areas">
+            <p:panel styleClass="areas">
+                <h:form id="projectAreaDataForm" prependId="false">
+                    <h:panelGrid columns="1">
+                        <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
                         <p:inputText id="projectArea" styleClass="projectArea"
-                                     value="#{projectController.projectAreaName}">
-                            <p:ajax event="change" update="@form:foundedAreas,@form"
-                                    listener="#{projectController.addProjectArea()}"/>
-                        </p:inputText>
-                        <p:selectManyMenu id="foundedAreas" var="area" filter="true" filterMatchMode="contains"
-                                          showCheckbox="true" styleClass="foundedAreas" scrollHeight="450">
-                            <f:selectItems id="itensArea" value="#{projectController.fetchProjectAreas()}" var="area"/>
+                                     value="#{projectController.projectAreaName}" required="true"/>
+
+                        <h:column>
+                            <p:commandButton value="#{project_bundle['btn.add_area']}" update="@form:foundedAreas"
+                                             action="#{projectController.addProjectArea()}"/>
+                            <p:commandButton id="removeAreaButton" value="#{project_bundle['btn.remove_area']}"
+                                             widgetVar="removeArea" process="@form:foundedAreas"/>
+                        </h:column>
+
+                        <p:dataTable id="foundedAreas" selection="#{projectController.selectedAreasForRemoval}"
+                                     value="#{projectController.fetchProjectAreas()}" var="area" scrollHeight="450"
+                                     scrollable="true" selectionMode="multiple" rowKey="#{area.name}" >
+
                             <p:column>
                                 <h:outputText value="#{area.name}"/>
                             </p:column>
-                        </p:selectManyMenu>
-                    </h:form>
-                </div>
-            </h:column>
-
-        </h:panelGrid>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>
+        </div>
     </ui:define>
 </ui:composition>

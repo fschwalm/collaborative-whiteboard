@@ -32,6 +32,10 @@
             <base-name>properties/whiteboard</base-name>
             <var>whiteboard</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/project</base-name>
+            <var>project_bundle</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>

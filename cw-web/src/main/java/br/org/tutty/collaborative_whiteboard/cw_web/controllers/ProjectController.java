@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,11 +33,14 @@ public class ProjectController extends GenericController implements Serializable
 
     private ProjectAreaCreation projectAreaCreation;
 
+    private List<ProjectArea> projectAreasForRemoval;
+
 
     @PostConstruct
     public void setUp() throws CloneNotSupportedException {
         selectedProject = sessionContext.getSelectedProject();
         projectAreaCreation = new ProjectAreaCreation(selectedProject, projectService.fetchProjectAreas());
+        projectAreasForRemoval = new ArrayList<>();
     }
 
     public String save() throws IOException {
@@ -49,7 +53,11 @@ public class ProjectController extends GenericController implements Serializable
         }
 
         showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
-        return HOME_PAGE;
+        return STAY_ON_PAGE;
+    }
+
+    public Boolean hasAreaForRemoval(){
+        return !(projectAreasForRemoval != null && projectAreasForRemoval.isEmpty());
     }
 
     private void updateProject() throws IOException {
@@ -120,4 +128,13 @@ public class ProjectController extends GenericController implements Serializable
     public void setProjectAreaName(String projectAreaName) {
         this.projectAreaCreation.setProjectAreaName(projectAreaName);
     }
+
+    public void setSelectedAreasForRemoval(List<ProjectArea> projectAreasForRemoval){
+        this.projectAreasForRemoval = projectAreasForRemoval;
+    }
+
+    public List<ProjectArea> getSelectedAreasForRemoval(){
+        return projectAreasForRemoval;
+    }
+
 }

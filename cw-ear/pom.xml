@@ -8,6 +8,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
+    <parent>
+        <groupId>br.org.tutty.collaborative-whiteboard</groupId>
+        <artifactId>cw-root</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <name>cw-ear</name>
 
     <properties>
@@ -81,6 +87,13 @@
             <artifactId>cw-persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.8</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

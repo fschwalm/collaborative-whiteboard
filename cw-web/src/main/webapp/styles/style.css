@@ -1,10 +1,11 @@
 #headerPage {
     background-image: url(../images/header_blue.png);
     height: 180px;
+
 }
 
 #bodyPage{
-    background-color: #F0F0F0;
+    background-color: #FFFFFF ;
 }
 
 #myProjects{
@@ -25,9 +26,25 @@
 }
 
 .project {
-    width: 50%;
+    width: 650px;
+    height: 600px;
+    float:left;
+    margin-top: 20px;
+    margin-left: 50px;
 }
 
 .areas {
-    width: 50%;
+    width: 650px;
+    height: 600px;
+    float:right;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+#sheet{
+    margin-left: auto ;
+    margin-right: auto ;
+    width: 1600px !important;
+    height: 1200px !important;
+    background-color: #F8F8F8 !important;
 }
