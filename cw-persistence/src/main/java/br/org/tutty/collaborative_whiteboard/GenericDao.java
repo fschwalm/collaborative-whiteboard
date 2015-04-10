@@ -58,4 +58,8 @@ public abstract class GenericDao implements Dao, Serializable{
             return result;
         }
     }
+
+    public void remove(Object entity){
+        entityManager.remove(entityManager.merge(entity));
+    }
 }

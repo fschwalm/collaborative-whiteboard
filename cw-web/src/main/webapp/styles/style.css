@@ -48,3 +48,13 @@
     height: 1200px !important;
     background-color: #F8F8F8 !important;
 }
+
+.removed_area{
+    background-color: #f5d3cd;
+}
+
+.remove_project_button{
+    background: #f55454 !important;
+    color: black !important;
+}
+

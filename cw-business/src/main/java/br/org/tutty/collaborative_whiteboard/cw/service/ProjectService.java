@@ -6,6 +6,7 @@ import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by root on 16/03/15.
@@ -22,4 +23,6 @@ public interface ProjectService {
     List<ProjectArea> fetchProjectAreas();
 
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
+
+    void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval);
 }

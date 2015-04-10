@@ -29,3 +29,5 @@
     - (ok) Criar redirect index para pagina principal
 
     - Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
+
+    - Implementar recuperar senha

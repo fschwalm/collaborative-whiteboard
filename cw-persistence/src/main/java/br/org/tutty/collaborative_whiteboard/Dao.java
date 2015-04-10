@@ -7,4 +7,6 @@ public interface Dao {
     void persist(Object entity);
 
     void update(Object entity);
+
+    void remove(Object entity);
 }

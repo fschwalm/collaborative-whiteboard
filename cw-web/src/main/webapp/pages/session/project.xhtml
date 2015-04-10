@@ -8,10 +8,14 @@
 
         <p:toolbar>
             <f:facet name="left">
-                <p:commandButton value="#{project_bundle['btn.save']}"
+                <p:commandButton value="#{project_bundle['btn.save']}" update=":projectAreaDataForm"
                                  process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
                                  action="#{projectController.save()}"/>
                 <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
+            </f:facet>
+
+            <f:facet name="right">
+                <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false" styleClass="remove_project_button" action="#{projectController.removeProject}" process="@this"/>
             </f:facet>
         </p:toolbar>
 
@@ -56,26 +60,39 @@
         <div class="areas">
             <p:panel styleClass="areas">
                 <h:form id="projectAreaDataForm" prependId="false">
-                    <h:panelGrid columns="1">
-                        <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
-                        <p:inputText id="projectArea" styleClass="projectArea"
-                                     value="#{projectController.projectAreaName}" required="true"/>
-
+                    <h:panelGrid>
                         <h:column>
-                            <p:commandButton value="#{project_bundle['btn.add_area']}" update="@form:foundedAreas"
+                            <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
+                            <p:inputText id="projectArea" styleClass="projectArea"
+                                         value="#{projectController.projectAreaName}" required="true"/>
+
+                            <p:commandButton value="#{project_bundle['btn.add_area']}"
+                                             update="@form:foundedAreas,@form:projectArea,@this"
                                              action="#{projectController.addProjectArea()}"/>
-                            <p:commandButton id="removeAreaButton" value="#{project_bundle['btn.remove_area']}"
-                                             widgetVar="removeArea" process="@form:foundedAreas"/>
                         </h:column>
 
-                        <p:dataTable id="foundedAreas" selection="#{projectController.selectedAreasForRemoval}"
-                                     value="#{projectController.fetchProjectAreas()}" var="area" scrollHeight="450"
-                                     scrollable="true" selectionMode="multiple" rowKey="#{area.name}" >
+                        <h:column>
+                            <p:spacer height="10"/>
+                        </h:column>
 
-                            <p:column>
-                                <h:outputText value="#{area.name}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <h:column>
+                            <p:dataTable id="foundedAreas" value="#{projectController.fetchProjectAreas()}" var="area"
+                                         scrollHeight="450" style="width: auto ;"
+                                         scrollable="true"
+                                         rowStyleClass="#{projectController.isCheckForRemoval(area.name) == true ? 'removed_area' : null}">
+
+                                <p:column headerText="Nome">
+                                    <h:outputText value="#{area.name}"/>
+                                </p:column>
+
+                                <p:column style="text-align: center; height: auto">
+                                    <p:commandButton value="#{project_bundle['btn.remove_area']}"
+                                                     actionListener="#{projectController.removeArea(area)}"
+                                                     update="@form:foundedAreas," process="@this"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:column>
                     </h:panelGrid>
                 </h:form>
             </p:panel>

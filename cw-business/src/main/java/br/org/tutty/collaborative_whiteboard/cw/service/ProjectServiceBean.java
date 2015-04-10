@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by drferreira on 20/03/15.
@@ -93,5 +94,10 @@ public class ProjectServiceBean implements ProjectService {
     public List<ProjectArea> filterProjectAreas(Project project, String queryName){
         List<ProjectArea> projectAreas = projectAreaDao.filterProjectAreas(project, queryName);
         return projectAreas;
+    }
+
+    @Override
+    public void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval){
+        projectAreasForRemoval.forEach(projectArea -> projectAreaDao.remove(projectArea));
     }
 }
