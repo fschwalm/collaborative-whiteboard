@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
+import backlog_manager.exceptions.ProjectAreaInUseException;
 import br.org.tutty.collaborative_whiteboard.ProjectAreaDao;
 import br.org.tutty.collaborative_whiteboard.ProjectDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
@@ -8,10 +9,13 @@ import cw.entities.ProjectArea;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
+import org.hibernate.exception.ConstraintViolationException;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +39,7 @@ public class ProjectServiceBean implements ProjectService {
     @Inject
     private ProjectAreaDao projectAreaDao;
 
-    public Boolean checkAvailabilityName(String projectName){
+    public Boolean checkAvailabilityName(String projectName) {
         try {
             projectDao.fetch(projectName);
             return Boolean.FALSE;
@@ -46,8 +50,8 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
-    public Project createProject(String projectName) throws NameInUseException{
-        if(checkAvailabilityName(projectName)){
+    public Project createProject(String projectName) throws NameInUseException {
+        if (checkAvailabilityName(projectName)) {
             User user = sessionContext.getLoggedUser().getUser();
 
             Project project = new Project(projectName, user);
@@ -56,13 +60,13 @@ public class ProjectServiceBean implements ProjectService {
 
             return project;
 
-        }else {
+        } else {
             throw new NameInUseException();
         }
     }
 
     @Override
-    public void createProjectArea(List<ProjectArea> projectAreas){
+    public void createProjectArea(List<ProjectArea> projectAreas) {
         projectAreas.forEach(project -> projectAreaDao.update(project));
     }
 
@@ -81,11 +85,11 @@ public class ProjectServiceBean implements ProjectService {
     public List<ProjectArea> fetchProjectAreas() {
         Project selectedProject = sessionContext.getSelectedProject();
 
-        try{
+        try {
             List<ProjectArea> foundedAreas = projectAreDao.fetch(selectedProject);
             return foundedAreas;
 
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return new ArrayList<>();
         }
     }
@@ -96,13 +100,13 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
-    public List<ProjectArea> filterProjectAreas(Project project, String queryName){
+    public List<ProjectArea> filterProjectAreas(Project project, String queryName) {
         List<ProjectArea> projectAreas = projectAreaDao.filterProjectAreas(project, queryName);
         return projectAreas;
     }
 
     @Override
-    public void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval){
+    public void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval) {
         projectAreasForRemoval.forEach(projectArea -> projectAreaDao.remove(projectArea));
     }
 }

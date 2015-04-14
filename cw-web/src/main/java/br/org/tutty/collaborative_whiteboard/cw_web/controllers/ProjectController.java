@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
+import backlog_manager.exceptions.ProjectAreaInUseException;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
@@ -9,6 +10,7 @@ import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -55,7 +57,7 @@ public class ProjectController extends GenericController implements Serializable
             updateProjectArea();
         }
 
-        if(!projectAreasForRemoval.isEmpty()){
+        if (!projectAreasForRemoval.isEmpty()) {
             updateProjectAreaForRemoval();
         }
 
@@ -77,14 +79,20 @@ public class ProjectController extends GenericController implements Serializable
     }
 
     private void updateProjectAreaForRemoval() throws IOException {
-        projectService.removeProjectAreas(projectAreasForRemoval);
+        try{
+            projectService.removeProjectAreas(projectAreasForRemoval);
+
+        }catch (EJBTransactionRolledbackException e){
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "project.area.remove.in_use");
+        }
+
     }
 
     public void addProjectArea() throws IOException {
-        try{
+        try {
             projectService.fetchProjectArea(selectedProject, projectAreaCreation.getProjectAreaName());
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             projectAreaCreation.addArea();
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
         }
@@ -151,10 +159,10 @@ public class ProjectController extends GenericController implements Serializable
     }
 
     public void removeArea(ProjectArea projectArea) throws IOException {
-        if(isCheckForRemoval(projectArea.getName())){
+        if (isCheckForRemoval(projectArea.getName())) {
             projectAreasForRemoval.remove(projectArea);
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
-        }else {
+        } else {
             projectAreasForRemoval.add(projectArea);
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
         }
