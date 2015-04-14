@@ -87,13 +87,6 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
-    public List<ProjectArea> fetchProjectAreas(String query){
-        Project selectedProject = storyCreation.getSelectedProject();
-        List<ProjectArea> projectAreas = projectService.filterProjectAreas(selectedProject, query);
-
-        return projectAreas;
-    }
-
     public List<Project> fetchProjects() throws DataNotFoundException {
         return projectService.fetchProjects();
     }
@@ -102,11 +95,15 @@ public class BacklogController extends GenericController implements Serializable
         showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
     }
 
-    public void createStory() throws IOException {
-        Story story = backlogManagerService.getEmptyStory(storyCreation.getSelectedProject());
+    public void createStory() throws IOException, DataNotFoundException {
+        Project selectedProject = storyCreation.getSelectedProject();
+
+        Story story = backlogManagerService.getEmptyStory(selectedProject);
         story.setSubject(storyCreation.getSubject());
         story.setDescription(storyCreation.getDescription());
-        story.setProjectArea(storyCreation.getProjectArea());
+
+        ProjectArea selectedProjectArea = projectService.fetchProjectArea(selectedProject, storyCreation.getProjectArea());
+        story.setProjectArea(selectedProjectArea);
 
         stories.add(story);
 
@@ -147,6 +144,16 @@ public class BacklogController extends GenericController implements Serializable
             projectsNames.add(project.getNameProject());
         }
         return projectsNames;
+    }
+
+    public List<String> fetchProjectAreas(String query){
+        Project selectedProject = storyCreation.getSelectedProject();
+        List<ProjectArea> projectAreas = projectService.filterProjectAreas(selectedProject, query);
+
+        List<String> convertedAreas = new ArrayList<>();
+        projectAreas.forEach(area -> convertedAreas.add(area.getName()));
+
+        return convertedAreas;
     }
 
     public void setProjects(List<Project> projects) {

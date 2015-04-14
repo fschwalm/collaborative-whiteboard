@@ -91,6 +91,11 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
+    public ProjectArea fetchProjectArea(Project project, String name) throws DataNotFoundException {
+        return projectAreaDao.fetch(project, name);
+    }
+
+    @Override
     public List<ProjectArea> filterProjectAreas(Project project, String queryName){
         List<ProjectArea> projectAreas = projectAreaDao.filterProjectAreas(project, queryName);
         return projectAreas;

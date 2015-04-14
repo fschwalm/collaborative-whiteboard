@@ -91,6 +91,9 @@
                         <h:outputLabel value="#{backlog['label.code']}" for="code"/>
                         <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
 
+                        <h:outputLabel value="#{backlog['label.area']}" for="area"/>
+                        <p:inputText id="area" value="#{backlogController.storyEdition.projectArea.name}" readonly="true"/>
+
                         <h:outputLabel value="#{backlog['label.author']}" for="author"/>
                         <p:inputText id="author" value="#{backlogController.storyEdition.author.fullName}"
                                      readonly="true"/>
@@ -125,7 +128,7 @@
                                            itemLabel="#{projectName}" itemValue="#{projectName}"/>
                         </p:selectOneMenu>
 
-                        <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area.name}" var="area" value="#{backlogController.storyCreation.projectArea}" completeMethod="#{backlogController.fetchProjectAreas}"/>
+                        <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}" var="area" value="#{backlogController.storyCreation.projectArea}" completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}"/>
 
                         <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
                         <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
@@ -140,7 +143,7 @@
 
                     <h:panelGrid columns="2">
                         <p:commandButton id="save" value="#{backlog['btn.save']}"
-                                         update="createStoryForm :backlogForm:backlogTable"
+                                         update="createStoryForm,:backlogForm:backlogTable"
                                          action="#{backlogController.createStory()}" icon="ui-icon-disk"/>
                         <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
                                          onsuccess="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"/>

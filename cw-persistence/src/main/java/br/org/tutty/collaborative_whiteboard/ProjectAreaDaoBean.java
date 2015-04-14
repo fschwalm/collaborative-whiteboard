@@ -33,4 +33,13 @@ public class ProjectAreaDaoBean extends GenericDao implements ProjectAreaDao{
 
         return listNotWaitingEmpty(criteria);
     }
+
+    @Override
+    public ProjectArea fetch(Project project, String name) throws DataNotFoundException {
+        Criteria criteria = createCriteria(ProjectArea.class);
+        criteria.add(Restrictions.eq("project", project));
+        criteria.add(Restrictions.eq("name", name));
+
+        return (ProjectArea) uniqueResultNotWaitingEmpty(criteria);
+    }
 }

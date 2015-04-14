@@ -1,11 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import cw.entities.Project;
-import cw.entities.ProjectArea;
-import cw.entities.User;
-
+import cw.exceptions.DataNotFoundException;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by drferreira on 13/03/15.
@@ -13,12 +10,9 @@ import java.util.Date;
 public class StoryCreation implements Serializable{
 
     private Project selectedProject;
-    private String code;
-    private Date creationDate;
-    private User user;
     private String subject;
     private String description;
-    private ProjectArea projectArea;
+    private String projectArea;
 
     public Project getSelectedProject() {
         return selectedProject;
@@ -26,30 +20,6 @@ public class StoryCreation implements Serializable{
 
     public void setSelectedProject(Project selectedProject) {
         this.selectedProject = selectedProject;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getSubject() {
@@ -68,11 +38,11 @@ public class StoryCreation implements Serializable{
         this.description = description;
     }
 
-    public ProjectArea getProjectArea() {
+    public String getProjectArea() {
         return projectArea;
     }
 
-    public void setProjectArea(ProjectArea projectArea) {
+    public void setProjectArea(String projectArea) throws DataNotFoundException {
         this.projectArea = projectArea;
     }
 }

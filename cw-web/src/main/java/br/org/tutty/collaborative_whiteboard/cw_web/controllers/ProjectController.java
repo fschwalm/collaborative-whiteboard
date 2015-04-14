@@ -6,6 +6,7 @@ import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.exceptions.DataNotFoundException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -80,8 +81,13 @@ public class ProjectController extends GenericController implements Serializable
     }
 
     public void addProjectArea() throws IOException {
-        projectAreaCreation.addArea();
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
+        try{
+            projectService.fetchProjectArea(selectedProject, projectAreaCreation.getProjectAreaName());
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
+        }catch (DataNotFoundException e){
+            projectAreaCreation.addArea();
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
+        }
     }
 
     public List<ProjectArea> fetchProjectAreas() {
