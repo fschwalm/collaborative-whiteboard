@@ -125,3 +125,14 @@ $.fn.scrollTo = function( target, options, callback ){
     });
 }
 
+//NOVO MODELO APARTIR DAQUI
+
+function disableChat(){
+    $("#chatButton").attr("disabled", true).addClass('ui-state-disabled');
+}
+
+function enableChat(){
+    $("#chatButton").attr("disabled", false).addClass('ui-state-enable');
+}
+
+

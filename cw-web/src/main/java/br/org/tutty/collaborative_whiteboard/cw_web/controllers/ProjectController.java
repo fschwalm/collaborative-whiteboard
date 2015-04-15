@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.exceptions.ProjectAreaInUseException;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerServiceBean;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
@@ -33,6 +35,9 @@ public class ProjectController extends GenericController implements Serializable
 
     @Inject
     private ProjectService projectService;
+
+    @Inject
+    private BacklogManagerService backlogManagerService;
 
     private Project selectedProject;
 
@@ -79,20 +84,19 @@ public class ProjectController extends GenericController implements Serializable
     }
 
     private void updateProjectAreaForRemoval() throws IOException {
-        try{
-            projectService.removeProjectAreas(projectAreasForRemoval);
-
-        }catch (EJBTransactionRolledbackException e){
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "project.area.remove.in_use");
-        }
-
+        projectService.removeProjectAreas(projectAreasForRemoval);
     }
 
     public void addProjectArea() throws IOException {
-        try {
-            projectService.fetchProjectArea(selectedProject, projectAreaCreation.getProjectAreaName());
+        String projectAreaName = projectAreaCreation.getProjectAreaName();
+
+        Boolean areaAlreadySaved = projectService.areaAlreadyAdded(selectedProject, projectAreaName);
+        Boolean areaAlreadyAddedToSave = projectAreaCreation.alreadyAdded(projectAreaName);
+
+        if (areaAlreadySaved || areaAlreadyAddedToSave) {
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
-        } catch (DataNotFoundException e) {
+
+        } else {
             projectAreaCreation.addArea();
             showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
         }
@@ -159,14 +163,17 @@ public class ProjectController extends GenericController implements Serializable
     }
 
     public void removeArea(ProjectArea projectArea) throws IOException {
-        if (isCheckForRemoval(projectArea.getName())) {
-            projectAreasForRemoval.remove(projectArea);
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
+        if (!backlogManagerService.projectAreaIsAssignedToStory(projectArea)) {
+            if (isCheckForRemoval(projectArea.getName())) {
+                projectAreasForRemoval.remove(projectArea);
+                showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
+            } else {
+                projectAreasForRemoval.add(projectArea);
+                showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
+            }
         } else {
-            projectAreasForRemoval.add(projectArea);
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
+            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");
         }
-
     }
 
 }

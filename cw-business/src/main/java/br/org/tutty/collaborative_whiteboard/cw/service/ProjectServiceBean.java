@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import backlog_manager.exceptions.ProjectAreaInUseException;
 import br.org.tutty.collaborative_whiteboard.ProjectAreaDao;
 import br.org.tutty.collaborative_whiteboard.ProjectDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
@@ -9,13 +8,10 @@ import cw.entities.ProjectArea;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
-import org.hibernate.exception.ConstraintViolationException;
 
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -97,6 +93,17 @@ public class ProjectServiceBean implements ProjectService {
     @Override
     public ProjectArea fetchProjectArea(Project project, String name) throws DataNotFoundException {
         return projectAreaDao.fetch(project, name);
+    }
+
+    @Override
+    public Boolean areaAlreadyAdded(Project project, String projecAreaName){
+        try {
+            fetchProjectArea(project, projecAreaName);
+            return Boolean.TRUE;
+
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
     }
 
     @Override

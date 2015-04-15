@@ -3,6 +3,7 @@ package br.org.tutty.backlog_manager;
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -31,5 +32,13 @@ public class BacklogDaoBean extends GenericDao implements BacklogDao {
         criteria.setProjection(Projections.rowCount());
 
         return ((Long)criteria.list().get(0)).longValue();
+    }
+
+    @Override
+    public List<Story> fetchStories(ProjectArea projectArea) throws DataNotFoundException {
+        Criteria criteria = createCriteria(Story.class);
+        criteria.add(Restrictions.eq("projectArea", projectArea));
+
+        return listNotWaitingEmpty(criteria);
     }
 }

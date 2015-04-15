@@ -1,3 +1,5 @@
+  - (Andamento) Corrigir Layout chat
+
   - Confirmação por senha para novo usuário
 
   - Cor de linhas do backlog conforme cor do projeto
@@ -6,13 +8,9 @@
 
   - Corrigir e pensar no modelo de compartilhamento
 
-  - Corrigir Layout chat
+  - (OK) Criar 'area sistema' para concatenar ao codigo
 
-  - (Andamento) Criar 'area sistema' para concatenar ao codigo
-
-  - (Andamento) Corrigir ConstrainValidation para Area atribuida a uma estoria
-
-  - (Andamento) Possibilitar edição de area em tela de backlog
+  - (OK) Corrigir ConstrainValidation para Area atribuida a uma estoria
 
   - (OK) Persistir mensagens apos redirect
 
@@ -35,3 +33,5 @@
     - Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
 
     - Implementar recuperar senha
+
+    - Possibilitar edição de area em tela de backlog

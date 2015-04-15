@@ -43,6 +43,23 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         return story;
     }
 
+    @Override
+    public void updateBacklog(List<Story> stories) {
+        List<Story> prioritizedStories = reformulatePriorities(stories);
+        updateStories(prioritizedStories);
+    }
+
+    @Override
+    public Boolean projectAreaIsAssignedToStory(ProjectArea projectArea){
+        try{
+            backlogDao.fetchStories(projectArea);
+            return Boolean.TRUE;
+
+        }catch (DataNotFoundException e){
+            return Boolean.FALSE;
+        }
+    }
+
     private String getAvailableCode(Project project) {
         Long sequence = (backlogDao.getNextSequenceStory(project) + 1);
 
@@ -93,11 +110,5 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
                 }
             }
         });
-    }
-
-    @Override
-    public void updateBacklog(List<Story> stories) {
-        List<Story> prioritizedStories = reformulatePriorities(stories);
-        updateStories(prioritizedStories);
     }
 }

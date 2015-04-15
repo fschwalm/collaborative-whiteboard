@@ -24,6 +24,8 @@ public interface ProjectService {
 
     ProjectArea fetchProjectArea(Project project, String name) throws DataNotFoundException;
 
+    Boolean areaAlreadyAdded(Project project, String projecAreaName);
+
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
 
     void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval);

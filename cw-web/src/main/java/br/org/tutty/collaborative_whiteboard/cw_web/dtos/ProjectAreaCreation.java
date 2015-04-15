@@ -44,4 +44,9 @@ public class ProjectAreaCreation {
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("projectAreaName", oldValue, projectAreaName);
     }
+
+    public Boolean alreadyAdded(String projectAreaName){
+        return getProjectAreas().stream().anyMatch(project -> project.getName().equals(projectAreaName));
+    }
+
 }

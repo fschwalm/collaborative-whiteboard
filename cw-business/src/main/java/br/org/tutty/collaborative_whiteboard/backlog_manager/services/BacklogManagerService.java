@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Story;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface BacklogManagerService {
     Story getEmptyStory(Project project);
 
     void updateBacklog(List<Story> stories);
+
+    Boolean projectAreaIsAssignedToStory(ProjectArea projectArea);
 }
