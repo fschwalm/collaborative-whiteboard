@@ -1,5 +1,10 @@
 $(document).ready(function () {
-    hideChat();
+    $("#chatField").hide();
+
+    $("#chatHeader").click(function() {
+        $("#chatField").slideToggle('slow');
+    });
+
     initChat();
 
 });
@@ -13,10 +18,9 @@ function initChat(){
         registerReceiptsMessages();
         registerErrorHandling();
         registerRemovalReceivingFlag();
-        enableChat();
 
     }catch (exception){
-        disableChat();
+        alert('Sem conexão');
     }
 }
 
@@ -26,7 +30,7 @@ function scrollChat(){
 
 function registerCloseConnection(){
     ws.onclose = function(evt){
-        disableChat();
+        alert('Conexão finalizada');
     }
 }
 
@@ -120,24 +124,5 @@ $.fn.scrollTo = function( target, options, callback ){
         });
     });
 }
-
-//NOVO MODELO APARTIR DAQUI
-
-function disableChat(){
-    $('#chatButton').addClass("chatButtonDisable");
-}
-
-function enableChat(){
-    $('#chatImage').attr('value',"resources/images/icon_chat_enable.png");
-}
-
-function showChat(){
-    //$("#chatField").slideToggle('slow');
-}
-
-function hideChat(){
-    $("#chatField").hide();
-}
-
 
 
