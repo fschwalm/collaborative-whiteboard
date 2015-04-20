@@ -1,58 +1,59 @@
-$(document).ready(function () {
-    hideChat();
-    initChat();
+var isOpen;
 
+$(document).ready(function () {
+    initChat();
 });
 
-function initChat(){
-    try{
-        if(! isConnect()){
+function initChat() {
+    try {
+        if (!isConnect()) {
             connect();
         }
+        registerClickChatButton();
         registerCloseConnection();
         registerReceiptsMessages();
         registerErrorHandling();
         registerRemovalReceivingFlag();
         enableChat();
 
-    }catch (exception){
+    } catch (exception) {
         disableChat();
     }
 }
 
-function scrollChat(){
-        $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
+function scrollChat() {
+    $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
 }
 
-function registerCloseConnection(){
-    ws.onclose = function(evt){
+function registerCloseConnection() {
+    ws.onclose = function (evt) {
         disableChat();
     }
 }
 
-function registerErrorHandling(){
-    ws.onerror = function(evt){
-        alert("Erro ao comunicar com o servidor");
+function registerErrorHandling() {
+    ws.onerror = function (evt) {
+        disableChat();
     }
 }
 
-function registerReceiptsMessages(){
+function registerReceiptsMessages() {
     ws.onmessage = function (evt) {
         messageWriter(JSON.parse(evt.data));
         flagReceipt();
     }
 }
 
-function registerRemovalReceivingFlag(){
-    $('#outputMessage').bind('mouseover', function(){
+function registerRemovalReceivingFlag() {
+    $('#outputMessage').bind('mouseover', function () {
         $('#chatHeader').removeClass('receivedMessageFlag');
     })
 
-    $('#messageInput').bind('mouseover', function(){
+    $('#messageInput').bind('mouseover', function () {
         $('#chatHeader').removeClass('receivedMessageFlag');
     })
 
-    $('#chatField').bind('mouseover', function(){
+    $('#chatField').bind('mouseover', function () {
         $('#chatHeader').removeClass('receivedMessageFlag');
     })
 }
@@ -62,9 +63,9 @@ function commit(inputTextId) {
         var $messageData = createMessage(inputTextId)
         var jsonObject = JSON.stringify($messageData)
 
-        if(isConnect()){
+        if (isConnect()) {
             sendMessage(jsonObject);
-        }else{
+        } else {
             alert('Sem conexão');
         }
     }
@@ -99,45 +100,64 @@ function clearMessage(inputTextId) {
     $inputText.val('');
 };
 
-function flagReceipt(){
+function flagReceipt() {
     $('#chatHeader').addClass('receivedMessageFlag');
 }
 
-$.fn.scrollTo = function( target, options, callback ){
-    if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
+$.fn.scrollTo = function (target, options, callback) {
+    if (typeof options == 'function' && arguments.length == 2) {
+        callback = options;
+        options = target;
+    }
     var settings = $.extend({
-        scrollTarget  : target,
-        offsetTop     : 50,
-        duration      : 500,
-        easing        : 'swing'
+        scrollTarget: target,
+        offsetTop: 50,
+        duration: 500,
+        easing: 'swing'
     }, options);
-    return this.each(function(){
+    return this.each(function () {
         var scrollPane = $(this);
         var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
         var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
-        scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
-            if (typeof callback == 'function') { callback.call(this); }
+        scrollPane.animate({scrollTop: scrollY}, parseInt(settings.duration), settings.easing, function () {
+            if (typeof callback == 'function') {
+                callback.call(this);
+            }
         });
     });
 }
 
-//NOVO MODELO APARTIR DAQUI
 
-function disableChat(){
-    $('#chatButton').addClass("chatButtonDisable");
+function disableChat() {
+    $("#chatButton").removeClass('chatButtonEnable').addClass('chatButtonDisable');
+    $("#chatButton").off();
+    closeChat()
 }
 
-function enableChat(){
-    $('#chatImage').attr('value',"resources/images/icon_chat_enable.png");
+function enableChat() {
+    $("#chatButton").removeClass('chatButtonDisable').addClass('chatButtonEnable')
 }
 
-function showChat(){
-    //$("#chatField").slideToggle('slow');
+function registerClickChatButton() {
+    $("#chatButton").click(function () {
+        managerDisplatChat();
+    });
 }
 
-function hideChat(){
-    $("#chatField").hide();
+function managerDisplatChat(){
+    if(!isOpen){
+        openChat();
+    }else{
+        closeChat()
+    }
 }
 
+function openChat(){
+    $("#chatField").slideToggle('slow');
+    isOpen = true;
+}
 
-
+function closeChat(){
+    $("#chatField").hide('slow');
+    isOpen = false;
+}

@@ -9,10 +9,9 @@
     <script type="text/javascript" src="../../js/moment-with-locales.js"/>
     <link type="text/css" rel="stylesheet" href="../../styles/chat.css"/>
 
+    <div id="chatButton">
 
-    <p:commandLink id="chatButton" styleClass="chatButton">
-        <p:graphicImage id="chatImage" styleClass="chatButton"/>
-    </p:commandLink>
+    </div>
 
     <div id="chat">
         <h:outputText id="chatHeader"/>
@@ -26,7 +25,4 @@
             <p:inputTextarea id="messageInput" autoResize="false" onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
         </div>
     </div>
-
-
-
 </ui:composition>

@@ -2,18 +2,18 @@
     background-color: #F8F4F0;
 }
 
-#messageInput{
+#messageInput {
     width: 85% !important;
     margin-bottom: 5px;
     margin-top: 10%;
     margin-left: 5%;
 }
 
-#messagePanel{
+#messagePanel {
     align-content: center;
 }
 
-#outputMessage{
+#outputMessage {
     font-size: small;
     color: #534A40;
     overflow-x: hidden;
@@ -23,8 +23,8 @@
     height: 500px !important;
 }
 
-.receivedMessages{
-    background-image: url(../../images/background_message.png) ;
+.receivedMessages {
+    background-image: url(../../images/background_message.png);
     background-size: cover !important;
     background-repeat: no-repeat !important;
     border-radius: 10px;
@@ -32,17 +32,17 @@
     max-width: 100% !important;
 }
 
-.myMessages{
+.myMessages {
     border-radius: 10px;
     width: 100%;
 }
 
-.hour{
+.hour {
     float: right;
     margin-right: 7%;
 }
 
-.user{
+.user {
     font-weight: bold;
     margin-top: -05%;
     float: left;
@@ -50,23 +50,23 @@
 
 }
 
-.message{
+.message {
     margin-left: 7%;
     margin-right: 7%;
     text-align: center;
 }
 
-.flagReceipt{
+.flagReceipt {
     color: deepskyblue;
 }
 
-.receivedMessageFlag{
+.receivedMessageFlag {
     border-color: skyblue !important;
     border-style: solid;
     border-width: 2px;
 }
 
-#chat{
+#chat {
     display: inline-block;
     resize: none;
     top: 0 !important;
@@ -75,28 +75,37 @@
     width: 400px !important;
     max-width: 400px !important;
     position: absolute;
-    top:0;
-    right:0;
-    background-image: url(http://localhost:8080/cw/images/icon_chat_enable.png) ;
+    top: 0;
+    right: 0;
 }
 
-#chatHeader{
+#chatHeader {
     background-color: lightgray;
     text-align: center;
     display: block;
 }
 
-#sendBtn{
-    margin-left: 5% ;
+#sendBtn {
+    margin-left: 5%;
     margin-bottom: 2%;
 }
 
-.chatButton{
+#chatButton {
     float: right;
-    width: 70px;
     height: 70px;
+    width: 70px;
+    background-size: 70px 70px !important;
+
 }
 
+.chatButtonEnable{
+    background: url(../images/icon_chat_enable.png) no-repeat;
+}
+
+
+.chatButtonDisable{
+    background: url(../images/icon_chat_disable.png) no-repeat;
+}
 
 
 
