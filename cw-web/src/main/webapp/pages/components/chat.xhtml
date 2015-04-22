@@ -9,20 +9,18 @@
     <script type="text/javascript" src="../../js/moment-with-locales.js"/>
     <link type="text/css" rel="stylesheet" href="../../styles/chat.css"/>
 
-    <div id="chatButton">
-
-    </div>
-
     <div id="chat">
-        <h:outputText id="chatHeader"/>
-
-        <div id="chatField">
-            <p:outputPanel id="outputMessage">
-                <p:outputPanel id="messagePanel">
-                </p:outputPanel>
-            </p:outputPanel>
-
-            <p:inputTextarea id="messageInput" autoResize="false" onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
-        </div>
+        <div id="chatButton"/>
     </div>
+
+    <div id="chatField">
+        <p:outputPanel id="outputMessage">
+            <p:outputPanel id="messagePanel">
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <p:inputTextarea id="messageInput" autoResize="false"
+                         onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
+    </div>
+
 </ui:composition>

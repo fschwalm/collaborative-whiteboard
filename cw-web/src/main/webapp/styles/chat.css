@@ -1,5 +1,6 @@
 #chatField {
     background-color: #F8F4F0;
+    float: left;
 }
 
 #messageInput {
@@ -66,45 +67,50 @@
     border-width: 2px;
 }
 
-#chat {
-    display: inline-block;
-    resize: none;
-    top: 0 !important;
-    right: 0 !important;
-    resize: none;
-    width: 400px !important;
-    max-width: 400px !important;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-#chatHeader {
-    background-color: lightgray;
-    text-align: center;
-    display: block;
-}
+/*#chat {*/
+    /*display: inline-block;*/
+    /*resize: none;*/
+    /*top: 0 !important;*/
+    /*right: 0 !important;*/
+    /*resize: none;*/
+    /*width: 400px !important;*/
+    /*max-width: 400px !important;*/
+    /*position: absolute;*/
+    /*top: 0;*/
+/*}*/
 
 #sendBtn {
     margin-left: 5%;
     margin-bottom: 2%;
 }
 
+/* NOVO MODELO APARTIR DAQUI */
+
+#chat{
+    float: right;
+}
+
+#chatHeader{
+    float: left;
+    width: 140px;
+    height: 70px;
+    font-weight: bold;
+    color: white;
+}
+
 #chatButton {
     float: right;
+    width: 200px;
     height: 70px;
-    width: 70px;
-    background-size: 70px 70px !important;
-
 }
 
 .chatButtonEnable{
-    background: url(../images/icon_chat_enable.png) no-repeat;
+    background: url(../images/chat_enable.png) no-repeat;
 }
 
 
 .chatButtonDisable{
-    background: url(../images/icon_chat_disable.png) no-repeat;
+    background: url(../images/chat_disable.png) no-repeat;
 }
 
 
