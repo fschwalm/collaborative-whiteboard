@@ -131,7 +131,6 @@ $.fn.scrollTo = function (target, options, callback) {
 function disableChat() {
     $("#chatButton").removeClass('chatButtonEnable').addClass('chatButtonDisable');
     $("#chatButton").off();
-    closeChat()
 }
 
 function enableChat() {
@@ -140,24 +139,30 @@ function enableChat() {
 
 function registerClickChatButton() {
     $("#chatButton").click(function () {
-        managerDisplatChat();
+        managerDisplatChat()
+    });
+    $("#chatHeader").click(function () {
+        managerDisplatChat()
     });
 }
 
 function managerDisplatChat(){
-    if(!isOpen){
-        openChat();
+    if (!$( "#chatButton").is(':animated')) {
+        $( "#chatButton" ).animate({right: "539px"}, 500 );
+        $( "#chatHeader" ).animate({width: "420px"}, 500 );
+        $('#chatField').slideToggle();
     }else{
-        closeChat()
+        $(".chatButton").each(function() {
+            var orig = $.data(this, 'css');
+            $(this).animate({right: orig.right}, 500);
+        });
+
+        $(".chatHeader").each(function() {
+            var orig = $.data(this, 'css');
+            $(this).animate({width: orig.width}, 500);
+        });
+
+        $('#chatField').hide();
     }
-}
 
-function openChat(){
-    $("#chatField").slideToggle('slow');
-    isOpen = true;
-}
-
-function closeChat(){
-    $("#chatField").hide('slow');
-    isOpen = false;
 }

@@ -11,16 +11,17 @@
 
     <div id="chat">
         <div id="chatButton"/>
-    </div>
 
-    <div id="chatField">
-        <p:outputPanel id="outputMessage">
-            <p:outputPanel id="messagePanel">
+        <div id="chatHeader"/>
+
+        <div id="chatField">
+            <p:outputPanel id="outputMessage">
+                <p:outputPanel id="messagePanel">
+                </p:outputPanel>
             </p:outputPanel>
-        </p:outputPanel>
 
-        <p:inputTextarea id="messageInput" autoResize="false"
-                         onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
+            <p:inputTextarea id="messageInput" autoResize="false"
+                             onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
+        </div>
     </div>
-
 </ui:composition>

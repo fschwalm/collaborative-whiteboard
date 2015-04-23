@@ -1,7 +1,3 @@
-#chatField {
-    background-color: #F8F4F0;
-    float: left;
-}
 
 #messageInput {
     width: 85% !important;
@@ -14,15 +10,6 @@
     align-content: center;
 }
 
-#outputMessage {
-    font-size: small;
-    color: #534A40;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    max-width: 100% !important;
-    max-height: 500px !important;
-    height: 500px !important;
-}
 
 .receivedMessages {
     background-image: url(../../images/background_message.png);
@@ -91,26 +78,54 @@
 }
 
 #chatHeader{
-    float: left;
-    width: 140px;
+    float: right;
+    width: 200px;
     height: 70px;
+    top: 110px;
+    right: 160px;
+    position: absolute;
     font-weight: bold;
     color: white;
+    background: url(../images/chat_header.png) no-repeat;
 }
 
 #chatButton {
     float: right;
-    width: 200px;
+    width: 70px;
     height: 70px;
+    top: 110px;
+    right: 319px;
+    position: absolute;
 }
 
 .chatButtonEnable{
-    background: url(../images/chat_enable.png) no-repeat;
+    background: url(../images/chat_button_enable.png) no-repeat;
 }
 
 
 .chatButtonDisable{
-    background: url(../images/chat_disable.png) no-repeat;
+    background: url(../images/chat_button_disable.png) no-repeat;
+}
+
+#chatField {
+    max-height: 500px !important;
+    height: 800px !important;
+    position:absolute;
+    overflow: hidden;
+    z-index:10000;
+    width: 450px !important;
+    top: 188px;
+    background: #f5f5dc ;
+    right: 159px;
+}
+
+#outputMessage {
+    font-size: small;
+    color: #534A40;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 500px !important;
+    height: 500px !important;
 }
 
 
