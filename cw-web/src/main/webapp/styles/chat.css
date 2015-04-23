@@ -1,11 +1,4 @@
 
-#messageInput {
-    width: 85% !important;
-    margin-bottom: 5px;
-    margin-top: 10%;
-    margin-left: 5%;
-}
-
 #messagePanel {
     align-content: center;
 }
@@ -81,11 +74,10 @@
     float: right;
     width: 200px;
     height: 70px;
-    top: 110px;
+    top: 155px;
     right: 160px;
     position: absolute;
     font-weight: bold;
-    color: white;
     background: url(../images/chat_header.png) no-repeat;
 }
 
@@ -93,7 +85,7 @@
     float: right;
     width: 70px;
     height: 70px;
-    top: 110px;
+    top: 159px;
     right: 319px;
     position: absolute;
 }
@@ -108,15 +100,16 @@
 }
 
 #chatField {
-    max-height: 500px !important;
-    height: 800px !important;
+    max-height: 650px !important;
+    height: 650px !important;
     position:absolute;
     overflow: hidden;
     z-index:10000;
-    width: 450px !important;
-    top: 188px;
+    width: 420px !important;
+    top: 225px;
     background: #f5f5dc ;
     right: 159px;
+    display:none
 }
 
 #outputMessage {
@@ -127,6 +120,24 @@
     max-height: 500px !important;
     height: 500px !important;
 }
+
+#chatStatus{
+    text-shadow: 0px 1px 1px #4d4d4d;
+    color: #edee83;
+    position: absolute;
+    font: 40px 'LeagueGothicRegular';
+    line-height: 70px;
+    margin-left: 60px;
+}
+
+#messageInput {
+    width: 85% !important;
+    margin-bottom: 5px !important;
+    margin-top: 10% !important;
+    margin-left: 5% !important;
+}
+
+
 
 
 

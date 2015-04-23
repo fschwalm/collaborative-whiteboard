@@ -1,4 +1,4 @@
-var isOpen;
+var chatIsOpen;
 
 $(document).ready(function () {
     initChat();
@@ -66,7 +66,7 @@ function commit(inputTextId) {
         if (isConnect()) {
             sendMessage(jsonObject);
         } else {
-            alert('Sem conexão');
+            disableChat();
         }
     }
 };
@@ -138,31 +138,27 @@ function enableChat() {
 }
 
 function registerClickChatButton() {
-    $("#chatButton").click(function () {
-        managerDisplatChat()
-    });
-    $("#chatHeader").click(function () {
-        managerDisplatChat()
+    $("#chatButton,#chatHeader").click(function () {
+        if (!chatIsOpen) {
+            openChat();
+        }else{
+            closeChat();
+        }
     });
 }
 
-function managerDisplatChat(){
-    if (!$( "#chatButton").is(':animated')) {
-        $( "#chatButton" ).animate({right: "539px"}, 500 );
-        $( "#chatHeader" ).animate({width: "420px"}, 500 );
-        $('#chatField').slideToggle();
-    }else{
-        $(".chatButton").each(function() {
-            var orig = $.data(this, 'css');
-            $(this).animate({right: orig.right}, 500);
-        });
+function openChat() {
+    $("#chatButton").animate({right: "554px"}, 50);
+    $("#chatButton").css({top: "156px"});
+    $("#chatHeader").animate({width: "437px"}, 50);
+    $('#chatField').slideToggle('fast');
+    chatIsOpen = true;
+}
 
-        $(".chatHeader").each(function() {
-            var orig = $.data(this, 'css');
-            $(this).animate({width: orig.width}, 500);
-        });
-
-        $('#chatField').hide();
-    }
-
+function closeChat() {
+    $("#chatButton").animate({right: "320px"}, 50);
+    $("#chatButton").css({top: "156px"});
+    $("#chatHeader").animate({width: "203px"}, 50);
+    $('#chatField').slideToggle('fast');
+    chatIsOpen = false;
 }

@@ -36,7 +36,7 @@ function printUserMessage(jsonObject){
 function printStatusMessage(jsonObject){
     var status = jsonObject['STATUS'];
 
-    $('#chatHeader').text(status);
+    $('#chatHeader').append("<span id='chatStatus'>"+status+"</span>");
 }
 
 function printServerMessage(jsonObject){
