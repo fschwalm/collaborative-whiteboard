@@ -45,17 +45,9 @@ function registerReceiptsMessages() {
 }
 
 function registerRemovalReceivingFlag() {
-    $('#outputMessage').bind('mouseover', function () {
-        $('#chatHeader').removeClass('receivedMessageFlag');
-    })
-
-    $('#messageInput').bind('mouseover', function () {
-        $('#chatHeader').removeClass('receivedMessageFlag');
-    })
-
-    $('#chatField').bind('mouseover', function () {
-        $('#chatHeader').removeClass('receivedMessageFlag');
-    })
+    $('#chatButton,#chatHeader').click(function () {
+        $("span[id=receivedMessageFlag]").remove();
+    });
 }
 
 function commit(inputTextId) {
@@ -100,8 +92,12 @@ function clearMessage(inputTextId) {
     $inputText.val('');
 };
 
-function flagReceipt() {
-    $('#chatHeader').addClass('receivedMessageFlag');
+function flagReceipt(){
+    var valueFlag = '⁺';
+
+    if($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))){
+        $('#chatHeader').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
+    }
 }
 
 $.fn.scrollTo = function (target, options, callback) {
@@ -148,17 +144,13 @@ function registerClickChatButton() {
 }
 
 function openChat() {
-    $("#chatButton").animate({right: "554px"}, 50);
-    $("#chatButton").css({top: "156px"});
-    $("#chatHeader").animate({width: "437px"}, 50);
-    $('#chatField').slideToggle('fast');
+    $("#chatHeader").animate({width: "437px"});
+    $("#chatField").slideDown('fast');
     chatIsOpen = true;
 }
 
 function closeChat() {
-    $("#chatButton").animate({right: "320px"}, 50);
-    $("#chatButton").css({top: "156px"});
-    $("#chatHeader").animate({width: "203px"}, 50);
-    $('#chatField').slideToggle('fast');
+    $("#chatHeader").animate({width: "200px"});
+    $("#chatField").slideUp('fast');
     chatIsOpen = false;
 }
