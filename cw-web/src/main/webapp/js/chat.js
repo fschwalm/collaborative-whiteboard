@@ -146,6 +146,7 @@ function registerClickChatButton() {
 function openChat() {
     $("#chatHeader").animate({width: "437px"});
     $("#chatField").slideDown('fast');
+    $("#messageInput").focus();
     chatIsOpen = true;
 }
 

@@ -14,6 +14,13 @@ public class StoryCreation implements Serializable{
     private String description;
     private String projectArea;
 
+    public void init() {
+        selectedProject = null;
+        subject = null;
+        description = null;
+        projectArea = null;
+    }
+
     public Project getSelectedProject() {
         return selectedProject;
     }

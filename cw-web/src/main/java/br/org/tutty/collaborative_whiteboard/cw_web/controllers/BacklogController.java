@@ -68,7 +68,7 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void prepareCreationStory(){
-        storyCreation = new StoryCreation();
+        storyCreation.init();
     }
 
     public List<Story> fetchStories() throws IOException {
@@ -191,5 +191,9 @@ public class BacklogController extends GenericController implements Serializable
                 this.storyCreation.setSelectedProject(project);
             }
         }
+    }
+
+    public void closeStoryEdition(){
+        prepareCreationStory();
     }
 }

@@ -1,4 +1,4 @@
-  - Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
+  - (OK) Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
 
   - (OK) Corrigir Layout chat
 
