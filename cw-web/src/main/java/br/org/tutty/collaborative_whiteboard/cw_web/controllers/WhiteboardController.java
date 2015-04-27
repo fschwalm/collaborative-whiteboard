@@ -45,10 +45,10 @@ public class WhiteboardController extends GenericController implements Serializa
         try {
             projectService.createProject(projectName);
             setUp();
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "whiteboard.project_created");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "whiteboard.project_created");
 
         } catch (NameInUseException e) {
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "whiteboard.name_in_use");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "whiteboard.name_in_use");
         }
     }
 

@@ -80,7 +80,7 @@ public class BacklogController extends GenericController implements Serializable
             return stories;
 
         } catch (Exception e){
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.stories.error");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.stories.error");
 
             stories = new ArrayList<>();
             return stories;
@@ -92,7 +92,7 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
     }
 
     public void createStory() throws IOException, DataNotFoundException {
@@ -108,12 +108,12 @@ public class BacklogController extends GenericController implements Serializable
         stories.add(story);
 
         storyCreation = new StoryCreation();
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.created_story");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.created_story");
     }
 
     public void updateBacklog() throws IOException {
         backlogManagerService.updateBacklog(stories);
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
     }
 
     public Boolean isSelected() {

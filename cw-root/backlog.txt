@@ -1,5 +1,7 @@
   - Adicionar botão de sair
 
+  - (OK) Validação email Usuario
+
   - (OK) Corrigir nome de usuario no chat
 
   - (OK) Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload

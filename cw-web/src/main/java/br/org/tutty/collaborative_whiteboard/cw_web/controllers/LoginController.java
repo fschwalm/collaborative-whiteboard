@@ -23,6 +23,11 @@ public class LoginController extends GenericController {
     private String email;
     private String password;
 
+    private static String LOGIN_PROPERTY_KEY = "login.error";
+    private static String FEATURE_NOT_IMPLEMENTED_PROPERTY_KEY = "feature.not_implemented";
+    private static String UNEXPECTED_ERROR_PROPERTY_KEY = "unexpected.error";
+    private static String UNEXPECTED_ERROR_DETAIL_PROPERTY_KEY = "unexpected.error.detail";
+
     public String login() throws IOException {
         try {
             Security security = new Security(getSession(), email, password);
@@ -30,11 +35,11 @@ public class LoginController extends GenericController {
             return HOME_PAGE;
 
         } catch (LoginException e) {
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "login.error");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, LOGIN_PROPERTY_KEY );
             return RECOVERY_PAGE;
 
         }catch (Exception exception){
-            showGlobalMessage(FacesMessage.SEVERITY_FATAL, "unexpected.error", "unexpected.error.detail");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_FATAL, UNEXPECTED_ERROR_PROPERTY_KEY, UNEXPECTED_ERROR_DETAIL_PROPERTY_KEY);
             exception.printStackTrace();
             return RECOVERY_PAGE;
         }
@@ -45,7 +50,7 @@ public class LoginController extends GenericController {
     }
 
     public String recovery() throws IOException {
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "feature.not_implemented");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, FEATURE_NOT_IMPLEMENTED_PROPERTY_KEY);
         return RECOVERY_PAGE;
     }
 

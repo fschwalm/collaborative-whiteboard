@@ -17,7 +17,9 @@
                 <p:messages/>
                 <h:panelGrid>
                     <p:watermark value="#{accountCreation['email']}" for="email"/>
-                    <p:inputText id="email" required="true" requiredMessage="#{accountCreation['required.email']}" value="#{accountCreationController.email}" size="35"/>
+                    <p:inputText id="email" required="true" requiredMessage="#{accountCreation['required.email']}" value="#{accountCreationController.email}" size="35" >
+                        <f:validator validatorId="custom.emailValidator"/>
+                    </p:inputText>
 
                     <p:watermark value="#{accountCreation['first_name']}" for="firstName"/>
                     <p:inputText id="firstName" required="true"

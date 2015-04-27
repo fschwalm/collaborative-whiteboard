@@ -1,18 +1,13 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
-import backlog_manager.exceptions.ProjectAreaInUseException;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
-import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerServiceBean;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
-import cw.exceptions.DataNotFoundException;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -66,12 +61,12 @@ public class ProjectController extends GenericController implements Serializable
             updateProjectAreaForRemoval();
         }
 
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
         return STAY_ON_PAGE;
     }
 
     public void removeProject() throws IOException {
-        showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "feature.not_implemented");
+        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "feature.not_implemented");
     }
 
     private void updateProject() throws IOException {
@@ -94,11 +89,11 @@ public class ProjectController extends GenericController implements Serializable
         Boolean areaAlreadyAddedToSave = projectAreaCreation.alreadyAdded(projectAreaName);
 
         if (areaAlreadySaved || areaAlreadyAddedToSave) {
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
 
         } else {
             projectAreaCreation.addArea();
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
         }
     }
 
@@ -166,13 +161,13 @@ public class ProjectController extends GenericController implements Serializable
         if (!backlogManagerService.projectAreaIsAssignedToStory(projectArea)) {
             if (isCheckForRemoval(projectArea.getName())) {
                 projectAreasForRemoval.remove(projectArea);
-                showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
+                facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
             } else {
                 projectAreasForRemoval.add(projectArea);
-                showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
+                facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
             }
         } else {
-            showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");
         }
     }
 
