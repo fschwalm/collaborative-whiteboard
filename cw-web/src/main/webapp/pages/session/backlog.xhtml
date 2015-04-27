@@ -134,7 +134,7 @@
 
                         <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}"
                                         var="area" value="#{backlogController.storyCreation.projectArea}"
-                                        completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}"/>
+                                        completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}" required="true"/>
 
                         <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
                         <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"

@@ -28,11 +28,11 @@
             </h:form>
         </div>
 
-        <div>
+        <div id="backlogArea">
             <h:form id="accessForm" prependId="false">
-                <p:commandLink id="backlog" action="#{whiteboardController.goToBacklog()}" ajax="false"
+                <p:commandLink id="backlogButton" action="#{whiteboardController.goToBacklog()}" ajax="false"
                                rendered="#{whiteboardController.hasSomeProject()}">
-                    <p:graphicImage url="http://localhost:8080/cw/images/backlog_icon.png"/>
+                    <p:graphicImage value="../../images/backlog_icon_new.png"/>
                 </p:commandLink>
             </h:form>
         </div>

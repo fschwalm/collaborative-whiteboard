@@ -19,14 +19,27 @@
 
         <div id="sheet">
             <div id="headerPage">
-                <p:commandLink action="HOME_PAGE" style="top: 200px">
-                    <h:graphicImage url="../../images/icon.png"/>
+                <p:commandLink action="HOME_PAGE" >
+                    <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
                 </p:commandLink>
-                <ui:include src="../pages/components/chat.xhtml"/>
+
+                <div id="actionArea">
+                    <p:commandLink id="exitBtn" styleClass="exitLink" onclick="PF('confirmationExit').show()">
+                        <h:graphicImage url="../../images/exit_icon.png" styleClass="exitBtn"/>
+                    </p:commandLink>
+
+                    <p:commandLink id="chatBtn" styleClass="chatLink">
+                        <h:graphicImage styleClass="chatBtn"/>
+                    </p:commandLink>
+
+                </div>
             </div>
 
+            <ui:include src="../pages/components/chat.xhtml"/>
             <ui:insert name="pageContent"/>
         </div>
+
+        <ui:include src="../pages/components/exit.xhtml"/>
     </h:body>
 </f:view>
 </html>

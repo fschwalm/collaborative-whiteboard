@@ -60,3 +60,59 @@
     color: black !important;
 }
 
+#backlogArea{
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.homeButton{
+    margin-top: 2% !important;
+    margin-left: 4% !important;
+}
+
+#actionArea{
+    margin-top: -1%;
+    margin-left: 1%;
+    width: 98%;
+    height: 30px;
+}
+
+.exitLink{
+    float: right;
+}
+
+.chatLink{
+    float: right;
+}
+
+.exitBtn{
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 70px;
+    height: 70px;
+}
+
+.chatBtn{
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 70px;
+    height: 70px;
+}
+
+.chatEnable{
+    background: url(../images/chat_button_enable.png) no-repeat;
+}
+
+.chatEnable{
+    background: url(../images/chat_button_disable.png) no-repeat;
+}
+
+#receivedMessageFlag {
+    margin-left: -40px;
+    margin-top: -15px;
+    font-size: 300%;
+    position: absolute;
+    color: #edee83;
+    float: right;
+}
+

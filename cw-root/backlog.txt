@@ -1,4 +1,6 @@
-  - Adicionar botão de sair
+  - (Andamento) Adicionar botão de sair
+
+  - Melhorar Qualidade botão Chat
 
   - (OK) Validação email Usuario
 

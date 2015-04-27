@@ -36,6 +36,10 @@
             <base-name>properties/project</base-name>
             <var>project_bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/exit</base-name>
+            <var>exit</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>

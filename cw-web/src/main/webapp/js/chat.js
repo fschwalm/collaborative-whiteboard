@@ -45,7 +45,7 @@ function registerReceiptsMessages() {
 }
 
 function registerRemovalReceivingFlag() {
-    $('#chatButton,#chatHeader').click(function () {
+    $('#chatBtn').click(function () {
         $("span[id=receivedMessageFlag]").remove();
     });
 }
@@ -96,7 +96,7 @@ function flagReceipt(){
     var valueFlag = '⁺';
 
     if($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))){
-        $('#chatHeader').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
+        $('#chatBtn').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
     }
 }
 
@@ -125,16 +125,15 @@ $.fn.scrollTo = function (target, options, callback) {
 
 
 function disableChat() {
-    $("#chatButton").removeClass('chatButtonEnable').addClass('chatButtonDisable');
-    $("#chatButton").off();
+    $('#chatBtn').children('img').attr('src','../../images/chat_button_disable.png')
 }
 
 function enableChat() {
-    $("#chatButton").removeClass('chatButtonDisable').addClass('chatButtonEnable')
+    $('#chatBtn').children('img').attr('src','../../images/chat_button_enable.png')
 }
 
 function registerClickChatButton() {
-    $("#chatButton,#chatHeader").click(function () {
+    $("#chatBtn").click(function () {
         if (!chatIsOpen) {
             openChat();
         }else{
@@ -144,14 +143,14 @@ function registerClickChatButton() {
 }
 
 function openChat() {
-    $("#chatHeader").animate({width: "437px"});
+    $('#exitBtn').animate({'margin-right': "8%"});
     $("#chatField").slideDown('fast');
     $("#messageInput").focus();
     chatIsOpen = true;
 }
 
 function closeChat() {
-    $("#chatHeader").animate({width: "200px"});
+    $('#exitBtn').animate({'margin-right': "0%"});
     $("#chatField").slideUp('fast');
     chatIsOpen = false;
 }

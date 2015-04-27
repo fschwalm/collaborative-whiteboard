@@ -24,6 +24,7 @@ public class GenericController implements Serializable {
     protected static final String WELCOME_PAGE = "WELCOME_PAGE";
     protected static final String GOT_TO_PROJECT_PAGE = "PROJECT_PAGE";
 
+
     @Inject
     protected FacesMessageUtil facesMessageUtil;
 
