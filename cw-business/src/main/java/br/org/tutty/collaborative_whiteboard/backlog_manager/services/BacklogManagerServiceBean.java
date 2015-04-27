@@ -60,16 +60,18 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         }
     }
 
-    private String getAvailableCode(Project project) {
+    private String getAvailableCode(Project project, ProjectArea projectArea) {
         Long sequence = (backlogDao.getNextSequenceStory(project) + 1);
 
-        return mountStoryCode(project, sequence);
+        return mountStoryCode(projectArea, sequence);
     }
 
-    private String mountStoryCode(Project project, Long sequence) {
-        String prefix = project.getPrefix();
+    private String mountStoryCode(ProjectArea projectArea, Long sequence) {
+        String separatorId = "-";
+        String projectAreaId = projectArea.getName().toUpperCase();
 
-        StringBuffer code = new StringBuffer(prefix);
+        StringBuffer code = new StringBuffer(projectAreaId);
+        code.append(separatorId);
         code.append(sequence.toString());
 
         return code.toString();
@@ -86,9 +88,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     public Story populateStoryCode(Story story) throws StoryAlreadyIdentifiedException {
         Project project = story.getProject();
+        ProjectArea projectArea = story.getProjectArea();
 
         if(story.getCode() == null){
-            String availableCode = getAvailableCode(project);
+            String availableCode = getAvailableCode(project, projectArea);
             story.setCode(availableCode);
         }else {
             throw new StoryAlreadyIdentifiedException();

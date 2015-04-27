@@ -192,8 +192,4 @@ public class BacklogController extends GenericController implements Serializable
             }
         }
     }
-
-    public void closeStoryEdition(){
-        prepareCreationStory();
-    }
 }

@@ -1,3 +1,7 @@
+  - (Andamento) Modificar Modelo de ID
+
+  - Adicionar coluna Branch e coluna Area
+
   - Adicionar Filtro Global a tabela de backlog
 
   - Corrigir e pensar no modelo de compartilhamento
@@ -13,6 +17,10 @@
   - Melhorar Qualidade botão Chat
 
   - Persistencia de mensagens do chat
+
+  - Formatar data
+
+  - Bloquear chat quando offline
 
   - (OK) Validação email Usuario
 
