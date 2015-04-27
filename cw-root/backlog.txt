@@ -1,3 +1,7 @@
+  - Adicionar botão de sair
+
+  - (OK) Corrigir nome de usuario no chat
+
   - (OK) Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
 
   - (OK) Corrigir Layout chat
@@ -14,7 +18,7 @@
 
   - (OK) Corrigir ConstrainValidation para Area atribuida a uma estoria
 
-  - (OK) Persistir mensagens apos redirect
+  - (OK) Persistir mensagens apos redirectc
 
   - (OK) Validação de dados para criação de Usuario
 
