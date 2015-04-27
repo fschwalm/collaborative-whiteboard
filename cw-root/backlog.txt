@@ -1,6 +1,18 @@
-  - (Andamento) Adicionar botão de sair
+  - Adicionar Filtro Global a tabela de backlog
+
+  - Corrigir e pensar no modelo de compartilhamento
+
+  - Confirmação por senha para novo usuário
+
+  - Cor de linhas do backlog conforme cor do projeto
+
+  - Implementar recuperar senha
+
+  - Possibilitar edição de area em tela de backlog
 
   - Melhorar Qualidade botão Chat
+
+  - Persistencia de mensagens do chat
 
   - (OK) Validação email Usuario
 
@@ -9,14 +21,6 @@
   - (OK) Corrigir bug de quando se abre Dialog de criação e a mesma não faz reload
 
   - (OK) Corrigir Layout chat
-
-  - Confirmação por senha para novo usuário
-
-  - Cor de linhas do backlog conforme cor do projeto
-
-  - Adicionar Filtro Global a tabela de backlog
-
-  - Corrigir e pensar no modelo de compartilhamento
 
   - (OK) Criar 'area sistema' para concatenar ao codigo
 
@@ -40,6 +44,4 @@
 
     - (ok) Criar redirect index para pagina principal
 
-    - Implementar recuperar senha
-
-    - Possibilitar edição de area em tela de backlog
+    - (ok) Adicionar botão de sair
