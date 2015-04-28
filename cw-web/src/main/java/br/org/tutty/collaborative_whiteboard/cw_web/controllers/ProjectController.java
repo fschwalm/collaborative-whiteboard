@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,8 +118,8 @@ public class ProjectController extends GenericController implements Serializable
         return selectedProject.getNameProject();
     }
 
-    public String getCreationDate() {
-        return selectedProject.getCreationDate().toString();
+    public Date getCreationDate() {
+        return selectedProject.getCreationDate();
     }
 
     public String getProjectDescription() {

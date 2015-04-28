@@ -1,6 +1,4 @@
-  - (Andamento) Modificar Modelo de ID
-
-  - Adicionar coluna Branch e coluna Area
+  - (Andamento) Melhorar Qualidade botão Chat
 
   - Adicionar Filtro Global a tabela de backlog
 
@@ -14,13 +12,17 @@
 
   - Possibilitar edição de area em tela de backlog
 
-  - Melhorar Qualidade botão Chat
-
   - Persistencia de mensagens do chat
 
-  - Formatar data
-
   - Bloquear chat quando offline
+
+  - (OK) Formatar data
+
+  - (OK) Modificar Modelo de ID
+
+  - (OK) Adicionar coluna Branch e coluna Area
+
+  - (OK) Adicionar Edição de Branch
 
   - (OK) Validação email Usuario
 

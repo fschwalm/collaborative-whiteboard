@@ -100,13 +100,20 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         return story;
     }
 
+    public Story populateBranch(Story story){
+        story.setBranch(story.getCode());
+        return story;
+    }
+
     private void updateStories(List<Story> stories) {
         stories.forEach(new Consumer<Story>() {
             @Override
             public void accept(Story story) {
                 try{
                     Story storyWithNewCode = populateStoryCode(story);
-                    backlogDao.update(storyWithNewCode);
+                    Story storyWithDefaultBranch = populateBranch(storyWithNewCode);
+
+                    backlogDao.update(storyWithDefaultBranch);
 
                 }catch (StoryAlreadyIdentifiedException e){
                     backlogDao.update(story);

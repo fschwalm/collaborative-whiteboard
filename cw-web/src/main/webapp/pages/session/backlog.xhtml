@@ -31,6 +31,14 @@
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
+                    <p:column headerText="#{backlog['header.table.branch']}" style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.branch}"/>
+                    </p:column>
+
+                    <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.projectArea.name}"/>
+                    </p:column>
+
                     <p:column headerText="#{backlog['header.table.subject']}"
                               style="width: 300px; text-align: left">
                         <h:outputText value="#{story.subject}"/>
@@ -86,11 +94,14 @@
                 <h:form id="storyDetailForm" prependId="false">
                     <h:panelGrid columns="2">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
-                        <p:inputText id="creationDate" value="#{backlogController.storyEdition.creationDate}"
-                                     readonly="true"/>
+                        <p:calendar id="creationDate" value="#{backlogController.storyEdition.creationDate}"
+                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <h:outputLabel value="#{backlog['label.code']}" for="code"/>
                         <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
+
+                        <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
+                        <p:inputText id="branch" value="#{backlogController.storyEdition.branch}"/>
 
                         <h:outputLabel value="#{backlog['label.area']}" for="area"/>
                         <p:inputText id="area" value="#{backlogController.storyEdition.projectArea.name}"

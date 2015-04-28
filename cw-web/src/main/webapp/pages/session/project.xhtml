@@ -24,8 +24,8 @@
                 <h:form id="projectDataForm" prependId="false">
                     <h:panelGrid columns="2">
                         <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
-                        <p:inputText id="projectCreationDate" value="#{projectController.creationDate}"
-                                     readonly="true"/>
+                        <p:calendar id="projectCreationDate" value="#{projectController.creationDate}"
+                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <p:spacer height="5px"/> <p:spacer height="5px"/>
 

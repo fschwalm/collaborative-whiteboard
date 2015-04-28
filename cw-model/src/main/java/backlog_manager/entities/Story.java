@@ -16,13 +16,20 @@ import java.util.List;
  */
 @Entity
 @Table(name = "story", catalog = "cw")
-@SequenceGenerator(name="Priority_seq", sequenceName="Story_Priority_Seq", allocationSize=1)
+@SequenceGenerator(name = "StorySequence", sequenceName = "story_seq", initialValue = 1, allocationSize = 1)
 public class Story implements Serializable{
+
     @Id
+    @GeneratedValue(generator = "StorySequence", strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    @Column(nullable = false)
     private String code;
 
-    @Column
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Story_Priority_Seq")
+    @Column(nullable = false)
+    private String branch;
+
+    @Column(nullable = false)
     private Integer priority;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -158,6 +165,18 @@ public class Story implements Serializable{
         return priority;
     }
 
+    public Long getId() {
+
+        return id;
+    }
+
+    public void setId(Long id) {
+        Long oldValue = this.id;
+        this.id = id;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("id", oldValue, id);
+    }
+
     public void setPriority(Integer priority) {
         Integer oldValue = this.priority;
         this.priority = priority;
@@ -169,6 +188,17 @@ public class Story implements Serializable{
         return projectArea;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        String oldValue = this.branch;
+        this.branch = branch;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("branch", oldValue, branch);
+    }
+
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
     }
@@ -176,12 +206,14 @@ public class Story implements Serializable{
     @Override
     public Story clone() throws CloneNotSupportedException {
         Story story = new Story(author, project, creationDate);
+        story.setId(id);
         story.setCode(code);
         story.setSubject(subject);
         story.setDescription(description);
         story.setPriority(priority);
         story.setComments(comments);
         story.setTasks(tasks);
+        story.setBranch(branch);
 
         return story;
     }

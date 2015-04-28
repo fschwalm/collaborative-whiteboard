@@ -14,6 +14,7 @@ public class StoryEdition implements Serializable{
     public Story selectedStory;
 
     private String code;
+    private String branch;
     private Date creationDate;
     private User author;
     private String subjectChanges;
@@ -23,6 +24,7 @@ public class StoryEdition implements Serializable{
     public void init(Story selectedStory) {
         this.selectedStory = selectedStory;
         this.code = selectedStory.getCode();
+        this.branch = selectedStory.getBranch();
         this.creationDate = selectedStory.getCreationDate();
         this.author = selectedStory.getAuthor();
         this.subjectChanges = selectedStory.getSubject();
@@ -32,6 +34,7 @@ public class StoryEdition implements Serializable{
 
     public void save(){
         selectedStory.setCode(code);
+        selectedStory.setBranch(branch);
         selectedStory.setSubject(subjectChanges);
         selectedStory.setDescription(descriptionChanges);
     }
@@ -82,5 +85,13 @@ public class StoryEdition implements Serializable{
 
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 }
