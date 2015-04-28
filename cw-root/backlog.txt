@@ -1,12 +1,10 @@
-  - (Andamento) Melhorar Qualidade botão Chat
+  - (Andamento) Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
 
   - Corrigir e pensar no modelo de compartilhamento
 
   - Confirmação por senha para novo usuário
-
-  - Cor de linhas do backlog conforme cor do projeto
 
   - Implementar recuperar senha
 
@@ -15,6 +13,8 @@
   - Persistencia de mensagens do chat
 
   - Bloquear chat quando offline
+
+  - (OK) Melhorar Qualidade botão Chat
 
   - (OK) Formatar data
 

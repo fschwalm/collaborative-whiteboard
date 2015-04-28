@@ -12,9 +12,6 @@
                                  process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
                                  action="#{projectController.save()}"/>
                 <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
-            </f:facet>
-
-            <f:facet name="right">
                 <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false" styleClass="remove_project_button" action="#{projectController.removeProject}" process="@this"/>
             </f:facet>
         </p:toolbar>
