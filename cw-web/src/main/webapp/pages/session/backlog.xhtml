@@ -13,42 +13,40 @@
                 <p:dataTable id="backlogTable" var="story"
                              value="#{backlogController.stories}"
                              draggableRows="true"
-                             widgetVar="backlogTable"
+                             widgetVar="backlogTbl"
                              rowIndexVar="index" selection="#{backlogController.selectedStory}"
                              rowKey="#{story}"
-                             selectionMode="single">
+                             selectionMode="single" rowStyleClass="#{story.project.nameProject})">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
-
                     <p:ajax event="rowSelect" update="openButton"/>
                     <p:ajax event="rowUnselect" update="openButton"/>
+                        <p:column headerText="#{backlog['header.table.project']}"
+                                  style="width: 50px; text-align: center">
+                            <h:outputText value="#{story.project.nameProject}"/>
+                        </p:column>
 
-                    <p:column headerText="#{backlog['header.table.project']}"
-                              style="width: 50px; text-align: center">
-                        <h:outputText value="#{story.project.nameProject}"/>
-                    </p:column>
+                        <p:column headerText="#{backlog['header.table.code']}" style="width: 50px; text-align: center">
+                            <h:outputText value="#{story.code}"/>
+                        </p:column>
 
-                    <p:column headerText="#{backlog['header.table.code']}" style="width: 50px; text-align: center">
-                        <h:outputText value="#{story.code}"/>
-                    </p:column>
+                        <p:column headerText="#{backlog['header.table.branch']}"
+                                  style="width: 50px; text-align: center">
+                            <h:outputText value="#{story.branch}"/>
+                        </p:column>
 
-                    <p:column headerText="#{backlog['header.table.branch']}" style="width: 50px; text-align: center">
-                        <h:outputText value="#{story.branch}"/>
-                    </p:column>
+                        <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
+                            <h:outputText value="#{story.projectArea.name}"/>
+                        </p:column>
 
-                    <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
-                        <h:outputText value="#{story.projectArea.name}"/>
-                    </p:column>
+                        <p:column headerText="#{backlog['header.table.subject']}"
+                                  style="width: 300px; text-align: left">
+                            <h:outputText value="#{story.subject}"/>
+                        </p:column>
 
-                    <p:column headerText="#{backlog['header.table.subject']}"
-                              style="width: 300px; text-align: left">
-                        <h:outputText value="#{story.subject}"/>
-                    </p:column>
-
-                    <p:column headerText="#{backlog['header.table.author']}"
-                              style="width: 100px; text-align: center">
-                        <h:outputText value="#{story.author.firstName}"/>
-                    </p:column>
-
+                        <p:column headerText="#{backlog['header.table.author']}"
+                                  style="width: 100px; text-align: center">
+                            <h:outputText value="#{story.author.firstName}"/>
+                        </p:column>
                     <f:facet name="header">
                         <p:toolbar>
                             <f:facet name="left">
@@ -79,7 +77,7 @@
             <p:outputPanel>
                 <h:panelGrid columns="2">
                     <h:form>
-                        <p:commandButton value="#{backlog['btn.save']}"
+                        <p:commandButton value="#{backlog['btn.save']}" update=":backlogForm:backlogTable"
                                          styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="#{backlog['btn.cancel']}"
                                          type="button"
@@ -95,7 +93,7 @@
                     <h:panelGrid columns="2">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
                         <p:calendar id="creationDate" value="#{backlogController.storyEdition.creationDate}"
-                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+                                    disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <h:outputLabel value="#{backlog['label.code']}" for="code"/>
                         <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
@@ -124,9 +122,10 @@
                                          action="#{backlogController.saveDetailChanges()}"
                                          update="storyDetailForm :backlogForm:backlogTable" icon="ui-icon-disk"/>
                         <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
-                                         oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w" immediate="true">
+                                         oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
+                                         immediate="true">
                             <f:ajax execute="@this" render=":storyDetail"/>
-                                </p:commandButton>
+                        </p:commandButton>
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>
@@ -134,40 +133,73 @@
 
         <p:dialog id="storyCreation" widgetVar="storyCreation" modal="true" resizable="false" appendToBody="false">
             <h:form id="createStoryForm" prependId="false">
-                    <h:panelGrid columns="1">
-                        <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}"
-                                         required="true">
-                            <f:selectItem itemLabel="#{backlog['label.story.creation.select_empty']}" itemValue=""/>
-                            <p:ajax event="change" execute="@this" update="projectArea"/>
-                            <f:selectItems value="#{backlogController.projects}" var="projectName"
-                                           itemLabel="#{projectName}" itemValue="#{projectName}"/>
-                        </p:selectOneMenu>
+                <h:panelGrid columns="1">
+                    <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}"
+                                     required="true">
+                        <f:selectItem itemLabel="#{backlog['label.story.creation.select_empty']}" itemValue=""/>
+                        <p:ajax event="change" execute="@this" update="projectArea"/>
+                        <f:selectItems value="#{backlogController.projects}" var="projectName"
+                                       itemLabel="#{projectName}" itemValue="#{projectName}"/>
+                    </p:selectOneMenu>
 
-                        <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}"
-                                        var="area" value="#{backlogController.storyCreation.projectArea}"
-                                        completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}" required="true"/>
+                    <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}"
+                                    var="area" value="#{backlogController.storyCreation.projectArea}"
+                                    completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}"
+                                    required="true"/>
 
-                        <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
-                        <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
-                                     size="60" required="true"/>
+                    <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
+                    <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
+                                 size="60" required="true"/>
 
-                        <p:watermark value="#{backlog['label.story.creation.description']}"
-                                     for="descriptionNewStory"/>
-                        <p:inputTextarea id="descriptionNewStory"
-                                         value="#{backlogController.storyCreation.description}"
-                                         cols="63" rows="20" required="true"/>
-                    </h:panelGrid>
+                    <p:watermark value="#{backlog['label.story.creation.description']}"
+                                 for="descriptionNewStory"/>
+                    <p:inputTextarea id="descriptionNewStory"
+                                     value="#{backlogController.storyCreation.description}"
+                                     cols="63" rows="20" required="true"/>
+                </h:panelGrid>
 
-                    <h:panelGrid columns="2">
-                        <p:commandButton id="save" value="#{backlog['btn.save']}"
-                                         update="createStoryForm,:backlogForm:backlogTable"
-                                         action="#{backlogController.createStory()}" icon="ui-icon-disk"/>
-                        <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
-                                         oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w" immediate="true">
-                            <f:ajax execute="@this" render=":createStoryForm"/>
-                                </p:commandButton>
-                    </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton id="save" value="#{backlog['btn.save']}"
+                                     update="createStoryForm,:backlogForm:backlogTable"
+                                     action="#{backlogController.createStory()}" icon="ui-icon-disk"/>
+                    <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
+                                     oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
+                                     immediate="true">
+                        <f:ajax execute="@this" render=":createStoryForm"/>
+                    </p:commandButton>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
+
+        <script type="text/javascript">
+            //<![CDATA[
+
+            $(document).ready(function () {
+                processColorMap();
+            });
+
+            function processColorMap(){
+                var jsonData = JSON.parse('#{backlogController.colorMap()}');
+
+                // Percorrer json e criar css para cada elemento existente
+                createCssClass(className, backgroundColor)
+            }
+
+            function createCssClass(className, backgroundColor){
+                $.cssRule('.'+className+' { background = '+backgroundColor+'}');
+
+                return className;
+            }
+
+            function printRows(){
+                var rows = backlogTable.children[1].children[0].children[2].rows;
+
+                for(var i = 0; i < rows.length; i++){
+                    var colorName = jsonData[rows[i].cells[0].innerHTML];
+                    rows[i].style.background = colorName;
+                }
+            }
+            //]]>
+        </script>
     </ui:define>
 </ui:composition>

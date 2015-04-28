@@ -11,6 +11,8 @@ import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 
@@ -22,7 +24,6 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -191,5 +192,20 @@ public class BacklogController extends GenericController implements Serializable
                 this.storyCreation.setSelectedProject(project);
             }
         }
+    }
+
+    public String colorMap() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Linda", "red");
+        jsonObject.put("Elsa", "blue");
+
+        return jsonObject.toString();
+
+//        if (!stories.isEmpty()) {
+//
+//            return "#" + stories.get(indice).getProject().getColor();
+//        } else {
+//            return "#FFF";
+//        }
     }
 }
