@@ -1,4 +1,4 @@
-  - (Andamento) Persistencia de mensagens do chat
+  - (Andamento) Carregar mensagens antigas ao iniciar Chat
 
   - Cor de linhas do backlog conforme cor do projeto
 
@@ -13,6 +13,8 @@
   - Possibilitar edição de area em tela de backlog
 
   - Implementar proteção de Contexto com redirect Filter
+
+  - (OK) Persistencia de mensagens do chat
 
   - (OK) Bloquear chat quando offline
 

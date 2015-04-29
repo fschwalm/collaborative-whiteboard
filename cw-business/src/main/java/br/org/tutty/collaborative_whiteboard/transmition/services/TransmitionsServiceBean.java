@@ -2,14 +2,15 @@ package br.org.tutty.collaborative_whiteboard.transmition.services;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
 import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
+import br.org.tutty.transmition.TransmitionDao;
 import cw.dtos.LoggedUser;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
+import org.json.JSONObject;
 import transmition.Connection;
 import transmition.Transmition;
-import transmition.messages.Message;
-import transmition.messages.OfflineMessage;
-import transmition.messages.OnlineMessage;
-import transmition.messages.UserMessage;
+import transmition.entities.SentMessage;
+import transmition.messages.*;
 
 import javax.ejb.Local;
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.ConnectException;
+import java.util.Date;
 
 /**
  * Created by drferreira on 27/11/14.
@@ -30,6 +32,9 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
 
     @Inject
     private TransmitionContext transmitionContext;
+
+    @Inject
+    private TransmitionDao transmitionDao;
 
     @Override
     public void connect(Session socketSessionSender, HttpSession httpSession) {
@@ -52,8 +57,10 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
             Transmition transmition = transmitionContext.fetch(socketSessionSender);
             Connection connection = transmition.fetchConnection(socketSessionSender);
             LoggedUser loggedUser = userGlobalContext.fetch(connection.getHttpSessionId());
-            UserMessage userMessage = new UserMessage(loggedUser.getUser().getFirstName(), messageData);
+            User user = loggedUser.getUser();
+            UserMessage userMessage = new UserMessage(user.getFirstName(), messageData);
 
+            saveMessage(user, userMessage);
             broadcast(userMessage, socketSessionSender);
 
         } catch (DataNotFoundException e) {
@@ -76,10 +83,17 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
                 .forEach(s -> sendMessage(message, s));
     }
 
-    private void sendMessage(Message message, Session target) {
+    private void sendMessage(Message message, Session sessionTarget) {
         try {
-            target.getBasicRemote().sendText(message.toJSon().toString());
+            sessionTarget.getBasicRemote().sendText(message.toJSon().toString());
         } catch (IOException e) {
         }
+    }
+
+    private void saveMessage(User sender, UserMessage message){
+        Date date = message.getDate();
+        String messageData = message.getMessage();
+        SentMessage sentMessage = new SentMessage(sender, date, TypeMessage.USER_MESSAGE, messageData);
+        transmitionDao.persist(sentMessage);
     }
 }

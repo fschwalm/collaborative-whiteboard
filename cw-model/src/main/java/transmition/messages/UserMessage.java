@@ -18,4 +18,7 @@ public class UserMessage extends Message {
         write("USERNAME", userName);
     }
 
+    public String getMessage(){
+        return message;
+    }
 }

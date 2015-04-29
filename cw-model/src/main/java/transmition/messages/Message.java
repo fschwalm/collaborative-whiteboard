@@ -10,13 +10,15 @@ import java.util.Date;
  * Created by drferreira on 16/12/14.
  */
 public abstract class Message {
-    private String date;
+    private Date date;
+    private String formatedDate;
     private TypeMessage typeMessage;
     private JSONObject jsonObject;
 
     protected Message(TypeMessage typeMessage) {
         this.typeMessage = typeMessage;
-        this.date = formatDate(new Date());
+        this.date = new Date();
+        this.formatedDate = formatDate(date);
         this.jsonObject = new JSONObject();
     }
 
@@ -34,24 +36,21 @@ public abstract class Message {
     public JSONObject toJSon() {
         aditionalWrite();
         write("TYPE_MESSAGE", typeMessage);
-        write("DATE", date);
+        write("DATE", formatedDate);
 
         return jsonObject;
     }
 
-    enum TypeMessage {
-        STATUS_MESSAGE("STATUS_MESSAGE"),
-        SERVER_MESSAGE("SERVER_MESSAGE"),
-        USER_MESSAGE("USER_MESSAGE");
-
-        private String typeMessage;
-
-        TypeMessage(String typeMessage) {
-            this.typeMessage = typeMessage;
-        }
-    }
-
     protected String formatDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+    }
+
+    public TypeMessage getTypeMessage() {
+        return typeMessage;
+    }
+
+
+    public Date getDate() {
+        return date;
     }
 }
