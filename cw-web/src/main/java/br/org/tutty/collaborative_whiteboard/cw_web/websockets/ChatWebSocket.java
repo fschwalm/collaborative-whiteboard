@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 
 @ServerEndpoint(value = "/chat", configurator = GetHttpSessionConfigurator.class)
 public class ChatWebSocket extends WebSocket {
@@ -35,7 +36,7 @@ public class ChatWebSocket extends WebSocket {
     }
 
     @OnClose
-    public void close(Session session) {
+    public void close(Session session) throws IOException {
         transmitionsService.disconect(session);
     }
 }

@@ -65,11 +65,10 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
     }
 
     @Override
-    public void disconect(Session socketSession) {
-        transmitionContext.end(socketSession);
-
+    public void disconect(Session socketSession) throws IOException {
         OfflineMessage offlineMessage = new OfflineMessage();
-        sendMessage(offlineMessage, socketSession);
+        broadcast(offlineMessage, socketSession);
+        transmitionContext.end(socketSession);
     }
 
     private void broadcast(Message message, Session webSocketSessionSender) {

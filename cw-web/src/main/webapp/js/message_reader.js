@@ -31,6 +31,8 @@ function printUserMessage(jsonObject){
             '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
             '<span class="user">'+ user +'</span><br>' +
             '<span class="message">' + messageValue + '</span><br><br></div>');
+
+    addFlagReceipt();
 }
 
 function printStatusMessage(jsonObject){
@@ -51,4 +53,14 @@ function printServerMessage(jsonObject){
             '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
             '<span class="user">Eu</span><br>' +
             '<span class="message">' + messageValue + '</span><br><br></div>');
+
+    addFlagReceipt();
+}
+
+function addFlagReceipt(){
+    var valueFlag = '⁺';
+
+    if($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))){
+        $('#chatBtn').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
+    }
 }

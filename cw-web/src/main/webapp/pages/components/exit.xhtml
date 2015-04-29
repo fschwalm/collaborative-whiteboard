@@ -7,7 +7,7 @@
         <p:outputPanel>
             <h:form>
                 <h:panelGrid columns="2">
-                    <p:commandButton value="#{exit['btn.confirm']}" action="#{exitController.exit()}" ajax="false"
+                    <p:commandButton value="#{exit['btn.confirm']}" action="#{exitController.exit()}" oncomplete="disconect();" ajax="false"
                                      styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                     <p:commandButton value="#{exit['btn.cancel']}"
                                      type="button" onclick="PF('confirmationExit').hide();"

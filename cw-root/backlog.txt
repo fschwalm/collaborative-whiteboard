@@ -1,4 +1,6 @@
-  - (Andamento) Cor de linhas do backlog conforme cor do projeto
+  - (Andamento) Persistencia de mensagens do chat
+
+  - Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
 
@@ -10,9 +12,9 @@
 
   - Possibilitar edição de area em tela de backlog
 
-  - Persistencia de mensagens do chat
+  - Implementar proteção de Contexto com redirect Filter
 
-  - Bloquear chat quando offline
+  - (OK) Bloquear chat quando offline
 
   - (OK) Melhorar Qualidade botão Chat
 

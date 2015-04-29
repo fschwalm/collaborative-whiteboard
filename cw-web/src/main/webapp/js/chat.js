@@ -8,13 +8,13 @@ function initChat() {
     try {
         if (!isConnect()) {
             connect();
+            registerClickChatButton();
+            registerCloseConnection();
+            registerReceiptsMessages();
+            registerErrorHandling();
+            registerRemovalReceivingFlag();
+            enableChat();
         }
-        registerClickChatButton();
-        registerCloseConnection();
-        registerReceiptsMessages();
-        registerErrorHandling();
-        registerRemovalReceivingFlag();
-        enableChat();
 
     } catch (exception) {
         disableChat();
@@ -40,7 +40,6 @@ function registerErrorHandling() {
 function registerReceiptsMessages() {
     ws.onmessage = function (evt) {
         messageWriter(JSON.parse(evt.data));
-        flagReceipt();
     }
 }
 
@@ -92,13 +91,6 @@ function clearMessage(inputTextId) {
     $inputText.val('');
 };
 
-function flagReceipt(){
-    var valueFlag = '⁺';
-
-    if($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))){
-        $('#chatBtn').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
-    }
-}
 
 $.fn.scrollTo = function (target, options, callback) {
     if (typeof options == 'function' && arguments.length == 2) {
@@ -126,10 +118,12 @@ $.fn.scrollTo = function (target, options, callback) {
 
 function disableChat() {
     $('#chatBtn').children('img').attr('src','../../images/chat_button_disable.png')
+    $("#messageInput").prop('disabled', true);
 }
 
 function enableChat() {
-    $('#chatBtn').children('img').attr('src','../../images/chat_button_enable.png')
+    $('#chatBtn').children('img').attr('src','../../images/chat_button_enable.png');
+    $("#messageInput").prop('disabled', false);
 }
 
 function registerClickChatButton() {
