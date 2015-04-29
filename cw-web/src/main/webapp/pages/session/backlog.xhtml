@@ -171,35 +171,5 @@
             </h:form>
         </p:dialog>
 
-        <script type="text/javascript">
-            //<![CDATA[
-
-            $(document).ready(function () {
-                processColorMap();
-            });
-
-            function processColorMap(){
-                var jsonData = JSON.parse('#{backlogController.colorMap()}');
-
-                // Percorrer json e criar css para cada elemento existente
-                createCssClass(className, backgroundColor)
-            }
-
-            function createCssClass(className, backgroundColor){
-                $.cssRule('.'+className+' { background = '+backgroundColor+'}');
-
-                return className;
-            }
-
-            function printRows(){
-                var rows = backlogTable.children[1].children[0].children[2].rows;
-
-                for(var i = 0; i < rows.length; i++){
-                    var colorName = jsonData[rows[i].cells[0].innerHTML];
-                    rows[i].style.background = colorName;
-                }
-            }
-            //]]>
-        </script>
     </ui:define>
 </ui:composition>

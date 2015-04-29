@@ -193,19 +193,4 @@ public class BacklogController extends GenericController implements Serializable
             }
         }
     }
-
-    public String colorMap() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Linda", "red");
-        jsonObject.put("Elsa", "blue");
-
-        return jsonObject.toString();
-
-//        if (!stories.isEmpty()) {
-//
-//            return "#" + stories.get(indice).getProject().getColor();
-//        } else {
-//            return "#FFF";
-//        }
-    }
 }
