@@ -1,0 +1,15 @@
+#myProjects {
+    max-height: 650px !important;
+    height: 650px !important;
+    position: fixed;
+    overflow: hidden;
+    z-index: 10000;
+    width: 300px !important;
+    background: #f5f5dc;
+    display: none;
+    right: 0%;
+    top: 0%;
+    max-height: 100% !important;
+    height: 100% !important;
+}
+

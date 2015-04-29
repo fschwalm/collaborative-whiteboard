@@ -61,26 +61,6 @@
     float: left;
 }
 
-#myProjects {
-    float: right;
-    position: absolute;
-    top: 30%;
-    right: 9%;
-}
-
-.projectsPanel{
-    width: 300px !important;
-    height: 600px !important;
-}
-
-.addProjectBtn{
-    width: 100% !important;
-}
-
-.addProjectInput{
-    width: 96% !important;
-}
-
 .homeButton {
     margin-top: 2% !important;
     margin-left: 4% !important;
