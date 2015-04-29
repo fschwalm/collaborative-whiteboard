@@ -20,12 +20,15 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by drferreira on 27/11/14.
  */
 @Local(TransmitionsService.class)
 public class TransmitionsServiceBean implements TransmitionsService, Serializable {
+
+    private final static Integer DEFAULT_SIZE_LAST_MESSAGES = 100;
 
     @Inject
     private UserGlobalContext userGlobalContext;
@@ -42,7 +45,9 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
             LoggedUser loggedUser = userGlobalContext.fetch(httpSession.getId());
             transmitionContext.start(loggedUser, httpSession, socketSessionSender);
 
-            OnlineMessage onlineMessage = new OnlineMessage();
+            List<SentMessage> lastMessages = fetchLastMessages();
+
+            OnlineMessage onlineMessage = new OnlineMessage(lastMessages);
             sendMessage(onlineMessage, socketSessionSender);
 
         } catch (ConnectException | DataNotFoundException e) {
@@ -77,6 +82,11 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         broadcast(offlineMessage, socketSession);
         transmitionContext.end(socketSession);
     }
+
+    public List<SentMessage> fetchLastMessages(){
+        return transmitionDao.fetchLastMessages(DEFAULT_SIZE_LAST_MESSAGES);
+    }
+
 
     private void broadcast(Message message, Session webSocketSessionSender) {
         webSocketSessionSender.getOpenSessions().stream()

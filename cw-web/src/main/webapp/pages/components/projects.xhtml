@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="myProjects">
+        <h:form id="projectForm" prependId="false">
+            <p:panel header="#{whiteboard['text.project']}" styleClass="projectsPanel">
+                <h:panelGrid columns="1">
+                    <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>
+                    <p:inputText id="createProjectShortcut" value="#{whiteboardController.projectName}"
+                                 required="true" styleClass="addProjectInput"/>
+
+                    <p:commandButton value="#{whiteboard['btn.new']}"
+                                     action="#{whiteboardController.createProject()}"
+                                     update=":projectForm,:accessForm" styleClass="addProjectBtn"/>
+
+                    <p:column><p:spacer width="10px"/></p:column>
+
+                    <p:dataTable id="projectList" styleClass="projectList" value="#{whiteboardController.projects}"
+                                 var="project" scrollHeight="421" scrollable="true">
+                        <p:column>
+                            <p:commandLink value="#{project.nameProject}"
+                                           action="#{whiteboardController.openProject(project)}" process="@this"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </div>
+</ui:composition>

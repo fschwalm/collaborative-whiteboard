@@ -4,33 +4,27 @@
 
 }
 
-#bodyPage{
-    background-color: #FFFFFF ;
+#bodyPage {
+    background-color: #FFFFFF;
 }
 
-#myProjects{
-    margin-top: 5%;
-    margin-right: 2%;
-    float: right;
-}
-
-.backlogDiv{
+.backlogDiv {
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.projectArea{
+.projectArea {
     width: 300px;
 }
 
-#foundedAreas{
+#foundedAreas {
     width: 300px;
 }
 
 .project {
     width: 650px;
     height: 600px;
-    float:left;
+    float: left;
     margin-top: 20px;
     margin-left: 50px;
 }
@@ -38,72 +32,83 @@
 .areas {
     width: 650px;
     height: 600px;
-    float:right;
+    float: right;
     margin-top: 20px;
     margin-right: 50px;
 }
 
-#sheet{
-    margin-left: auto ;
-    margin-right: auto ;
+#sheet {
+    margin-left: auto;
+    margin-right: auto;
     width: 1600px !important;
     height: 930px !important;
     background-color: #F8F8F8 !important;
 }
 
-.removed_area{
+.removed_area {
     background-color: #f5d3cd;
 }
 
-.remove_project_button{
+.remove_project_button {
     background: #f55454 !important;
     color: black !important;
 }
 
-#backlogArea{
-    margin-left: 10%;
-    margin-top: 5%;
+#backlogArea {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    float: left;
 }
 
-.homeButton{
+#myProjects {
+    float: right;
+    position: absolute;
+    top: 30%;
+    right: 9%;
+}
+
+.projectsPanel{
+    width: 300px !important;
+    height: 600px !important;
+}
+
+.addProjectBtn{
+    width: 100% !important;
+}
+
+.addProjectInput{
+    width: 96% !important;
+}
+
+.homeButton {
     margin-top: 2% !important;
     margin-left: 4% !important;
 }
 
-#actionArea{
+#actionArea {
     margin-top: -1%;
     margin-left: 1%;
     width: 98%;
     height: 30px;
 }
 
-.exitLink{
+.actionButton{
     float: right;
 }
 
-.chatLink{
-    float: right;
-}
-
-.exitBtn{
+.actionImage{
     margin-left: 20px;
     margin-right: 20px;
     width: 70px;
     height: 70px;
 }
 
-.chatBtn{
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 70px;
-    height: 70px;
-}
-
-.chatEnable{
+.chatEnable {
     background: url(../images/chat_button_enable.png) no-repeat;
 }
 
-.chatEnable{
+.chatEnable {
     background: url(../images/chat_button_disable.png) no-repeat;
 }
 

@@ -21,10 +21,6 @@ function initChat() {
     }
 }
 
-function scrollChat() {
-    $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
-}
-
 function registerCloseConnection() {
     ws.onclose = function (evt) {
         disableChat();
@@ -140,6 +136,7 @@ function openChat() {
     $('#exitBtn').animate({'margin-right': "8%"});
     $("#chatField").slideDown('fast');
     $("#messageInput").focus();
+    scrollChat();
     chatIsOpen = true;
 }
 

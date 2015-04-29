@@ -2,25 +2,28 @@ var USER_MESSAGE = 'USER_MESSAGE';
 var STATUS_MESSAGE = 'STATUS_MESSAGE';
 var SERVER_MESSAGE = 'SERVER_MESSAGE';
 
-function messageWriter(jsonData){
+function messageWriter(jsonData) {
 
     var typeMessage = jsonData['TYPE_MESSAGE'];
 
-    switch (typeMessage){
+    switch (typeMessage) {
 
         case USER_MESSAGE:
             printUserMessage(jsonData);
+            scrollChat();
             break;
         case STATUS_MESSAGE:
             printStatusMessage(jsonData);
+            scrollChat();
             break;
         case SERVER_MESSAGE:
             printServerMessage(jsonData);
+            scrollChat();
             break;
     }
 }
 
-function printUserMessage(jsonObject){
+function printUserMessage(jsonObject, flag) {
     var $outputList = $('#messagePanel');
 
     var date = jsonObject['DATE'];
@@ -28,20 +31,24 @@ function printUserMessage(jsonObject){
     var user = jsonObject['USERNAME'];
 
     $outputList.append(
-            '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
-            '<span class="user">'+ user +'</span><br>' +
-            '<span class="message">' + messageValue + '</span><br><br></div>');
+        '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
+        '<span class="user">' + user + '</span><br>' +
+        '<span class="message">' + messageValue + '</span><br><br></div>');
 
-    addFlagReceipt();
+    if(flag){
+        addFlagReceipt();
+    }
 }
 
-function printStatusMessage(jsonObject){
-    var status = jsonObject['STATUS'];
+function printStatusMessage(jsonObject) {
+    var jsonLastMessages = jsonObject['LAST_MESSAGES'];
 
-    $('#chatHeader').append("<span id='chatStatus'>"+status+"</span>");
+    $.each(jsonLastMessages, function (index, value) {
+        printUserMessage(value, false);
+    });
 }
 
-function printServerMessage(jsonObject){
+function printServerMessage(jsonObject) {
     var $outputList = $('#messagePanel');
 
     var date = jsonObject['date'];
@@ -50,17 +57,21 @@ function printServerMessage(jsonObject){
     var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
     $outputList.append(
-            '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
-            '<span class="user">Eu</span><br>' +
-            '<span class="message">' + messageValue + '</span><br><br></div>');
+        '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
+        '<span class="user">Eu</span><br>' +
+        '<span class="message">' + messageValue + '</span><br><br></div>');
 
     addFlagReceipt();
 }
 
-function addFlagReceipt(){
+function addFlagReceipt() {
     var valueFlag = '⁺';
 
-    if($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))){
-        $('#chatBtn').append("<span id='receivedMessageFlag'>"+valueFlag+"</span>");
+    if ($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))) {
+        $('#chatBtn').append("<span id='receivedMessageFlag'>" + valueFlag + "</span>");
     }
+}
+
+function scrollChat() {
+    $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
 }

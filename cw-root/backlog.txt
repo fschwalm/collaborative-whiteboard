@@ -1,4 +1,4 @@
-  - (Andamento) Carregar mensagens antigas ao iniciar Chat
+  - (Andamento) Mudar layout do campo projetos para ficar como o chat
 
   - Cor de linhas do backlog conforme cor do projeto
 
@@ -13,6 +13,8 @@
   - Possibilitar edição de area em tela de backlog
 
   - Implementar proteção de Contexto com redirect Filter
+
+  - (OK) Carregar mensagens antigas ao iniciar Chat
 
   - (OK) Persistencia de mensagens do chat
 

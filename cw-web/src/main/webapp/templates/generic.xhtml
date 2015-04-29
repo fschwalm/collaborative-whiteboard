@@ -29,18 +29,27 @@
                 </p:commandLink>
 
                 <div id="actionArea">
-                    <p:commandLink id="exitBtn" styleClass="exitLink" onclick="PF('confirmationExit').show()">
-                        <h:graphicImage url="../../images/exit_icon.png" styleClass="exitBtn"/>
+                    <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
+                        <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
                     </p:commandLink>
 
-                    <p:commandLink id="chatBtn" styleClass="chatLink">
-                        <h:graphicImage styleClass="chatBtn"/>
+                    <p:commandLink id="chatBtn" styleClass="actionButton">
+                        <h:graphicImage styleClass="actionImage"/>
+                    </p:commandLink>
+
+                    <p:commandLink id="projectsBtn" styleClass="actionButton">
+                        <h:graphicImage url="../../images/projects_icon.png" styleClass="actionImage"/>
+                    </p:commandLink>
+
+                    <p:commandLink id="statsBtn" styleClass="actionButton">
+                        <h:graphicImage url="../../images/stats_icon.png" styleClass="actionImage"/>
                     </p:commandLink>
 
                 </div>
             </div>
 
             <ui:include src="../pages/components/chat.xhtml"/>
+            <ui:include src="../pages/components/projects.xhtml"/>
             <ui:insert name="pageContent"/>
         </div>
 

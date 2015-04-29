@@ -18,7 +18,6 @@ public class ChatWebSocket extends WebSocket {
 
     @OnMessage
     public void send(String dataMessage, Session senderSession){
-
         try {
             String messageValue = new JSONObject(dataMessage).getString("messageValue");
             transmitionsService.send(messageValue, senderSession);
