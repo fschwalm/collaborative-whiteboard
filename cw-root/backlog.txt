@@ -1,6 +1,7 @@
-  - (Andamento) Mudar layout do campo projetos para ficar como o chat
 
   - Cor de linhas do backlog conforme cor do projeto
+
+  - Adicionar mensagens para campos
 
   - Adicionar Filtro Global a tabela de backlog
 
@@ -13,6 +14,10 @@
   - Possibilitar edição de area em tela de backlog
 
   - Implementar proteção de Contexto com redirect Filter
+
+  - Editar Menu para ficar inteligente
+
+  - (OK) Mudar layout do campo projetos para ficar como o chat
 
   - (OK) Carregar mensagens antigas ao iniciar Chat
 

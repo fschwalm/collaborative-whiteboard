@@ -4,14 +4,5 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <div id="backlogArea">
-            <h:form id="accessForm" prependId="false">
-                <p:commandLink id="backlogButton" action="#{whiteboardController.goToBacklog()}" ajax="false"
-                               rendered="#{whiteboardController.hasSomeProject()}">
-                    <p:graphicImage value="../../images/backlog_icon_new.png" style=""/>
-                </p:commandLink>
-            </h:form>
-        </div>
     </ui:define>
-
 </ui:composition>

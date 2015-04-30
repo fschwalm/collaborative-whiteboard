@@ -15,7 +15,7 @@ function registerClickProjectsButton() {
 }
 
 function openProjects() {
-    $('#exitBtn').animate({'margin-right': "8%"});
+    $('#exitBtn').animate({'margin-right': "10%"});
     $("#myProjects").slideDown('fast');
     projectsIsOpen = true;
 }

@@ -4,8 +4,8 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <div id="myProjects">
-        <h:form id="projectForm" prependId="false">
-            <p:panel header="#{whiteboard['text.project']}" styleClass="projectsPanel">
+        <p:panel header="#{whiteboard['text.project']}" styleClass="projectsPanel">
+            <h:form id="projectForm" prependId="false">
                 <h:panelGrid columns="1">
                     <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>
                     <p:inputText id="createProjectShortcut" value="#{whiteboardController.projectName}"
@@ -13,19 +13,19 @@
 
                     <p:commandButton value="#{whiteboard['btn.new']}"
                                      action="#{whiteboardController.createProject()}"
-                                     update=":projectForm,:accessForm" styleClass="addProjectBtn"/>
+                                     update=":projectForm" styleClass="addProjectBtn"/>
 
                     <p:column><p:spacer width="10px"/></p:column>
 
                     <p:dataTable id="projectList" styleClass="projectList" value="#{whiteboardController.projects}"
-                                 var="project" scrollHeight="421" scrollable="true">
+                                 var="project" scrollHeight="720" scrollable="true">
                         <p:column>
                             <p:commandLink value="#{project.nameProject}"
                                            action="#{whiteboardController.openProject(project)}" process="@this"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGrid>
-            </p:panel>
-        </h:form>
+            </h:form>
+        </p:panel>
     </div>
 </ui:composition>

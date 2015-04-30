@@ -4,7 +4,7 @@
     position: fixed;
     overflow: hidden;
     z-index: 10000;
-    width: 300px !important;
+    width: 350px !important;
     background: #f5f5dc;
     display: none;
     right: 0%;
@@ -12,4 +12,25 @@
     max-height: 100% !important;
     height: 100% !important;
 }
+
+.projectsPanel{
+    height: 100% !important;
+    width: 350px !important;
+    max-height: 100% !important;
+}
+
+.projectList{
+    height: 100% !important;
+    width: 300px !important;
+    max-height: 100% !important;
+}
+
+.addProjectInput{
+    width: 289px !important;
+}
+
+.addProjectBtn{
+    width: 300px !important;
+}
+
 

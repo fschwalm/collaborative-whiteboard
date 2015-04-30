@@ -133,8 +133,8 @@ function registerClickChatButton() {
 }
 
 function openChat() {
-    $('#exitBtn').animate({'margin-right': "8%"});
-    $("#chatField").slideDown('fast');
+    $('#exitBtn').animate({'margin-right': "10%"});
+    $("#chat").slideDown('fast');
     $("#messageInput").focus();
     scrollChat();
     chatIsOpen = true;
@@ -142,6 +142,6 @@ function openChat() {
 
 function closeChat() {
     $('#exitBtn').animate({'margin-right': "0%"});
-    $("#chatField").slideUp('fast');
+    $("#chat").slideUp('fast');
     chatIsOpen = false;
 }

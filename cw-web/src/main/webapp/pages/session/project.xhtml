@@ -5,16 +5,19 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-
-        <p:toolbar>
-            <f:facet name="left">
-                <p:commandButton value="#{project_bundle['btn.save']}" update=":projectAreaDataForm"
-                                 process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
-                                 action="#{projectController.save()}"/>
-                <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
-                <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false" styleClass="remove_project_button" action="#{projectController.removeProject}" process="@this"/>
-            </f:facet>
-        </p:toolbar>
+        <h:form prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="#{project_bundle['btn.save']}" update=":projectAreaDataForm"
+                                     process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
+                                     action="#{projectController.save()}"/>
+                    <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
+                    <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false"
+                                     styleClass="remove_project_button" action="#{projectController.removeProject}"
+                                     process="@this"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
 
         <div class="project">
             <p:panel styleClass="project">
@@ -22,7 +25,7 @@
                     <h:panelGrid columns="2">
                         <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
                         <p:calendar id="projectCreationDate" value="#{projectController.creationDate}"
-                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+                                    disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <p:spacer height="5px"/> <p:spacer height="5px"/>
 

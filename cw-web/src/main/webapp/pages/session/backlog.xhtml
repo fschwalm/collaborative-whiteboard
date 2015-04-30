@@ -20,33 +20,33 @@
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
                     <p:ajax event="rowSelect" update="openButton"/>
                     <p:ajax event="rowUnselect" update="openButton"/>
-                        <p:column headerText="#{backlog['header.table.project']}"
-                                  style="width: 50px; text-align: center">
-                            <h:outputText value="#{story.project.nameProject}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.project']}"
+                              style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.project.nameProject}"/>
+                    </p:column>
 
-                        <p:column headerText="#{backlog['header.table.code']}" style="width: 50px; text-align: center">
-                            <h:outputText value="#{story.code}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.code']}" style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.code}"/>
+                    </p:column>
 
-                        <p:column headerText="#{backlog['header.table.branch']}"
-                                  style="width: 50px; text-align: center">
-                            <h:outputText value="#{story.branch}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.branch']}"
+                              style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.branch}"/>
+                    </p:column>
 
-                        <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
-                            <h:outputText value="#{story.projectArea.name}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
+                        <h:outputText value="#{story.projectArea.name}"/>
+                    </p:column>
 
-                        <p:column headerText="#{backlog['header.table.subject']}"
-                                  style="width: 300px; text-align: left">
-                            <h:outputText value="#{story.subject}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.subject']}"
+                              style="width: 300px; text-align: left">
+                        <h:outputText value="#{story.subject}"/>
+                    </p:column>
 
-                        <p:column headerText="#{backlog['header.table.author']}"
-                                  style="width: 100px; text-align: center">
-                            <h:outputText value="#{story.author.firstName}"/>
-                        </p:column>
+                    <p:column headerText="#{backlog['header.table.author']}"
+                              style="width: 100px; text-align: center">
+                        <h:outputText value="#{story.author.firstName}"/>
+                    </p:column>
                     <f:facet name="header">
                         <p:toolbar>
                             <f:facet name="left">
@@ -124,7 +124,6 @@
                         <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                          oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                          immediate="true">
-                            <f:ajax execute="@this" render=":storyDetail"/>
                         </p:commandButton>
                     </h:panelGrid>
                 </h:form>
@@ -165,7 +164,6 @@
                     <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
                                      oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                      immediate="true">
-                        <f:ajax execute="@this" render=":createStoryForm"/>
                     </p:commandButton>
                 </h:panelGrid>
             </h:form>

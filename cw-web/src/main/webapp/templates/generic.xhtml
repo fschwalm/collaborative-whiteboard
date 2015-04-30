@@ -22,40 +22,48 @@
 
 
     <h:body id="bodyPage">
-        <p:growl id="globalMessages" globalOnly="true" autoUpdate="true" escape="false" life="10000"/>
-
         <div id="sheet">
             <div id="headerPage">
-                <p:commandLink action="HOME_PAGE" >
-                    <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
-                </p:commandLink>
-
-                <div id="actionArea">
-                    <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
-                        <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
+                <h:form prependId="false">
+                    <p:commandLink action="HOME_PAGE">
+                        <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
                     </p:commandLink>
 
-                    <p:commandLink id="chatBtn" styleClass="actionButton">
-                        <h:graphicImage styleClass="actionImage"/>
-                    </p:commandLink>
+                    <div id="actionArea">
+                        <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
+                            <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
+                        </p:commandLink>
 
-                    <p:commandLink id="projectsBtn" styleClass="actionButton">
-                        <h:graphicImage url="../../images/projects_icon.png" styleClass="actionImage"/>
-                    </p:commandLink>
+                        <p:commandLink id="chatBtn" styleClass="actionButton">
+                            <h:graphicImage styleClass="actionImage"/>
+                        </p:commandLink>
 
-                    <p:commandLink id="statsBtn" styleClass="actionButton">
-                        <h:graphicImage url="../../images/stats_icon.png" styleClass="actionImage"/>
-                    </p:commandLink>
+                        <p:commandLink id="projectsBtn" styleClass="actionButton">
+                            <h:graphicImage url="../../images/projects_icon.png" styleClass="actionImage"/>
+                        </p:commandLink>
 
-                </div>
+                        <p:commandLink id="statsBtn" styleClass="actionButton">
+                            <h:graphicImage url="../../images/stats_icon.png" styleClass="actionImage"/>
+                        </p:commandLink>
+
+                        <p:commandLink id="backlogBtn" styleClass="actionButton"
+                                       action="#{toolsController.goToBacklog()}" ajax="false">
+                            <h:graphicImage url="../../images/backlog_icon.png" styleClass="actionImage"/>
+                        </p:commandLink>
+                    </div>
+                </h:form>
             </div>
 
             <ui:include src="../pages/components/chat.xhtml"/>
             <ui:include src="../pages/components/projects.xhtml"/>
+            <ui:include src="../pages/components/exit.xhtml"/>
+
+            <h:form prependId="false">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" escape="false"/>
+            </h:form>
+
             <ui:insert name="pageContent"/>
         </div>
-
-        <ui:include src="../pages/components/exit.xhtml"/>
     </h:body>
 </f:view>
 </html>

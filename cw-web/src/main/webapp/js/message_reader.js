@@ -24,16 +24,20 @@ function messageWriter(jsonData) {
 }
 
 function printUserMessage(jsonObject, flag) {
-    var $outputList = $('#messagePanel');
+    var $outputList = $('#chatPanel_content');
 
     var date = jsonObject['DATE'];
     var messageValue = jsonObject['MESSAGE'];
     var user = jsonObject['USERNAME'];
 
     $outputList.append(
-        '<div class="myMessages"><br><span class="hour"> ' + date + ' </span><br>' +
-        '<span class="user">' + user + '</span><br>' +
-        '<span class="message">' + messageValue + '</span><br><br></div>');
+        '<div class="myMessages">' +
+        '<div class="headerMessage">' +
+        '<span class="user">' + user + '</span></div><br>' +
+        '<br><span class="hour"> ' + date + ' </span><br>' +
+        '<span class="message">' + messageValue + '</span><br><br>' +
+        '</div>' +
+        '<hr class="gray">');
 
     if(flag){
         addFlagReceipt();
@@ -49,7 +53,7 @@ function printStatusMessage(jsonObject) {
 }
 
 function printServerMessage(jsonObject) {
-    var $outputList = $('#messagePanel');
+    var $outputList = $('#chatPanel_content');
 
     var date = jsonObject['date'];
     var messageValue = jsonObject['MESSAGE'];
@@ -57,9 +61,13 @@ function printServerMessage(jsonObject) {
     var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
     $outputList.append(
-        '<div class="myMessages"><br><span class="hour"> ' + formattedDate + ' </span><br>' +
+        '<div class="myMessages">' +
+        '<div class="headerMessage">' +
         '<span class="user">Eu</span><br>' +
-        '<span class="message">' + messageValue + '</span><br><br></div>');
+        '<br><span class="hour"> ' + formattedDate + ' </span><div><br>' +
+        '<span class="message">' + messageValue + '</span><br><br>' +
+        '</div>' +
+        '<hr class="gray">');
 
     addFlagReceipt();
 }
@@ -73,5 +81,5 @@ function addFlagReceipt() {
 }
 
 function scrollChat() {
-    $('#outputMessage').scrollTo($("#outputMessage").get(0).scrollHeight);
+    $("#chatPanel").get(0).scrollHeight;
 }

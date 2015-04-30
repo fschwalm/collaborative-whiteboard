@@ -55,7 +55,7 @@ public class BacklogController extends GenericController implements Serializable
     private Story selectedStory;
 
     @PostConstruct
-    public void setUp() throws EncryptedException, DataNotFoundException, IOException {
+    public void setUp() throws EncryptedException, IOException {
         stories = fetchStories();
         projects = fetchProjects();
     }
@@ -76,20 +76,18 @@ public class BacklogController extends GenericController implements Serializable
         try {
             return backlogManagerService.fetchAllStories();
 
-        } catch (DataNotFoundException e) {
-            stories = new ArrayList<>();
-            return stories;
-
         } catch (Exception e){
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.stories.error");
-
-            stories = new ArrayList<>();
-            return stories;
+            return new ArrayList<>();
         }
     }
 
-    public List<Project> fetchProjects() throws DataNotFoundException {
-        return projectService.fetchProjects();
+    public List<Project> fetchProjects() throws IOException {
+        try{
+            return projectService.fetchProjects();
+        }catch (DataNotFoundException e){
+            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "backlog.projects_not_found");
+            return new ArrayList<>();
+        }
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
@@ -138,12 +136,10 @@ public class BacklogController extends GenericController implements Serializable
         RequestContext.getCurrentInstance().update("storyDetailPanel");
     }
 
-    public List<String> getProjects() {
+    public List<String> getProjects() throws IOException {
         List<String> projectsNames = new ArrayList<>();
+        projects.stream().forEach(project -> projectsNames.add(project.getNameProject()));
 
-        for (Project project : projects) {
-            projectsNames.add(project.getNameProject());
-        }
         return projectsNames;
     }
 

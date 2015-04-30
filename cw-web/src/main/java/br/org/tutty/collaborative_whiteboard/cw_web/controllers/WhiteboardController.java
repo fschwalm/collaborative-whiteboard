@@ -66,10 +66,6 @@ public class WhiteboardController extends GenericController implements Serializa
         return GOT_TO_PROJECT_PAGE;
     }
 
-    public String goToBacklog(){
-        return GO_TO_BACKLOG;
-    }
-
     public Boolean hasSomeProject(){
         return !projects.isEmpty();
     }
