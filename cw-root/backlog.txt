@@ -1,6 +1,3 @@
-
-  - (Andamento) Adicionar mensagens para campos
-
   - Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
@@ -16,6 +13,8 @@
   - Implementar proteção de Contexto com redirect Filter
 
   - Editar Menu para ficar inteligente
+
+  - (OK) Adicionar mensagens para campos
 
   - (OK) Mudar layout do campo projetos para ficar como o chat
 

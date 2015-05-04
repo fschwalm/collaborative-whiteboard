@@ -7,8 +7,6 @@
     <ui:define name="pageContent">
         <h:form id="backlogForm" prependId="false">
 
-            <p:spacer height="50"/>
-
             <div id="backlogDiv">
                 <p:dataTable id="backlogTable" var="story"
                              value="#{backlogController.stories}"
@@ -52,13 +50,13 @@
                             <f:facet name="left">
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                                  action="#{backlogController.prepareCreationStory()}"
-                                                 oncomplete="PF('storyCreation').show();"/>
+                                                 oncomplete="PF('storyCreation').show();" update=":storyCreation"/>
 
                                 <p:commandButton id="openButton" icon="ui-icon-folder-open"
                                                  value="#{backlog['btn.open']}"
                                                  action="#{backlogController.prepareEditionStory()}"
                                                  oncomplete="PF('storyDetail').show()"
-                                                 disabled="#{!backlogController.isSelected()}"/>
+                                                 disabled="#{!backlogController.isSelected()}" update=":storyDetail"/>
 
                                 <p:commandButton icon="ui-icon-disk" action="#{backlogController.updateBacklog()}"
                                                  value="#{backlog['btn.save_changes']}"
@@ -90,37 +88,53 @@
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false">
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
                         <p:calendar id="creationDate" value="#{backlogController.storyEdition.creationDate}"
                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
+                        <h:column />
+
                         <h:outputLabel value="#{backlog['label.code']}" for="code"/>
                         <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
 
+                        <h:column />
+
                         <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
-                        <p:inputText id="branch" value="#{backlogController.storyEdition.branch}"/>
+                        <p:inputText id="branch" value="#{backlogController.storyEdition.branch}"
+                                     requiredMessage="#{messages['mandatory.field']}" required="true"/>
+
+                        <p:message for="branch"/>
 
                         <h:outputLabel value="#{backlog['label.area']}" for="area"/>
                         <p:inputText id="area" value="#{backlogController.storyEdition.projectArea.name}"
                                      readonly="true"/>
 
+                        <h:column />
+
                         <h:outputLabel value="#{backlog['label.author']}" for="author"/>
                         <p:inputText id="author" value="#{backlogController.storyEdition.author.fullName}"
                                      readonly="true"/>
 
+                        <h:column />
+
                         <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
-                        <p:inputText id="subject" value="#{backlogController.storyEdition.subjectChanges}"/>
+                        <p:inputText id="subject" value="#{backlogController.storyEdition.subjectChanges}"
+                                     requiredMessage="#{messages['mandatory.field']}" required="true"/>
+                        <p:message for="subject"/>
+
                     </h:panelGrid>
 
+                    <p:message for="description"/>
                     <p:inputTextarea id="description"
-                                     value="#{backlogController.storyEdition.descriptionChanges}" cols="63"
-                                     rows="20"/>
+                                     value="#{backlogController.storyEdition.descriptionChanges}" cols="70"
+                                     rows="20" requiredMessage="#{messages['mandatory.field']}"
+                                     required="true"/>
 
                     <h:panelGrid columns="2">
                         <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
                                          action="#{backlogController.saveDetailChanges()}"
-                                         update="storyDetailForm :backlogForm:backlogTable" icon="ui-icon-disk"/>
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk"/>
                         <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                          oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                          immediate="true">
@@ -134,27 +148,32 @@
             <h:form id="createStoryForm" prependId="false">
                 <h:panelGrid columns="1">
                     <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}"
-                                     required="true">
+                                     required="true" requiredMessage="#{messages['mandatory.field']}">
                         <f:selectItem itemLabel="#{backlog['label.story.creation.select_empty']}" itemValue=""/>
                         <p:ajax event="change" execute="@this" update="projectArea"/>
                         <f:selectItems value="#{backlogController.projects}" var="projectName"
                                        itemLabel="#{projectName}" itemValue="#{projectName}"/>
                     </p:selectOneMenu>
+                    <p:message for="projectNewStory"/>
 
                     <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}"
                                     var="area" value="#{backlogController.storyCreation.projectArea}"
                                     completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}"
-                                    required="true"/>
+                                    required="true" requiredMessage="#{messages['mandatory.field']}"/>
+                    <p:message for="projectArea"/>
 
                     <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
                     <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
-                                 size="60" required="true"/>
+                                 size="60" required="true" requiredMessage="#{messages['mandatory.field']}"/>
+                    <p:message for="subjecNewStory"/>
 
                     <p:watermark value="#{backlog['label.story.creation.description']}"
                                  for="descriptionNewStory"/>
                     <p:inputTextarea id="descriptionNewStory"
                                      value="#{backlogController.storyCreation.description}"
-                                     cols="63" rows="20" required="true"/>
+                                     cols="63" rows="20" required="true"
+                                     requiredMessage="#{messages['mandatory.field']}"/>
+                    <p:message for="descriptionNewStory"/>
                 </h:panelGrid>
 
                 <h:panelGrid columns="2">

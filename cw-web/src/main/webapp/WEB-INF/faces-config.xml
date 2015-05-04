@@ -13,6 +13,10 @@
             <supported-locale>pt_BR</supported-locale>
         </locale-config>
         <resource-bundle>
+            <base-name>properties/messages</base-name>
+            <var>messages</var>
+        </resource-bundle>
+        <resource-bundle>
             <base-name>properties/chat</base-name>
             <var>chat</var>
         </resource-bundle>

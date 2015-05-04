@@ -13,11 +13,10 @@
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
             <property name="hibernate.default_schema" value="public" />
 
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="${database.action}" />
 
             <property name="hibernate.format_sql" value="false" />
             <property name="hibernate.show_sql" value="false" />
-            <property name="hibernate.hbm2ddl.import_files" value="/META-INF/database/setup_database.sql" />
         </properties>
     </persistence-unit>
 </persistence>
