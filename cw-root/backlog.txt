@@ -1,7 +1,7 @@
 
-  - Cor de linhas do backlog conforme cor do projeto
+  - (Andamento) Adicionar mensagens para campos
 
-  - Adicionar mensagens para campos
+  - Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
 

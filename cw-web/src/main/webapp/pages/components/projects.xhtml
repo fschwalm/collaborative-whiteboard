@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <div id="myProjects">
-        <p:panel header="#{whiteboard['text.project']}" styleClass="projectsPanel">
+        <p:panel id="myProjectsPanel" header="#{whiteboard['text.project']}" styleClass="projectsPanel">
             <h:form id="projectForm" prependId="false">
                 <h:panelGrid columns="1">
                     <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>

@@ -49,7 +49,7 @@ public class ProjectController extends GenericController implements Serializable
         projectAreasForRemoval = new HashSet<>();
     }
 
-    public String save() throws IOException {
+    public String save() throws IOException, CloneNotSupportedException {
         if (selectedProject.propertyMonitor.hasChanged()) {
             updateProject();
         }
@@ -62,6 +62,7 @@ public class ProjectController extends GenericController implements Serializable
             updateProjectAreaForRemoval();
         }
 
+        setUp();
         facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
         return STAY_ON_PAGE;
     }

@@ -33,4 +33,13 @@
     width: 300px !important;
 }
 
+#myProjectsPanel_header{
+    background-color: black;
+}
+
+#myProjectsPanel_header .ui-panel-title{
+    color: white;
+}
+
+
 
