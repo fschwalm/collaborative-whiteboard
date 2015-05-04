@@ -23,7 +23,7 @@ public class Story implements Serializable{
     @GeneratedValue(generator = "StorySequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
 
     @Column(nullable = false)
@@ -50,6 +50,9 @@ public class Story implements Serializable{
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private Boolean removed;
+
     @OneToMany(mappedBy = "story")
     private List<Task> tasks;
 
@@ -64,12 +67,14 @@ public class Story implements Serializable{
         this.project = project;
         this.creationDate = creationDate;
         this.creationDate = new Date();
+        this.removed = false;
     }
 
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
         this.creationDate = new Date();
+        this.removed = false;
     }
 
     public Story() {
@@ -78,6 +83,7 @@ public class Story implements Serializable{
     public Story(User author) {
         this.author = author;
         this.creationDate = new Date();
+        this.removed = false;
     }
 
     public String getCode() {
@@ -192,6 +198,20 @@ public class Story implements Serializable{
         return branch;
     }
 
+    public void remove() {
+        Boolean oldValue = this.removed;
+        this.removed = true;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("removed", oldValue, removed);
+    }
+
+    public void restore() {
+        Boolean oldValue = this.removed;
+        this.removed = false;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("removed", oldValue, removed);
+    }
+
     public void setBranch(String branch) {
         String oldValue = this.branch;
         this.branch = branch;
@@ -201,6 +221,10 @@ public class Story implements Serializable{
 
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
+    }
+
+    public Boolean isRemoved() {
+        return removed;
     }
 
     @Override

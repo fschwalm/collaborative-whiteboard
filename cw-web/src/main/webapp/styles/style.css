@@ -49,9 +49,14 @@
     background-color: #f5d3cd;
 }
 
-.remove_project_button {
+.warning_button{
     background: #f55454 !important;
     color: black !important;
+}
+
+.save_button{
+    background: #66b266 !important;
+    color: white !important;
 }
 
 #backlogArea {
@@ -99,5 +104,15 @@
     position: absolute;
     color: #edee83;
     float: right;
+}
+
+.storyRemoved{
+    color: #dbdbdb;
+}
+
+.ui-growl {
+    left: 20px;
+    position: fixed;
+    top: 20px;
 }
 

@@ -91,7 +91,7 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.change_priority", "save.pending");
     }
 
     public void createStory() throws IOException, DataNotFoundException {
@@ -107,11 +107,17 @@ public class BacklogController extends GenericController implements Serializable
         stories.add(story);
 
         storyCreation = new StoryCreation();
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.created_story");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.created_story", "save.pending");
     }
 
-    public void updateBacklog() throws IOException {
+    public void removeStory() throws IOException {
+        selectedStory.remove();
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.removed_story", "save.pending");
+    }
+
+    public void updateBacklog() throws IOException, EncryptedException {
         backlogManagerService.updateBacklog(stories);
+        setUp();
         facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
     }
 

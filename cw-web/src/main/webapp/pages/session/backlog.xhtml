@@ -14,21 +14,21 @@
                              widgetVar="backlogTbl"
                              rowIndexVar="index" selection="#{backlogController.selectedStory}"
                              rowKey="#{story}"
-                             selectionMode="single" rowStyleClass="#{story.project.nameProject})">
+                             selectionMode="single" rowStyleClass="#{story.isRemoved() ? 'storyRemoved' : null}">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
-                    <p:ajax event="rowSelect" update="openButton"/>
-                    <p:ajax event="rowUnselect" update="openButton"/>
+                    <p:ajax event="rowSelect" update="openButton,removeButton"/>
+                    <p:ajax event="rowUnselect" update="openButton,removeButton"/>
                     <p:column headerText="#{backlog['header.table.project']}"
                               style="width: 50px; text-align: center">
                         <h:outputText value="#{story.project.nameProject}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.code']}" style="width: 50px; text-align: center">
+                    <p:column headerText="#{backlog['header.table.code']}" style="width: 100px; text-align: center">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.branch']}"
-                              style="width: 50px; text-align: center">
+                              style="width: 100px; text-align: center">
                         <h:outputText value="#{story.branch}"/>
                     </p:column>
 
@@ -48,6 +48,12 @@
                     <f:facet name="header">
                         <p:toolbar>
                             <f:facet name="left">
+                                <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash" value="#{backlog['btn.remove']}"
+                                                 update=":backlogForm:backlogTable" disabled="#{!backlogController.isSelected()}" action="#{backlogController.removeStory()}">
+                                    <p:confirm message="#{backlog['confirmation.remove.text']}"
+                                               icon="ui-icon-alert"/>
+                                </p:commandButton>
+
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                                  action="#{backlogController.prepareCreationStory()}"
                                                  oncomplete="PF('storyCreation').show();" update=":storyCreation"/>
@@ -59,11 +65,12 @@
                                                  disabled="#{!backlogController.isSelected()}" update=":storyDetail"/>
 
                                 <p:commandButton icon="ui-icon-disk" action="#{backlogController.updateBacklog()}"
-                                                 value="#{backlog['btn.save_changes']}"
+                                                 value="#{backlog['btn.save']}" styleClass="save_button"
                                                  update=":backlogForm:backlogTable">
                                     <p:confirm message="#{backlog['confirmation.text']}"
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
+
                             </f:facet>
                         </p:toolbar>
                     </f:facet>

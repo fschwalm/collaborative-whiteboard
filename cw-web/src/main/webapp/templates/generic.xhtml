@@ -59,7 +59,7 @@
             <ui:include src="../pages/components/exit.xhtml"/>
 
             <h:form prependId="false">
-                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" escape="false"/>
+                <p:growl id="messages" showDetail="true" autoUpdate="true" closable="true" escape="false" sticky="true"/>
             </h:form>
 
             <ui:insert name="pageContent"/>

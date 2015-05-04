@@ -8,13 +8,13 @@
         <h:form prependId="false">
             <p:toolbar>
                 <f:facet name="left">
+                    <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false"
+                                     styleClass="warning_button" action="#{projectController.removeProject}"
+                                     process="@this"/>
+                    <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
                     <p:commandButton value="#{project_bundle['btn.save']}" update=":projectAreaDataForm"
                                      process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
-                                     action="#{projectController.save()}"/>
-                    <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
-                    <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false"
-                                     styleClass="remove_project_button" action="#{projectController.removeProject}"
-                                     process="@this"/>
+                                     action="#{projectController.save()}" styleClass="save_button"/>
                 </f:facet>
             </p:toolbar>
         </h:form>
