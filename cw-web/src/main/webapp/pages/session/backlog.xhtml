@@ -65,8 +65,7 @@
                                                  disabled="#{!backlogController.isSelected()}" update=":storyDetail"/>
 
                                 <p:commandButton icon="ui-icon-disk" action="#{backlogController.updateBacklog()}"
-                                                 value="#{backlog['btn.save']}" styleClass="save_button"
-                                                 update=":backlogForm:backlogTable">
+                                                 value="#{backlog['btn.save']}" update=":backlogForm:backlogTable">
                                     <p:confirm message="#{backlog['confirmation.text']}"
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>

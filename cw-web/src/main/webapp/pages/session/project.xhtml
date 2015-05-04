@@ -14,7 +14,7 @@
                     <p:commandButton value="#{project_bundle['btn.cancel']}" action="#{projectController.discard()}"/>
                     <p:commandButton value="#{project_bundle['btn.save']}" update=":projectAreaDataForm"
                                      process=":projectDataForm,:projectAreaDataForm:foundedAreas,@this"
-                                     action="#{projectController.save()}" styleClass="save_button"/>
+                                     action="#{projectController.save()}"/>
                 </f:facet>
             </p:toolbar>
         </h:form>

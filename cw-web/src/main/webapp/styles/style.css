@@ -54,11 +54,6 @@
     color: black !important;
 }
 
-.save_button{
-    background: #66b266 !important;
-    color: white !important;
-}
-
 #backlogArea {
     position: absolute;
     top: 30%;
