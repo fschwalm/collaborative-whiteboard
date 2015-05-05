@@ -94,6 +94,8 @@
 
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
             <p:outputPanel id="storyDetailPanel">
+                <p:message />
+
                 <h:form id="storyDetailForm" prependId="false">
                     <h:panelGrid columns="3">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>

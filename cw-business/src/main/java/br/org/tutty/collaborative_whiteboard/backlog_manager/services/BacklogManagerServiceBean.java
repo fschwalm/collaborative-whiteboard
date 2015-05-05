@@ -68,7 +68,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     private String mountStoryCode(ProjectArea projectArea, Long sequence) {
         String separatorId = "-";
-        String projectAreaId = projectArea.getName().toUpperCase();
+        String projectAreaId = projectArea.getName().toUpperCase().replace(" ", separatorId);
 
         StringBuffer code = new StringBuffer(projectAreaId);
         code.append(separatorId);
