@@ -58,8 +58,9 @@ public class BacklogController extends GenericController implements Serializable
         projects = fetchProjects();
     }
 
-    public void saveDetailChanges(){
+    public void saveDetailChanges() throws IOException {
         storyEdition.save();
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.changed_story", "save.pending");
     }
 
     public void prepareEditionStory(){

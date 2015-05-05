@@ -8,15 +8,12 @@ import cw.dtos.LoggedUser;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
-import org.hibernate.id.IdentifierGenerationException;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -50,12 +47,12 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     }
 
     @Override
-    public Boolean projectAreaIsAssignedToStory(ProjectArea projectArea){
-        try{
+    public Boolean projectAreaIsAssignedToStory(ProjectArea projectArea) {
+        try {
             backlogDao.fetchStories(projectArea);
             return Boolean.TRUE;
 
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return Boolean.FALSE;
         }
     }
@@ -78,7 +75,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     }
 
     public List<Story> reformulatePriorities(List<Story> stories) {
-        for (Story story : stories){
+        for (Story story : stories) {
             int indexOf = stories.indexOf(story);
             story.setPriority(indexOf);
         }
@@ -86,22 +83,24 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         return stories;
     }
 
-    public Story populateStoryCode(Story story) throws StoryAlreadyIdentifiedException {
+    public Story populateStoryCode(Story story) {
         Project project = story.getProject();
         ProjectArea projectArea = story.getProjectArea();
 
-        if(story.getCode() == null){
+        if (story.getCode() == null) {
             String availableCode = getAvailableCode(project, projectArea);
             story.setCode(availableCode);
-        }else {
-            throw new StoryAlreadyIdentifiedException();
         }
 
         return story;
     }
 
-    public Story populateBranch(Story story){
-        story.setBranch(story.getCode());
+    public Story populateBranchCode(Story story) {
+        if (story.getBranch() == null || story.getBranch().isEmpty()) {
+            story.setBranch(story.getCode());
+            return story;
+        }
+
         return story;
     }
 
@@ -109,15 +108,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         stories.forEach(new Consumer<Story>() {
             @Override
             public void accept(Story story) {
-                try{
-                    Story storyWithNewCode = populateStoryCode(story);
-                    Story storyWithDefaultBranch = populateBranch(storyWithNewCode);
+                Story storyWithNewCode = populateStoryCode(story);
+                Story storyWithDefaultBranch = populateBranchCode(storyWithNewCode);
 
-                    backlogDao.update(storyWithDefaultBranch);
-
-                }catch (StoryAlreadyIdentifiedException e){
-                    backlogDao.update(story);
-                }
+                backlogDao.update(storyWithDefaultBranch);
             }
         });
     }

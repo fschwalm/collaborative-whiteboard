@@ -40,6 +40,7 @@ public class StoryEdition implements Serializable{
         selectedStory.setBranch(branch);
         selectedStory.setSubject(subjectChanges);
         selectedStory.setDescription(descriptionChanges);
+        selectedStory.setStoryStatus(storyStatus);
     }
 
     public String getCode() {
@@ -101,4 +102,13 @@ public class StoryEdition implements Serializable{
     public StoryStatus getStoryStatus() {
         return storyStatus;
     }
+
+    public void provide(){
+        this.storyStatus = StoryStatus.AVAILABLE;
+    }
+
+    public Boolean isInitialized(){
+        return code == null ? Boolean.FALSE : Boolean.TRUE;
+    }
+
 }

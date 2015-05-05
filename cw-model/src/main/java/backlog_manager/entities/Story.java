@@ -211,10 +211,6 @@ public class Story implements Serializable{
         this.projectArea = projectArea;
     }
 
-    public Boolean isRemoved() {
-        return StoryStatus.REMOVED.equals(storyStatus);
-    }
-
     public StoryStatus getStoryStatus() {
         return storyStatus;
     }

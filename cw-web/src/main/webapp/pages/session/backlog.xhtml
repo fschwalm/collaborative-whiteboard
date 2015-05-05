@@ -116,7 +116,7 @@
 
                         <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
                         <p:inputText id="branch" value="#{backlogController.storyEdition.branch}"
-                                     requiredMessage="#{messages['mandatory.field']}" required="true"/>
+                                     requiredMessage="#{messages['mandatory.field']}"/>
 
                         <p:message for="branch"/>
 
@@ -145,14 +145,16 @@
                                      rows="20" requiredMessage="#{messages['mandatory.field']}"
                                      required="true"/>
 
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
-                                         action="#{backlogController.saveDetailChanges()}"
+                                         action="#{backlogController.saveDetailChanges()}" oncomplete="PF('storyDetail').hide()"
                                          update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk"/>
                         <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                          oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                          immediate="true">
                         </p:commandButton>
+                        <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}" action="#{backlogController.storyEdition.provide()}"
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isInitialized()}"/>
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>
