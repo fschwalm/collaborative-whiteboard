@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import backlog_manager.entities.Story;
+import backlog_manager.enums.StoryStatus;
 import cw.entities.ProjectArea;
 import cw.entities.User;
 
@@ -20,6 +21,7 @@ public class StoryEdition implements Serializable{
     private String subjectChanges;
     private String descriptionChanges;
     private ProjectArea projectArea;
+    private StoryStatus storyStatus;
 
     public void init(Story selectedStory) {
         this.selectedStory = selectedStory;
@@ -30,6 +32,7 @@ public class StoryEdition implements Serializable{
         this.subjectChanges = selectedStory.getSubject();
         this.descriptionChanges = selectedStory.getDescription();
         this.projectArea = selectedStory.getProjectArea();
+        this.storyStatus = selectedStory.getStoryStatus();
     }
 
     public void save(){
@@ -93,5 +96,9 @@ public class StoryEdition implements Serializable{
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public StoryStatus getStoryStatus() {
+        return storyStatus;
     }
 }

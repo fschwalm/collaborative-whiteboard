@@ -1,6 +1,7 @@
 package backlog_manager.entities;
 
 
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -50,8 +51,9 @@ public class Story implements Serializable{
     @Column(nullable = false)
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Boolean removed;
+    private StoryStatus storyStatus;
 
     @OneToMany(mappedBy = "story")
     private List<Task> tasks;
@@ -64,14 +66,14 @@ public class Story implements Serializable{
         this.project = project;
         this.creationDate = creationDate;
         this.creationDate = new Date();
-        this.removed = false;
+        this.storyStatus = StoryStatus.WAITING;
     }
 
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
         this.creationDate = new Date();
-        this.removed = false;
+        this.storyStatus = StoryStatus.WAITING;
     }
 
     public Story() {
@@ -80,7 +82,7 @@ public class Story implements Serializable{
     public Story(User author) {
         this.author = author;
         this.creationDate = new Date();
-        this.removed = false;
+        this.storyStatus = StoryStatus.WAITING;
     }
 
     public String getCode() {
@@ -185,17 +187,17 @@ public class Story implements Serializable{
     }
 
     public void remove() {
-        Boolean oldValue = this.removed;
-        this.removed = true;
+        StoryStatus oldValue = this.storyStatus;
+        this.storyStatus = StoryStatus.REMOVED;
 
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("removed", oldValue, removed);
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyStatus", oldValue, storyStatus);
     }
 
     public void restore() {
-        Boolean oldValue = this.removed;
-        this.removed = false;
+        StoryStatus oldValue = this.storyStatus;
+        this.storyStatus = StoryStatus.WAITING;
 
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("removed", oldValue, removed);
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyStatus", oldValue, storyStatus);
     }
 
     public void setBranch(String branch) {
@@ -210,7 +212,15 @@ public class Story implements Serializable{
     }
 
     public Boolean isRemoved() {
-        return removed;
+        return StoryStatus.REMOVED.equals(storyStatus);
+    }
+
+    public StoryStatus getStoryStatus() {
+        return storyStatus;
+    }
+
+    public void setStoryStatus(StoryStatus storyStatus) {
+        this.storyStatus = storyStatus;
     }
 
     @Override

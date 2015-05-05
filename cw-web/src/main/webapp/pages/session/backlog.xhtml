@@ -94,9 +94,14 @@
 
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
             <p:outputPanel id="storyDetailPanel">
-                <p:message />
-
                 <h:form id="storyDetailForm" prependId="false">
+
+                    <div class="story_#{backlogController.storyEdition.storyStatus}">
+                        <h:outputText value="#{backlog['story.status.'.concat(backlogController.storyEdition.storyStatus)]}" style="text-align: center"/>
+                    </div>
+
+                    <p:spacer width="15px"/>
+
                     <h:panelGrid columns="3">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
                         <p:calendar id="creationDate" value="#{backlogController.storyEdition.creationDate}"
@@ -155,6 +160,7 @@
 
         <p:dialog id="storyCreation" widgetVar="storyCreation" modal="true" resizable="false" appendToBody="false">
             <h:form id="createStoryForm" prependId="false">
+
                 <h:panelGrid columns="1">
                     <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}"
                                      required="true" requiredMessage="#{messages['mandatory.field']}">

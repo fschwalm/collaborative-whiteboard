@@ -1,4 +1,4 @@
-  - (Andamento) Correção de espaço entre palavras ID questão
+  - (Andamento) Possibilidade de trocar status estoria
 
   - Cor de linhas do backlog conforme cor do projeto
 
@@ -15,6 +15,10 @@
   - Implementar proteção de Contexto com redirect Filter
 
   - Editar Menu para ficar inteligente
+
+  - (OK) Status da Estoria
+
+  - (OK) Correção de espaço entre palavras ID questão
 
   - (OK) Remoção de dados atrelados Area e Storias
 
