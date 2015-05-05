@@ -18,9 +18,15 @@
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
                     <p:ajax event="rowSelect" update="openButton,removeButton"/>
                     <p:ajax event="rowUnselect" update="openButton,removeButton"/>
+
                     <p:column headerText="#{backlog['header.table.project']}"
                               style="width: 50px; text-align: center">
                         <h:outputText value="#{story.project.nameProject}"/>
+                    </p:column>
+
+                    <p:column headerText="#{backlog['header.table.subject']}"
+                              style="width: 300px; text-align: left">
+                        <h:outputText value="#{story.subject}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.code']}" style="width: 100px; text-align: center">
@@ -34,11 +40,6 @@
 
                     <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
                         <h:outputText value="#{story.projectArea.name}"/>
-                    </p:column>
-
-                    <p:column headerText="#{backlog['header.table.subject']}"
-                              style="width: 300px; text-align: left">
-                        <h:outputText value="#{story.subject}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.author']}"

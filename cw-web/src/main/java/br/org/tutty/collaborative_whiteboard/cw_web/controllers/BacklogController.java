@@ -11,8 +11,6 @@ import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 
@@ -91,7 +89,7 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void onRowReorder(ReorderEvent event) throws IOException {
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.change_priority", "save.pending");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.change_priority", "save.pending");
     }
 
     public void createStory() throws IOException, DataNotFoundException {

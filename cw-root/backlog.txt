@@ -1,4 +1,4 @@
-  - (Andamento) Remoção de dados atrelados Area e Storias
+  - (Andamento) Correção de espaço entre palavras ID questão
 
   - Cor de linhas do backlog conforme cor do projeto
 
@@ -15,6 +15,8 @@
   - Implementar proteção de Contexto com redirect Filter
 
   - Editar Menu para ficar inteligente
+
+  - (OK) Remoção de dados atrelados Area e Storias
 
   - (ok) Editar Nome do projeto
 

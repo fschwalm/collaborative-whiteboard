@@ -95,7 +95,7 @@ public class ProjectController extends GenericController implements Serializable
 
         } else {
             projectAreaCreation.addArea();
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.area", "save.pending");
         }
     }
 
@@ -163,10 +163,10 @@ public class ProjectController extends GenericController implements Serializable
         if (!backlogManagerService.projectAreaIsAssignedToStory(projectArea)) {
             if (isCheckForRemoval(projectArea.getName())) {
                 projectAreasForRemoval.remove(projectArea);
-                facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal");
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.exclude.area.to_removal", "save.pending");
             } else {
                 projectAreasForRemoval.add(projectArea);
-                facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal");
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal", "save.pending");
             }
         } else {
             facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");

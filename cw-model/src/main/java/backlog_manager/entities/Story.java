@@ -56,9 +56,6 @@ public class Story implements Serializable{
     @OneToMany(mappedBy = "story")
     private List<Task> tasks;
 
-    @OneToMany(mappedBy = "story")
-    private List<Comment> comments;
-
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
@@ -128,17 +125,6 @@ public class Story implements Serializable{
         this.tasks = tasks;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("tasks", oldValue, tasks);
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        List<Comment> oldValue = this.comments;
-        this.comments = comments;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("comments", oldValue, comments);
     }
 
     public Project getProject() {
@@ -235,7 +221,6 @@ public class Story implements Serializable{
         story.setSubject(subject);
         story.setDescription(description);
         story.setPriority(priority);
-        story.setComments(comments);
         story.setTasks(tasks);
         story.setBranch(branch);
 
