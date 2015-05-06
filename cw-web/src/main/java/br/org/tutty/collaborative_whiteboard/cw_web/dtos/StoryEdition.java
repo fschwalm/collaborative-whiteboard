@@ -107,8 +107,24 @@ public class StoryEdition implements Serializable{
         this.storyStatus = StoryStatus.AVAILABLE;
     }
 
+    public void restore(){
+        this.storyStatus = StoryStatus.WAITING;
+    }
+
+    public Boolean isPossibleRestore(){
+        return isRemoved();
+    }
+
+    public Boolean isPossibleProvide(){
+        return isInitialized() && !isRemoved();
+    }
+
     public Boolean isInitialized(){
         return code == null ? Boolean.FALSE : Boolean.TRUE;
+    }
+
+    public Boolean isRemoved(){
+        return StoryStatus.REMOVED.equals(storyStatus);
     }
 
 }

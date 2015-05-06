@@ -154,7 +154,10 @@
                                          immediate="true">
                         </p:commandButton>
                         <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}" action="#{backlogController.storyEdition.provide()}"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isInitialized()}"/>
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isPossibleProvide()}"/>
+
+                        <p:commandButton id="storyStatusRestore" value="#{backlog['btn.restore']}" action="#{backlogController.storyEdition.restore()}"
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isPossibleRestore()}"/>
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>

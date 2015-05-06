@@ -207,6 +207,10 @@ public class Story implements Serializable{
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("branch", oldValue, branch);
     }
 
+    public Boolean isRemoved() {
+        return StoryStatus.REMOVED.equals(storyStatus);
+    }
+
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
     }

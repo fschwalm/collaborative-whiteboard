@@ -16,6 +16,8 @@
 
   - Editar Menu para ficar inteligente
 
+  - Tela de Edição de Usuario
+
   - (OK) Status da Estoria
 
   - (OK) Correção de espaço entre palavras ID questão
