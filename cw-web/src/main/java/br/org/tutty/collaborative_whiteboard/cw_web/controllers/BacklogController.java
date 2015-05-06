@@ -9,6 +9,7 @@ import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryCreation;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
 import org.primefaces.context.RequestContext;
@@ -110,7 +111,8 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public void removeStory() throws IOException {
-        selectedStory.remove();
+        User user = sessionContext.getLoggedUser().getUser();
+        selectedStory.remove(user);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.removed_story", "save.pending");
     }
 

@@ -9,8 +9,7 @@ import cw.entities.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -51,9 +50,8 @@ public class Story implements Serializable{
     @Column(nullable = false)
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StoryStatus storyStatus;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "story", fetch=FetchType.LAZY)
+    private List<StoryStatusLog> storyStatusLogs;
 
     @OneToMany(mappedBy = "story")
     private List<Task> tasks;
@@ -61,28 +59,28 @@ public class Story implements Serializable{
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
+    public Story() {
+    }
+
     public Story(User author, Project project, Date creationDate) {
         this.author = author;
         this.project = project;
         this.creationDate = creationDate;
         this.creationDate = new Date();
-        this.storyStatus = StoryStatus.WAITING;
+        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
     }
 
     public Story(User author, Project project) {
         this.author = author;
         this.project = project;
         this.creationDate = new Date();
-        this.storyStatus = StoryStatus.WAITING;
-    }
-
-    public Story() {
+        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
     }
 
     public Story(User author) {
         this.author = author;
         this.creationDate = new Date();
-        this.storyStatus = StoryStatus.WAITING;
+        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
     }
 
     public String getCode() {
@@ -186,20 +184,6 @@ public class Story implements Serializable{
         return branch;
     }
 
-    public void remove() {
-        StoryStatus oldValue = this.storyStatus;
-        this.storyStatus = StoryStatus.REMOVED;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyStatus", oldValue, storyStatus);
-    }
-
-    public void restore() {
-        StoryStatus oldValue = this.storyStatus;
-        this.storyStatus = StoryStatus.WAITING;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyStatus", oldValue, storyStatus);
-    }
-
     public void setBranch(String branch) {
         String oldValue = this.branch;
         this.branch = branch;
@@ -207,20 +191,29 @@ public class Story implements Serializable{
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("branch", oldValue, branch);
     }
 
+    public void remove(User user) {
+        storyStatusLogs.add(new StoryStatusLog(StoryStatus.REMOVED,user));
+    }
+
+    public void restore(User user) {
+        storyStatusLogs.add(new StoryStatusLog(StoryStatus.WAITING, user));
+    }
+
     public Boolean isRemoved() {
-        return StoryStatus.REMOVED.equals(storyStatus);
+        StoryStatusLog status = getStatus();
+        return StoryStatus.REMOVED.equals(status.getStoryStatus());
+    }
+
+    public StoryStatusLog getStatus(){
+        return storyStatusLogs.stream().reduce((a, b) -> b).get();
     }
 
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
     }
 
-    public StoryStatus getStoryStatus() {
-        return storyStatus;
-    }
-
-    public void setStoryStatus(StoryStatus storyStatus) {
-        this.storyStatus = storyStatus;
+    public List<StoryStatusLog> getStoryStatusLogs() {
+        return storyStatusLogs;
     }
 
     @Override

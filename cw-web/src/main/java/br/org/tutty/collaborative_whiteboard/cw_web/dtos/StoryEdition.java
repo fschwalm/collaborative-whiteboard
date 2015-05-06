@@ -1,10 +1,12 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import backlog_manager.entities.Story;
+import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.enums.StoryStatus;
+import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.ProjectArea;
 import cw.entities.User;
-
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,8 +14,11 @@ import java.util.Date;
  * Created by drferreira on 25/03/15.
  */
 public class StoryEdition implements Serializable{
-    public Story selectedStory;
 
+    @Inject
+    private SessionContext sessionContext;
+
+    public Story selectedStory;
     private String code;
     private String branch;
     private Date creationDate;
@@ -21,7 +26,7 @@ public class StoryEdition implements Serializable{
     private String subjectChanges;
     private String descriptionChanges;
     private ProjectArea projectArea;
-    private StoryStatus storyStatus;
+    private StoryStatusLog storyStatusLog;
 
     public void init(Story selectedStory) {
         this.selectedStory = selectedStory;
@@ -32,7 +37,7 @@ public class StoryEdition implements Serializable{
         this.subjectChanges = selectedStory.getSubject();
         this.descriptionChanges = selectedStory.getDescription();
         this.projectArea = selectedStory.getProjectArea();
-        this.storyStatus = selectedStory.getStoryStatus();
+        this.storyStatusLog = selectedStory.getStatus();
     }
 
     public void save(){
@@ -40,7 +45,7 @@ public class StoryEdition implements Serializable{
         selectedStory.setBranch(branch);
         selectedStory.setSubject(subjectChanges);
         selectedStory.setDescription(descriptionChanges);
-        selectedStory.setStoryStatus(storyStatus);
+        selectedStory.getStoryStatusLogs().add(storyStatusLog);
     }
 
     public String getCode() {
@@ -100,15 +105,21 @@ public class StoryEdition implements Serializable{
     }
 
     public StoryStatus getStoryStatus() {
-        return storyStatus;
+        if(storyStatusLog != null){
+            return storyStatusLog.getStoryStatus();
+        }
+
+        return null;
     }
 
     public void provide(){
-        this.storyStatus = StoryStatus.AVAILABLE;
+        User user = sessionContext.getLoggedUser().getUser();
+        this.storyStatusLog = new StoryStatusLog(StoryStatus.AVAILABLE,user);
     }
 
     public void restore(){
-        this.storyStatus = StoryStatus.WAITING;
+        User user = sessionContext.getLoggedUser().getUser();
+        this.storyStatusLog = new StoryStatusLog(StoryStatus.WAITING,user);
     }
 
     public Boolean isPossibleRestore(){
@@ -124,7 +135,10 @@ public class StoryEdition implements Serializable{
     }
 
     public Boolean isRemoved(){
-        return StoryStatus.REMOVED.equals(storyStatus);
+        if(storyStatusLog != null){
+            return StoryStatus.REMOVED.equals(storyStatusLog.getStoryStatus());
+        }
+        return Boolean.FALSE;
     }
 
 }

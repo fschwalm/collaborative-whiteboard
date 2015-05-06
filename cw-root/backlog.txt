@@ -1,4 +1,4 @@
-  - (Andamento) Possibilidade de trocar status estoria
+  - (Andamento) Corrigir Lazy Initialization Logs Status
 
   - Cor de linhas do backlog conforme cor do projeto
 
@@ -17,6 +17,8 @@
   - Editar Menu para ficar inteligente
 
   - Tela de Edição de Usuario
+
+  - (OK) Possibilidade de trocar status estoria
 
   - (OK) Status da Estoria
 
