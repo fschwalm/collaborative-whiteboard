@@ -50,26 +50,10 @@ public class BacklogController extends GenericController implements Serializable
     private ProjectService projectService;
 
     private List<Story> stories;
-    private List<Project> projects;
-    private Story selectedStory;
 
     @PostConstruct
     public void setUp() throws EncryptedException, IOException {
         stories = fetchStories();
-        projects = fetchProjects();
-    }
-
-    public void saveDetailChanges() throws IOException {
-        storyEdition.save();
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.changed_story", "save.pending");
-    }
-
-    public void prepareEditionStory(){
-        storyEdition.init(selectedStory);
-    }
-
-    public void prepareCreationStory(){
-        storyCreation.init();
     }
 
     public List<Story> fetchStories() throws IOException {
@@ -81,49 +65,20 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
-    public List<Project> fetchProjects() throws IOException {
-        try{
-            return projectService.fetchProjects();
-        }catch (DataNotFoundException e){
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "backlog.projects_not_found");
-            return new ArrayList<>();
-        }
-    }
-
     public void onRowReorder(ReorderEvent event) throws IOException {
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.change_priority", "save.pending");
     }
 
-    public void createStory() throws IOException, DataNotFoundException {
-        Project selectedProject = storyCreation.getSelectedProject();
-
-        Story story = backlogManagerService.getEmptyStory(selectedProject);
-        story.setSubject(storyCreation.getSubject());
-        story.setDescription(storyCreation.getDescription());
-
-        ProjectArea selectedProjectArea = projectService.fetchProjectArea(selectedProject, storyCreation.getProjectArea());
-        story.setProjectArea(selectedProjectArea);
-
-        stories.add(story);
-
-        storyCreation = new StoryCreation();
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.created_story", "save.pending");
-    }
-
     public void removeStory() throws IOException {
         User user = sessionContext.getLoggedUser().getUser();
-        selectedStory.remove(user);
+//        selectedStory.remove(user);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.removed_story", "save.pending");
     }
 
     public void updateBacklog() throws IOException, EncryptedException {
-        backlogManagerService.updateBacklog(stories);
-        setUp();
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
-    }
-
-    public Boolean isSelected() {
-        return selectedStory != null ? true : false;
+//        backlogManagerService.updateBacklog(stories);
+//        setUp();
+//        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
     }
 
     public List<Story> getStories() {
@@ -132,68 +87,5 @@ public class BacklogController extends GenericController implements Serializable
 
     public void setStories(List<Story> stories) {
         this.stories = stories;
-    }
-
-    public Story getSelectedStory() {
-        return selectedStory;
-    }
-
-    public void setSelectedStory(Story selectedStory){
-        this.selectedStory = selectedStory;
-        RequestContext.getCurrentInstance().update("storyDetailPanel");
-    }
-
-    public List<String> getProjects() throws IOException {
-        List<String> projectsNames = new ArrayList<>();
-        projects.stream().forEach(project -> projectsNames.add(project.getNameProject()));
-
-        return projectsNames;
-    }
-
-    public List<String> fetchProjectAreas(String query){
-        Project selectedProject = storyCreation.getSelectedProject();
-        List<ProjectArea> projectAreas = projectService.filterProjectAreas(selectedProject, query);
-
-        List<String> convertedAreas = new ArrayList<>();
-        projectAreas.forEach(area -> convertedAreas.add(area.getName()));
-
-        return convertedAreas;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
-
-    public StoryCreation getStoryCreation() {
-        return storyCreation;
-    }
-
-    public void setStoryCreation(StoryCreation storyCreation) {
-        this.storyCreation = storyCreation;
-    }
-
-    public StoryEdition getStoryEdition() {
-        return storyEdition;
-    }
-
-    public void setStoryEdition(StoryEdition storyEdition) {
-        this.storyEdition = storyEdition;
-    }
-
-    public String getProjectForNewStory() {
-        Project selectedProject = storyCreation.getSelectedProject();
-        if (selectedProject != null) {
-            return selectedProject.getNameProject();
-        } else {
-            return null;
-        }
-    }
-
-    public void setProjectForNewStory(String projectForNewStory) {
-        for (Project project : projects) {
-            if (project.getNameProject().equals(projectForNewStory)) {
-                this.storyCreation.setSelectedProject(project);
-            }
-        }
     }
 }

@@ -19,18 +19,17 @@ public class StoryStatusLog implements Serializable{
     @GeneratedValue(generator = "StoryStatusSequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne
-    private Story story;
-
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private StoryStatus storyStatus;
 
-    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Story story;
 
     public StoryStatusLog() {
     }
@@ -55,5 +54,13 @@ public class StoryStatusLog implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Story getStory() {
+        return story;
+    }
+
+    public void setStory(Story story) {
+        this.story = story;
     }
 }

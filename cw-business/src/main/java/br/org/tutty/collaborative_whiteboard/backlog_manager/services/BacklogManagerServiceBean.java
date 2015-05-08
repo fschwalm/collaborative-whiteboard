@@ -11,6 +11,8 @@ import cw.exceptions.DataNotFoundException;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.function.Consumer;
@@ -21,6 +23,8 @@ import java.util.function.Consumer;
 @Local(BacklogManagerService.class)
 @Stateless
 public class BacklogManagerServiceBean implements BacklogManagerService {
+    private static Integer INITIAL_PRIORITY = 0;
+
     @Inject
     private SessionContext sessionContext;
 
@@ -30,14 +34,6 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
         return backlogDao.fetchAllStories();
-    }
-
-    @Override
-    public Story getEmptyStory(Project project) {
-        LoggedUser loggedUser = sessionContext.getLoggedUser();
-        Story story = new Story(loggedUser.getUser());
-        story.setProject(project);
-        return story;
     }
 
     @Override
@@ -56,6 +52,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
             return Boolean.FALSE;
         }
     }
+
 
     private String getAvailableCode(Project project, ProjectArea projectArea) {
         Long sequence = (backlogDao.getNextSequenceStory(project) + 1);
@@ -114,5 +111,44 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
                 backlogDao.update(storyWithDefaultBranch);
             }
         });
+    }
+
+
+    /**
+     * Metodo responsavel por cria uma nova estoria.
+     * Cria novo codigo para estoria e verifica necessidade de popular branch
+     *
+     * @param story
+     */
+    @Override
+    public void createStory(Story story) {
+        Story storyWithNewCode = populateStoryCode(story);
+        Story storyWithBranch = populateBranchCode(storyWithNewCode);
+        Story storyWithPriority = populatePriority(storyWithBranch);
+
+        backlogDao.persist(storyWithPriority);
+    }
+
+    /**
+     * Metodo para atualizar uma estoria existente.
+     *
+     * @param story
+     */
+    @Override
+    public void updateStory(Story story) {
+        backlogDao.update(story);
+    }
+
+    public Story populatePriority(Story story){
+        try {
+            List<Story> stories = fetchAllStories();
+            stories.add(story);
+            reformulatePriorities(stories);
+            return story;
+
+        } catch (DataNotFoundException e) {
+            story.setPriority(INITIAL_PRIORITY);
+            return story;
+        }
     }
 }

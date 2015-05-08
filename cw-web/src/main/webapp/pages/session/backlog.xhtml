@@ -12,9 +12,9 @@
                              value="#{backlogController.stories}"
                              draggableRows="true"
                              widgetVar="backlogTbl"
-                             rowIndexVar="index" selection="#{backlogController.selectedStory}"
+                             rowIndexVar="index" selection="#{editionStoryController.selectedStory}"
                              rowKey="#{story}"
-                             selectionMode="single" rowStyleClass="#{story.isRemoved() ? 'storyRemoved' : null}">
+                             selectionMode="single" >
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
                     <p:ajax event="rowSelect" update="openButton,removeButton"/>
                     <p:ajax event="rowUnselect" update="openButton,removeButton"/>
@@ -50,20 +50,18 @@
                         <p:toolbar>
                             <f:facet name="left">
                                 <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash" value="#{backlog['btn.remove']}"
-                                                 update=":backlogForm:backlogTable" disabled="#{!backlogController.isSelected()}" action="#{backlogController.removeStory()}">
+                                                 update=":backlogForm:backlogTable" disabled="#{!editionStoryController.isSelected()}" action="#{backlogController.removeStory()}">
                                     <p:confirm message="#{backlog['confirmation.remove.text']}"
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
 
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                                 action="#{backlogController.prepareCreationStory()}"
                                                  oncomplete="PF('storyCreation').show();" update=":storyCreation"/>
 
                                 <p:commandButton id="openButton" icon="ui-icon-folder-open"
                                                  value="#{backlog['btn.open']}"
-                                                 action="#{backlogController.prepareEditionStory()}"
                                                  oncomplete="PF('storyDetail').show()"
-                                                 disabled="#{!backlogController.isSelected()}" update=":storyDetail"/>
+                                                 disabled="#{!editionStoryController.isSelected()}" update=":storyDetail"/>
 
                                 <p:commandButton icon="ui-icon-disk" action="#{backlogController.updateBacklog()}"
                                                  value="#{backlog['btn.save']}" update=":backlogForm:backlogTable">
@@ -96,44 +94,44 @@
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false">
 
-                    <div class="story_#{backlogController.storyEdition.storyStatus}">
-                        <h:outputText value="#{backlog['story.status.'.concat(backlogController.storyEdition.storyStatus)]}" style="text-align: center"/>
+                    <div class="story_#{editionStoryController.status}">
+                        <h:outputText value="#{backlog['story.status.'.concat(editionStoryController.status)]}" style="text-align: center"/>
                     </div>
 
                     <p:spacer width="15px"/>
 
                     <h:panelGrid columns="3">
                         <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
-                        <p:calendar id="creationDate" value="#{backlogController.storyEdition.creationDate}"
+                        <p:calendar id="creationDate" value="#{editionStoryController.storyEdition.creationDate}"
                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <h:column />
 
                         <h:outputLabel value="#{backlog['label.code']}" for="code"/>
-                        <p:inputText id="code" value="#{backlogController.storyEdition.code}" readonly="true"/>
+                        <p:inputText id="code" value="#{editionStoryController.storyEdition.code}" readonly="true"/>
 
                         <h:column />
 
                         <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
-                        <p:inputText id="branch" value="#{backlogController.storyEdition.branch}"
+                        <p:inputText id="branch" value="#{editionStoryController.storyEdition.branch}"
                                      requiredMessage="#{messages['mandatory.field']}"/>
 
                         <p:message for="branch"/>
 
                         <h:outputLabel value="#{backlog['label.area']}" for="area"/>
-                        <p:inputText id="area" value="#{backlogController.storyEdition.projectArea.name}"
+                        <p:inputText id="area" value="#{editionStoryController.storyEdition.projectArea.name}"
                                      readonly="true"/>
 
                         <h:column />
 
                         <h:outputLabel value="#{backlog['label.author']}" for="author"/>
-                        <p:inputText id="author" value="#{backlogController.storyEdition.author.fullName}"
+                        <p:inputText id="author" value="#{editionStoryController.storyEdition.author.fullName}"
                                      readonly="true"/>
 
                         <h:column />
 
                         <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
-                        <p:inputText id="subject" value="#{backlogController.storyEdition.subjectChanges}"
+                        <p:inputText id="subject" value="#{editionStoryController.storyEdition.subjectChanges}"
                                      requiredMessage="#{messages['mandatory.field']}" required="true"/>
                         <p:message for="subject"/>
 
@@ -141,23 +139,23 @@
 
                     <p:message for="description"/>
                     <p:inputTextarea id="description"
-                                     value="#{backlogController.storyEdition.descriptionChanges}" cols="70"
+                                     value="#{editionStoryController.storyEdition.descriptionChanges}" cols="70"
                                      rows="20" requiredMessage="#{messages['mandatory.field']}"
                                      required="true"/>
 
                     <h:panelGrid columns="3">
                         <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
-                                         action="#{backlogController.saveDetailChanges()}" oncomplete="PF('storyDetail').hide()"
+                                         action="#{editionStoryController.save()}" oncomplete="PF('storyDetail').hide()"
                                          update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk"/>
                         <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
                                          oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                          immediate="true">
                         </p:commandButton>
-                        <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}" action="#{backlogController.storyEdition.provide()}"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isPossibleProvide()}"/>
+                        <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}" action="#{editionStoryController.provide()}"
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{editionStoryController.isPossibleProvide()}"/>
 
-                        <p:commandButton id="storyStatusRestore" value="#{backlog['btn.restore']}" action="#{backlogController.storyEdition.restore()}"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{backlogController.storyEdition.isPossibleRestore()}"/>
+                        <p:commandButton id="storyStatusRestore" value="#{backlog['btn.restore']}" action="#{editionStoryController.restore()}"
+                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check" rendered="#{editionStoryController.isPossibleRestore()}"/>
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>
@@ -167,30 +165,30 @@
             <h:form id="createStoryForm" prependId="false">
 
                 <h:panelGrid columns="1">
-                    <p:selectOneMenu id="projectNewStory" value="#{backlogController.projectForNewStory}"
+                    <p:selectOneMenu id="projectNewStory" value="#{creationStoryController.project}"
                                      required="true" requiredMessage="#{messages['mandatory.field']}">
                         <f:selectItem itemLabel="#{backlog['label.story.creation.select_empty']}" itemValue=""/>
                         <p:ajax event="change" execute="@this" update="projectArea"/>
-                        <f:selectItems value="#{backlogController.projects}" var="projectName"
+                        <f:selectItems value="#{creationStoryController.projects}" var="projectName"
                                        itemLabel="#{projectName}" itemValue="#{projectName}"/>
                     </p:selectOneMenu>
                     <p:message for="projectNewStory"/>
 
                     <p:autoComplete id="projectArea" forceSelection="true" dropdown="true" itemLabel="#{area}"
-                                    var="area" value="#{backlogController.storyCreation.projectArea}"
-                                    completeMethod="#{backlogController.fetchProjectAreas}" itemValue="#{area}"
+                                    var="area" value="#{creationStoryController.projectArea}"
+                                    completeMethod="#{creationStoryController.fetchProjectAreas}" itemValue="#{area}"
                                     required="true" requiredMessage="#{messages['mandatory.field']}"/>
                     <p:message for="projectArea"/>
 
                     <p:watermark value="#{backlog['label.story.creation.subject']}" for="subjecNewStory"/>
-                    <p:inputText id="subjecNewStory" value="#{backlogController.storyCreation.subject}"
+                    <p:inputText id="subjecNewStory" value="#{creationStoryController.storyCreation.subject}"
                                  size="60" required="true" requiredMessage="#{messages['mandatory.field']}"/>
                     <p:message for="subjecNewStory"/>
 
                     <p:watermark value="#{backlog['label.story.creation.description']}"
                                  for="descriptionNewStory"/>
                     <p:inputTextarea id="descriptionNewStory"
-                                     value="#{backlogController.storyCreation.description}"
+                                     value="#{creationStoryController.storyCreation.description}"
                                      cols="63" rows="20" required="true"
                                      requiredMessage="#{messages['mandatory.field']}"/>
                     <p:message for="descriptionNewStory"/>
@@ -199,8 +197,8 @@
                 <h:panelGrid columns="2">
                     <p:commandButton id="save" value="#{backlog['btn.save']}"
                                      update="createStoryForm,:backlogForm:backlogTable"
-                                     action="#{backlogController.createStory()}" icon="ui-icon-disk"/>
-                    <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
+                                     action="#{creationStoryController.create()}" icon="ui-icon-disk"/>
+                    <p:commandButton id="cancel" value="#{backlog['btn.cancel']}" action="#{creationStoryController.cancel()}"
                                      oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
                                      immediate="true">
                     </p:commandButton>

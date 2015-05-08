@@ -1,7 +1,6 @@
 package backlog_manager.entities;
 
 
-import backlog_manager.enums.StoryStatus;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -9,7 +8,8 @@ import cw.entities.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -50,37 +50,19 @@ public class Story implements Serializable{
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "story", fetch=FetchType.LAZY)
-    private List<StoryStatusLog> storyStatusLogs;
-
-    @OneToMany(mappedBy = "story")
-    private List<Task> tasks;
-
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
     public Story() {
     }
 
-    public Story(User author, Project project, Date creationDate) {
+    public Story(User author, Project project, ProjectArea projectArea, String subject, String description) {
         this.author = author;
         this.project = project;
-        this.creationDate = creationDate;
+        this.projectArea = projectArea;
+        this.subject = subject;
+        this.description = description;
         this.creationDate = new Date();
-        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
-    }
-
-    public Story(User author, Project project) {
-        this.author = author;
-        this.project = project;
-        this.creationDate = new Date();
-        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
-    }
-
-    public Story(User author) {
-        this.author = author;
-        this.creationDate = new Date();
-        this.storyStatusLogs = Arrays.asList(new StoryStatusLog(StoryStatus.WAITING, author));
     }
 
     public String getCode() {
@@ -116,17 +98,6 @@ public class Story implements Serializable{
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("subject", oldValue, subject);
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        List<Task> oldValue = this.tasks;
-        this.tasks = tasks;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("tasks", oldValue, tasks);
-    }
-
     public Project getProject() {
         return project;
     }
@@ -151,10 +122,6 @@ public class Story implements Serializable{
         this.description = description;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("description", oldValue, description);
-    }
-
-    public Integer getPriority() {
-        return priority;
     }
 
     public Long getId() {
@@ -191,42 +158,7 @@ public class Story implements Serializable{
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("branch", oldValue, branch);
     }
 
-    public void remove(User user) {
-        storyStatusLogs.add(new StoryStatusLog(StoryStatus.REMOVED,user));
-    }
-
-    public void restore(User user) {
-        storyStatusLogs.add(new StoryStatusLog(StoryStatus.WAITING, user));
-    }
-
-    public Boolean isRemoved() {
-        StoryStatusLog status = getStatus();
-        return StoryStatus.REMOVED.equals(status.getStoryStatus());
-    }
-
-    public StoryStatusLog getStatus(){
-        return storyStatusLogs.stream().reduce((a, b) -> b).get();
-    }
-
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
-    }
-
-    public List<StoryStatusLog> getStoryStatusLogs() {
-        return storyStatusLogs;
-    }
-
-    @Override
-    public Story clone() throws CloneNotSupportedException {
-        Story story = new Story(author, project, creationDate);
-        story.setId(id);
-        story.setCode(code);
-        story.setSubject(subject);
-        story.setDescription(description);
-        story.setPriority(priority);
-        story.setTasks(tasks);
-        story.setBranch(branch);
-
-        return story;
     }
 }

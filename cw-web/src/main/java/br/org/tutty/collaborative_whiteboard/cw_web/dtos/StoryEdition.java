@@ -2,11 +2,9 @@ package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
-import backlog_manager.enums.StoryStatus;
-import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.ProjectArea;
 import cw.entities.User;
-import javax.inject.Inject;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,9 +12,6 @@ import java.util.Date;
  * Created by drferreira on 25/03/15.
  */
 public class StoryEdition implements Serializable{
-
-    @Inject
-    private SessionContext sessionContext;
 
     public Story selectedStory;
     private String code;
@@ -37,15 +32,14 @@ public class StoryEdition implements Serializable{
         this.subjectChanges = selectedStory.getSubject();
         this.descriptionChanges = selectedStory.getDescription();
         this.projectArea = selectedStory.getProjectArea();
-        this.storyStatusLog = selectedStory.getStatus();
     }
 
-    public void save(){
-        selectedStory.setCode(code);
-        selectedStory.setBranch(branch);
-        selectedStory.setSubject(subjectChanges);
-        selectedStory.setDescription(descriptionChanges);
-        selectedStory.getStoryStatusLogs().add(storyStatusLog);
+    public Story toEntity(){
+        this.selectedStory.setBranch(branch);
+        this.selectedStory.setSubject(subjectChanges);
+        this.selectedStory.setDescription(descriptionChanges);
+
+        return selectedStory;
     }
 
     public String getCode() {
@@ -104,41 +98,11 @@ public class StoryEdition implements Serializable{
         this.branch = branch;
     }
 
-    public StoryStatus getStoryStatus() {
-        if(storyStatusLog != null){
-            return storyStatusLog.getStoryStatus();
-        }
-
-        return null;
+    public StoryStatusLog getStoryStatusLog() {
+        return storyStatusLog;
     }
 
-    public void provide(){
-        User user = sessionContext.getLoggedUser().getUser();
-        this.storyStatusLog = new StoryStatusLog(StoryStatus.AVAILABLE,user);
+    public void setStoryStatusLog(StoryStatusLog storyStatusLog) {
+        this.storyStatusLog = storyStatusLog;
     }
-
-    public void restore(){
-        User user = sessionContext.getLoggedUser().getUser();
-        this.storyStatusLog = new StoryStatusLog(StoryStatus.WAITING,user);
-    }
-
-    public Boolean isPossibleRestore(){
-        return isRemoved();
-    }
-
-    public Boolean isPossibleProvide(){
-        return isInitialized() && !isRemoved();
-    }
-
-    public Boolean isInitialized(){
-        return code == null ? Boolean.FALSE : Boolean.TRUE;
-    }
-
-    public Boolean isRemoved(){
-        if(storyStatusLog != null){
-            return StoryStatus.REMOVED.equals(storyStatusLog.getStoryStatus());
-        }
-        return Boolean.FALSE;
-    }
-
 }

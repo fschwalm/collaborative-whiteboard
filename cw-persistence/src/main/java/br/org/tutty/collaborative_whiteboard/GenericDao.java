@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.io.Serializable;
 import java.util.List;
 

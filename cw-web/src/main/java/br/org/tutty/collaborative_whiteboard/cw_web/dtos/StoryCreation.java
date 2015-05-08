@@ -1,6 +1,9 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
+import backlog_manager.entities.Story;
 import cw.entities.Project;
+import cw.entities.ProjectArea;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import java.io.Serializable;
 
@@ -12,12 +15,16 @@ public class StoryCreation implements Serializable{
     private Project selectedProject;
     private String subject;
     private String description;
-    private String projectArea;
+    private ProjectArea projectArea;
 
     public void init() {
         subject = null;
         description = null;
         projectArea = null;
+    }
+
+    public Story toEntity(User loggedUser){
+        return new Story(loggedUser, selectedProject, projectArea, subject, description);
     }
 
     public Project getSelectedProject() {
@@ -44,11 +51,11 @@ public class StoryCreation implements Serializable{
         this.description = description;
     }
 
-    public String getProjectArea() {
+    public ProjectArea getProjectArea() {
         return projectArea;
     }
 
-    public void setProjectArea(String projectArea) throws DataNotFoundException {
+    public void setProjectArea(ProjectArea projectArea) throws DataNotFoundException {
         this.projectArea = projectArea;
     }
 }

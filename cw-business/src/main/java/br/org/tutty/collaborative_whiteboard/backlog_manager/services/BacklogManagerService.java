@@ -13,9 +13,11 @@ import java.util.List;
 public interface BacklogManagerService {
     List<Story> fetchAllStories() throws DataNotFoundException;
 
-    Story getEmptyStory(Project project);
-
     void updateBacklog(List<Story> stories);
 
     Boolean projectAreaIsAssignedToStory(ProjectArea projectArea);
+
+    void createStory(Story story);
+
+    void updateStory(Story story);
 }
