@@ -56,7 +56,7 @@ public class AccountCreationController extends GenericController implements Seri
             authenticateUser();
             return HOME_PAGE;
         }else {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "create_account.already_registered");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "create_account.already_registered");
             return STAY_ON_PAGE;
         }
     }

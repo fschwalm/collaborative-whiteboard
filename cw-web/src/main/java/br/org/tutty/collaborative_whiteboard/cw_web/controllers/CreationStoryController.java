@@ -46,7 +46,7 @@ public class CreationStoryController extends GenericController implements Serial
         try {
             projects = projectService.fetchProjects();
         } catch (DataNotFoundException e) {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, "backlog.projects_not_found");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "backlog.projects_not_found");
         }
     }
 
@@ -60,16 +60,17 @@ public class CreationStoryController extends GenericController implements Serial
         return convertedAreas;
     }
 
-
     public void create() throws IOException {
         User user = sessionContext.getLoggedUser().getUser();
         Story story = storyCreation.toEntity(user);
         backlogManagerService.createStory(story);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.created_story", "save.pending");
+
+        this.storyCreation = new StoryCreation();
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.created_story");
     }
 
     public void cancel(){
-        storyCreation.init();
+        this.storyCreation = new StoryCreation();
     }
 
     public void setProject(String projectName){

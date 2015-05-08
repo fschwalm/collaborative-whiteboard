@@ -45,10 +45,10 @@ public class WhiteboardController extends GenericController implements Serializa
         try {
             projectService.createProject(projectName);
             setUp();
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "whiteboard.project_created");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "whiteboard.project_created");
 
         } catch (NameInUseException e) {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "whiteboard.name_in_use");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "whiteboard.name_in_use");
         }
     }
 
@@ -64,10 +64,6 @@ public class WhiteboardController extends GenericController implements Serializa
     public String openProject(Project project){
         sessionContext.setSelectedProject(project);
         return GOT_TO_PROJECT_PAGE;
-    }
-
-    public Boolean hasSomeProject(){
-        return !projects.isEmpty();
     }
 
     public String getProjectName() {

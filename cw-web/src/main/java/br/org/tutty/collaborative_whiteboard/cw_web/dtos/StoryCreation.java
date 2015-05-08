@@ -17,12 +17,6 @@ public class StoryCreation implements Serializable{
     private String description;
     private ProjectArea projectArea;
 
-    public void init() {
-        subject = null;
-        description = null;
-        projectArea = null;
-    }
-
     public Story toEntity(User loggedUser){
         return new Story(loggedUser, selectedProject, projectArea, subject, description);
     }

@@ -1,6 +1,7 @@
 package br.org.tutty.backlog_manager;
 
 import backlog_manager.entities.Story;
+import backlog_manager.entities.StoryStatusLog;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -9,12 +10,13 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+
 import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
  */
-public class BacklogDaoBean extends GenericDao implements BacklogDao {
+public class StoryDaoBean extends GenericDao implements StoryDao {
 
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
@@ -41,4 +43,16 @@ public class BacklogDaoBean extends GenericDao implements BacklogDao {
 
         return listNotWaitingEmpty(criteria);
     }
+
+    @Override
+    public StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException {
+        Criteria criteria = createCriteria(StoryStatusLog.class);
+        criteria.add(Restrictions.eq("story", story));
+        criteria.addOrder(Order.desc("date"));
+        criteria.setFirstResult(0);
+        criteria.setMaxResults(1);
+
+        return (StoryStatusLog) uniqueResultNotWaitingEmpty(criteria);
+    }
+
 }

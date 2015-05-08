@@ -7,6 +7,7 @@ import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogMan
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.entities.User;
+import cw.exceptions.DataNotFoundException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -31,66 +32,54 @@ public class EditionStoryController extends GenericController implements Seriali
     @Inject
     private SessionContext sessionContext;
 
-    private Story selectedStory;
-
     public void save() throws IOException {
         Story story = storyEdition.toEntity();
         backlogManagerService.updateStory(story);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.changed_story", "save.pending");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.changed_story");
     }
 
-    public void provide(){
-        User user = sessionContext.getLoggedUser().getUser();
-        this.storyEdition.setStoryStatusLog(new StoryStatusLog(StoryStatus.AVAILABLE,user));
+    public void provide() {
+        backlogManagerService.provideStory(storyEdition.selectedStory);
     }
 
-    public void restore(){
-        User user = sessionContext.getLoggedUser().getUser();
-        this.storyEdition.setStoryStatusLog(new StoryStatusLog(StoryStatus.WAITING,user));
+    public void restore() {
+        backlogManagerService.restoreStory(storyEdition.selectedStory);
     }
 
-    public Boolean isPossibleProvide(){
-        return isInitialized() && !isRemoved();
+    public Boolean isPossibleProvide() throws DataNotFoundException {
+        return !isRemoved();
     }
 
-    public Boolean isPossibleRestore(){
-        return isInitialized() && !isRemoved();
+    public Boolean isPossibleRestore() throws DataNotFoundException {
+        return isRemoved();
     }
 
-    public Boolean isInitialized(){
-        return storyEdition.getCode() == null ? Boolean.FALSE : Boolean.TRUE;
-    }
-
-    public Boolean isRemoved(){
-        StoryStatusLog storyStatusLog = storyEdition.getStoryStatusLog();
-
-        if (storyStatusLog != null){
-            return StoryStatus.REMOVED.equals(storyStatusLog.getStoryStatus());
-        }
-        return Boolean.FALSE;
+    public Boolean isRemoved() throws DataNotFoundException {
+        return StoryStatus.REMOVED.equals(getStatus());
     }
 
     public Boolean isSelected() {
-        return selectedStory != null ? true : false;
+        return storyEdition.selectedStory != null ? true : false;
     }
 
-
     public Story getSelectedStory() {
-        return selectedStory;
+        return storyEdition.selectedStory;
     }
 
     public void setSelectedStory(Story selectedStory) {
-        this.selectedStory = selectedStory;
-        storyEdition.init(selectedStory);
+        try{
+            storyEdition.init(selectedStory);
+        }catch (Exception e){}
     }
 
-    public String getStatus(){
-        StoryStatusLog storyStatusLog = storyEdition.getStoryStatusLog();
+    public StoryStatus getStatus() {
+        StoryStatusLog storyStatusLog;
+        try {
+            storyStatusLog = backlogManagerService.getStoryStatus(storyEdition.selectedStory);
+            return storyStatusLog.getStoryStatus();
 
-        if(storyStatusLog != null){
-            return storyStatusLog.getStoryStatus().toString();
-        }else {
-            return "";
+        } catch (DataNotFoundException e) {
+            return  null;
         }
     }
 

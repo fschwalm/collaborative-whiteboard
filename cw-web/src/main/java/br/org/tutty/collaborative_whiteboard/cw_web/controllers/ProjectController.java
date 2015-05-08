@@ -63,12 +63,12 @@ public class ProjectController extends GenericController implements Serializable
         }
 
         setUp();
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "project.update");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "project.update");
         return STAY_ON_PAGE;
     }
 
     public void removeProject() throws IOException {
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "feature.not_implemented");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "feature.not_implemented");
     }
 
     private void updateProject() throws IOException {
@@ -91,7 +91,7 @@ public class ProjectController extends GenericController implements Serializable
         Boolean areaAlreadyAddedToSave = projectAreaCreation.alreadyAdded(projectAreaName);
 
         if (areaAlreadySaved || areaAlreadyAddedToSave) {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
 
         } else {
             projectAreaCreation.addArea();
@@ -169,7 +169,7 @@ public class ProjectController extends GenericController implements Serializable
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.area.to_removal", "save.pending");
             }
         } else {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.area.assigned_to_story");
         }
     }
 

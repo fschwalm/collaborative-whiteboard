@@ -161,4 +161,5 @@ public class Story implements Serializable{
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
     }
+
 }

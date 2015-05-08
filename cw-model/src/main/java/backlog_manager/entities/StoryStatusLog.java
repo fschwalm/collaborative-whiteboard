@@ -34,8 +34,9 @@ public class StoryStatusLog implements Serializable{
     public StoryStatusLog() {
     }
 
-    public StoryStatusLog(StoryStatus storyStatus, User user) {
+    public StoryStatusLog(StoryStatus storyStatus, User user, Story story) {
         this.storyStatus = storyStatus;
+        this.story = story;
         this.date = new Date();
         this.user = user;
     }

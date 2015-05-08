@@ -122,7 +122,6 @@
 .story_REMOVED{
     background-color: black;
     color: white;
-    width: 450px;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -134,7 +133,6 @@
 
 .story_WAITING{
     background-color: #ffff66;
-    width: 450px;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -146,7 +144,6 @@
 
 .story_AVAILABLE{
     background-color: #b4eeb4;
-    width: 450px;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -159,7 +156,6 @@
 .story_FINALIZED{
     background-color: #4a4a4a;
     color: white;
-    width: 450px;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -167,5 +163,38 @@
     text-align: center;
     display: block;
     font-size: 32px;
+}
+
+.status_collum_AVAILABLE{
+    background-color: #b4eeb4;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+    margin-left: -10px;
+}
+
+.status_collum_FINALIZED{
+    background-color: #4a4a4a;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+}
+
+.status_collum_WAITING{
+    background-color: #ffff66;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+}
+
+.status_collum_REMOVED{
+    background-color: black;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+}
+
+.ui-widget, .ui-widget * {
+    font-size: 15px !important;
 }
 

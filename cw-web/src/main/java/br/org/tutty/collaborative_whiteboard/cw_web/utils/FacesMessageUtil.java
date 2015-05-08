@@ -19,7 +19,7 @@ public class FacesMessageUtil implements Serializable{
         showMessage(null, severity, message, messageDetail);
     }
 
-    public void showGlobalMessageWithoutDetail(FacesMessage.Severity severity, String keyPropertyMessage) throws IOException {
+    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage) throws IOException {
         String message = readPropertyMessage(keyPropertyMessage);
         showMessage(null, severity, message, null);
     }

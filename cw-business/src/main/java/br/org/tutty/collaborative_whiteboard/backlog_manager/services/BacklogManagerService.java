@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Story;
+import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.enums.StoryStatus;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
@@ -20,4 +22,16 @@ public interface BacklogManagerService {
     void createStory(Story story);
 
     void updateStory(Story story);
+
+    void restoreStory(Story story);
+
+    void removeStory(Story story);
+
+    void provideStory(Story story);
+
+    void finalizeStory(Story story);
+
+    StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException;
+
+    void changeStoryStatus(Story story, StoryStatus storyStatus);
 }

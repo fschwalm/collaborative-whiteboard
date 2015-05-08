@@ -4,6 +4,7 @@ import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import cw.entities.ProjectArea;
 import cw.entities.User;
+import cw.exceptions.DataNotFoundException;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,17 +22,20 @@ public class StoryEdition implements Serializable{
     private String subjectChanges;
     private String descriptionChanges;
     private ProjectArea projectArea;
-    private StoryStatusLog storyStatusLog;
 
-    public void init(Story selectedStory) {
-        this.selectedStory = selectedStory;
-        this.code = selectedStory.getCode();
-        this.branch = selectedStory.getBranch();
-        this.creationDate = selectedStory.getCreationDate();
-        this.author = selectedStory.getAuthor();
-        this.subjectChanges = selectedStory.getSubject();
-        this.descriptionChanges = selectedStory.getDescription();
-        this.projectArea = selectedStory.getProjectArea();
+    public void init(Story selectedStory) throws DataNotFoundException {
+        if(selectedStory != null){
+            this.selectedStory = selectedStory;
+            this.code = selectedStory.getCode();
+            this.branch = selectedStory.getBranch();
+            this.creationDate = selectedStory.getCreationDate();
+            this.author = selectedStory.getAuthor();
+            this.subjectChanges = selectedStory.getSubject();
+            this.descriptionChanges = selectedStory.getDescription();
+            this.projectArea = selectedStory.getProjectArea();
+        }else {
+            throw new DataNotFoundException();
+        }
     }
 
     public Story toEntity(){
@@ -96,13 +100,5 @@ public class StoryEdition implements Serializable{
 
     public void setBranch(String branch) {
         this.branch = branch;
-    }
-
-    public StoryStatusLog getStoryStatusLog() {
-        return storyStatusLog;
-    }
-
-    public void setStoryStatusLog(StoryStatusLog storyStatusLog) {
-        this.storyStatusLog = storyStatusLog;
     }
 }

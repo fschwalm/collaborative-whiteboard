@@ -1,6 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
-import br.org.tutty.backlog_manager.BacklogDaoBean;
+import br.org.tutty.backlog_manager.StoryDaoBean;
 import cw.exceptions.DataNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,18 +19,18 @@ public class BacklogServiceBeanTest {
     private BacklogManagerServiceBean backlogManagerServiceBean;
 
     @Mock
-    private BacklogDaoBean backlogDaoBean;
+    private StoryDaoBean storyDaoBean;
 
     @Test
     public void fetchAllStoriesShouldCallDaoWithoutFilters() throws DataNotFoundException {
         backlogManagerServiceBean.fetchAllStories();
 
-        Mockito.verify(backlogDaoBean).fetchAllStories();
+        Mockito.verify(storyDaoBean).fetchAllStories();
     }
 
     @Test(expected = DataNotFoundException.class)
     public void fetchAllStoriesShouldThrowDataNotFoundWhenNotFoundStories() throws DataNotFoundException {
-        Mockito.when(backlogDaoBean.fetchAllStories()).thenThrow(DataNotFoundException.class);
+        Mockito.when(storyDaoBean.fetchAllStories()).thenThrow(DataNotFoundException.class);
 
         backlogManagerServiceBean.fetchAllStories();
     }

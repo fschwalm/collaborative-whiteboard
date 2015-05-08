@@ -35,7 +35,7 @@ public class LoginController extends GenericController {
             return HOME_PAGE;
 
         } catch (LoginException e) {
-            facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, LOGIN_PROPERTY_KEY );
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, LOGIN_PROPERTY_KEY );
             return RECOVERY_PAGE;
 
         }catch (Exception exception){
@@ -50,7 +50,7 @@ public class LoginController extends GenericController {
     }
 
     public String recovery() throws IOException {
-        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_ERROR, FEATURE_NOT_IMPLEMENTED_PROPERTY_KEY);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, FEATURE_NOT_IMPLEMENTED_PROPERTY_KEY);
         return RECOVERY_PAGE;
     }
 

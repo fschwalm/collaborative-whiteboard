@@ -1,18 +1,17 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Story;
-import backlog_manager.exceptions.StoryAlreadyIdentifiedException;
-import br.org.tutty.backlog_manager.BacklogDao;
+import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.enums.StoryStatus;
+import br.org.tutty.backlog_manager.StoryDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
-import cw.dtos.LoggedUser;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,11 +28,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     private SessionContext sessionContext;
 
     @Inject
-    private BacklogDao backlogDao;
+    private StoryDao storyDao;
 
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
-        return backlogDao.fetchAllStories();
+        return storyDao.fetchAllStories();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     @Override
     public Boolean projectAreaIsAssignedToStory(ProjectArea projectArea) {
         try {
-            backlogDao.fetchStories(projectArea);
+            storyDao.fetchStories(projectArea);
             return Boolean.TRUE;
 
         } catch (DataNotFoundException e) {
@@ -55,7 +54,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
 
     private String getAvailableCode(Project project, ProjectArea projectArea) {
-        Long sequence = (backlogDao.getNextSequenceStory(project) + 1);
+        Long sequence = (storyDao.getNextSequenceStory(project) + 1);
 
         return mountStoryCode(projectArea, sequence);
     }
@@ -108,7 +107,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
                 Story storyWithNewCode = populateStoryCode(story);
                 Story storyWithDefaultBranch = populateBranchCode(storyWithNewCode);
 
-                backlogDao.update(storyWithDefaultBranch);
+                storyDao.update(storyWithDefaultBranch);
             }
         });
     }
@@ -126,7 +125,8 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         Story storyWithBranch = populateBranchCode(storyWithNewCode);
         Story storyWithPriority = populatePriority(storyWithBranch);
 
-        backlogDao.persist(storyWithPriority);
+        storyDao.persist(storyWithPriority);
+        storyDao.persist(new StoryStatusLog(StoryStatus.WAITING, story.getAuthor(), story));
     }
 
     /**
@@ -136,10 +136,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
      */
     @Override
     public void updateStory(Story story) {
-        backlogDao.update(story);
+        storyDao.update(story);
     }
 
-    public Story populatePriority(Story story){
+    public Story populatePriority(Story story) {
         try {
             List<Story> stories = fetchAllStories();
             stories.add(story);
@@ -150,5 +150,37 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
             story.setPriority(INITIAL_PRIORITY);
             return story;
         }
+    }
+
+    @Override
+    public void restoreStory(Story story) {
+        changeStoryStatus(story,StoryStatus.WAITING);
+    }
+
+    @Override
+    public void removeStory(Story story) {
+        changeStoryStatus(story,StoryStatus.REMOVED);
+    }
+
+    @Override
+    public void provideStory(Story story) {
+        changeStoryStatus(story,StoryStatus.AVAILABLE);
+    }
+
+    @Override
+    public void finalizeStory(Story story) {
+        changeStoryStatus(story,StoryStatus.FINALIZED);
+    }
+
+    @Override
+    public StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException {
+        return storyDao.getStoryStatus(story);
+    }
+
+    @Override
+    public void changeStoryStatus(Story story, StoryStatus storyStatus) {
+        User user = sessionContext.getLoggedUser().getUser();
+        StoryStatusLog storyStatusLog = new StoryStatusLog(storyStatus, user, story);
+        storyDao.persist(storyStatusLog);
     }
 }

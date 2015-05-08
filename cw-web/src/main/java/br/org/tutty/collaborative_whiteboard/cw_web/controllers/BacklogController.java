@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
+import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
@@ -23,6 +25,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,51 +44,46 @@ public class BacklogController extends GenericController implements Serializable
     private UserService userService;
 
     @Inject
-    private StoryCreation storyCreation;
-
-    @Inject
-    private StoryEdition storyEdition;
-
-    @Inject
-    private ProjectService projectService;
+    private EditionStoryController editionStoryController;
 
     private List<Story> stories;
 
-    @PostConstruct
-    public void setUp() throws EncryptedException, IOException {
-        stories = fetchStories();
-    }
-
-    public List<Story> fetchStories() throws IOException {
-        try {
-            return backlogManagerService.fetchAllStories();
-
-        } catch (Exception e){
-            return new ArrayList<>();
-        }
-    }
-
     public void onRowReorder(ReorderEvent event) throws IOException {
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.change_priority", "save.pending");
+        Collections.swap(stories, event.getFromIndex(), event.getToIndex());
+        backlogManagerService.updateBacklog(stories);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
     }
 
     public void removeStory() throws IOException {
-        User user = sessionContext.getLoggedUser().getUser();
-//        selectedStory.remove(user);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "backlog.removed_story", "save.pending");
+        Story selectedStory = editionStoryController.getSelectedStory();
+        backlogManagerService.removeStory(selectedStory);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.removed_story");
     }
 
-    public void updateBacklog() throws IOException, EncryptedException {
-//        backlogManagerService.updateBacklog(stories);
-//        setUp();
-//        facesMessageUtil.showGlobalMessageWithoutDetail(FacesMessage.SEVERITY_INFO, "backlog.update");
+    public List<Story> fetchStories() {
+        try {
+            this.stories = backlogManagerService.fetchAllStories();
+            return stories;
+
+        } catch (Exception e) {
+            stories = new ArrayList();
+            return stories;
+        }
     }
 
-    public List<Story> getStories() {
-        return stories;
+    public Boolean isRemoved(Story story) throws DataNotFoundException {
+        return StoryStatus.REMOVED.equals(getStatus(story));
     }
 
-    public void setStories(List<Story> stories) {
-        this.stories = stories;
+    public StoryStatus getStatus(Story story) {
+        StoryStatusLog storyStatusLog;
+        try {
+            storyStatusLog = backlogManagerService.getStoryStatus(story);
+            return storyStatusLog.getStoryStatus();
+
+        } catch (DataNotFoundException e) {
+            return  null;
+        }
     }
+
 }
