@@ -21,6 +21,7 @@ public class ChatWebSocket extends WebSocket {
         try {
             String messageValue = new JSONObject(dataMessage).getString("messageValue");
             transmitionsService.send(messageValue, senderSession);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

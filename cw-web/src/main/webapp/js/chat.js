@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function initChat() {
     try {
-        if (!isConnect()) {
+        if (isConnect() == false) {
             connect();
             registerClickChatButton();
             registerCloseConnection();
@@ -88,7 +88,7 @@ function clearMessage(inputTextId) {
 };
 
 function scrollChat() {
-    $("#chatPanel").animate({ scrollTop: $("#chatPanel")[0].scrollHeight }, "fast");
+    // TODO Implementar regra para realizar scrool da barra lateral
 }
 
 
