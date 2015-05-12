@@ -17,9 +17,9 @@
         <h:form id="loginForm" prependId="false">
             <p:messages />
             <h:panelGrid columns="2">
-                <p:inputText id="email" size="42" value="#{loginController.email}" required="true"/>
+                <p:inputText id="email" size="42" value="#{loginController.email}" required="true" requiredMessage="#{login['mandatory.email']}"/>
                 <p:watermark value="#{login['watermark.email']}" for="email"/>
-                <p:password id="password" size="42" value="#{loginController.password}" required="true"/>
+                <p:password id="password" size="42" value="#{loginController.password}" required="true" requiredMessage="#{login['mandatory.password']}"/>
                 <p:watermark value="#{login['watermark.password']}" for="password"/>
             </h:panelGrid>
 
