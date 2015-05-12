@@ -1,7 +1,7 @@
 var ws;
 
 function connect() {
-    ws = new WebSocket("ws://localhost:8080/cw/chat");
+    ws = new WebSocket("ws://ccem.ufrgs.br:8080/cw/chat");
 }
 
 function disconect() {
