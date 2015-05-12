@@ -1,5 +1,3 @@
-  - (Andamento) Corrigir Lazy Initialization Logs Status
-
   - Cor de linhas do backlog conforme cor do projeto
 
   - Adicionar Filtro Global a tabela de backlog
@@ -17,6 +15,10 @@
   - Editar Menu para ficar inteligente
 
   - Tela de Edição de Usuario
+
+  - Corrigir bug scroll chat
+
+  - (OK) Corrigir Lazy Initialization Logs Status
 
   - (OK) Possibilidade de trocar status estoria
 
