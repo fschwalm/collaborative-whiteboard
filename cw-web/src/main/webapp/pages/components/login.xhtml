@@ -14,7 +14,8 @@
 
     <p:panel id="loginPanel" header="#{login['header.login_panel']}" footer="#{login['footer.login_panel']}"
              styleClass="loginPanel">
-        <h:form prependId="false">
+        <h:form id="loginForm" prependId="false">
+            <p:messages />
             <h:panelGrid columns="2">
                 <p:inputText id="email" size="42" value="#{loginController.email}" required="true"/>
                 <p:watermark value="#{login['watermark.email']}" for="email"/>
@@ -28,8 +29,9 @@
             <p:spacer height="10px"/>
 
             <p:commandButton id="createBtn" value="#{login['button.create_account']}"
-                             onclick="PF('creationDialog').show()"
-                             immediate="true"/>
+                             immediate="true">
+                <p:ajax update=":loginForm,:creationForm" resetValues="true" oncomplete="PF('creationDialog').show()"/>
+            </p:commandButton>
 
             <p:spacer height="25px"/>
 
@@ -38,9 +40,9 @@
         </h:form>
     </p:panel>
 
-    <p:dialog widgetVar="creationDialog" modal="true" resizable="false" header="#{accountCreation['welcome']}">
+    <p:dialog id="creationDialog" widgetVar="creationDialog" modal="true" resizable="false" header="#{accountCreation['welcome']}">
         <h:form id="creationForm">
-            <p:messages/>
+            <p:messages />
             <h:panelGrid>
                 <p:watermark value="#{accountCreation['email']}" for="emailCreation"/>
                 <p:inputText id="emailCreation" required="true" requiredMessage="#{accountCreation['required.email']}"
