@@ -49,7 +49,7 @@
     background-color: #f5d3cd;
 }
 
-.warning_button{
+.warning_button {
     background: #f55454 !important;
     color: black !important;
 }
@@ -73,11 +73,11 @@
     height: 30px;
 }
 
-.actionButton{
+.actionButton {
     float: right;
 }
 
-.actionImage{
+.actionImage {
     margin-left: 20px;
     margin-right: 20px;
     width: 70px;
@@ -101,7 +101,7 @@
     float: right;
 }
 
-.storyRemoved{
+.storyRemoved {
     color: #dbdbdb;
 }
 
@@ -111,15 +111,15 @@
     top: 20px;
 }
 
-.project_name{
+.project_name {
     position: absolute;
     margin-top: 5%;
     font-size: 70px;
     color: #edd021;
-    text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
+    text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
 }
 
-.story_REMOVED{
+.story_REMOVED {
     background-color: black;
     color: white;
     height: 35px;
@@ -131,7 +131,7 @@
     font-size: 32px;
 }
 
-.story_WAITING{
+.story_WAITING {
     background-color: #ffff66;
     height: 35px;
     moz-border-radius: 7px;
@@ -142,7 +142,7 @@
     font-size: 32px;
 }
 
-.story_AVAILABLE{
+.story_AVAILABLE {
     background-color: #b4eeb4;
     height: 35px;
     moz-border-radius: 7px;
@@ -153,7 +153,7 @@
     font-size: 32px;
 }
 
-.story_FINALIZED{
+.story_FINALIZED {
     background-color: #4a4a4a;
     color: white;
     height: 35px;
@@ -165,7 +165,7 @@
     font-size: 32px;
 }
 
-.status_collum_AVAILABLE{
+.status_collum_AVAILABLE {
     background-color: #b4eeb4;
     width: 20px;
     height: 50px;
@@ -173,21 +173,21 @@
     margin-left: -10px;
 }
 
-.status_collum_FINALIZED{
+.status_collum_FINALIZED {
     background-color: #4a4a4a;
     width: 20px;
     height: 50px;
     display: inline-block;
 }
 
-.status_collum_WAITING{
+.status_collum_WAITING {
     background-color: #ffff66;
     width: 20px;
     height: 50px;
     display: inline-block;
 }
 
-.status_collum_REMOVED{
+.status_collum_REMOVED {
     background-color: black;
     width: 20px;
     height: 50px;
@@ -197,4 +197,29 @@
 .ui-widget, .ui-widget * {
     font-size: 15px !important;
 }
+
+.loginPanel {
+    width: 370px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+.initialLogoArea{
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.initialName{
+    position: absolute;
+    margin-top: 5%;
+    font-size: 50px;
+    color: #edd021;
+    text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
+    text-align: center;
+}
+
+
+
 

@@ -76,10 +76,6 @@ public class AccountCreationController extends GenericController implements Seri
         }
     }
 
-    public String cancel(){
-        return WELCOME_PAGE;
-    }
-
     public String getEmail() {
         return email;
     }

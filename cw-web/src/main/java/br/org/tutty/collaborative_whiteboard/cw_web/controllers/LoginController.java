@@ -45,10 +45,6 @@ public class LoginController extends GenericController {
         }
     }
 
-    public String createAccount(){
-        return CREATE_ACCOUNT_PAGE;
-    }
-
     public String recovery() throws IOException {
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, FEATURE_NOT_IMPLEMENTED_PROPERTY_KEY);
         return RECOVERY_PAGE;

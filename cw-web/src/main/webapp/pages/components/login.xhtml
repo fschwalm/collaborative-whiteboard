@@ -1,22 +1,92 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
-    <p:panel id="loginPanel" header="#{login['header.login_panel']}" footer="#{login['footer.login_panel']}">
+    <link type="text/css" rel="stylesheet" href="../../cw/styles/style.css"/>
+
+    <div class="initialLogoArea">
+        <h:graphicImage url="../../cw/images/icon.png" styleClass="initialLogo"/>
+
+        <h:outputText value="Collaborative Whiteboard" styleClass="initialName"/>
+    </div>
+
+    <p:panel id="loginPanel" header="#{login['header.login_panel']}" footer="#{login['footer.login_panel']}"
+             styleClass="loginPanel">
         <h:form prependId="false">
-        <h:panelGrid columns="2">
-            <p:inputText id="email" size="35" value="#{loginController.email}" required="true"/>
-            <p:watermark value="#{login['watermark.email']}" for="email"/>
-            <p:password id="password" size="35" value="#{loginController.password}" required="true"/>
-            <p:watermark value="#{login['watermark.password']}" for="password"/>
-        </h:panelGrid>
+            <h:panelGrid columns="2">
+                <p:inputText id="email" size="42" value="#{loginController.email}" required="true"/>
+                <p:watermark value="#{login['watermark.email']}" for="email"/>
+                <p:password id="password" size="42" value="#{loginController.password}" required="true"/>
+                <p:watermark value="#{login['watermark.password']}" for="password"/>
+            </h:panelGrid>
 
-        <h:panelGrid columns="3">
-            <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}" ajax="false"/>
-            <p:commandButton id="createBtn" value="#{login['button.create_account']}" action="#{loginController.createAccount()}" ajax="false" immediate="true"/>
-            <p:commandLink id="recoveryAccount"  value="#{login['button.recovery_account']}" action="#{loginController.recovery()}" ajax="false"/>
-        </h:panelGrid>
+            <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
+                             ajax="false"/>
+
+            <p:spacer height="10px"/>
+
+            <p:commandButton id="createBtn" value="#{login['button.create_account']}"
+                             onclick="PF('creationDialog').show()"
+                             immediate="true"/>
+
+            <p:spacer height="25px"/>
+
+            <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
+                           action="#{loginController.recovery()}" ajax="false"/>
         </h:form>
     </p:panel>
+
+    <p:dialog widgetVar="creationDialog" modal="true" resizable="false" header="#{accountCreation['welcome']}">
+        <h:form id="creationForm">
+            <p:messages/>
+            <h:panelGrid>
+                <p:watermark value="#{accountCreation['email']}" for="emailCreation"/>
+                <p:inputText id="emailCreation" required="true" requiredMessage="#{accountCreation['required.email']}"
+                             value="#{accountCreationController.email}" size="40">
+                    <f:validator validatorId="custom.emailValidator"/>
+                </p:inputText>
+
+                <p:watermark value="#{accountCreation['first_name']}" for="firstName"/>
+                <p:inputText id="firstName" required="true"
+                             requiredMessage="#{accountCreation['required.first_name']}"
+                             value="#{accountCreationController.firstName}" size="40"/>
+
+                <p:watermark value="#{accountCreation['last_name']}" for="lastName"/>
+                <p:inputText id="lastName" required="true"
+                             requiredMessage="#{accountCreation['required.last_name']}"
+                             value="#{accountCreationController.lastName}" size="40"/>
+
+                <p:watermark value="#{accountCreation['birthdate']}" for="birthdate"/>
+                <p:calendar id="birthdate" required="true" navigator="true" pattern="dd-MM-yyyy" mask="true" size="10"
+                            maxdate="#{accountCreationController.birthdateMax()}"
+                            requiredMessage="#{accountCreation['required.birthdate']}"
+                            value="#{accountCreationController.birthdate}"/>
+
+                <p:watermark value="#{accountCreation['password']}" for="passwordCreation"/>
+                <p:password id="passwordCreation" match="passwordConfirmation" feedback="false" required="true"
+                            validatorMessage="#{accountCreation['password.equals.validator']}"
+                            requiredMessage="#{accountCreation['required.password']}"
+                            value="#{accountCreationController.password}" size="40"/>
+
+                <p:watermark value="#{accountCreation['password_comfirmation']}" for="passwordConfirmation"/>
+                <p:password id="passwordConfirmation" feedback="false" required="true"
+                            requiredMessage="#{accountCreation['required.password_confirmation']}" size="40"/>
+
+                <p:spacer height="7"/>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton id="save" value="#{accountCreation['button.save']}"
+                                     action="#{accountCreationController.create()}" update=":creationForm,@this"/>
+
+                    <p:commandButton id="cancel" value="#{accountCreation['button.cancel']}"
+                                     onclick="PF('creationDialog').hide()">
+                        <p:ajax update="creationForm" resetValues="true"/>
+                    </p:commandButton>
+                </h:panelGrid>
+
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
 </ui:composition>

@@ -12,5 +12,5 @@ import java.util.List;
 public interface ProjectDao extends Dao {
     Project fetch(String name) throws DataNotFoundException;
 
-    List<Project> fetchAll(User user) throws DataNotFoundException;
+    List<Project> fetchAll() throws DataNotFoundException;
 }

@@ -73,8 +73,7 @@ public class ProjectServiceBean implements ProjectService {
 
     @Override
     public List<Project> fetchProjects() throws DataNotFoundException {
-        User user = sessionContext.getLoggedUser().getUser();
-        return projectDao.fetchAll(user);
+        return projectDao.fetchAll();
     }
 
     @Override

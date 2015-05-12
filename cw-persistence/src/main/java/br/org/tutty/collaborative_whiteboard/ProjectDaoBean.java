@@ -26,10 +26,8 @@ public class ProjectDaoBean extends GenericDao implements ProjectDao {
         return (Project) uniqueResultNotWaitingEmpty(criteria);
     }
 
-    public List fetchAll(User user) throws DataNotFoundException {
+    public List fetchAll() throws DataNotFoundException {
         Criteria criteria = createCriteria(Project.class);
-        criteria.add(Restrictions.eq("owner", user));
-
         return listNotWaitingEmpty(criteria);
 
     }
