@@ -8,12 +8,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
-    <parent>
-        <groupId>br.org.tutty.collaborative-whiteboard</groupId>
-        <artifactId>cw-root</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
     <name>cw-ear</name>
 
     <properties>
