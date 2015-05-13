@@ -1,5 +1,3 @@
-  - Cor de linhas do backlog conforme cor do projeto
-
   - Adicionar Filtro Global a tabela de backlog
 
   - Corrigir e pensar no modelo de compartilhamento
