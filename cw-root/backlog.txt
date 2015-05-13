@@ -8,8 +8,6 @@
 
   - Possibilitar edição de area em tela de backlog
 
-  - Implementar proteção de Contexto com redirect Filter
-
   - Editar Menu para ficar inteligente
 
   - Tela de Edição de Usuario
