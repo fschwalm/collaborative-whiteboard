@@ -1,7 +1,5 @@
   - Adicionar Filtro Global a tabela de backlog
 
-  - Corrigir e pensar no modelo de compartilhamento
-
   - Confirmação por senha para novo usuário
 
   - Implementar recuperar senha
