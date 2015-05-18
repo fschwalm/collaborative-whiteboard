@@ -66,9 +66,17 @@
                             <p:inputText id="projectArea" styleClass="projectArea"
                                          value="#{projectController.projectAreaName}" required="true"/>
 
+                            <p:spacer width="5"/>
+
+                            <p:watermark value="#{project_bundle['btn.new_area_abbreviation']}" for="projectAreaAbbreviation"/>
+                            <p:inputText id="projectAreaAbbreviation" styleClass="projectAreaAbbreviation"
+                                         value="#{projectController.projectAreaAbbreviation}" size="4" required="true"/>
+
+                            <p:spacer width="10"/>
+
                             <p:commandButton value="#{project_bundle['btn.add_area']}"
-                                             update="@form:foundedAreas,@form:projectArea,@this"
-                                             action="#{projectController.addProjectArea()}"/>
+                                             process="@this projectArea projectAreaAbbreviation" update="@form:foundedAreas,@form:projectArea,@form:projectAreaAbbreviation"
+                                             action="#{projectController.addProjectArea()}" />
                         </h:column>
 
                         <h:column>

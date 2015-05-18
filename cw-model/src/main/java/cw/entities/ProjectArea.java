@@ -17,14 +17,18 @@ public class ProjectArea implements Serializable{
     @Column
     private String name;
 
+    @Column
+    private String projectAreaAbbreviation;
+
     @ManyToOne
     private Project project;
 
     public ProjectArea() {
     }
 
-    public ProjectArea(String projectAreaName) {
+    public ProjectArea(String projectAreaName, String projectAreaAbbreviation) {
         this.name = projectAreaName;
+        this.projectAreaAbbreviation = projectAreaAbbreviation;
     }
 
     public Long getId() {
@@ -49,6 +53,10 @@ public class ProjectArea implements Serializable{
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public String getProjectAreaAbbreviation() {
+        return projectAreaAbbreviation;
     }
 
     @Override

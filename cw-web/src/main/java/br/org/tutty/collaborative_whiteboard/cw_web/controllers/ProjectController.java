@@ -155,8 +155,16 @@ public class ProjectController extends GenericController implements Serializable
         return projectAreaCreation.getProjectAreaName();
     }
 
+    public String getProjectAreaAbbreviation(){
+        return projectAreaCreation.getProjectAreaAbbreviation();
+    }
+
     public void setProjectAreaName(String projectAreaName) {
         this.projectAreaCreation.setProjectAreaName(projectAreaName);
+    }
+
+    public void setProjectAreaAbbreviation(String projectAreaAbbreviation){
+        this.projectAreaCreation.setProjectAreaAbbreviation(projectAreaAbbreviation);
     }
 
     public void removeArea(ProjectArea projectArea) throws IOException {

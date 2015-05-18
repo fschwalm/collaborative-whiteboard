@@ -8,10 +8,6 @@
     </lifecycle>
 
     <application>
-        <locale-config>
-            <default-locale>pt_BR</default-locale>
-            <supported-locale>pt_BR</supported-locale>
-        </locale-config>
         <resource-bundle>
             <base-name>properties/messages</base-name>
             <var>messages</var>

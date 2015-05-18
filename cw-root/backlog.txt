@@ -1,3 +1,5 @@
+  - (Andamento) Adicionar Sigla para Area e modificar gerador de branch
+
   - Adicionar Filtro Global a tabela de backlog
 
   - Confirmação por senha para novo usuário
