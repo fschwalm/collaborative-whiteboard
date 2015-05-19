@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
+import backlog_manager.exceptions.ProjectAreaInUseException;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
@@ -16,6 +17,8 @@ public interface ProjectService {
 
     void createProjectArea(List<ProjectArea> projectAreas);
 
+    void createProjectArea(ProjectArea projectArea);
+
     void update(Project selectedProjectCloned);
 
     List<Project> fetchProjects() throws DataNotFoundException;
@@ -29,4 +32,6 @@ public interface ProjectService {
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
 
     void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval);
+
+    void removeProjectAreas(ProjectArea projectArea) throws ProjectAreaInUseException;
 }

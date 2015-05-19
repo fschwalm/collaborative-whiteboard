@@ -18,7 +18,7 @@ public class ProjectArea implements Serializable{
     private String name;
 
     @Column
-    private String projectAreaAbbreviation;
+    private String prefix;
 
     @ManyToOne
     private Project project;
@@ -26,9 +26,9 @@ public class ProjectArea implements Serializable{
     public ProjectArea() {
     }
 
-    public ProjectArea(String projectAreaName, String projectAreaAbbreviation) {
+    public ProjectArea(String projectAreaName, String prefix) {
         this.name = projectAreaName;
-        this.projectAreaAbbreviation = projectAreaAbbreviation;
+        this.prefix = prefix.toUpperCase();
     }
 
     public Long getId() {
@@ -55,8 +55,8 @@ public class ProjectArea implements Serializable{
         this.project = project;
     }
 
-    public String getProjectAreaAbbreviation() {
-        return projectAreaAbbreviation;
+    public String getPrefix() {
+        return prefix;
     }
 
     @Override

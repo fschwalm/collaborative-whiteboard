@@ -1,7 +1,9 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
+import backlog_manager.exceptions.ProjectAreaInUseException;
 import br.org.tutty.collaborative_whiteboard.ProjectAreaDao;
 import br.org.tutty.collaborative_whiteboard.ProjectDao;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -9,9 +11,12 @@ import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.RollbackException;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +39,9 @@ public class ProjectServiceBean implements ProjectService {
 
     @Inject
     private ProjectAreaDao projectAreaDao;
+
+    @Inject
+    private BacklogManagerService backlogManagerService;
 
     public Boolean checkAvailabilityName(String projectName) {
         try {
@@ -64,6 +72,11 @@ public class ProjectServiceBean implements ProjectService {
     @Override
     public void createProjectArea(List<ProjectArea> projectAreas) {
         projectAreas.forEach(project -> projectAreaDao.update(project));
+    }
+
+    @Override
+    public void createProjectArea(ProjectArea projectArea) {
+        projectAreaDao.update(projectArea);
     }
 
     @Override
@@ -105,6 +118,8 @@ public class ProjectServiceBean implements ProjectService {
         }
     }
 
+
+
     @Override
     public List<ProjectArea> filterProjectAreas(Project project, String queryName) {
         List<ProjectArea> projectAreas = projectAreaDao.filterProjectAreas(project, queryName);
@@ -114,5 +129,16 @@ public class ProjectServiceBean implements ProjectService {
     @Override
     public void removeProjectAreas(Set<ProjectArea> projectAreasForRemoval) {
         projectAreasForRemoval.forEach(projectArea -> projectAreaDao.remove(projectArea));
+    }
+
+    @Override
+    public void removeProjectAreas(ProjectArea projectArea) throws ProjectAreaInUseException {
+            try {
+                backlogManagerService.fetch(projectArea);
+                throw new ProjectAreaInUseException();
+
+            } catch (DataNotFoundException e) {
+                projectAreaDao.remove(projectArea);
+            }
     }
 }

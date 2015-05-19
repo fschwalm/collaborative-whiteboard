@@ -56,7 +56,7 @@ public class Project implements Serializable{
     }
 
     private void initProjectPrefix(String nameProject){
-        this.prefix = nameProject.toLowerCase();
+        this.prefix = nameProject.toUpperCase();
     }
 
     protected Project() {}
@@ -128,10 +128,11 @@ public class Project implements Serializable{
     }
 
     public void setPrefix(String prefix) {
+        String prefixUpperCase = prefix.toUpperCase();
         String oldValue = this.prefix;
-        this.prefix = prefix;
+        this.prefix = prefixUpperCase;
 
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("prefix", oldValue, prefix);
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("prefix", oldValue, prefixUpperCase);
     }
 
     public String getColor() {

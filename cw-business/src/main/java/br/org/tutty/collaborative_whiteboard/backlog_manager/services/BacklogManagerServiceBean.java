@@ -36,6 +36,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     }
 
     @Override
+    public List<Story> fetch(ProjectArea projectArea) throws DataNotFoundException {
+        return storyDao.fetchStories(projectArea);
+    }
+
+    @Override
     public void updateBacklog(List<Story> stories) {
         List<Story> prioritizedStories = reformulatePriorities(stories);
         updateStories(prioritizedStories);
@@ -61,12 +66,12 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     private String mountStoryCode(ProjectArea projectArea, Long sequence) {
         String separatorId = "-";
-        String projectName = projectArea.getProject().getNameProject().toUpperCase().replace(" ", separatorId);
-        String projectAreaId = projectArea.getName().toUpperCase().replace(" ", separatorId);
+        String projectName = projectArea.getProject().getPrefix();
+        String projectAreaAbbreviation = projectArea.getPrefix();
 
         StringBuffer code = new StringBuffer(projectName);
         code.append(separatorId);
-        code.append(projectAreaId);
+        code.append(projectAreaAbbreviation);
         code.append(separatorId);
         code.append(sequence.toString());
 

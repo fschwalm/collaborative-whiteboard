@@ -3,45 +3,35 @@ package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
-
-import java.util.List;
+import cw.exceptions.EmptyEntityException;
 
 /**
  * Created by drferreira on 08/04/15.
  */
 public class ProjectAreaCreation {
 
-    private Project selectedProject;
-    private List<ProjectArea> projectAreas;
     private String projectAreaName;
     private String projectAreaAbbreviation;
 
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
+    private Project selectedProject;
 
-    public ProjectAreaCreation(Project selectedProject, List<ProjectArea> projectAreas) {
+    public ProjectAreaCreation(Project selectedProject) {
         this.selectedProject = selectedProject;
-        this.projectAreas = projectAreas;
     }
 
-    public void addArea(){
-        ProjectArea projectArea = new ProjectArea(projectAreaName, projectAreaAbbreviation);
-        projectArea.setProject(selectedProject);
-        projectAreas.add(projectArea);
+    public Object toEntity() throws EmptyEntityException {
+        if(propertyMonitor.hasChanged()){
+            ProjectArea projectArea = new ProjectArea(projectAreaName, projectAreaAbbreviation);
+            projectArea.setProject(selectedProject);
 
-        projectAreaName = null;
-        projectAreaAbbreviation = null;
-    }
+            projectAreaName = null;
+            projectAreaAbbreviation = null;
 
-    public List<ProjectArea> getProjectAreas() {
-        return projectAreas;
-    }
+            return projectArea;
+        }
 
-    public String getProjectAreaName() {
-        return projectAreaName;
-    }
-
-    public String getProjectAreaAbbreviation() {
-        return projectAreaAbbreviation;
+        throw new EmptyEntityException();
     }
 
     public void setProjectAreaName(String projectAreaName) {
@@ -51,6 +41,10 @@ public class ProjectAreaCreation {
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("projectAreaName", oldValue, projectAreaName);
     }
 
+    public String getProjectAreaName() {
+        return projectAreaName;
+    }
+
     public void setProjectAreaAbbreviation(String projectAreaAbbreviation) {
         String oldValue = this.projectAreaAbbreviation;
         this.projectAreaAbbreviation = projectAreaAbbreviation;
@@ -58,8 +52,7 @@ public class ProjectAreaCreation {
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("projectAreaAbbreviation", oldValue, projectAreaAbbreviation);
     }
 
-    public Boolean alreadyAdded(String projectAreaName){
-        return getProjectAreas().stream().anyMatch(project -> project.getName().equals(projectAreaName));
+    public String getProjectAreaAbbreviation() {
+        return projectAreaAbbreviation;
     }
-
 }
