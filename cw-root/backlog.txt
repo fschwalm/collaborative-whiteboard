@@ -1,4 +1,4 @@
-  - (Andamento) Adicionar Sigla para Area e modificar gerador de branch
+  - (Andamento) Controle de Iteração
 
   - Adicionar Filtro Global a tabela de backlog
 
@@ -13,6 +13,8 @@
   - Tela de Edição de Usuario
 
   - Corrigir bug scroll chat
+
+  - (OK) Adicionar Sigla para Area e modificar gerador de branch
 
   - (OK) Corrigir Lazy Initialization Logs Status
 
