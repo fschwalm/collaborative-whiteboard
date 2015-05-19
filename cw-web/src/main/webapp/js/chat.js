@@ -1,4 +1,8 @@
 var chatIsOpen;
+var url = 'localhost';
+var port = '8080';
+var chatService = 'chat';
+var websocket;
 
 $(document).ready(function () {
     initChat();
@@ -6,8 +10,8 @@ $(document).ready(function () {
 
 function initChat() {
     try {
-        if (isConnect() == false) {
-            connect();
+        if (isConnect(websocket) == false) {
+            websocket = connect(url, port, chatService);
             registerClickChatButton();
             registerCloseConnection();
             registerReceiptsMessages();
@@ -22,19 +26,19 @@ function initChat() {
 }
 
 function registerCloseConnection() {
-    ws.onclose = function (evt) {
+    websocket.onclose = function (evt) {
         disableChat();
     }
 }
 
 function registerErrorHandling() {
-    ws.onerror = function (evt) {
+    websocket.onerror = function (evt) {
         disableChat();
     }
 }
 
 function registerReceiptsMessages() {
-    ws.onmessage = function (evt) {
+    websocket.onmessage = function (evt) {
         messageWriter(JSON.parse(evt.data));
     }
 }
@@ -50,8 +54,8 @@ function commit(inputTextId) {
         var $messageData = createMessage(inputTextId)
         var jsonObject = JSON.stringify($messageData)
 
-        if (isConnect()) {
-            sendMessage(jsonObject);
+        if (isConnect(websocket)) {
+            sendMessage(jsonObject, websocket);
         } else {
             disableChat();
         }
@@ -124,4 +128,8 @@ function closeChat() {
     $('#exitBtn').animate({'margin-right': "0%"});
     $("#chat").slideUp('fast');
     chatIsOpen = false;
+}
+
+function disconect() {
+    websocket.close();
 }

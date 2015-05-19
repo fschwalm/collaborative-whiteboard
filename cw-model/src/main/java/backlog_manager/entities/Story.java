@@ -4,6 +4,7 @@ package backlog_manager.entities;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.entities.Stage;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -49,6 +50,9 @@ public class Story implements Serializable{
 
     @Column(nullable = false)
     private String description;
+
+    @ManyToOne
+    private Stage stage;
 
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
@@ -162,4 +166,14 @@ public class Story implements Serializable{
         this.projectArea = projectArea;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        Stage oldValue = this.stage;
+        this.stage = stage;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
+    }
 }
