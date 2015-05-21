@@ -6,6 +6,8 @@ package br.org.tutty.collaborative_whiteboard;
 public interface Dao {
     void persist(Object entity);
 
+    Long count(Class<?> clazz);
+
     void update(Object entity);
 
     void remove(Object entity);

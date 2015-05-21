@@ -6,3 +6,9 @@
     height: 930px !important;
 }
 
+.stage{
+    background-color: gray;
+    float: left;
+    min-height: 95%;
+    margin: 0.6%;
+}

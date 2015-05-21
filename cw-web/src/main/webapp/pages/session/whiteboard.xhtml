@@ -6,30 +6,52 @@
 
     <ui:define name="pageContent">
         <h:form prependId="false">
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:commandButton value="Teste"/>
-                    <p:commandButton value="Teste"/>
-                </f:facet>
-            </p:toolbar>
+            <p:ribbon>
+                <p:tab title="#{whiteboard['menu.header']}">
+                    <p:ribbonGroup label="#{whiteboard['menu.stage']}">
+                        <p:commandButton value="#{whiteboard['menu.stage.new']}" oncomplete="PF('stageCreation').show()"/>
+                        <p:commandButton value="#{whiteboard['menu.stage.edit']}"/>
+                    </p:ribbonGroup>
+
+                    <p:ribbonGroup label="#{whiteboard['menu.iteration']}">
+                        <p:commandButton value="#{whiteboard['menu.iteration.init']}"/>
+                        <p:commandButton value="#{whiteboard['menu.iteration.end']}"/>
+                    </p:ribbonGroup>
+
+                    <p:ribbonGroup label="#{whiteboard['menu.story']}">
+                        <p:commandButton value="#{whiteboard['menu.story.create']}"/>
+                    </p:ribbonGroup>
+                </p:tab>
+            </p:ribbon>
 
             <div id="whiteboard" class="whiteboard">
-                <div id="waiting">
-
-                </div>
-
-                <div class="or-spacer-vertical left">
-                    <div class="mask"></div>
-                </div>
-
-                <div id="developing">
-
-                </div>
-
-                <div id="finalized">
-
-                </div>
             </div>
         </h:form>
+
+        <p:dialog id="stageCreation" widgetVar="stageCreation" modal="true" resizable="false" appendToBody="false"
+                  header="#{whiteboard['stage.dialog.creation.header']}">
+            <h:form id="stageCreationForm" prependId="false">
+                <h:panelGrid>
+                    <h:column>
+                        <p:watermark value="#{whiteboard['stage.dialog.creation.name']}" for="stageCreationName"/>
+                        <p:inputText id="stageCreationName" value="#{whiteboardController.name}" required="true"/>
+
+                    </h:column>
+
+                    <h:column>
+                        <p:spacer height="10px"/>
+                    </h:column>
+
+                    <h:column>
+                        <p:commandButton id="stageCreationSave" value="Salvar"
+                                         action="#{whiteboardController.createStage()}"
+                                         onsuccess="PF('stageCreation').hide()" update=":stageCreationForm,@this"/>
+                        <p:commandButton id="stageCreationExit" value="Sair"
+                                         onclick="PF('stageCreationPosition').hide()"
+                                         immediate="true"/>
+                    </h:column>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

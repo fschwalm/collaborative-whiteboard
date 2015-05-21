@@ -8,20 +8,20 @@
             <h:form id="projectForm" prependId="false">
                 <h:panelGrid columns="1">
                     <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>
-                    <p:inputText id="createProjectShortcut" value="#{whiteboardController.projectName}"
+                    <p:inputText id="createProjectShortcut" value="#{projectsController.projectName}"
                                  required="true" styleClass="addProjectInput"/>
 
                     <p:commandButton value="#{whiteboard['btn.new']}"
-                                     action="#{whiteboardController.createProject()}"
+                                     action="#{projectsController.createProject()}"
                                      update=":projectForm" styleClass="addProjectBtn"/>
 
                     <p:column><p:spacer width="10px"/></p:column>
 
-                    <p:dataTable id="projectList" styleClass="projectList" value="#{whiteboardController.projects}"
+                    <p:dataTable id="projectList" styleClass="projectList" value="#{projectsController.projects}"
                                  var="project" scrollHeight="720" scrollable="true">
                         <p:column>
                             <p:commandLink value="#{project.nameProject}"
-                                           action="#{whiteboardController.openProject(project)}" process="@this"/>
+                                           action="#{projectsController.openProject(project)}" process="@this"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGrid>

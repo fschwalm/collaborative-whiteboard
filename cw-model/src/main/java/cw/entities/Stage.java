@@ -1,5 +1,7 @@
 package cw.entities;
 
+import cw.dtos.json.JSonStage;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -16,15 +18,14 @@ public class Stage implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Integer position;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long position;
 
     public Stage() {
     }
 
-    public Stage(String name, Integer position) {
+    public Stage(String name) {
         this.name = name;
-        this.position = position;
     }
 
     public Long getId() {
@@ -39,11 +40,35 @@ public class Stage implements Serializable {
         this.name = name;
     }
 
-    public Integer getPosition() {
+    public Long getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(Long position) {
         this.position = position;
+    }
+
+    public JSonStage toJSON(){
+        JSonStage jSonStage = new JSonStage();
+        jSonStage.setName(name);
+
+        return jSonStage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Stage stage = (Stage) o;
+
+        if (name != null ? !name.equals(stage.name) : stage.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }

@@ -3,6 +3,7 @@ package br.org.tutty.collaborative_whiteboard;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +22,14 @@ public abstract class GenericDao implements Dao, Serializable{
     @Override
     public void persist(Object entity) {
         entityManager.persist(entity);
+    }
+
+    @Override
+    public Long count(Class<?> clazz){
+        Criteria criteria = createCriteria(clazz);
+        criteria.setProjection(Projections.rowCount());
+
+        return (Long) criteria.uniqueResult();
     }
 
     @Override

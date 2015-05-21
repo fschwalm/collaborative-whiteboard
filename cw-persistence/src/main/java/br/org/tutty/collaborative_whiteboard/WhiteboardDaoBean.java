@@ -20,6 +20,4 @@ public class WhiteboardDaoBean extends GenericDao implements WhiteboardDao {
         Criteria criteria = createCriteria(Stage.class);
         return (List<Stage>) listNotWaitingEmpty(criteria);
     }
-
-
 }

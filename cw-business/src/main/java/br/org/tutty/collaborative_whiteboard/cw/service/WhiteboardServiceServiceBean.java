@@ -1,16 +1,18 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
+import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
+import com.google.gson.Gson;
 import cw.dtos.json.Whiteboard;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
-import org.json.JSONObject;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.websocket.Session;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -20,7 +22,8 @@ import java.util.List;
 @Local(WhiteboardService.class)
 public class WhiteboardServiceServiceBean implements WhiteboardService, Serializable {
 
-    private WhiteboardContext whiteboardContext;
+    @Inject
+    private WhiteboardHandler whiteboardHandler;
 
     @Inject
     public WhiteboardDao whiteboardDao;
@@ -31,10 +34,26 @@ public class WhiteboardServiceServiceBean implements WhiteboardService, Serializ
     }
 
     @Override
-    public void createStage(Stage stage){
+    public void createStage(Stage stage) throws DataNotFoundException {
+        Long count = whiteboardDao.count(Stage.class);
+        stage.setPosition(count);
         whiteboardDao.persist(stage);
-        // Buscar minhas session
-        broadcast(new JSONObject(new Whiteboard()), );
+
+        refreshAllWhiteboards();
+    }
+
+@Override
+    public void refreshAllWhiteboards() throws DataNotFoundException {
+        List<Stage> stages = whiteboardDao.fetchAllStages();
+        Whiteboard whiteboard = whiteboardHandler.builderWhiteboard(stages, new HashSet<>());
+        whiteboardHandler.broadcast(new Gson().toJson(whiteboard));
+    }
+
+    @Override
+    public void refreshWhiteboard(Session target) throws DataNotFoundException {
+        List<Stage> stages = whiteboardDao.fetchAllStages();
+        Whiteboard whiteboard = whiteboardHandler.builderWhiteboard(stages, new HashSet<>());
+        whiteboardHandler.send(new Gson().toJson(whiteboard), target);
     }
 
     @Override
@@ -42,15 +61,5 @@ public class WhiteboardServiceServiceBean implements WhiteboardService, Serializ
         whiteboardDao.remove(stage);
     }
 
-    private void broadcast(JSONObject message, Session webSocketSessionSender) {
-        webSocketSessionSender.getOpenSessions().stream()
-                .forEach(s -> send(message, s));
-    }
 
-    private void send(JSONObject whiteboard, Session sessionTarget) {
-        try {
-            sessionTarget.getBasicRemote().sendText(whiteboard.toString());
-        } catch (IOException e) {
-        }
-    }
 }

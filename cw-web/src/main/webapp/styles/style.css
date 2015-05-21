@@ -220,6 +220,32 @@
     text-align: center;
 }
 
+.ui-ribbon .ui-colorpicker .ui-button {
+    height: 24px;
+}
+
+.ui-icon.ui-ribbonicon-new {
+    margin-left: -10px;
+    margin-top: -20px;
+    background-image: url(../images/icons/new.png);
+}
+
+.ui-icon.ui-ribbonicon-save {
+    background-image: url(../images/icon/save.png);
+}
+
+.ui-icon.ui-ribbonicon-paste {
+    background-image: url(../images/icon/paste.png);
+}
+
+.ui-icon.ui-ribbonicon-cut {
+    background-image: url(../images/icon/cut.png);
+}
+
+.ui-icon.ui-ribbonicon-print {
+    background-image: url(../images/icon/print.png);
+}
+
 
 
 

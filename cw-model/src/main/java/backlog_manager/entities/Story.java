@@ -2,6 +2,7 @@ package backlog_manager.entities;
 
 
 import br.org.tutty.util.PropertyMonitor;
+import cw.dtos.json.JSonStory;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.entities.Stage;
@@ -175,5 +176,29 @@ public class Story implements Serializable{
         this.stage = stage;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
+    }
+
+    public JSonStory toJson(){
+        JSonStory jSonStory = new JSonStory();
+        jSonStory.setCode(code);
+
+        return jSonStory;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Story story = (Story) o;
+
+        if (code != null ? !code.equals(story.code) : story.code != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return code != null ? code.hashCode() : 0;
     }
 }
