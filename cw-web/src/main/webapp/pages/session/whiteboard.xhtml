@@ -24,6 +24,8 @@
                 </p:tab>
             </p:ribbon>
 
+            <p:remoteCommand name="whiteboardRemoteConnection" actionListener="#{whiteboardController.drawMyWhiteboard}"/>
+
             <div id="whiteboard" class="whiteboard">
             </div>
         </h:form>
@@ -34,7 +36,7 @@
                 <h:panelGrid>
                     <h:column>
                         <p:watermark value="#{whiteboard['stage.dialog.creation.name']}" for="stageCreationName"/>
-                        <p:inputText id="stageCreationName" value="#{whiteboardController.name}" required="true"/>
+                        <p:inputText id="stageCreationName" value="#{whiteboardController.stageNameForCreation}" required="true"/>
 
                     </h:column>
 
@@ -45,7 +47,7 @@
                     <h:column>
                         <p:commandButton id="stageCreationSave" value="Salvar"
                                          action="#{whiteboardController.createStage()}"
-                                         onsuccess="PF('stageCreation').hide()" update=":stageCreationForm,@this"/>
+                                         oncomplete="PF('stageCreation').hide()" update=":stageCreationForm,@this"/>
                         <p:commandButton id="stageCreationExit" value="Sair"
                                          onclick="PF('stageCreationPosition').hide()"
                                          immediate="true"/>

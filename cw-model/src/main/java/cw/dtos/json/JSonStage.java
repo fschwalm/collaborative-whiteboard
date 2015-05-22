@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public class JSonStage implements Serializable {
     public String name;
+    private Long position;
 
     private Set<JSonStory> stories;
 
@@ -50,5 +51,13 @@ public class JSonStage implements Serializable {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    public void setPosition(Long position) {
+        this.position = position;
+    }
+
+    public Long getPosition() {
+        return position;
     }
 }

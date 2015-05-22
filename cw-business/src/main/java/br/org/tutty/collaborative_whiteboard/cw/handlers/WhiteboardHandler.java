@@ -11,7 +11,6 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -21,9 +20,11 @@ import java.util.function.Consumer;
 @ApplicationScoped
 public class WhiteboardHandler implements Serializable {
     private final Set<Session> sessions = new HashSet<>();
+    private Session lastConnect;
 
     public void addSession(Session session) {
         sessions.add(session);
+        lastConnect = session;
     }
 
     public void removeSession(Session session) {
@@ -45,7 +46,7 @@ public class WhiteboardHandler implements Serializable {
         }
     }
 
-    public Whiteboard builderWhiteboard(List<Stage> stages, Set<Story> stories) {
+    public Whiteboard builderWhiteboard(Set<Stage> stages, Set<Story> stories) {
         Whiteboard whiteboard = new Whiteboard();
 
         stages.stream().forEach(new Consumer<Stage>() {
@@ -66,5 +67,9 @@ public class WhiteboardHandler implements Serializable {
         });
 
         return whiteboard;
+    }
+
+    public Session getLastConnect() {
+        return lastConnect;
     }
 }

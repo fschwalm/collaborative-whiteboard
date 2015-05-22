@@ -4,8 +4,10 @@ import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import cw.exceptions.DataNotFoundException;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -18,10 +20,10 @@ import java.io.IOException;
 public class WhiteboardWebSocket extends WebSocket {
 
     @Inject
-    private WhiteboardHandler whiteboardHandler;
+    private WhiteboardService whiteboardService;
 
     @Inject
-    private WhiteboardService whiteboardService;
+    private WhiteboardHandler whiteboardHandler;
 
     @OnMessage
     public void send(String dataMessage, Session senderSession){
@@ -31,11 +33,10 @@ public class WhiteboardWebSocket extends WebSocket {
     @OnOpen
     public void open(Session websocketSession, EndpointConfig endpointConfig) throws DataNotFoundException {
         whiteboardHandler.addSession(websocketSession);
-        whiteboardService.refreshWhiteboard(websocketSession);
     }
 
     @OnClose
-    public void close(Session session) throws IOException {
-        whiteboardHandler.removeSession(session);
+    public void close(Session websocketSession) throws IOException {
+        whiteboardHandler.removeSession(websocketSession);
     }
 }

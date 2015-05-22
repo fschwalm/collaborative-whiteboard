@@ -4,10 +4,11 @@ import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by drferreira on 19/05/15.
  */
 public interface WhiteboardDao extends Dao {
-    List<Stage> fetchAllStages() throws DataNotFoundException;
+    Set<Stage> fetchAllStages() throws DataNotFoundException;
 }

@@ -1,6 +1,4 @@
 var chatIsOpen;
-var url = 'localhost';
-var port = '8080';
 var chatService = 'chat';
 var websocket;
 
@@ -11,7 +9,7 @@ $(document).ready(function () {
 function initChat() {
     try {
         if (isConnect(websocket) == false) {
-            websocket = connect(url, port, chatService);
+            websocket = connect(chatService);
             registerClickChatButton();
             registerCloseConnection();
             registerReceiptsMessages();

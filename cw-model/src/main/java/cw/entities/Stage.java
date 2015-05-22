@@ -51,6 +51,7 @@ public class Stage implements Serializable {
     public JSonStage toJSON(){
         JSonStage jSonStage = new JSonStage();
         jSonStage.setName(name);
+        jSonStage.setPosition(position);
 
         return jSonStage;
     }

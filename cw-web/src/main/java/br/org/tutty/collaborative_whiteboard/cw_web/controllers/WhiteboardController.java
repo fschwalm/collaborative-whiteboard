@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
+import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
@@ -18,28 +19,26 @@ public class WhiteboardController extends GenericController implements Serializa
     @Inject
     private WhiteboardService whiteboardService;
 
-    private String name;
+    @Inject
+    private WhiteboardHandler whiteboardHandler;
 
+    private String stageNameForCreation;
 
     public void createStage() throws DataNotFoundException {
-        Stage stage = new Stage(name);
+        Stage stage = new Stage(stageNameForCreation);
         whiteboardService.createStage(stage);
-        name = null;
+        stageNameForCreation = null;
     }
 
-    public void removeStage(){
-
+    public void drawMyWhiteboard(){
+        whiteboardService.refreshWhiteboard(whiteboardHandler.getLastConnect());
     }
 
-    public void reorderStage(){
-
+    public String getStageNameForCreation() {
+        return stageNameForCreation;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setStageNameForCreation(String name) {
+        this.stageNameForCreation = name;
     }
 }
