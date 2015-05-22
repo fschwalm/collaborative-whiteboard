@@ -1,5 +1,5 @@
 .whiteboard{
-    background: whitesmoke;
+    background: white;
     margin-left: auto;
     margin-right: auto;
     width: 1600px !important;
@@ -7,12 +7,43 @@
 }
 
 .stage{
-    background-color: gray;
+    background-color: #cccccc;
     float: left;
     min-height: 100%;
-    margin: 10px;
+    margin: 6px;
+    border-radius: 10px;
+    border: 1px solid #8AC007;
 }
 
 .stage_header{
+    background-color: #ebfde7;
+    border-radius: 10px 10px 0px 0px;
+    min-height: 30px;
+    text-align: center;
+    font-family: 'Raleway',sans-serif;
+    vertical-align: middle;
+    font-size: 25px;
+    font-weight: 100;
+    color: black;
+}
+
+.emptyMessage{
+    display: table;
+    min-height: 65%;
+    min-width: 100%;
+}
+
+.emptyMessage span{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-family: 'Raleway',sans-serif;
+    font-size: 62px;
+    font-weight: 800;
+    line-height: 72px;
+    margin: 0 0 24px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #675c5c;
     background-color: white;
 }

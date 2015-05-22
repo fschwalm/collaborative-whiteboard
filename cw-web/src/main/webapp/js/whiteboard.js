@@ -32,7 +32,8 @@ function stageWriter(jsonStages){
     if(jsonStages.length != 0){
         createStages(whiteboard, jsonStages);
     }else{
-        createMessageEmptyStages(whiteboard, 'TA VAZIO O BAGULHO');
+        var textForMessage = 'Quadro não inicializado. Crie novas etapas para inicializa-lo!';
+        createMessageEmptyStages(whiteboard, textForMessage);
     }
 }
 
@@ -41,11 +42,11 @@ function createMessageEmptyStages(whiteboard, messageText){
     var message = document.createElement('span');
     message.textContent = messageText;
 
+    messageDiv.setAttribute('class','emptyMessage');
+
     $(messageDiv).append(message);
     $(whiteboard).append(messageDiv);
 }
-
-
 
 function createStages(whiteboard, jsonStages){
     jsonStages.sort(sortByProperty('position'));
@@ -54,7 +55,7 @@ function createStages(whiteboard, jsonStages){
 
     var whiteboardSize = whiteboard.width();
     var numberOfAreas = jsonStages.length;
-    var margin = 20;
+    var margin = 14;
     var sumMargin = numberOfAreas * margin;
     var sizeForStage = ((whiteboardSize - sumMargin) / numberOfAreas);
 
@@ -68,7 +69,6 @@ function createStages(whiteboard, jsonStages){
         $(whiteboard).append(stage)
     });
 }
-
 
 function createStageHeader(label, stage){
     var header = document.createElement('div');

@@ -1,11 +1,10 @@
 #headerPage {
     background-image: url(../images/header_blue.png);
     height: 180px;
-
 }
 
 #bodyPage {
-    background-color: #FFFFFF;
+    background-color: whitesmoke;
 }
 
 .backlogDiv {
@@ -42,7 +41,7 @@
     margin-right: auto;
     width: 1600px !important;
     height: 930px !important;
-    background-color: #F8F8F8 !important;
+    background-color: white !important;
 }
 
 .removed_area {
