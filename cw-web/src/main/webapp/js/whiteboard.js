@@ -9,10 +9,18 @@ window.onload = function() {
 
 function initWhiteboardRegisters(websocketWhiteboard){
     websocketWhiteboard.onclose = function (evt) {
-        alert("CLOSE")
+        var whiteboard = $('#whiteboard');
+        whiteboard.empty();
+
+        var textForMessage = 'Sem conexão com o Quadro.';
+        createMessageEmptyStages(whiteboard, textForMessage);
     };
     websocketWhiteboard.onerror = function (evt) {
-        alert("ERRO")
+        var whiteboard = $('#whiteboard');
+        whiteboard.empty();
+
+        var textForMessage = 'OMG!! Erro ao conectar com o Servidor.';
+        createMessageEmptyStages(whiteboard, textForMessage);
     };
     websocketWhiteboard.onmessage = function (evt) {
         whiteboardWriter(evt);
