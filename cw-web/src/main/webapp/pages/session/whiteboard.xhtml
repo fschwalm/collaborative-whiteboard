@@ -9,7 +9,8 @@
             <p:ribbon>
                 <p:tab title="#{whiteboard['menu.header']}">
                     <p:ribbonGroup label="#{whiteboard['menu.stage']}">
-                        <p:commandButton value="#{whiteboard['menu.stage.new']}" oncomplete="PF('stageCreation').show()"/>
+                        <p:commandButton value="#{whiteboard['menu.stage.new']}"
+                                         oncomplete="PF('stageCreation').show()"/>
                         <p:commandButton value="#{whiteboard['menu.stage.edit']}"/>
                     </p:ribbonGroup>
 
@@ -24,7 +25,8 @@
                 </p:tab>
             </p:ribbon>
 
-            <p:remoteCommand name="whiteboardRemoteConnection" actionListener="#{whiteboardController.drawMyWhiteboard}"/>
+            <p:remoteCommand name="whiteboardRemoteConnection"
+                             actionListener="#{whiteboardController.drawMyWhiteboard}"/>
 
             <div id="whiteboard" class="whiteboard">
             </div>
@@ -36,7 +38,8 @@
                 <h:panelGrid>
                     <h:column>
                         <p:watermark value="#{whiteboard['stage.dialog.creation.name']}" for="stageCreationName"/>
-                        <p:inputText id="stageCreationName" value="#{whiteboardController.stageNameForCreation}" required="true"/>
+                        <p:inputText id="stageCreationName" value="#{whiteboardController.stageNameForCreation}"
+                                     required="true" requiredMessage="#{whiteboard['stage.name.required']}" size="25"/>
 
                     </h:column>
 
@@ -45,12 +48,15 @@
                     </h:column>
 
                     <h:column>
-                        <p:commandButton id="stageCreationSave" value="Salvar"
+                        <p:commandButton id="stageCreationSave" value="#{whiteboard['stage.create.save']}"
                                          action="#{whiteboardController.createStage()}"
-                                         oncomplete="PF('stageCreation').hide()" update=":stageCreationForm,@this"/>
-                        <p:commandButton id="stageCreationExit" value="Sair"
-                                         onclick="PF('stageCreationPosition').hide()"
-                                         immediate="true"/>
+                                         oncomplete="PF('stageCreation').hide()"
+                                         process="@form" update=":stageCreationForm"/>
+                        <p:commandButton id="stageCreationExit" value="#{whiteboard['stage.create.cancel']}"
+                                         oncomplete="PF('stageCreation').hide()"
+                                         immediate="true" action="#{whiteboardController.cancel()}">
+                            <p:ajax update="stageCreationForm" resetValues="true"/>
+                        </p:commandButton>
                     </h:column>
                 </h:panelGrid>
             </h:form>

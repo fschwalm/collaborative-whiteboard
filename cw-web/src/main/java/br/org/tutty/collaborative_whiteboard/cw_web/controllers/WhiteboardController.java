@@ -27,6 +27,9 @@ public class WhiteboardController extends GenericController implements Serializa
     public void createStage() throws DataNotFoundException {
         Stage stage = new Stage(stageNameForCreation);
         whiteboardService.createStage(stage);
+    }
+
+    public void cancel(){
         stageNameForCreation = null;
     }
 
