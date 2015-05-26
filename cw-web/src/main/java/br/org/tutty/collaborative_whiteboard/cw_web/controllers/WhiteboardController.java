@@ -30,6 +30,10 @@ public class WhiteboardController extends GenericController implements Serializa
         stageNameForCreation = null;
     }
 
+    public String vote(){
+        return GOT_TO_VOTING_PAGE;
+    }
+
     public void cancel(){
         stageNameForCreation = null;
     }

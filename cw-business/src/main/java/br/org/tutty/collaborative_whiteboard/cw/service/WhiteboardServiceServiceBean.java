@@ -4,6 +4,8 @@ import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import com.google.gson.Gson;
+import cw.dtos.json.JSonStage;
+import cw.dtos.json.JSonStory;
 import cw.dtos.json.Whiteboard;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
@@ -15,6 +17,7 @@ import javax.websocket.Session;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 19/05/15.
@@ -44,39 +47,28 @@ public class WhiteboardServiceServiceBean implements WhiteboardService, Serializ
     }
 
     @Override
+    public void removeStage(Stage stage) {
+        whiteboardDao.remove(stage);
+    }
+
+    public Whiteboard mountWhiteboard() {
+        Set<JSonStage> stages = whiteboardDao.mountJsonStages();
+        Set<JSonStory> stories = whiteboardDao.mountJsonStories();
+
+        return whiteboardHandler.builderWhiteboard(stages, stories);
+    }
+
+    @Override
     public void refreshAllWhiteboards() {
-        Set<Stage> stages;
-        Set<Story> stories = new HashSet<>();
-
-        try {
-            stages = whiteboardDao.fetchAllStages();
-
-        } catch (DataNotFoundException e) {
-            stages = new HashSet<>();
-        }
-
-        Whiteboard whiteboard = whiteboardHandler.builderWhiteboard(stages, stories);
+        Whiteboard whiteboard = mountWhiteboard();
         whiteboardHandler.broadcast(new Gson().toJson(whiteboard));
     }
 
     @Override
     public void refreshWhiteboard(Session target) {
-        Set<Stage> stages;
-        Set<Story> stories = new HashSet<>();
-
-        try {
-            stages = whiteboardDao.fetchAllStages();
-
-        } catch (DataNotFoundException e) {
-            stages = new HashSet<>();
-        }
-
-        Whiteboard whiteboard = whiteboardHandler.builderWhiteboard(stages, stories);
+        Whiteboard whiteboard = mountWhiteboard();
         whiteboardHandler.send(new Gson().toJson(whiteboard), target);
     }
 
-    @Override
-    public void removeStage(Stage stage) {
-        whiteboardDao.remove(stage);
-    }
+
 }

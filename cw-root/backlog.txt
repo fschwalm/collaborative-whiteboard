@@ -18,6 +18,8 @@
 
   - Prefixo de area deve ser unico
 
+  - Adicionar etapa de analise
+
   - (OK) Adicionar Sigla para Area e modificar gerador de branch
 
   - (OK) Corrigir Lazy Initialization Logs Status

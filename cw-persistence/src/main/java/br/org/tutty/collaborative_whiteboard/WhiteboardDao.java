@@ -1,5 +1,8 @@
 package br.org.tutty.collaborative_whiteboard;
 
+import backlog_manager.entities.Story;
+import cw.dtos.json.JSonStage;
+import cw.dtos.json.JSonStory;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
 
@@ -11,4 +14,10 @@ import java.util.Set;
  */
 public interface WhiteboardDao extends Dao {
     Set<Stage> fetchAllStages() throws DataNotFoundException;
+
+    Set<Story> fetchStories();
+
+    Set<JSonStage> mountJsonStages();
+
+    Set<JSonStory> mountJsonStories();
 }

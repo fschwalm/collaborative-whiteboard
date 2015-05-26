@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw.context;
 
+import backlog_manager.entities.Story;
 import cw.dtos.LoggedUser;
 import cw.entities.Project;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class SessionContext implements Serializable {
     private LoggedUser loggedUser;
     private Project selectedProject;
+    private Story story;
 
     public LoggedUser getLoggedUser() {
         return loggedUser;
@@ -28,5 +30,13 @@ public class SessionContext implements Serializable {
 
     public Project getSelectedProject() {
         return selectedProject;
+    }
+
+    public Story getStory() {
+        return story;
+    }
+
+    public void setStory(Story story) {
+        this.story = story;
     }
 }

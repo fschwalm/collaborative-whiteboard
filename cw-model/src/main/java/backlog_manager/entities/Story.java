@@ -7,6 +7,7 @@ import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.entities.Stage;
 import cw.entities.User;
+import cw.interfaces.ConvertibleToJSon;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "story", catalog = "cw")
 @SequenceGenerator(name = "StorySequence", sequenceName = "story_seq", initialValue = 1, allocationSize = 1)
-public class Story implements Serializable{
+public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
 
     @Id
     @GeneratedValue(generator = "StorySequence", strategy = GenerationType.SEQUENCE)
@@ -178,9 +179,14 @@ public class Story implements Serializable{
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
     }
 
+    @Override
     public JSonStory toJson(){
         JSonStory jSonStory = new JSonStory();
         jSonStory.setCode(code);
+        jSonStory.setSubject(subject);
+        jSonStory.setBranch(branch);
+        jSonStory.setAuthor(author.toJson());
+        jSonStory.setStage(stage.toJson());
 
         return jSonStory;
     }

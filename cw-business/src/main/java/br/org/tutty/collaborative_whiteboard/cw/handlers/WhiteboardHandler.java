@@ -1,7 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.handlers;
 
-import backlog_manager.entities.Story;
 import cw.dtos.json.JSonStage;
+import cw.dtos.json.JSonStory;
 import cw.dtos.json.Whiteboard;
 import cw.entities.Stage;
 
@@ -46,20 +46,19 @@ public class WhiteboardHandler implements Serializable {
         }
     }
 
-    public Whiteboard builderWhiteboard(Set<Stage> stages, Set<Story> stories) {
+    public Whiteboard builderWhiteboard(Set<JSonStage> stages, Set<JSonStory> preparedStories) {
         Whiteboard whiteboard = new Whiteboard();
 
-        stages.stream().forEach(new Consumer<Stage>() {
+        stages.stream().forEach(new Consumer<JSonStage>() {
             @Override
-            public void accept(Stage stage) {
-                JSonStage jSonStage = stage.toJSON();
+            public void accept(JSonStage jSonStage) {
                 whiteboard.addStage(jSonStage);
 
-                stories.stream().forEach(new Consumer<Story>() {
+                preparedStories.stream().forEach(new Consumer<JSonStory>() {
                     @Override
-                    public void accept(Story story) {
-                        if (story.getStage().toJSON().equals(jSonStage)) {
-                            jSonStage.addStory(story.toJson());
+                    public void accept(JSonStory story) {
+                        if (story.getStage().equals(jSonStage)) {
+                            jSonStage.addStory(story);
                         }
                     }
                 });

@@ -7,5 +7,6 @@ public enum StoryStatus {
     REMOVED,
     WAITING,
     AVAILABLE,
+    ANALYZED,
     FINALIZED,
 }

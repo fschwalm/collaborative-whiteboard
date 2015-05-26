@@ -1,5 +1,7 @@
 package br.org.tutty.collaborative_whiteboard;
 
+import backlog_manager.entities.Story;
+import backlog_manager.enums.StoryStatus;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -39,6 +41,10 @@ public abstract class GenericDao implements Dao, Serializable{
 
     public Criteria createCriteria(Class<?> clazz) {
         return getSession().createCriteria(clazz);
+    }
+
+    public Criteria createCriteria(Class<?> clazz, String alias) {
+        return getSession().createCriteria(clazz, alias);
     }
 
     public Session getSession() {

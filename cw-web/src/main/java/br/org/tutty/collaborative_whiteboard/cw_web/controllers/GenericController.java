@@ -23,6 +23,7 @@ public class GenericController implements Serializable {
     protected static final String GO_TO_BACKLOG = "BACKLOG_PAGE";
     protected static final String WELCOME_PAGE = "WELCOME_PAGE";
     protected static final String GOT_TO_PROJECT_PAGE = "PROJECT_PAGE";
+    protected static final String GOT_TO_VOTING_PAGE = "VOTING_PAGE";
 
 
     @Inject

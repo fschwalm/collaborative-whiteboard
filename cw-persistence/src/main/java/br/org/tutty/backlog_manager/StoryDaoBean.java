@@ -2,14 +2,13 @@ package br.org.tutty.backlog_manager;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 
 import java.util.List;
 
@@ -54,5 +53,4 @@ public class StoryDaoBean extends GenericDao implements StoryDao {
 
         return (StoryStatusLog) uniqueResultNotWaitingEmpty(criteria);
     }
-
 }

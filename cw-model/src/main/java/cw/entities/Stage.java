@@ -1,6 +1,7 @@
 package cw.entities;
 
 import cw.dtos.json.JSonStage;
+import cw.interfaces.ConvertibleToJSon;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "stage", catalog = "cw")
-public class Stage implements Serializable {
+public class Stage implements Serializable, ConvertibleToJSon<JSonStage> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -48,7 +49,8 @@ public class Stage implements Serializable {
         this.position = position;
     }
 
-    public JSonStage toJSON(){
+    @Override
+    public JSonStage toJson(){
         JSonStage jSonStage = new JSonStage();
         jSonStage.setName(name);
         jSonStage.setPosition(position);

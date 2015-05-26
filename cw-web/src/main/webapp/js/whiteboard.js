@@ -1,8 +1,11 @@
 var whiteboardService = 'whiteboard';
 var websocketWhiteboard = {};
 
-window.onload = function() {
+$(document).ready(function () {
     websocketWhiteboard = connect(whiteboardService);
+});
+
+window.onload = function() {
     initWhiteboardRegisters(websocketWhiteboard);
     whiteboardRemoteConnection();
 };

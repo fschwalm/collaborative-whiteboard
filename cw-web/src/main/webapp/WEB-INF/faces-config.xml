@@ -69,5 +69,10 @@
             <to-view-id>/pages/session/project.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>VOTING_PAGE</from-outcome>
+            <to-view-id>/pages/session/voting.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

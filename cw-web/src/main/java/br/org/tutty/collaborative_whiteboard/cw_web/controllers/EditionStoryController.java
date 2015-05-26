@@ -46,6 +46,11 @@ public class EditionStoryController extends GenericController implements Seriali
         backlogManagerService.restoreStory(storyEdition.selectedStory);
     }
 
+    public String voting() {
+        sessionContext.setStory(storyEdition.selectedStory);
+        return GOT_TO_VOTING_PAGE;
+    }
+
     public Boolean isPossibleProvide() throws DataNotFoundException {
         return !isRemoved();
     }
@@ -54,7 +59,11 @@ public class EditionStoryController extends GenericController implements Seriali
         return isRemoved();
     }
 
-    public Boolean isRemoved() throws DataNotFoundException {
+    public Boolean isPossibleVoting() throws DataNotFoundException {
+        return StoryStatus.AVAILABLE.equals(getStatus());
+    }
+
+    public Boolean isRemoved(){
         return StoryStatus.REMOVED.equals(getStatus());
     }
 

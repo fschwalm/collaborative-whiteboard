@@ -2,8 +2,10 @@ package cw.entities;
 
 import br.org.tutty.util.PropertyMonitor;
 import cw.dtos.EncryptorResources;
+import cw.dtos.json.JSonUser;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
+import cw.interfaces.ConvertibleToJSon;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user", catalog = "cw")
-public class User implements Serializable{
+public class User implements Serializable, ConvertibleToJSon<JSonUser>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -87,5 +89,14 @@ public class User implements Serializable{
 
     public String getLastName() {
         return lastName;
+    }
+
+    public JSonUser toJson(){
+        JSonUser jSonUser = new JSonUser();
+        jSonUser.setFirstName(firstName);
+        jSonUser.setLastName(lastName);
+        jSonUser.setEmail(email);
+
+        return jSonUser;
     }
 }

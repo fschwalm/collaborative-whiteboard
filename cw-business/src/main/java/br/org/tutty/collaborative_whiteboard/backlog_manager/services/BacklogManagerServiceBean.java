@@ -2,8 +2,11 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.entities.Task;
 import backlog_manager.enums.StoryStatus;
+import backlog_manager.enums.TaskStatus;
 import br.org.tutty.backlog_manager.StoryDao;
+import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -29,6 +32,9 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Inject
     private StoryDao storyDao;
+
+    @Inject
+    private TaskDao taskDao;
 
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
@@ -190,5 +196,12 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         User user = sessionContext.getLoggedUser().getUser();
         StoryStatusLog storyStatusLog = new StoryStatusLog(storyStatus, user, story);
         storyDao.persist(storyStatusLog);
+    }
+
+    @Override
+    public void createTask(Task task) {
+        task.setTaskStatus(TaskStatus.OPEN);
+        // TODO Gerar codigo tarefa
+        taskDao.persist(task);
     }
 }
