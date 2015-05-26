@@ -14,8 +14,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "task", catalog = "cw")
+@SequenceGenerator(name = "TaskSequence", sequenceName = "task_seq", initialValue = 1, allocationSize = 1)
 public class Task implements Serializable {
+
     @Id
+    @GeneratedValue(generator = "TaskSequence", strategy = GenerationType.SEQUENCE)
     private String code;
 
     @ManyToOne
