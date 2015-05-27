@@ -1,0 +1,122 @@
+<ui:composition template="../../templates/generic.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="pageContent">
+        <h:form id="votingForm" prependId="false">
+            <p:panel>
+                <div id="storyHeader">
+                    <h:panelGrid columns="2" style="width: 200px;">
+                        <h:outputLabel for="storyCode" value="#{tasks_bundle['task.header.code']}" escape="false"/>
+                        <h:outputText id="storyCode" value="#{tasksController.getSelectedStory().code}"/>
+
+                        <h:outputLabel for="storyBranch" value="#{tasks_bundle['task.header.branch']}"
+                                       escape="false"/>
+                        <h:outputText id="storyBranch" value="#{tasksController.getSelectedStory().branch}"/>
+
+                        <h:outputLabel for="storySubject" value="#{tasks_bundle['task.header.subject']}"
+                                       escape="false"/>
+                        <h:outputText id="storySubject" value="#{tasksController.getSelectedStory().subject}"/>
+                    </h:panelGrid>
+                </div>
+            </p:panel>
+
+            <p:dataTable id="taskTable" value="#{tasksController.tasks}" var="task" selectionMode="single"
+                         rowKey="#{task.id}"
+                         selection="#{tasksController.selectedTask}"
+                         style="text-align: center;">
+
+                <p:ajax event="rowSelect" update="removeButton,openButton"/>
+                <p:ajax event="rowUnselect" update="removeButton,openButton"/>
+
+                <f:facet name="header">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton id="removeButton" value="#{tasks_bundle['task.btn.remove']}"
+                                             styleClass="warning_button" icon="ui-icon-trash"
+                                             disabled="#{tasksController.isNotSelected()}"
+                                             action="#{tasksController.removeTask()}"
+                                             update=":votingForm:taskTable">
+                                <p:confirm message="#{backlog['confirmation.remove.text']}"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
+                                             onclick="PF('editionTask').show();" update=":creationTaskForm"/>
+
+                            <p:commandButton id="openButton" value="#{tasks_bundle['task.btn.open']}" icon="ui-icon-folder-open"
+                                             disabled="#{tasksController.isNotSelected()}" />
+                        </f:facet>
+                    </p:toolbar>
+                </f:facet>
+
+                <p:column headerText="#{tasks_bundle['task.status']}" style="width: 70px;">
+                    <h:outputText value="#{task.taskStatus}"/>
+                </p:column>
+
+                <p:column headerText="#{tasks_bundle['task.code']}" style="width: 200px;">
+                    <h:outputText value="#{task.code}"/>
+                </p:column>
+
+                <p:column headerText="#{tasks_bundle['task.estimated']}" style="width: 180px;">
+                    <p:calendar value="#{task.estimatedTime}" readonly="true" mask="true" pattern="HH:mm"/>
+                </p:column>
+
+                <p:column headerText="#{tasks_bundle['task.subject']}">
+                    <h:outputText value="#{task.subject}"/>
+                </p:column>
+
+                <p:column headerText="#{tasks_bundle['task.responsible']}" style="width: 350px">
+                    <h:outputText value="#{task.responsible}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog widgetVar="editionTask" modal="true" resizable="false">
+            <h:form id="creationTaskForm" prependId="false">
+                <h:panelGrid>
+                    <h:column>
+                        <p:watermark value="#{tasks_bundle['edition.collum.time']}" for="time"/>
+                        <p:calendar id="time" pattern="HH:mm" timeOnly="true" required="true"
+                                    value="#{taskCreationController.taskCreation.time}"/>
+                    </h:column>
+
+                    <h:column>
+                        <p:watermark value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
+                        <p:inputText id="taskSubject" required="true" size="68"
+                                     value="#{taskCreationController.taskCreation.subject}"/>
+                    </h:column>
+
+                    <h:column>
+                        <p:watermark value="#{tasks_bundle['edition.collum.description']}" for="description"/>
+                        <p:inputTextarea id="description" rows="20" cols="70"
+                                         value="#{taskCreationController.taskCreation.description}"/>
+                    </h:column>
+
+                    <h:column>
+                        <p:commandButton value="#{tasks_bundle['edition.btn.save']}" action="#{taskCreationController.createTask()}"
+                                         onsuccess="PF('editionTask').hide()" update=":votingForm:taskTable"/>
+                        <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
+                                         onsuccess="PF('editionTask').hide()"/>
+                    </h:column>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <p:confirmDialog global="true" widgetVar="confirmationDialog" modal="true" resizable="false">
+            <p:outputPanel>
+                <h:panelGrid columns="2">
+                    <h:form>
+                        <p:commandButton value="#{backlog['btn.save']}"
+                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="#{backlog['btn.cancel']}"
+                                         type="button"
+                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </h:form>
+                </h:panelGrid>
+            </p:outputPanel>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

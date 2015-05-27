@@ -30,7 +30,7 @@ public class WhiteboardDaoBean extends GenericDao implements WhiteboardDao {
 
     @Override
     public Set<Story> fetchStories() {
-        // TODO Deve buscar todas as estorias preparadas - Estorias que ja foram analisadas
+        // TODO Deve buscar todas as estorias dentro da iteração
         return new HashSet<>();
     }
 

@@ -7,6 +7,7 @@ import backlog_manager.enums.StoryStatus;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.backlog_manager.StoryDao;
 import br.org.tutty.backlog_manager.TaskDao;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.factories.CodeFactory;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -63,27 +64,6 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         }
     }
 
-
-    private String getAvailableCode(Project project, ProjectArea projectArea) {
-        Long sequence = (storyDao.getNextSequenceStory(project) + 1);
-
-        return mountStoryCode(projectArea, sequence);
-    }
-
-    private String mountStoryCode(ProjectArea projectArea, Long sequence) {
-        String separatorId = "-";
-        String projectName = projectArea.getProject().getPrefix();
-        String projectAreaAbbreviation = projectArea.getPrefix();
-
-        StringBuffer code = new StringBuffer(projectName);
-        code.append(separatorId);
-        code.append(projectAreaAbbreviation);
-        code.append(separatorId);
-        code.append(sequence.toString());
-
-        return code.toString();
-    }
-
     public List<Story> reformulatePriorities(List<Story> stories) {
         for (Story story : stories) {
             int indexOf = stories.indexOf(story);
@@ -98,8 +78,8 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         ProjectArea projectArea = story.getProjectArea();
 
         if (story.getCode() == null) {
-            String availableCode = getAvailableCode(project, projectArea);
-            story.setCode(availableCode);
+            String code = CodeFactory.story(storyDao, project, projectArea);
+            story.setCode(code);
         }
 
         return story;
@@ -141,6 +121,28 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
         storyDao.persist(storyWithPriority);
         storyDao.persist(new StoryStatusLog(StoryStatus.WAITING, story.getAuthor(), story));
+    }
+
+    @Override
+    public void createTask(Task task) {
+        User author = sessionContext.getLoggedUser().getUser();
+        String code = CodeFactory.task(taskDao, task.getStory());
+
+        task.setTaskStatus(TaskStatus.OPEN);
+        task.setCode(code);
+        task.setAuthor(author);
+
+        taskDao.persist(task);
+    }
+
+    @Override
+    public List<Task> fetchTasks(Story selectedStory) throws DataNotFoundException {
+        return taskDao.fetchByStory(selectedStory);
+    }
+
+    @Override
+    public void removeTask(Task selectedTask) {
+        taskDao.remove(selectedTask);
     }
 
     /**
@@ -196,12 +198,5 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         User user = sessionContext.getLoggedUser().getUser();
         StoryStatusLog storyStatusLog = new StoryStatusLog(storyStatus, user, story);
         storyDao.persist(storyStatusLog);
-    }
-
-    @Override
-    public void createTask(Task task) {
-        task.setTaskStatus(TaskStatus.OPEN);
-        // TODO Gerar codigo tarefa
-        taskDao.persist(task);
     }
 }

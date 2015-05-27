@@ -6,7 +6,6 @@ import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
-import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 
 import javax.faces.application.FacesMessage;
@@ -48,7 +47,7 @@ public class EditionStoryController extends GenericController implements Seriali
 
     public String voting() {
         sessionContext.setStory(storyEdition.selectedStory);
-        return GOT_TO_VOTING_PAGE;
+        return GOT_TO_TASKS_PAGE;
     }
 
     public Boolean isPossibleProvide() throws DataNotFoundException {

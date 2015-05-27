@@ -1,7 +1,5 @@
   - (Andamento) Controle de Iteração
 
-  - Não apaga dados - modal de criação de etapa
-
   - Adicionar Filtro Global a tabela de backlog
 
   - Confirmação por senha para novo usuário
@@ -19,6 +17,8 @@
   - Prefixo de area deve ser unico
 
   - Adicionar etapa de analise
+
+  - (OK) Não apaga dados - modal de criação de etapa
 
   - (OK) Adicionar Sigla para Area e modificar gerador de branch
 

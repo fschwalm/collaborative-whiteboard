@@ -19,6 +19,8 @@ public class Task implements Serializable {
 
     @Id
     @GeneratedValue(generator = "TaskSequence", strategy = GenerationType.SEQUENCE)
+    private Long id;
+
     private String code;
 
     @ManyToOne
@@ -26,6 +28,9 @@ public class Task implements Serializable {
 
     @ManyToOne
     private Story story;
+
+    @ManyToOne
+    private User author;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,13 +45,6 @@ public class Task implements Serializable {
 
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
-
-    public Task() {
-    }
-
-    public Task(User responsible) {
-        this.responsible = responsible;
-    }
 
     public String getCode() {
         return code;
@@ -123,5 +121,20 @@ public class Task implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAuthor(User author) {
+        User oldValue = this.author;
+        this.author = author;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("author", oldValue, author);
     }
 }

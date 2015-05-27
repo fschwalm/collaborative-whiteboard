@@ -34,6 +34,7 @@ public class TaskCreationController extends GenericController implements Seriali
         backlogManagerService.createTask(task);
 
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.task.create");
+        taskCreation = new TaskCreation();
     }
 
     public TaskCreation getTaskCreation() {

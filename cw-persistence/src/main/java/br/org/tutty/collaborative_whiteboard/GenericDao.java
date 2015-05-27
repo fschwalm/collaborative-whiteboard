@@ -1,7 +1,5 @@
 package br.org.tutty.collaborative_whiteboard;
 
-import backlog_manager.entities.Story;
-import backlog_manager.enums.StoryStatus;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -9,7 +7,6 @@ import org.hibernate.criterion.Projections;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.io.Serializable;
 import java.util.List;
 

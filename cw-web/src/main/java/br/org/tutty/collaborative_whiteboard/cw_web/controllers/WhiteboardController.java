@@ -31,7 +31,7 @@ public class WhiteboardController extends GenericController implements Serializa
     }
 
     public String vote(){
-        return GOT_TO_VOTING_PAGE;
+        return GOT_TO_TASKS_PAGE;
     }
 
     public void cancel(){

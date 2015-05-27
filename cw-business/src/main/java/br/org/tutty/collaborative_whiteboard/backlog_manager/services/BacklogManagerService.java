@@ -39,4 +39,8 @@ public interface BacklogManagerService {
     void changeStoryStatus(Story story, StoryStatus storyStatus);
 
     void createTask(Task task);
+
+    List<Task> fetchTasks(Story selectedStory) throws DataNotFoundException;
+
+    void removeTask(Task selectedTask);
 }

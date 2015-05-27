@@ -37,6 +37,10 @@
             <var>project_bundle</var>
         </resource-bundle>
         <resource-bundle>
+            <base-name>properties/tasks</base-name>
+            <var>tasks_bundle</var>
+        </resource-bundle>
+        <resource-bundle>
             <base-name>properties/exit</base-name>
             <var>exit</var>
         </resource-bundle>
@@ -70,8 +74,8 @@
             <redirect />
         </navigation-case>
         <navigation-case>
-            <from-outcome>VOTING_PAGE</from-outcome>
-            <to-view-id>/pages/session/voting.xhtml</to-view-id>
+            <from-outcome>TASKS_PAGE</from-outcome>
+            <to-view-id>/pages/session/tasks.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
