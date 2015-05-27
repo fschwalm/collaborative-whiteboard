@@ -1,5 +1,7 @@
   - (Andamento) Controle de Iteração
 
+  - Bug mensagem de required tela de tarefas
+
   - Adicionar Filtro Global a tabela de backlog
 
   - Confirmação por senha para novo usuário
