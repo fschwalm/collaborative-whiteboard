@@ -46,8 +46,9 @@
                             <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
                                              onclick="PF('editionTask').show();" update=":creationTaskForm"/>
 
-                            <p:commandButton id="openButton" value="#{tasks_bundle['task.btn.open']}" icon="ui-icon-folder-open"
-                                             disabled="#{tasksController.isNotSelected()}" />
+                            <p:commandButton id="openButton" value="#{tasks_bundle['task.btn.open']}"
+                                             icon="ui-icon-folder-open"
+                                             disabled="#{tasksController.isNotSelected()}"/>
                         </f:facet>
                     </p:toolbar>
                 </f:facet>
@@ -76,32 +77,29 @@
 
         <p:dialog widgetVar="editionTask" modal="true" resizable="false">
             <h:form id="creationTaskForm" prependId="false">
-                <h:panelGrid>
-                    <h:column>
-                        <p:watermark value="#{tasks_bundle['edition.collum.time']}" for="time"/>
-                        <p:calendar id="time" pattern="HH:mm" timeOnly="true" required="true"
-                                    value="#{taskCreationController.taskCreation.time}"/>
-                    </h:column>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{tasks_bundle['edition.collum.time']}" for="time"/>
 
-                    <h:column>
-                        <p:watermark value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
-                        <p:inputText id="taskSubject" required="true" size="68"
-                                     value="#{taskCreationController.taskCreation.subject}"/>
-                    </h:column>
+                    <p:calendar id="time" pattern="HH:mm" timeOnly="true" required="true"
+                                value="#{taskCreationController.taskCreation.time}" style="width: 40px;"/>
 
-                    <h:column>
-                        <p:watermark value="#{tasks_bundle['edition.collum.description']}" for="description"/>
-                        <p:inputTextarea id="description" rows="20" cols="70"
-                                         value="#{taskCreationController.taskCreation.description}"/>
-                    </h:column>
+                    <p:outputLabel value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
 
-                    <h:column>
-                        <p:commandButton value="#{tasks_bundle['edition.btn.save']}" action="#{taskCreationController.createTask()}"
-                                         onsuccess="PF('editionTask').hide()" update=":votingForm:taskTable"/>
-                        <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
-                                         onsuccess="PF('editionTask').hide()"/>
-                    </h:column>
+                    <p:inputText id="taskSubject" required="true"
+                                 value="#{taskCreationController.taskCreation.subject}" size="55"/>
                 </h:panelGrid>
+
+                <p:inputTextarea id="description" rows="20" cols="70"
+                                 value="#{taskCreationController.taskCreation.description}"/>
+
+                <br />
+
+                <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
+                                 action="#{taskCreationController.createTask()}"
+                                 onsuccess="PF('editionTask').hide()" update=":votingForm:taskTable"/>
+
+                <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
+                                 onsuccess="PF('editionTask').hide()"/>
             </h:form>
         </p:dialog>
 

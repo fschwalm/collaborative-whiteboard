@@ -32,6 +32,9 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @Column(nullable = false)
     private String branch;
 
+    @Column(name = "story_points")
+    private Integer storyPoints;
+
     @Column(nullable = false)
     private Integer priority;
 
@@ -177,6 +180,17 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         this.stage = stage;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
+    }
+
+    public Integer getStoryPoints() {
+        return storyPoints;
+    }
+
+    public void setStoryPoints(Integer storyPoints) {
+        Integer oldValue = this.storyPoints;
+        this.storyPoints = storyPoints;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyPoints", oldValue, storyPoints);
     }
 
     @Override

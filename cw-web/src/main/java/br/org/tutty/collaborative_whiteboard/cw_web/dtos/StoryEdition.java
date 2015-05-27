@@ -22,6 +22,7 @@ public class StoryEdition implements Serializable{
     private String subjectChanges;
     private String descriptionChanges;
     private ProjectArea projectArea;
+    private Integer storyPoints;
 
     public void init(Story selectedStory) throws DataNotFoundException {
         if(selectedStory != null){
@@ -33,6 +34,7 @@ public class StoryEdition implements Serializable{
             this.subjectChanges = selectedStory.getSubject();
             this.descriptionChanges = selectedStory.getDescription();
             this.projectArea = selectedStory.getProjectArea();
+            this.storyPoints = selectedStory.getStoryPoints();
         }else {
             throw new DataNotFoundException();
         }
@@ -42,6 +44,7 @@ public class StoryEdition implements Serializable{
         this.selectedStory.setBranch(branch);
         this.selectedStory.setSubject(subjectChanges);
         this.selectedStory.setDescription(descriptionChanges);
+        this.selectedStory.setStoryPoints(storyPoints);
 
         return selectedStory;
     }
@@ -100,5 +103,13 @@ public class StoryEdition implements Serializable{
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public Integer getStoryPoints() {
+        return storyPoints;
+    }
+
+    public void setStoryPoints(Integer storyPoints) {
+        this.storyPoints = storyPoints;
     }
 }

@@ -21,7 +21,7 @@
                     <p:ajax event="rowUnselect" update="openButton,removeButton"/>
 
                     <p:column style="padding: 0px; width: 4px;">
-                        <span class="status_collum_#{backlogController.getStatus(story)}" />
+                        <span class="status_collum_#{backlogController.getStatus(story)}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.project']}"
@@ -89,41 +89,70 @@
 
                     <p:spacer width="15px"/>
 
-                    <h:panelGrid columns="3">
-                        <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
-                        <p:calendar id="creationDate" value="#{editionStoryController.storyEdition.creationDate}"
-                                    disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+                    <h:panelGrid columns="2">
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.story_points']}" for="storyPoints"/>
+                        </h:column>
 
-                        <h:column/>
+                        <h:column>
+                            <p:inputMask mask="99" id="storyPoints" value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2" size="2" style="width: 20px;"/>
+                        </h:column>
 
-                        <h:outputLabel value="#{backlog['label.code']}" for="code"/>
-                        <p:inputText id="code" value="#{editionStoryController.storyEdition.code}" readonly="true"/>
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
+                        </h:column>
 
-                        <h:column/>
+                        <h:column>
+                            <p:calendar id="creationDate" value="#{editionStoryController.storyEdition.creationDate}"
+                                        disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+                        </h:column>
 
-                        <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
-                        <p:inputText id="branch" value="#{editionStoryController.storyEdition.branch}"
-                                     requiredMessage="#{messages['mandatory.field']}"/>
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.code']}" for="code"/>
+                        </h:column>
 
-                        <p:message for="branch"/>
+                        <h:column>
+                            <p:inputText id="code" value="#{editionStoryController.storyEdition.code}" readonly="true"/>
+                        </h:column>
 
-                        <h:outputLabel value="#{backlog['label.area']}" for="area"/>
-                        <p:inputText id="area" value="#{editionStoryController.storyEdition.projectArea.name}"
-                                     readonly="true" size="68"/>
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
+                        </h:column>
 
-                        <h:column/>
+                        <h:column>
+                            <p:inputText id="branch" value="#{editionStoryController.storyEdition.branch}"
+                                         requiredMessage="#{messages['mandatory.field']}"/>
+                        </h:column>
 
-                        <h:outputLabel value="#{backlog['label.author']}" for="author"/>
-                        <p:inputText id="author" value="#{editionStoryController.storyEdition.author.fullName}"
-                                     readonly="true" size="68"/>
+                        <h:column>
+                            <p:message for="branch"/>
 
-                        <h:column/>
+                            <h:outputLabel value="#{backlog['label.area']}" for="area"/>
+                        </h:column>
 
-                        <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
-                        <p:inputText id="subject" value="#{editionStoryController.storyEdition.subjectChanges}"
-                                     requiredMessage="#{messages['mandatory.field']}" required="true" size="68"/>
-                        <p:message for="subject"/>
+                        <h:column>
+                            <p:inputText id="area" value="#{editionStoryController.storyEdition.projectArea.name}"
+                                         readonly="true" size="68"/>
+                        </h:column>
 
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.author']}" for="author"/>
+                        </h:column>
+
+                        <h:column>
+                            <p:inputText id="author" value="#{editionStoryController.storyEdition.author.fullName}"
+                                         readonly="true" size="68"/>
+                        </h:column>
+
+                        <h:column>
+                            <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
+                        </h:column>
+
+                        <h:column>
+                            <p:inputText id="subject" value="#{editionStoryController.storyEdition.subjectChanges}"
+                                         requiredMessage="#{messages['mandatory.field']}" required="true" size="68"/>
+                            <p:message for="subject"/>
+                        </h:column>
                     </h:panelGrid>
 
                     <p:message for="description"/>
@@ -161,7 +190,7 @@
                                          rendered="#{editionStoryController.isPossibleVoting()}"
                                          action="#{editionStoryController.voting()}"
                                          icon="ui-icon-note"
-                                         immediate="true" />
+                                         immediate="true"/>
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>
