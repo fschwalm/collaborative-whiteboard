@@ -1,5 +1,7 @@
   - (Andamento) Controle de Iteração
 
+  - Bug Erro codigo de tarefa deletada
+
   - Bug mensagem de required tela de tarefas
 
   - Adicionar Filtro Global a tabela de backlog
