@@ -15,4 +15,6 @@ public interface ProjectAreaDao extends Dao{
     List<ProjectArea> fetch(Project project) throws DataNotFoundException;
 
     ProjectArea fetch(Project project, String name) throws DataNotFoundException;
+
+    ProjectArea fetchByPrefix(Project selectedProject, String prefixArea) throws DataNotFoundException;
 }

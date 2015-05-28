@@ -1,8 +1,8 @@
   - (Andamento) Controle de Iteração
 
-  - Bug Erro codigo de tarefa deletada
+  - (Andamento) Prefixo de area deve ser unico
 
-  - Bug mensagem de required tela de tarefas
+  - Bug Erro codigo de tarefa deletada
 
   - Adicionar Filtro Global a tabela de backlog
 
@@ -18,9 +18,9 @@
 
   - Corrigir bug scroll chat
 
-  - Prefixo de area deve ser unico
-
   - Adicionar etapa de analise
+
+  - (OK) Bug mensagem de required tela de tarefas
 
   - (OK) Não apaga dados - modal de criação de etapa
 

@@ -52,17 +52,20 @@ public class ProjectAreaController extends GenericController implements Serializ
         try {
             ProjectArea projectArea = (ProjectArea) projectAreaCreation.toEntity();
 
-            if (!projectService.areaAlreadyAdded(projectArea.getProject(), projectArea.getName())) {
+            Boolean projectAreaAlreadyAdd = projectService.areaAlreadyAdded(projectArea.getProject(), projectArea.getName());
+            Boolean projectAreaPrefixAlreadyAdd = projectService.prefixAreaAlreadyAdded(projectArea.getProject(), projectArea.getPrefix());
+
+            if (projectAreaAlreadyAdd) {
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
+
+            } else if (projectAreaPrefixAlreadyAdd){
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area_prefix");
+
+            }else {
                 projectService.createProjectArea(projectArea);
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "project.add.area");
-
-            } else {
-                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
             }
-
-
-        } catch (EmptyEntityException e) {
-        }
+        } catch (EmptyEntityException e) {}
     }
 
     public void removeProjectArea(ProjectArea projectArea) throws IOException {

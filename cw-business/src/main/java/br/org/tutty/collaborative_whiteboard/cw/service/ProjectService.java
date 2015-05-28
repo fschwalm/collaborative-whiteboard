@@ -25,9 +25,13 @@ public interface ProjectService {
 
     List<ProjectArea> fetchProjectAreas();
 
+    ProjectArea fetchProjectAreaByPrefix(String prefixArea) throws DataNotFoundException;
+
     ProjectArea fetchProjectArea(Project project, String name) throws DataNotFoundException;
 
     Boolean areaAlreadyAdded(Project project, String projecAreaName);
+
+    Boolean prefixAreaAlreadyAdded(Project project, String prefixArea);
 
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
 

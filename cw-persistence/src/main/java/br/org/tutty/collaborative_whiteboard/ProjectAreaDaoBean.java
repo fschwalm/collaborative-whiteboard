@@ -42,4 +42,13 @@ public class ProjectAreaDaoBean extends GenericDao implements ProjectAreaDao{
 
         return (ProjectArea) uniqueResultNotWaitingEmpty(criteria);
     }
+
+    @Override
+    public ProjectArea fetchByPrefix(Project selectedProject, String prefixArea) throws DataNotFoundException {
+        Criteria criteria = createCriteria(ProjectArea.class);
+        criteria.add(Restrictions.eq("project", selectedProject));
+        criteria.add(Restrictions.eq("prefix", prefixArea));
+
+        return (ProjectArea) uniqueResultNotWaitingEmpty(criteria);
+    }
 }

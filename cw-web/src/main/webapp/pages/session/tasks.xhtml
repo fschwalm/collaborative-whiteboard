@@ -78,15 +78,16 @@
         <p:dialog widgetVar="editionTask" modal="true" resizable="false">
             <h:form id="creationTaskForm" prependId="false">
                 <h:panelGrid columns="2">
-                    <p:outputLabel value="#{tasks_bundle['edition.collum.time']}" for="time"/>
+                    <p:watermark value="#{tasks_bundle['edition.collum.time']}" for="time"/>
 
                     <p:calendar id="time" pattern="HH:mm" timeOnly="true" required="true"
-                                value="#{taskCreationController.taskCreation.time}" style="width: 40px;"/>
+                                value="#{taskCreationController.taskCreation.time}" style="width: 40px;margin-left: -7px;" requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
 
-                    <p:outputLabel value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
+                    <p:watermark value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
 
                     <p:inputText id="taskSubject" required="true"
-                                 value="#{taskCreationController.taskCreation.subject}" size="55"/>
+                                 value="#{taskCreationController.taskCreation.subject}" style="margin-left: -7px;" size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
+
                 </h:panelGrid>
 
                 <p:inputTextarea id="description" rows="20" cols="70"
@@ -96,10 +97,11 @@
 
                 <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
                                  action="#{taskCreationController.createTask()}"
-                                 onsuccess="PF('editionTask').hide()" update=":votingForm:taskTable"/>
+                                 oncomplete="if (!args.validationFailed) editionTask.hide()"
+                                 update="@form,:votingForm:taskTable"/>
 
                 <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
-                                 onsuccess="PF('editionTask').hide()"/>
+                                 oncomplete="PF('editionTask').hide()" process="@this"/>
             </h:form>
         </p:dialog>
 

@@ -103,12 +103,20 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
+    public ProjectArea fetchProjectAreaByPrefix(String prefixArea) throws DataNotFoundException {
+        Project selectedProject = sessionContext.getSelectedProject();
+
+        ProjectArea foundedAreas = projectAreDao.fetchByPrefix(selectedProject, prefixArea);
+        return foundedAreas;
+    }
+
+    @Override
     public ProjectArea fetchProjectArea(Project project, String name) throws DataNotFoundException {
         return projectAreaDao.fetch(project, name);
     }
 
     @Override
-    public Boolean areaAlreadyAdded(Project project, String projecAreaName){
+    public Boolean areaAlreadyAdded(Project project, String projecAreaName) {
         try {
             fetchProjectArea(project, projecAreaName);
             return Boolean.TRUE;
@@ -118,7 +126,16 @@ public class ProjectServiceBean implements ProjectService {
         }
     }
 
+    @Override
+    public Boolean prefixAreaAlreadyAdded(Project project, String prefixArea) {
+        try {
+            fetchProjectArea(project, prefixArea);
+            return Boolean.TRUE;
 
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
 
     @Override
     public List<ProjectArea> filterProjectAreas(Project project, String queryName) {
@@ -133,12 +150,12 @@ public class ProjectServiceBean implements ProjectService {
 
     @Override
     public void removeProjectAreas(ProjectArea projectArea) throws ProjectAreaInUseException {
-            try {
-                backlogManagerService.fetch(projectArea);
-                throw new ProjectAreaInUseException();
+        try {
+            backlogManagerService.fetch(projectArea);
+            throw new ProjectAreaInUseException();
 
-            } catch (DataNotFoundException e) {
-                projectAreaDao.remove(projectArea);
-            }
+        } catch (DataNotFoundException e) {
+            projectAreaDao.remove(projectArea);
+        }
     }
 }
