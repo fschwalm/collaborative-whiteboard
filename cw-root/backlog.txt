@@ -1,6 +1,5 @@
   - (Andamento) Controle de Iteração
 
-  - (Andamento) Prefixo de area deve ser unico
 
   - Bug Erro codigo de tarefa deletada
 
@@ -19,6 +18,8 @@
   - Corrigir bug scroll chat
 
   - Adicionar etapa de analise
+
+  - (OK) Prefixo de area deve ser unico
 
   - (OK) Bug mensagem de required tela de tarefas
 
