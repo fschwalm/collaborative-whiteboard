@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
-import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import com.google.gson.Gson;
@@ -15,9 +14,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.websocket.Session;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 19/05/15.

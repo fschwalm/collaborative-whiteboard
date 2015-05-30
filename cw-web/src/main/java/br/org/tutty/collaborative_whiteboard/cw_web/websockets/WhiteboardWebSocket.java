@@ -1,13 +1,11 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
+import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.exceptions.DataNotFoundException;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -33,6 +31,7 @@ public class WhiteboardWebSocket extends WebSocket {
     @OnOpen
     public void open(Session websocketSession, EndpointConfig endpointConfig) throws DataNotFoundException {
         whiteboardHandler.addSession(websocketSession);
+        whiteboardService.refreshAllWhiteboards();
     }
 
     @OnClose

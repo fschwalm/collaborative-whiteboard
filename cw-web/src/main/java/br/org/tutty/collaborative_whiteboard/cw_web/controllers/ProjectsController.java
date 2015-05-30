@@ -1,8 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
-import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
+import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
 import cw.entities.Project;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;

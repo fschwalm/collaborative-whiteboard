@@ -30,16 +30,8 @@ public class WhiteboardController extends GenericController implements Serializa
         stageNameForCreation = null;
     }
 
-    public String vote(){
-        return GOT_TO_TASKS_PAGE;
-    }
-
     public void cancel(){
         stageNameForCreation = null;
-    }
-
-    public void drawMyWhiteboard(){
-        whiteboardService.refreshWhiteboard(whiteboardHandler.getLastConnect());
     }
 
     public String getStageNameForCreation() {

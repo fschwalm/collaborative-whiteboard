@@ -3,10 +3,8 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.ProjectService;
-import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectAreaCreation;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.ProjectData;
 import cw.entities.Project;
-import cw.entities.ProjectArea;
 import cw.exceptions.EmptyEntityException;
 
 import javax.annotation.PostConstruct;
@@ -16,10 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by drferreira on 11/03/15.

@@ -12,7 +12,6 @@ import cw.interfaces.ConvertibleToJSon;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -53,7 +52,7 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne

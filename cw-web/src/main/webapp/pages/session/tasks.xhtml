@@ -97,11 +97,10 @@
 
                 <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
                                  action="#{taskCreationController.createTask()}"
-                                 oncomplete="if (!args.validationFailed) editionTask.hide()"
                                  update="@form,:votingForm:taskTable"/>
 
                 <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
-                                 oncomplete="PF('editionTask').hide()" process="@this"/>
+                                 onclick="PF('editionTask').hide()"/>
             </h:form>
         </p:dialog>
 

@@ -53,7 +53,7 @@ public class ProjectAreaController extends GenericController implements Serializ
             ProjectArea projectArea = (ProjectArea) projectAreaCreation.toEntity();
 
             Boolean projectAreaAlreadyAdd = projectService.areaAlreadyAdded(projectArea.getProject(), projectArea.getName());
-            Boolean projectAreaPrefixAlreadyAdd = projectService.prefixAreaAlreadyAdded(projectArea.getProject(), projectArea.getPrefix());
+            Boolean projectAreaPrefixAlreadyAdd = projectService.prefixAreaAlreadyAdded(projectArea.getPrefix());
 
             if (projectAreaAlreadyAdd) {
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area");

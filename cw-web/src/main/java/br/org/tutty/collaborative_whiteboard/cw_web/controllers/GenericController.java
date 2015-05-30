@@ -2,14 +2,9 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw_web.utils.FacesMessageUtil;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Properties;
 
 /**
  * Created by drferreira on 12/12/14.

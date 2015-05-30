@@ -11,12 +11,9 @@ import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.NameInUseException;
 
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.RollbackException;
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -127,9 +124,9 @@ public class ProjectServiceBean implements ProjectService {
     }
 
     @Override
-    public Boolean prefixAreaAlreadyAdded(Project project, String prefixArea) {
+    public Boolean prefixAreaAlreadyAdded(String prefixArea) {
         try {
-            fetchProjectArea(project, prefixArea);
+            fetchProjectAreaByPrefix(prefixArea);
             return Boolean.TRUE;
 
         } catch (DataNotFoundException e) {

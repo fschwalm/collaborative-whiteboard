@@ -3,7 +3,6 @@ package br.org.tutty.collaborative_whiteboard.cw.handlers;
 import cw.dtos.json.JSonStage;
 import cw.dtos.json.JSonStory;
 import cw.dtos.json.Whiteboard;
-import cw.entities.Stage;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.EncodeException;
@@ -20,11 +19,9 @@ import java.util.function.Consumer;
 @ApplicationScoped
 public class WhiteboardHandler implements Serializable {
     private final Set<Session> sessions = new HashSet<>();
-    private Session lastConnect;
 
     public void addSession(Session session) {
         sessions.add(session);
-        lastConnect = session;
     }
 
     public void removeSession(Session session) {
@@ -66,9 +63,5 @@ public class WhiteboardHandler implements Serializable {
         });
 
         return whiteboard;
-    }
-
-    public Session getLastConnect() {
-        return lastConnect;
     }
 }

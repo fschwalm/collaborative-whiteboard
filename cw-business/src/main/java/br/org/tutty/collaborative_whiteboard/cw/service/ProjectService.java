@@ -31,7 +31,7 @@ public interface ProjectService {
 
     Boolean areaAlreadyAdded(Project project, String projecAreaName);
 
-    Boolean prefixAreaAlreadyAdded(Project project, String prefixArea);
+    Boolean prefixAreaAlreadyAdded(String prefixArea);
 
     List<ProjectArea> filterProjectAreas(Project project, String queryName);
 

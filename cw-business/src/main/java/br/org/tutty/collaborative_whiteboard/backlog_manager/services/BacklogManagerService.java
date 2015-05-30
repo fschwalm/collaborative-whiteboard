@@ -4,7 +4,6 @@ import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
 import backlog_manager.enums.StoryStatus;
-import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 

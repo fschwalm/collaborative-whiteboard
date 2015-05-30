@@ -2,7 +2,6 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw.service.SecurityService;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
-import cw.dtos.EncryptorResources;
 import cw.dtos.Security;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;

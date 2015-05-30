@@ -1,8 +1,6 @@
 package br.org.tutty.collaborative_whiteboard;
 
 import cw.entities.Project;
-import cw.entities.ProjectArea;
-import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;

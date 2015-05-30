@@ -1,7 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import backlog_manager.entities.Story;
-import backlog_manager.entities.StoryStatusLog;
 import cw.entities.ProjectArea;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;

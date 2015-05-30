@@ -6,7 +6,6 @@ import br.org.tutty.transmition.TransmitionDao;
 import cw.dtos.LoggedUser;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
-import org.json.JSONObject;
 import transmition.Connection;
 import transmition.Transmition;
 import transmition.entities.SentMessage;
