@@ -28,8 +28,8 @@
                          selection="#{tasksController.selectedTask}"
                          style="text-align: center;">
 
-                <p:ajax event="rowSelect" update="removeButton,openButton"/>
-                <p:ajax event="rowUnselect" update="removeButton,openButton"/>
+                <p:ajax event="rowSelect" update="removeButton"/>
+                <p:ajax event="rowUnselect" update="removeButton"/>
 
                 <f:facet name="header">
                     <p:toolbar>
@@ -45,10 +45,6 @@
 
                             <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
                                              onclick="PF('editionTask').show();" update=":creationTaskForm"/>
-
-                            <p:commandButton id="openButton" value="#{tasks_bundle['task.btn.open']}"
-                                             icon="ui-icon-folder-open"
-                                             disabled="#{tasksController.isNotSelected()}"/>
                         </f:facet>
                     </p:toolbar>
                 </f:facet>
@@ -81,19 +77,22 @@
                     <p:watermark value="#{tasks_bundle['edition.collum.time']}" for="time"/>
 
                     <p:calendar id="time" pattern="HH:mm" timeOnly="true" required="true"
-                                value="#{taskCreationController.taskCreation.time}" style="width: 40px;margin-left: -7px;" requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
+                                value="#{taskCreationController.taskCreation.time}"
+                                style="width: 40px;margin-left: -7px;"
+                                requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
 
                     <p:watermark value="#{tasks_bundle['edition.collum.subject']}" for="taskSubject"/>
 
                     <p:inputText id="taskSubject" required="true"
-                                 value="#{taskCreationController.taskCreation.subject}" style="margin-left: -7px;" size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
+                                 value="#{taskCreationController.taskCreation.subject}" style="margin-left: -7px;"
+                                 size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
 
                 </h:panelGrid>
 
                 <p:inputTextarea id="description" rows="20" cols="70"
                                  value="#{taskCreationController.taskCreation.description}"/>
 
-                <br />
+                <br/>
 
                 <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
                                  action="#{taskCreationController.createTask()}"
