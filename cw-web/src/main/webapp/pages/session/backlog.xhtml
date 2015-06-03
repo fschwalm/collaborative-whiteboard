@@ -15,7 +15,7 @@
                              rowIndexVar="index" selection="#{editionStoryController.selectedStory}"
                              rowKey="#{story.id}"
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
-                             selectionMode="single">
+                             selectionMode="single" filteredValue="#{backlogController.storiesFiltered}">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
                     <p:ajax event="rowSelect" update="openButton,removeButton"/>
                     <p:ajax event="rowUnselect" update="openButton,removeButton"/>
@@ -30,16 +30,19 @@
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.subject']}"
-                              style="width: 300px; text-align: left">
+                              style="width: 300px; text-align: center" filterBy="#{story.subject}"
+                              filterMatchMode="contains">
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.code']}" style="width: 100px; text-align: center">
+                    <p:column headerText="#{backlog['header.table.code']}" style="width: 100px; text-align: center"
+                              filterBy="#{story.code}" filterMatchMode="contains">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.branch']}"
-                              style="width: 100px; text-align: center">
+                              style="width: 100px; text-align: center" filterBy="#{story.branch}"
+                              filterMatchMode="contains">
                         <h:outputText value="#{story.branch}"/>
                     </p:column>
 
@@ -72,6 +75,12 @@
                                                  disabled="#{!editionStoryController.isSelected()}"
                                                  update=":storyDetail"/>
                             </f:facet>
+
+                            <f:facet name="right">
+                                <p:outputPanel>
+                                    <p:inputText id="statusFilter" onkeyup="PF('backlogTbl').filter()" style="width:150px" placeholder="Status Da Estoria"/>
+                                </p:outputPanel>
+                            </f:facet>
                         </p:toolbar>
                     </f:facet>
                 </p:dataTable>
@@ -95,7 +104,9 @@
                         </h:column>
 
                         <h:column>
-                            <p:inputMask mask="9?9" id="storyPoints" value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2" size="2" style="width: 20px;"/>
+                            <p:inputMask mask="9?9" id="storyPoints"
+                                         value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2"
+                                         size="2" style="width: 20px;"/>
                         </h:column>
 
                         <h:column>

@@ -39,6 +39,8 @@ public class BacklogController extends GenericController implements Serializable
 
     private List<Story> stories;
 
+    private List<Story> storiesFiltered;
+
     public void onRowReorder(ReorderEvent event) throws IOException {
         Collections.swap(stories, event.getFromIndex(), event.getToIndex());
         backlogManagerService.updateBacklog(stories);
@@ -77,4 +79,11 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
+    public List<Story> getStoriesFiltered() {
+        return storiesFiltered;
+    }
+
+    public void setStoriesFiltered(List<Story> storiesFiltered) {
+        this.storiesFiltered = storiesFiltered;
+    }
 }
