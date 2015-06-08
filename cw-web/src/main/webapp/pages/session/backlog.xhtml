@@ -191,6 +191,10 @@
                                          action="#{editionStoryController.voting()}"
                                          icon="ui-icon-note"
                                          immediate="true"/>
+
+                        <p:commandButton id="analyze" value="#{backlog['btn.analize']}"
+                                         action="#{editionStoryController.analize()}" />
+
                     </h:panelGrid>
                 </h:form>
             </p:outputPanel>

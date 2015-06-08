@@ -62,6 +62,10 @@ public class EditionStoryController extends GenericController implements Seriali
         return StoryStatus.AVAILABLE.equals(getStatus());
     }
 
+    public void analize(){
+        // TODO AÇÂO DE ANALIZAR ESTORIA
+    }
+
     public Boolean isRemoved(){
         return StoryStatus.REMOVED.equals(getStatus());
     }
