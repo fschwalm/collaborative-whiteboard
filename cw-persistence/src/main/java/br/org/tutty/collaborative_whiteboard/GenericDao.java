@@ -33,7 +33,7 @@ public abstract class GenericDao implements Dao, Serializable{
 
     @Override
     public void update(Object entity){
-        entityManager.merge(entity);
+        entityManager.persist(entityManager.merge(entity));
     }
 
     public Criteria createCriteria(Class<?> clazz) {

@@ -1,6 +1,5 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
-import backlog_manager.entities.Analysis;
 import backlog_manager.entities.Story;
 import cw.entities.ProjectArea;
 import cw.entities.User;
@@ -23,7 +22,6 @@ public class StoryEdition implements Serializable{
     private String descriptionChanges;
     private ProjectArea projectArea;
     private Integer storyPoints;
-    private Analysis analyzed;
 
     public void init(Story selectedStory) throws DataNotFoundException {
         if(selectedStory != null){
@@ -36,7 +34,6 @@ public class StoryEdition implements Serializable{
             this.descriptionChanges = selectedStory.getDescription();
             this.projectArea = selectedStory.getProjectArea();
             this.storyPoints = selectedStory.getStoryPoints();
-            this.analyzed = selectedStory.getAnalysis();
         }else {
             throw new DataNotFoundException();
         }
@@ -47,7 +44,6 @@ public class StoryEdition implements Serializable{
         this.selectedStory.setSubject(subjectChanges);
         this.selectedStory.setDescription(descriptionChanges);
         this.selectedStory.setStoryPoints(storyPoints);
-        this.selectedStory.setAnalysis(analyzed);
 
         return selectedStory;
     }

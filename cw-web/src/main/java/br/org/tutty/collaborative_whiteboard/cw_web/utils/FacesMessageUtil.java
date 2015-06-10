@@ -34,7 +34,7 @@ public class FacesMessageUtil implements Serializable{
     }
 
     public String readPropertyMessage(String keyPropertie) throws IOException {
-        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("/properties/messages.properties");
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("/properties/messages_pt_BR.properties");
         Properties properties = new Properties();
         properties.load(resourceAsStream);
 

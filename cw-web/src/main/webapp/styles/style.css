@@ -119,8 +119,8 @@
 }
 
 .story_REMOVED {
-    background-color: black;
-    color: white;
+    background-color: #e0eee0;
+    color: black;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -131,7 +131,8 @@
 }
 
 .story_WAITING {
-    background-color: #ffff66;
+    background-color: #fbae34;
+    color: black;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -142,7 +143,32 @@
 }
 
 .story_AVAILABLE {
-    background-color: #b4eeb4;
+    background-color: #97ffff;
+    color: black;
+    height: 35px;
+    moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    text-align: center;
+    display: block;
+    font-size: 32px;
+}
+
+.story_ANALYZED {
+    background-color: #6cdc97;
+    color: black;
+    height: 35px;
+    moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    text-align: center;
+    display: block;
+    font-size: 32px;
+}
+
+.story_IN_ANALYSIS {
+    background-color: #6cdc97;
+    color: black;
     height: 35px;
     moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -165,7 +191,23 @@
 }
 
 .status_collum_AVAILABLE {
-    background-color: #b4eeb4;
+    background-color: #97ffff;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+    margin-left: -10px;
+}
+
+.status_collum_IN_ANALYSIS {
+    background-color: #6cdc97;
+    width: 20px;
+    height: 50px;
+    display: inline-block;
+    margin-left: -10px;
+}
+
+.status_collum_ANALYZED {
+    background-color: #6cdc97;
     width: 20px;
     height: 50px;
     display: inline-block;
@@ -180,14 +222,14 @@
 }
 
 .status_collum_WAITING {
-    background-color: #ffff66;
+    background-color: #fbae34;
     width: 20px;
     height: 50px;
     display: inline-block;
 }
 
 .status_collum_REMOVED {
-    background-color: black;
+    background-color: #e0eee0;
     width: 20px;
     height: 50px;
     display: inline-block;

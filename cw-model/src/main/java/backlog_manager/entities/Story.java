@@ -43,9 +43,6 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @ManyToOne
     private User author;
 
-    @OneToOne
-    private Analysis analysis;
-
     @ManyToOne
     private Project project;
 
@@ -219,16 +216,4 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        return code != null ? code.hashCode() : 0;
-    }
-
-    public Analysis getAnalysis() {
-        return analysis;
-    }
-
-    public void setAnalysis(Analysis analysis) {
-        this.analysis = analysis;
-    }
 }

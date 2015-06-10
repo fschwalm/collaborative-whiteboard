@@ -95,7 +95,11 @@
                         </h:column>
 
                         <h:column>
-                            <p:inputMask mask="9?9" id="storyPoints" value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2" size="2" style="width: 20px;"/>
+                            <p:inputMask mask="9?9" id="storyPoints"
+                                         value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2"
+                                         size="2" style="width: 20px;"
+                                         required="#{empty param.required_validation}"
+                                         requiredMessage="#{messages['mandatory.field']}"/>
                         </h:column>
 
                         <h:column>
@@ -157,45 +161,79 @@
 
                     <p:message for="description"/>
                     <p:inputTextarea id="description"
-                                     value="#{editionStoryController.storyEdition.descriptionChanges}" cols="88"
-                                     rows="20" requiredMessage="#{messages['mandatory.field']}"
-                                     required="true"/>
+                                     value="#{editionStoryController.storyEdition.descriptionChanges}" cols="95"
+                                     rows="20" requiredMessage="#{messages['mandatory.field']}"/>
 
-                    <h:panelGrid columns="4">
-                        <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
-                                         action="#{editionStoryController.save()}" oncomplete="PF('storyDetail').hide()"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk"/>
-                        <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
-                                         oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
-                                         immediate="true">
-                        </p:commandButton>
-                        <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}"
-                                         action="#{editionStoryController.provide()}"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check"
-                                         rendered="#{editionStoryController.isPossibleProvide()}">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
+                                             action="#{editionStoryController.save()}"
+                                             oncomplete="PF('storyDetail').hide()"
+                                             update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk">
+                                <f:param name="required_validation" value="true"/>
+                            </p:commandButton>
 
-                            <p:confirm message="#{backlog['confirmation.change_status.text']}"
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
+                            <p:commandButton id="storyDetailCancel" value="#{backlog['btn.cancel']}"
+                                             oncomplete="PF('storyDetail').hide()" icon="ui-icon-arrowreturnthick-1-w"
+                                             immediate="true">
+                            </p:commandButton>
 
-                        <p:commandButton id="storyStatusRestore" value="#{backlog['btn.restore']}"
-                                         action="#{editionStoryController.restore()}"
-                                         update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check"
-                                         rendered="#{editionStoryController.isPossibleRestore()}">
-                            <p:confirm message="#{backlog['confirmation.remove.text']}"
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
+                            <p:commandButton id="storyStatusRestore" value="#{backlog['btn.restore']}"
+                                             action="#{editionStoryController.restore()}"
+                                             update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check"
+                                             disabled="#{!editionStoryController.isPossibleRestore()}">
 
-                        <p:commandButton id="storyVoting" value="#{backlog['btn.voting']}"
-                                         rendered="#{editionStoryController.isPossibleVoting()}"
-                                         action="#{editionStoryController.voting()}"
-                                         icon="ui-icon-note"
-                                         immediate="true"/>
+                                <f:param name="required_validation" value="true"/>
 
-                        <p:commandButton id="analyze" value="#{backlog['btn.analize']}"
-                                         action="#{editionStoryController.analize()}" />
+                                <p:confirm message="#{backlog['confirmation.remove.text']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandButton>
 
-                    </h:panelGrid>
+                             <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                            </span>
+                        </f:facet>
+
+                        <f:facet name="right">
+                            <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}"
+                                             action="#{editionStoryController.provide()}"
+                                             update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check"
+                                             disabled="#{!editionStoryController.isPossibleProvide()}"
+                                             immediate="true">
+
+                                <p:confirm message="#{backlog['confirmation.change_status.text']}"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+
+                            <p:commandButton id="storyVoting" value="#{backlog['btn.voting']}"
+                                             action="#{editionStoryController.voting()}"
+                                             icon="ui-icon-note"
+                                             immediate="true"/>
+
+                            <p:menuButton value="#{backlog['btn.analysis']}"
+                                          disabled="#{!editionStoryController.isPossibleAnalyze()}">
+                                <p:menuitem value="#{backlog['btn.analysis.init']}" icon="ui-icon-play"
+                                            update="storyDetailForm,:backlogForm:backlogTable"
+                                            action="#{editionStoryController.initAnalysis()}"
+                                            disabled="#{!editionStoryController.isPossibleInitAnalyze()}">
+                                    <f:param name="required_validation" value="true"/>
+                                </p:menuitem>
+
+                                <p:menuitem value="#{backlog['btn.analysis.end']}" icon="ui-icon-stop"
+                                            update="storyDetailForm,:backlogForm:backlogTable"
+                                            action="#{editionStoryController.endAnalysis()}"
+                                            disabled="#{!editionStoryController.isPossibleEndAnalyze()}">
+                                    <f:param name="required_validation" value="true"/>
+                                </p:menuitem>
+                            </p:menuButton>
+
+                        </f:facet>
+
+                    </p:toolbar>
+
+
                 </h:form>
             </p:outputPanel>
         </p:dialog>
@@ -232,17 +270,19 @@
                     <p:message for="descriptionNewStory"/>
                 </h:panelGrid>
 
-                <h:panelGrid columns="2">
-                    <p:commandButton id="save" value="#{backlog['btn.save']}"
-                                     update="@form,:backlogForm:backlogTable"
-                                     action="#{creationStoryController.create()}" icon="ui-icon-disk"/>
-                    <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
-                                     action="#{creationStoryController.cancel()}"
-                                     oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
-                                     immediate="true">
-                        <p:ajax update="createStoryForm" resetValues="true"/>
-                    </p:commandButton>
-                </h:panelGrid>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="save" value="#{backlog['btn.save']}"
+                                         update="@form,:backlogForm:backlogTable"
+                                         action="#{creationStoryController.create()}" icon="ui-icon-disk"/>
+                        <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
+                                         action="#{creationStoryController.cancel()}"
+                                         oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
+                                         immediate="true">
+                            <p:ajax update="createStoryForm" resetValues="true"/>
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
             </h:form>
         </p:dialog>
 

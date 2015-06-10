@@ -42,4 +42,8 @@ public interface BacklogManagerService {
     List<Task> fetchTasks(Story selectedStory) throws DataNotFoundException;
 
     void removeTask(Task selectedTask);
+
+    void initAnalyzeStory(Story selectedStory);
+
+    void endAnalyzeStory(Story story) throws DataNotFoundException;
 }

@@ -50,23 +50,37 @@ public class EditionStoryController extends GenericController implements Seriali
         return GOT_TO_TASKS_PAGE;
     }
 
-    public Boolean isPossibleProvide() throws DataNotFoundException {
+    public Boolean isPossibleProvide() {
         return !isRemoved();
     }
 
-    public Boolean isPossibleRestore() throws DataNotFoundException {
+    public Boolean isPossibleRestore() {
         return isRemoved();
     }
 
-    public Boolean isPossibleVoting() throws DataNotFoundException {
+    public Boolean isPossibleAnalyze() {
+        return isPossibleInitAnalyze() || isPossibleEndAnalyze();
+    }
+
+    public Boolean isPossibleInitAnalyze() {
         return StoryStatus.AVAILABLE.equals(getStatus());
     }
 
-    public void analize(){
-        // TODO AÇÂO DE ANALIZAR ESTORIA
+    public Boolean isPossibleEndAnalyze() {
+        return StoryStatus.IN_ANALYSIS.equals(getStatus());
     }
 
-    public Boolean isRemoved(){
+    public void initAnalysis() throws IOException {
+        backlogManagerService.initAnalyzeStory(storyEdition.selectedStory);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.stories.init_analyze");
+    }
+
+    public void endAnalysis() throws IOException, DataNotFoundException {
+        backlogManagerService.endAnalyzeStory(storyEdition.selectedStory);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.stories.end_analyze");
+    }
+
+    public Boolean isRemoved() {
         return StoryStatus.REMOVED.equals(getStatus());
     }
 
@@ -79,9 +93,10 @@ public class EditionStoryController extends GenericController implements Seriali
     }
 
     public void setSelectedStory(Story selectedStory) {
-        try{
+        try {
             storyEdition.init(selectedStory);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     public StoryStatus getStatus() {
@@ -91,7 +106,7 @@ public class EditionStoryController extends GenericController implements Seriali
             return storyStatusLog.getStoryStatus();
 
         } catch (DataNotFoundException e) {
-            return  null;
+            return null;
         }
     }
 

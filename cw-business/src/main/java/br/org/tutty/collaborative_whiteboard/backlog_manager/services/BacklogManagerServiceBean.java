@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
+import backlog_manager.entities.Analysis;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
@@ -98,14 +99,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         stories.forEach(new Consumer<Story>() {
             @Override
             public void accept(Story story) {
-                Story storyWithNewCode = populateStoryCode(story);
-                Story storyWithDefaultBranch = populateBranchCode(storyWithNewCode);
-
-                storyDao.update(storyWithDefaultBranch);
+                updateStory(story);
             }
         });
     }
-
 
     /**
      * Metodo responsavel por cria uma nova estoria.
@@ -152,7 +149,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
      */
     @Override
     public void updateStory(Story story) {
-        storyDao.update(story);
+        Story storyWithNewCode = populateStoryCode(story);
+        Story storyWithDefaultBranch = populateBranchCode(storyWithNewCode);
+
+        storyDao.update(storyWithDefaultBranch);
     }
 
     public Story populatePriority(Story story) {
@@ -198,5 +198,25 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         User user = sessionContext.getLoggedUser().getUser();
         StoryStatusLog storyStatusLog = new StoryStatusLog(storyStatus, user, story);
         storyDao.persist(storyStatusLog);
+    }
+
+    @Override
+    public void initAnalyzeStory(Story story) {
+        User user = sessionContext.getLoggedUser().getUser();
+        Analysis analysis = new Analysis(user, story);
+
+        changeStoryStatus(story, StoryStatus.IN_ANALYSIS);
+        storyDao.persist(analysis);
+    }
+
+    @Override
+    public void endAnalyzeStory(Story story) throws DataNotFoundException {
+        User user = sessionContext.getLoggedUser().getUser();
+        Analysis lastStoryAnalysis = storyDao.getLastStoryAnalysis(story);
+
+        lastStoryAnalysis.finish(user);
+
+        changeStoryStatus(story, StoryStatus.ANALYZED);
+        storyDao.update(lastStoryAnalysis);
     }
 }

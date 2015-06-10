@@ -73,7 +73,7 @@ public class ProjectServiceBean implements ProjectService {
 
     @Override
     public void createProjectArea(ProjectArea projectArea) {
-        projectAreaDao.update(projectArea);
+        projectAreaDao.persist(projectArea);
     }
 
     @Override
