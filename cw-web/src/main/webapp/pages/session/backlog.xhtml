@@ -218,14 +218,14 @@
                                             update="storyDetailForm,:backlogForm:backlogTable"
                                             action="#{editionStoryController.initAnalysis()}"
                                             disabled="#{!editionStoryController.isPossibleInitAnalyze()}">
-                                    <f:param name="required_validation" value="true"/>
+                                    <f:attribute name="required_validation" value="true"/>
                                 </p:menuitem>
 
                                 <p:menuitem value="#{backlog['btn.analysis.end']}" icon="ui-icon-stop"
                                             update="storyDetailForm,:backlogForm:backlogTable"
                                             action="#{editionStoryController.endAnalysis()}"
                                             disabled="#{!editionStoryController.isPossibleEndAnalyze()}">
-                                    <f:param name="required_validation" value="true"/>
+                                    <f:attribute name="required_validation" value="true"/>
                                 </p:menuitem>
                             </p:menuButton>
 
