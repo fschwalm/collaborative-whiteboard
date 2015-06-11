@@ -71,11 +71,13 @@ public class EditionStoryController extends GenericController implements Seriali
     }
 
     public void initAnalysis() throws IOException {
+        save();
         backlogManagerService.initAnalyzeStory(storyEdition.selectedStory);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.stories.init_analyze");
     }
 
     public void endAnalysis() throws IOException, DataNotFoundException {
+        save();
         backlogManagerService.endAnalyzeStory(storyEdition.selectedStory);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.stories.end_analyze");
     }
