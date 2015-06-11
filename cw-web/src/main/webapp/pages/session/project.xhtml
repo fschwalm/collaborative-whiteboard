@@ -64,16 +64,18 @@
                 <h:form id="projectAreaDataForm" prependId="false">
                     <h:panelGrid>
                         <h:column>
-                            <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
-                            <p:inputText id="projectArea" styleClass="projectArea"
-                                         value="#{projectAreaController.projectAreaCreation.projectAreaName}" required="true"/>
-
-                            <p:spacer width="5"/>
 
                             <p:watermark value="#{project_bundle['btn.new_area_abbreviation']}"
                                          for="projectAreaAbbreviation"/>
                             <p:inputText id="projectAreaAbbreviation" styleClass="projectAreaAbbreviation"
                                          value="#{projectAreaController.projectAreaCreation.projectAreaAbbreviation}" size="4" required="true"/>
+
+                            <p:spacer width="5"/>
+
+                            <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
+                            <p:inputText id="projectArea" styleClass="projectArea"
+                                         value="#{projectAreaController.projectAreaCreation.projectAreaName}" required="true"/>
+
 
                             <p:spacer width="10"/>
 
