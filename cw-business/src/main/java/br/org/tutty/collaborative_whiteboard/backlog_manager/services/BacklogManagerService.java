@@ -25,6 +25,8 @@ public interface BacklogManagerService {
 
     void updateStory(Story story);
 
+    void updateTask(Task task);
+
     void restoreStory(Story story);
 
     void removeStory(Story story);

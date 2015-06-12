@@ -155,6 +155,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         storyDao.update(storyWithDefaultBranch);
     }
 
+    @Override
+    public void updateTask(Task task) {
+        storyDao.update(task);
+    }
+
     public Story populatePriority(Story story) {
         try {
             List<Story> stories = fetchAllStories();

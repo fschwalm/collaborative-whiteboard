@@ -25,18 +25,18 @@
 
             <p:dataTable id="taskTable" value="#{tasksController.tasks}" var="task" selectionMode="single"
                          rowKey="#{task.id}"
-                         selection="#{tasksController.selectedTask}"
+                         selection="#{tasksEditionController.selectedTask}"
                          style="text-align: center;">
 
-                <p:ajax event="rowSelect" update="removeButton"/>
-                <p:ajax event="rowUnselect" update="removeButton"/>
+                <p:ajax event="rowSelect" update="removeButton,openButton"/>
+                <p:ajax event="rowUnselect" update="removeButton,openButton"/>
 
                 <f:facet name="header">
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton id="removeButton" value="#{tasks_bundle['task.btn.remove']}"
                                              styleClass="warning_button" icon="ui-icon-trash"
-                                             disabled="#{tasksController.isNotSelected()}"
+                                             disabled="#{tasksEditionController.isNotSelected()}"
                                              action="#{tasksController.removeTask()}"
                                              update=":votingForm:taskTable">
                                 <p:confirm message="#{backlog['confirmation.remove.text']}"
@@ -44,7 +44,12 @@
                             </p:commandButton>
 
                             <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
-                                             onclick="PF('editionTask').show();" update=":creationTaskForm"/>
+                                             onclick="PF('creationTask').show();" update=":creationTaskForm"/>
+
+                            <p:commandButton id="openButton" value="#{tasks_bundle['task.btn.open']}"
+                                             icon="ui-icon-folder-open"
+                                             disabled="#{tasksEditionController.isNotSelected()}"
+                                             onclick="PF('editionTask').show();" update=":editionForm"/>
                         </f:facet>
                     </p:toolbar>
                 </f:facet>
@@ -72,6 +77,38 @@
         </h:form>
 
         <p:dialog widgetVar="editionTask" modal="true" resizable="false">
+            <h:form id="editionForm" prependId="false">
+                <h:panelGrid columns="1">
+                    <p:calendar id="timeEdition" pattern="HH:mm" timeOnly="true" required="true"
+                                value="#{tasksEditionController.taskEdition.time}"
+                                style="width: 40px"
+                                requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
+
+                    <p:inputText id="taskSubjectEdition" required="true"
+                                 value="#{tasksEditionController.taskEdition.subject}"
+                                 size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
+
+                    <p:focus context="descriptionEdition"/>
+
+                    <p:inputTextarea id="descriptionEdition" rows="20" cols="70"
+                                     value="#{tasksEditionController.taskEdition.description}"/>
+
+                </h:panelGrid>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
+                                         update="@form,:votingForm:taskTable" action="#{tasksEditionController.save()}"/>
+
+                        <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
+                                         onclick="PF('editionTask').hide()"/>
+                    </f:facet>
+                </p:toolbar>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="creationTask" modal="true" resizable="false">
             <h:form id="creationTaskForm" prependId="false">
                 <h:panelGrid columns="2">
                     <p:watermark value="#{tasks_bundle['edition.collum.time']}" for="time"/>
@@ -89,17 +126,22 @@
 
                 </h:panelGrid>
 
+                <p:focus context="description"/>
+
                 <p:inputTextarea id="description" rows="20" cols="70"
                                  value="#{taskCreationController.taskCreation.description}"/>
 
-                <br/>
 
-                <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
-                                 action="#{taskCreationController.createTask()}"
-                                 update="@form,:votingForm:taskTable"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
+                                         action="#{taskCreationController.createTask()}"
+                                         update="@form,:votingForm:taskTable"/>
 
-                <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
-                                 onclick="PF('editionTask').hide()"/>
+                        <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
+                                         onclick="PF('creationTask').hide()"/>
+                    </f:facet>
+                </p:toolbar>
             </h:form>
         </p:dialog>
 
