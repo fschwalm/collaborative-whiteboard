@@ -92,7 +92,7 @@
                     <div id="wikiArea" style="margin-top: 7px;">
                         <p:commandButton icon="ui-icon-pencil" onclick="PF('editionWikiPage').jq.show()" immediate="true"/>
                         <p:spacer width="10px"/>
-                        <p:commandLink  ajax="false" action="#{editionStoryController.openWiki}" value="Pagina Wiki" target="_blank" immediate="true"/> <br />
+                        <p:commandLink  disabled="#{empty editionStoryController.storyEdition.wikiPage}" ajax="false" action="#{editionStoryController.openWiki}" value="#{backlog['label.wiki_link']}" target="_blank" immediate="true"/> <br />
                         <p:inputText widgetVar="editionWikiPage" value="#{editionStoryController.storyEdition.wikiPage}" size="90" style="display:none;margin-top: 10px;"/>
                     </div>
 

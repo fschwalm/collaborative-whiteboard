@@ -40,8 +40,10 @@ public class EditionStoryController extends GenericController implements Seriali
     }
 
     public void openWiki() throws IOException {
+        String wikiPage = storyEdition.getWikiPage();
+
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect(storyEdition.getWikiPage());
+        externalContext.redirect(wikiPage);
     }
 
     public void provide() {
