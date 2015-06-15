@@ -9,6 +9,8 @@ import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.exceptions.DataNotFoundException;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +37,11 @@ public class EditionStoryController extends GenericController implements Seriali
         Story story = storyEdition.toEntity();
         backlogManagerService.updateStory(story);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.changed_story");
+    }
+
+    public void openWiki() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect(storyEdition.getWikiPage());
     }
 
     public void provide() {

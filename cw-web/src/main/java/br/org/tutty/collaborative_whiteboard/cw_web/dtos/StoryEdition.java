@@ -22,6 +22,7 @@ public class StoryEdition implements Serializable{
     private String descriptionChanges;
     private ProjectArea projectArea;
     private Integer storyPoints;
+    private String wikiPage;
 
     public void init(Story selectedStory) throws DataNotFoundException {
         if(selectedStory != null){
@@ -34,6 +35,7 @@ public class StoryEdition implements Serializable{
             this.descriptionChanges = selectedStory.getDescription();
             this.projectArea = selectedStory.getProjectArea();
             this.storyPoints = selectedStory.getStoryPoints();
+            this.wikiPage = selectedStory.getWikiPage();
         }else {
             throw new DataNotFoundException();
         }
@@ -44,6 +46,7 @@ public class StoryEdition implements Serializable{
         this.selectedStory.setSubject(subjectChanges);
         this.selectedStory.setDescription(descriptionChanges);
         this.selectedStory.setStoryPoints(storyPoints);
+        this.selectedStory.setWikiPage(wikiPage);
 
         return selectedStory;
     }
@@ -110,5 +113,13 @@ public class StoryEdition implements Serializable{
 
     public void setStoryPoints(Integer storyPoints) {
         this.storyPoints = storyPoints;
+    }
+
+    public String getWikiPage() {
+        return wikiPage;
+    }
+
+    public void setWikiPage(String wikiPage) {
+        this.wikiPage = wikiPage;
     }
 }

@@ -287,6 +287,11 @@
     background-image: url(../images/icon/print.png);
 }
 
+#wikiPage{
+    float: right;
+    margin-right: 10px;
+}
+
 
 
 

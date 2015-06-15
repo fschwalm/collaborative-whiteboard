@@ -61,6 +61,9 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
+    @Column(name = "wiki_page")
+    private String wikiPage;
+
     public Story() {
     }
 
@@ -216,4 +219,11 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         return true;
     }
 
+    public String getWikiPage() {
+        return wikiPage;
+    }
+
+    public void setWikiPage(String wikiPage) {
+        this.wikiPage = wikiPage;
+    }
 }

@@ -82,9 +82,18 @@
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false">
 
+
                     <div class="story_#{editionStoryController.status}">
                         <h:outputText value="#{backlog['story.status.'.concat(editionStoryController.status)]}"
                                       style="text-align: center; font-size: 30px !important;"/>
+
+                    </div>
+
+                    <div id="wikiArea" style="margin-top: 7px;">
+                        <p:commandButton icon="ui-icon-pencil" onclick="PF('editionWikiPage').jq.show()" immediate="true"/>
+                        <p:spacer width="10px"/>
+                        <p:commandLink  ajax="false" action="#{editionStoryController.openWiki}" value="Pagina Wiki" target="_blank" immediate="true"/> <br />
+                        <p:inputText widgetVar="editionWikiPage" value="#{editionStoryController.storyEdition.wikiPage}" size="90" style="display:none;margin-top: 10px;"/>
                     </div>
 
                     <p:spacer width="15px"/>
@@ -168,7 +177,6 @@
                         <f:facet name="left">
                             <p:commandButton id="storyDetailSave" value="#{backlog['btn.save']}"
                                              action="#{editionStoryController.save()}"
-                                             oncomplete="PF('storyDetail').hide()"
                                              update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-disk">
                                 <f:param name="required_validation" value="true"/>
                             </p:commandButton>
