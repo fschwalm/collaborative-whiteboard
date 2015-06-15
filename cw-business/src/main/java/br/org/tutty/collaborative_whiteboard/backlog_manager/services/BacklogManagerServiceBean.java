@@ -1,9 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
-import backlog_manager.entities.Analysis;
-import backlog_manager.entities.Story;
-import backlog_manager.entities.StoryStatusLog;
-import backlog_manager.entities.Task;
+import backlog_manager.entities.*;
 import backlog_manager.enums.StoryStatus;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.backlog_manager.StoryDao;
@@ -18,6 +15,9 @@ import cw.exceptions.DataNotFoundException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -175,22 +175,22 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Override
     public void restoreStory(Story story) {
-        changeStoryStatus(story,StoryStatus.WAITING);
+        changeStoryStatus(story, StoryStatus.WAITING);
     }
 
     @Override
     public void removeStory(Story story) {
-        changeStoryStatus(story,StoryStatus.REMOVED);
+        changeStoryStatus(story, StoryStatus.REMOVED);
     }
 
     @Override
     public void provideStory(Story story) {
-        changeStoryStatus(story,StoryStatus.AVAILABLE);
+        changeStoryStatus(story, StoryStatus.AVAILABLE);
     }
 
     @Override
     public void finalizeStory(Story story) {
-        changeStoryStatus(story,StoryStatus.FINALIZED);
+        changeStoryStatus(story, StoryStatus.FINALIZED);
     }
 
     @Override
@@ -223,5 +223,18 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
         changeStoryStatus(story, StoryStatus.ANALYZED);
         storyDao.update(lastStoryAnalysis);
+    }
+
+    @Override
+    public void uploadFile(Story story, InputStream inputStream, String fileName) throws IOException {
+        User user = sessionContext.getLoggedUser().getUser();
+        UploadedFile uploadedFile = new UploadedFile(user, story, inputStream, fileName);
+        storyDao.persist(uploadedFile);
+
+    }
+
+    @Override
+    public List<UploadedFile> fetchFiles(Story selectedStory) throws DataNotFoundException {
+        return storyDao.fetchFiles(selectedStory);
     }
 }

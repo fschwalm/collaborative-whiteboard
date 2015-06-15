@@ -127,10 +127,6 @@ public class Task implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setAuthor(User author) {
         User oldValue = this.author;
         this.author = author;

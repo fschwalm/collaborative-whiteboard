@@ -78,9 +78,9 @@
             </div>
         </h:form>
 
-        <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
+        <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false" width="885" height="627">
             <p:outputPanel id="storyDetailPanel">
-                <h:form id="storyDetailForm" prependId="false">
+                <h:form id="storyDetailForm" prependId="false" enctype="multipart/form-data">
 
 
                     <div class="story_#{editionStoryController.status}">
@@ -89,89 +89,128 @@
 
                     </div>
 
-                    <div id="wikiArea" style="margin-top: 7px;">
-                        <p:commandButton icon="ui-icon-pencil" onclick="PF('editionWikiPage').jq.show()" immediate="true"/>
-                        <p:spacer width="10px"/>
-                        <p:commandLink  disabled="#{empty editionStoryController.storyEdition.wikiPage}" ajax="false" action="#{editionStoryController.openWiki}" value="#{backlog['label.wiki_link']}" target="_blank" immediate="true"/> <br />
-                        <p:inputText widgetVar="editionWikiPage" value="#{editionStoryController.storyEdition.wikiPage}" size="90" style="display:none;margin-top: 10px;"/>
-                    </div>
+                    <p:tabView>
+                        <p:tab title="#{backlog['tab.story.title']}">
+                            <div id="wikiArea" style="margin-top: 7px;">
+                                <p:commandButton icon="ui-icon-pencil" onclick="PF('editionWikiPage').jq.show()"
+                                                 immediate="true"/>
+                                <p:spacer width="10px"/>
+                                <p:commandLink disabled="#{empty editionStoryController.storyEdition.wikiPage}"
+                                               ajax="false"
+                                               action="#{editionStoryController.openWiki}"
+                                               value="#{backlog['label.wiki_link']}" target="_blank" immediate="true"/>
+                                <br/>
+                                <p:inputText widgetVar="editionWikiPage"
+                                             value="#{editionStoryController.storyEdition.wikiPage}" size="90"
+                                             style="display:none;margin-top: 10px;"/>
+                            </div>
 
-                    <p:spacer width="15px"/>
+                            <p:spacer width="11px"/>
 
-                    <h:panelGrid columns="2">
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.story_points']}" for="storyPoints"/>
-                        </h:column>
+                            <h:panelGrid columns="2">
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.story_points']}" for="storyPoints"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputMask mask="9?9" id="storyPoints"
-                                         value="#{editionStoryController.storyEdition.storyPoints}" maxlength="2"
-                                         size="2" style="width: 20px;"
-                                         required="#{empty param.required_validation}"
-                                         requiredMessage="#{messages['mandatory.field']}"/>
-                        </h:column>
+                                <h:column>
+                                    <p:inputMask mask="9?9" id="storyPoints"
+                                                 value="#{editionStoryController.storyEdition.storyPoints}"
+                                                 maxlength="2"
+                                                 size="2" style="width: 20px;"
+                                                 required="#{empty param.required_validation}"
+                                                 requiredMessage="#{messages['mandatory.field']}"/>
+                                </h:column>
 
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
-                        </h:column>
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.creation_date']}" for="creationDate"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:calendar id="creationDate" value="#{editionStoryController.storyEdition.creationDate}"
-                                        disabled="true" pattern="dd/MM/yyyy HH:mm"/>
-                        </h:column>
+                                <h:column>
+                                    <p:calendar id="creationDate"
+                                                value="#{editionStoryController.storyEdition.creationDate}"
+                                                disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+                                </h:column>
 
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.code']}" for="code"/>
-                        </h:column>
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.code']}" for="code"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputText id="code" value="#{editionStoryController.storyEdition.code}" readonly="true"/>
-                        </h:column>
+                                <h:column>
+                                    <p:inputText id="code" value="#{editionStoryController.storyEdition.code}"
+                                                 readonly="true"/>
+                                </h:column>
 
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
-                        </h:column>
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.branch']}" for="branch"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputText id="branch" value="#{editionStoryController.storyEdition.branch}"
-                                         requiredMessage="#{messages['mandatory.field']}"/>
-                        </h:column>
+                                <h:column>
+                                    <p:inputText id="branch" value="#{editionStoryController.storyEdition.branch}"
+                                                 requiredMessage="#{messages['mandatory.field']}"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:message for="branch"/>
+                                <h:column>
+                                    <p:message for="branch"/>
 
-                            <h:outputLabel value="#{backlog['label.area']}" for="area"/>
-                        </h:column>
+                                    <h:outputLabel value="#{backlog['label.area']}" for="area"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputText id="area" value="#{editionStoryController.storyEdition.projectArea.name}"
-                                         readonly="true" size="68"/>
-                        </h:column>
+                                <h:column>
+                                    <p:inputText id="area"
+                                                 value="#{editionStoryController.storyEdition.projectArea.name}"
+                                                 readonly="true" size="68"/>
+                                </h:column>
 
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.author']}" for="author"/>
-                        </h:column>
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.author']}" for="author"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputText id="author" value="#{editionStoryController.storyEdition.author.fullName}"
-                                         readonly="true" size="68"/>
-                        </h:column>
+                                <h:column>
+                                    <p:inputText id="author"
+                                                 value="#{editionStoryController.storyEdition.author.fullName}"
+                                                 readonly="true" size="68"/>
+                                </h:column>
 
-                        <h:column>
-                            <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
-                        </h:column>
+                                <h:column>
+                                    <h:outputLabel value="#{backlog['label.subject']}" for="subject"/>
+                                </h:column>
 
-                        <h:column>
-                            <p:inputText id="subject" value="#{editionStoryController.storyEdition.subjectChanges}"
-                                         requiredMessage="#{messages['mandatory.field']}" required="true" size="68"/>
-                            <p:message for="subject"/>
-                        </h:column>
-                    </h:panelGrid>
+                                <h:column>
+                                    <p:inputText id="subject"
+                                                 value="#{editionStoryController.storyEdition.subjectChanges}"
+                                                 requiredMessage="#{messages['mandatory.field']}" required="true"
+                                                 size="68"/>
+                                    <p:message for="subject"/>
+                                </h:column>
+                            </h:panelGrid>
 
-                    <p:message for="description"/>
-                    <p:inputTextarea id="description"
-                                     value="#{editionStoryController.storyEdition.descriptionChanges}" cols="95"
-                                     rows="20" requiredMessage="#{messages['mandatory.field']}"/>
+                            <p:spacer width="4px"/>
+
+                            <p:message for="description"/>
+                            <p:inputTextarea id="description"
+                                             value="#{editionStoryController.storyEdition.descriptionChanges}"
+                                             cols="110"
+                                             rows="10" requiredMessage="#{messages['mandatory.field']}"/>
+                        </p:tab>
+                        <p:tab title="#{backlog['tab.file.title']}">
+                            <p:fileUpload fileUploadListener="#{editionStoryController.uploadFile}" mode="advanced"
+                                          dragDropSupport="true" sizeLimit="10485760"/>
+
+                            <p:outputPanel>
+                                <p:dataTable rows="8" paginator="true" var="file" value="#{editionStoryController.fetchFiles()}">
+                                    <p:column style="width: 100px">
+                                        <h:outputText value="#{file.fileName}"/>
+                                    </p:column>
+                                    <p:column style="width: 50px">
+                                        <p:commandButton icon="ui-icon-arrowthickstop-1-s" immediate="true" ajax="false">
+                                            <p:fileDownload value="#{editionStoryController.download(file)}"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </p:tab>
+                    </p:tabView>
+
 
                     <p:toolbar>
                         <f:facet name="left">
@@ -201,9 +240,7 @@
                              <span class="ui-separator">
                                 <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                             </span>
-                        </f:facet>
 
-                        <f:facet name="right">
                             <p:commandButton id="storyStatusAvailable" value="#{backlog['btn.available']}"
                                              action="#{editionStoryController.provide()}"
                                              update="storyDetailForm,:backlogForm:backlogTable" icon="ui-icon-check"
@@ -236,11 +273,8 @@
                                     <f:attribute name="required_validation" value="true"/>
                                 </p:menuitem>
                             </p:menuButton>
-
                         </f:facet>
-
                     </p:toolbar>
-
 
                 </h:form>
             </p:outputPanel>

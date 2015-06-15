@@ -2,11 +2,16 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
+import backlog_manager.entities.UploadedFile;
 import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.exceptions.DataNotFoundException;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -15,7 +20,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by drferreira on 07/05/15.
@@ -37,6 +45,35 @@ public class EditionStoryController extends GenericController implements Seriali
         Story story = storyEdition.toEntity();
         backlogManagerService.updateStory(story);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.changed_story");
+    }
+
+    public StreamedContent download(UploadedFile uploadedFile){
+        InputStream inputStream = uploadedFile.getStreamFile();
+        DefaultStreamedContent defaultStreamedContent = new DefaultStreamedContent(inputStream);
+        defaultStreamedContent.setName(uploadedFile.getFileName());
+
+        return defaultStreamedContent;
+    }
+
+    public List<UploadedFile> fetchFiles(){
+        try{
+            return backlogManagerService.fetchFiles(storyEdition.selectedStory);
+        }catch (DataNotFoundException e){
+            return new ArrayList<>();
+        }
+    }
+
+    public void uploadFile(FileUploadEvent event) throws IOException {
+        try {
+            org.primefaces.model.UploadedFile file = event.getFile();
+            String fileName = file.getFileName();
+            InputStream stream = file.getInputstream();
+
+            backlogManagerService.uploadFile(storyEdition.selectedStory, stream, fileName);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.upload_file_success");
+        }catch (Exception e){
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "backlog.upload_file_error");
+        }
     }
 
     public void openWiki() throws IOException {
