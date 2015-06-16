@@ -292,6 +292,10 @@
     margin-right: 10px;
 }
 
+.files td.name {
+    word-break:break-all;
+}
+
 
 
 
