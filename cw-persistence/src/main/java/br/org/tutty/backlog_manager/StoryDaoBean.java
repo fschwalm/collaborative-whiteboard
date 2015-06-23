@@ -4,18 +4,17 @@ import backlog_manager.entities.Analysis;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.UploadedFile;
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -50,7 +49,26 @@ public class StoryDaoBean extends GenericDao implements StoryDao {
     }
 
     @Override
-    public StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException {
+    public List<Story> fetchStories(StoryStatus storyStatus) throws DataNotFoundException {
+        List<Story> result = new ArrayList<>();
+        List<Story> stories = fetchAllStories();
+
+        stories.forEach(new Consumer<Story>() {
+            @Override
+            public void accept(Story story) {
+                    try {
+                        if(StoryStatus.ANALYZED.equals(getStoryStatusLog(story).getStoryStatus())){
+                           result.add(story);
+                        }
+                    } catch (DataNotFoundException e) {}
+            }
+        });
+
+        return result;
+    }
+
+    @Override
+    public StoryStatusLog getStoryStatusLog(Story story) throws DataNotFoundException {
         Criteria criteria = createCriteria(StoryStatusLog.class);
         criteria.add(Restrictions.eq("story", story));
         criteria.addOrder(Order.desc("date"));

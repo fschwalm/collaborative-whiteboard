@@ -58,6 +58,9 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @ManyToOne
     private Stage stage;
 
+    @ManyToOne
+    private Iteration iteration;
+
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
@@ -193,6 +196,17 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         this.storyPoints = storyPoints;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("storyPoints", oldValue, storyPoints);
+    }
+
+    public Iteration getIteration() {
+        return iteration;
+    }
+
+    public void setIteration(Iteration iteration) {
+        Iteration oldValue = this.iteration;
+        this.iteration = iteration;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("iteration", oldValue, iteration);
     }
 
     @Override

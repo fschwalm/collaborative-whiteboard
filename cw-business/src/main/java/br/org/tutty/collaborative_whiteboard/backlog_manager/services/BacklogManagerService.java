@@ -18,6 +18,8 @@ import java.util.List;
 public interface BacklogManagerService {
     List<Story> fetchAllStories() throws DataNotFoundException;
 
+    List<Story> fetchAnalyzedStories() throws DataNotFoundException;
+
     List<Story> fetch(ProjectArea projectArea) throws DataNotFoundException;
 
     void updateBacklog(List<Story> stories);

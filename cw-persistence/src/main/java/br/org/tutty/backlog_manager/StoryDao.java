@@ -4,6 +4,7 @@ import backlog_manager.entities.Analysis;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.UploadedFile;
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.Dao;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
@@ -21,7 +22,9 @@ public interface StoryDao extends Dao {
 
     List<Story> fetchStories(ProjectArea projectArea) throws DataNotFoundException;
 
-    StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException;
+    List<Story> fetchStories(StoryStatus storyStatus) throws DataNotFoundException;
+
+    StoryStatusLog getStoryStatusLog(Story story) throws DataNotFoundException;
 
     Analysis getLastStoryAnalysis(Story story) throws DataNotFoundException;
 

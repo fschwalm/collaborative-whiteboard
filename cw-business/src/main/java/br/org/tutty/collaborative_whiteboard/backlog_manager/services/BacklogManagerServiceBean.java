@@ -15,7 +15,6 @@ import cw.exceptions.DataNotFoundException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -41,6 +40,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
         return storyDao.fetchAllStories();
+    }
+
+    @Override
+    public List<Story> fetchAnalyzedStories() throws DataNotFoundException {
+        return storyDao.fetchStories(StoryStatus.ANALYZED);
     }
 
     @Override
@@ -195,7 +199,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Override
     public StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException {
-        return storyDao.getStoryStatus(story);
+        return storyDao.getStoryStatusLog(story);
     }
 
     @Override

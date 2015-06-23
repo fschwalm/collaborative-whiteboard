@@ -1,7 +1,8 @@
 <ui:composition template="../../templates/generic.xhtml" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="pageContent">
         <h:form prependId="false">
@@ -9,12 +10,15 @@
                 <p:tab title="#{whiteboard['menu.header']}">
                     <p:ribbonGroup label="#{whiteboard['menu.stage']}">
                         <p:commandButton value="#{whiteboard['menu.stage.new']}"
-                                         oncomplete="PF('stageCreation').show()"/>
+                                         oncomplete="PF('stageCreation').show()"
+                                         update=":iterationInitForm:availablesStories"/>
                         <p:commandButton value="#{whiteboard['menu.stage.edit']}"/>
                     </p:ribbonGroup>
 
                     <p:ribbonGroup label="#{whiteboard['menu.iteration']}">
-                        <p:commandButton value="#{whiteboard['menu.iteration.init']}"/>
+                        <p:commandButton value="#{whiteboard['menu.iteration.init']}"
+                                         oncomplete="PF('iterationCreate').show()"
+                                         update=":iterationCreate" process="@this"/>
                         <p:commandButton value="#{whiteboard['menu.iteration.end']}"/>
                     </p:ribbonGroup>
 
@@ -27,6 +31,47 @@
             <div id="whiteboard" class="whiteboard">
             </div>
         </h:form>
+
+        <p:dialog id="iterationCreate" widgetVar="iterationCreate" modal="true" resizable="false" appendToBody="false"
+                  width="1000">
+            <h:form id="iterationInitForm" prependId="false">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton icon="ui-icon-check" value="Criar"
+                                         action="#{iterationController.create()}" update="iterationInitForm"
+                                         process="@this,iterationName,availablesStories"/>
+                        <p:spacer width="5"/>
+                        <p:watermark value="Nome" for="iterationName"/>
+                        <p:inputText id="iterationName" value="#{iterationController.name}" required="true"
+                                     requiredMessage="#{whiteboard['iteration.name.required']}"/>
+                        <p:calendar id="initDate" value="#{iterationController.init}"/>
+                        <p:calendar id="endDate" value="#{iterationController.end}"/>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:dataTable id="availablesStories" var="story" value="#{iterationController.fetchAvailables()}"
+                             selection="#{iterationController.selected}" rowKey="#{story.id}">
+
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                    <p:column headerText="Story Points" style="width:40px;text-align:center">
+                        <h:outputText value="#{story.storyPoints}"/>
+                    </p:column>
+
+                    <p:column headerText="Projeto" style="width:80px;text-align:center">
+                        <h:outputText value="#{story.project.nameProject}"/>
+                    </p:column>
+
+                    <p:column headerText="Codigo" style="width:60px;text-align:center">
+                        <h:outputText value="#{story.code}"/>
+                    </p:column>
+
+                    <p:column headerText="Assunto">
+                        <h:outputText value="#{story.subject}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
 
         <p:dialog id="stageCreation" widgetVar="stageCreation" modal="true" resizable="false" appendToBody="false"
                   header="#{whiteboard['stage.dialog.creation.header']}">

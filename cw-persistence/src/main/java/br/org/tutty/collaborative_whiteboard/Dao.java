@@ -11,4 +11,6 @@ public interface Dao {
     void update(Object entity);
 
     void remove(Object entity);
+
+    void merge(Object entity);
 }

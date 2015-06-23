@@ -24,6 +24,11 @@ public abstract class GenericDao implements Dao, Serializable{
     }
 
     @Override
+    public void merge(Object entity){
+        entityManager.merge(entity);
+    }
+
+    @Override
     public Long count(Class<?> clazz){
         Criteria criteria = createCriteria(clazz);
         criteria.setProjection(Projections.rowCount());
