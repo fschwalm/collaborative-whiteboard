@@ -296,6 +296,14 @@
     word-break:break-all;
 }
 
+.iteration_tool_name{
+    text-align: left;
+    width: 250px;
+    height: 20px;
+    margin-top: -3%;
+    display: block;
+}
+
 
 
 

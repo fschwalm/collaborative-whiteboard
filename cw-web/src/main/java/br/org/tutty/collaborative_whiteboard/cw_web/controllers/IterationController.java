@@ -1,8 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
+import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
-import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerServiceBean;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.IterationService;
 import cw.exceptions.DataNotFoundException;
 
@@ -39,7 +39,29 @@ public class IterationController extends GenericController implements Serializab
     @PostConstruct
     public void setUp() throws IOException {
         name = null;
+        init = null;
+        end = null;
         selected = new ArrayList<>();
+    }
+
+    public String iterationName() throws IOException {
+        try {
+            return getCurrentIteration().getName();
+        } catch (DataNotFoundException e) {
+            return "";
+        }
+    }
+
+    public Float progressIteration() throws IOException {
+        try {
+            return iterationService.getProgressIteration(getCurrentIteration());
+        } catch (DataNotFoundException e) {
+            return 0f;
+        }
+    }
+
+    public void progressIterationComplete() throws IOException {
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.iteration.success");
     }
 
     public void create() throws IOException {
@@ -49,11 +71,11 @@ public class IterationController extends GenericController implements Serializab
     }
 
     public List<Story> fetchAvailables() throws IOException {
-        try{
-            return backlogManagerService.fetchAnalyzedStories();
-        }catch (DataNotFoundException e){
-            return new ArrayList<>();
-        }
+        return iterationService.fetchStoriesForIteration();
+    }
+
+    public Iteration getCurrentIteration() throws IOException, DataNotFoundException {
+        return iterationService.getCurrentIteration();
     }
 
     public List<Story> getSelected() {
@@ -88,3 +110,4 @@ public class IterationController extends GenericController implements Serializab
         this.end = end;
     }
 }
+

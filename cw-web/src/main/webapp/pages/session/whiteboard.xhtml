@@ -15,11 +15,17 @@
                         <p:commandButton value="#{whiteboard['menu.stage.edit']}"/>
                     </p:ribbonGroup>
 
-                    <p:ribbonGroup label="#{whiteboard['menu.iteration']}">
-                        <p:commandButton value="#{whiteboard['menu.iteration.init']}"
+                    <p:ribbonGroup label="#{iterationController.iterationName()}" style="width: 243px;">
+                        <p:commandButton value="#{whiteboard['menu.iteration.create']}"
                                          oncomplete="PF('iterationCreate').show()"
                                          update=":iterationCreate" process="@this"/>
+                        <p:commandButton value="#{whiteboard['menu.iteration.init']}"/>
                         <p:commandButton value="#{whiteboard['menu.iteration.end']}"/>
+
+                        <p:progressBar ajax="true" value="#{iterationController.progressIteration()}"
+                                       labelTemplate="{value}%" styleClass="animated" global="false" style="margin-top: 20%">
+                            <p:ajax event="complete" listener="#{iterationController.progressIterationComplete()}"/>
+                        </p:progressBar>
                     </p:ribbonGroup>
 
                     <p:ribbonGroup label="#{whiteboard['menu.story']}">
@@ -39,13 +45,30 @@
                     <f:facet name="left">
                         <p:commandButton icon="ui-icon-check" value="Criar"
                                          action="#{iterationController.create()}" update="iterationInitForm"
-                                         process="@this,iterationName,availablesStories"/>
+                                         process="@this,iterationName,availablesStories,initDate,endDate"/>
+
                         <p:spacer width="5"/>
+
                         <p:watermark value="Nome" for="iterationName"/>
                         <p:inputText id="iterationName" value="#{iterationController.name}" required="true"
                                      requiredMessage="#{whiteboard['iteration.name.required']}"/>
-                        <p:calendar id="initDate" value="#{iterationController.init}"/>
-                        <p:calendar id="endDate" value="#{iterationController.end}"/>
+
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                        </span>
+
+                        <p:watermark value="Inicio" for="initDate"/>
+                        <p:calendar id="initDate" value="#{iterationController.init}" pattern="dd-MM-yyyy" mask="true"
+                                    size="8" required="true"
+                                    requiredMessage="#{whiteboard['iteration.init.required']}"/>
+
+                        <p:spacer width="5"/>
+                        <h:outputText value="-"/>
+                        <p:spacer width="5"/>
+
+                        <p:watermark value="Fim" for="endDate"/>
+                        <p:calendar id="endDate" value="#{iterationController.end}" pattern="dd-MM-yyyy" mask="true"
+                                    size="8" required="true" requiredMessage="#{whiteboard['iteration.end.required']}"/>
                     </f:facet>
                 </p:toolbar>
 

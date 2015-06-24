@@ -12,6 +12,7 @@ import cw.interfaces.ConvertibleToJSon;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -49,6 +50,9 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @ManyToOne
     private ProjectArea projectArea;
 
+    @ManyToOne
+    private Iteration iteration;
+
     @Column(nullable = false)
     private String subject;
 
@@ -57,9 +61,6 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
 
     @ManyToOne
     private Stage stage;
-
-    @ManyToOne
-    private Iteration iteration;
 
     @Transient
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);

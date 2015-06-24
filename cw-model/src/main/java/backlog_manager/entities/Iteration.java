@@ -5,6 +5,7 @@ import br.org.tutty.util.PropertyMonitor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by drferreira on 23/06/15.
