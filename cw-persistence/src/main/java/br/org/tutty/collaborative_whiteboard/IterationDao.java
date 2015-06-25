@@ -4,6 +4,7 @@ import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
 import cw.exceptions.DataNotFoundException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ import java.util.List;
  */
 public interface IterationDao extends Dao{
     List<Story> fetchStories(Iteration iteration) throws DataNotFoundException;
+
+    Boolean existIterationInRange(Date init, Date end);
 
     Iteration getCurrentIteration() throws DataNotFoundException;
 }

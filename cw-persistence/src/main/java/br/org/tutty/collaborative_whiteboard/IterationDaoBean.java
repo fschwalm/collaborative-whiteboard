@@ -8,8 +8,7 @@ import org.hibernate.criterion.Restrictions;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by drferreira on 23/06/15.
@@ -17,6 +16,8 @@ import java.util.List;
 @Stateless
 @Local(IterationDao.class)
 public class IterationDaoBean extends GenericDao implements IterationDao {
+
+
 
     @Override
     public List<Story> fetchStories(Iteration iteration) throws DataNotFoundException {
@@ -27,13 +28,43 @@ public class IterationDaoBean extends GenericDao implements IterationDao {
     }
 
     @Override
-    public Iteration getCurrentIteration() throws DataNotFoundException {
-        Date now = new Date();
+    public Boolean existIterationInRange(Date init, Date end){
+        List<Date> daysBetweenDates = getDaysBetweenDates(init, end);
 
+        for (Date date : daysBetweenDates){
+            try {
+                fetchIterationBy(date);
+                return Boolean.TRUE;
+            } catch (DataNotFoundException e) {}
+        }
+
+        return Boolean.FALSE;
+    }
+
+    public Iteration fetchIterationBy(Date date) throws DataNotFoundException {
         Criteria criteria = createCriteria(Iteration.class);
-        criteria.add(Restrictions.lt("initDate", now));
-        criteria.add(Restrictions.gt("endDate", now));
+        criteria.add(Restrictions.lt("initDate", date));
+        criteria.add(Restrictions.gt("endDate", date));
         return (Iteration) uniqueResultNotWaitingEmpty(criteria);
+    }
 
+    @Override
+    public Iteration getCurrentIteration() throws DataNotFoundException {
+      return fetchIterationBy(new Date());
+    }
+
+    private List<Date> getDaysBetweenDates(Date init, Date end)
+    {
+        List<Date> dates = new ArrayList<Date>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(init);
+
+        while (calendar.getTime().before(end))
+        {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
     }
 }

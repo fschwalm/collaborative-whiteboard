@@ -4,6 +4,7 @@ import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.enums.StoryStatus;
+import backlog_manager.exceptions.IterationAlreadySet;
 import br.org.tutty.collaborative_whiteboard.IterationDao;
 import cw.exceptions.DataNotFoundException;
 
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -48,19 +48,23 @@ public class IterationServiceBean implements IterationService {
     }
 
     @Override
-    public void create(List<Story> stories, String name, Date init, Date end){
-        Iteration iteration = new Iteration(name, init, end);
+    public void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySet {
+        if(!iterationDao.existIterationInRange(init, end)){
+            Iteration iteration = new Iteration(name, init, end);
 
-        iterationDao.persist(iteration);
-        iterationDao.merge(iteration);
+            iterationDao.persist(iteration);
+            iterationDao.merge(iteration);
 
-        stories.forEach(new Consumer<Story>() {
-            @Override
-            public void accept(Story story) {
-                story.setIteration(iteration);
-                iterationDao.update(story);
-            }
-        });
+            stories.forEach(new Consumer<Story>() {
+                @Override
+                public void accept(Story story) {
+                    story.setIteration(iteration);
+                    iterationDao.update(story);
+                }
+            });
+        }else {
+            throw new IterationAlreadySet();
+        }
     }
 
     @Override

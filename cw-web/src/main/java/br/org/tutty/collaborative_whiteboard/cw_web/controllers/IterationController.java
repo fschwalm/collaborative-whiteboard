@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
+import backlog_manager.exceptions.IterationAlreadySet;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.IterationService;
 import cw.exceptions.DataNotFoundException;
@@ -65,9 +66,14 @@ public class IterationController extends GenericController implements Serializab
     }
 
     public void create() throws IOException {
-        iterationService.create(selected, name, init, end);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.iteration.success");
-        setUp();
+        try {
+            iterationService.create(selected, name, init, end);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.iteration.success");
+            setUp();
+
+        } catch (IterationAlreadySet iterationAlreadySet) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "backlog.iteration.already_set");
+        }
     }
 
     public List<Story> fetchAvailables() throws IOException {

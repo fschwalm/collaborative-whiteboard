@@ -5,7 +5,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="pageContent">
-        <h:form prependId="false">
+        <h:form id="toolbarForm" prependId="false">
             <p:ribbon>
                 <p:tab title="#{whiteboard['menu.header']}">
                     <p:ribbonGroup label="#{whiteboard['menu.stage']}">
@@ -15,10 +15,11 @@
                         <p:commandButton value="#{whiteboard['menu.stage.edit']}"/>
                     </p:ribbonGroup>
 
-                    <p:ribbonGroup label="#{iterationController.iterationName()}" style="width: 243px;">
+                    <p:ribbonGroup label="#{iterationController.iterationName()}" style="width: 246px;">
                         <p:commandButton value="#{whiteboard['menu.iteration.create']}"
                                          oncomplete="PF('iterationCreate').show()"
                                          update=":iterationCreate" process="@this"/>
+
                         <p:commandButton value="#{whiteboard['menu.iteration.init']}"/>
                         <p:commandButton value="#{whiteboard['menu.iteration.end']}"/>
 
@@ -44,12 +45,12 @@
                 <p:toolbar>
                     <f:facet name="left">
                         <p:commandButton icon="ui-icon-check" value="Criar"
-                                         action="#{iterationController.create()}" update="iterationInitForm"
-                                         process="@this,iterationName,availablesStories,initDate,endDate"/>
+                                         action="#{iterationController.create()}"
+                                         ajax="false"/>
 
                         <p:spacer width="5"/>
 
-                        <p:watermark value="Nome" for="iterationName"/>
+                        <p:watermark value="#{iteration_creation['iteration.name']}" for="iterationName"/>
                         <p:inputText id="iterationName" value="#{iterationController.name}" required="true"
                                      requiredMessage="#{whiteboard['iteration.name.required']}"/>
 
@@ -57,7 +58,7 @@
                             <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                         </span>
 
-                        <p:watermark value="Inicio" for="initDate"/>
+                        <p:watermark value="#{iteration_creation['iteration.init']}" for="initDate"/>
                         <p:calendar id="initDate" value="#{iterationController.init}" pattern="dd-MM-yyyy" mask="true"
                                     size="8" required="true"
                                     requiredMessage="#{whiteboard['iteration.init.required']}"/>
@@ -66,7 +67,7 @@
                         <h:outputText value="-"/>
                         <p:spacer width="5"/>
 
-                        <p:watermark value="Fim" for="endDate"/>
+                        <p:watermark value="#{iteration_creation['iteration.end']}" for="endDate"/>
                         <p:calendar id="endDate" value="#{iterationController.end}" pattern="dd-MM-yyyy" mask="true"
                                     size="8" required="true" requiredMessage="#{whiteboard['iteration.end.required']}"/>
                     </f:facet>
@@ -77,19 +78,19 @@
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-                    <p:column headerText="Story Points" style="width:40px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.points']}" style="width:40px;text-align:center">
                         <h:outputText value="#{story.storyPoints}"/>
                     </p:column>
 
-                    <p:column headerText="Projeto" style="width:80px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.project']}" style="width:80px;text-align:center">
                         <h:outputText value="#{story.project.nameProject}"/>
                     </p:column>
 
-                    <p:column headerText="Codigo" style="width:60px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.code']}" style="width:60px;text-align:center">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
-                    <p:column headerText="Assunto">
+                    <p:column headerText="#{iteration_creation['iteration.story.subject']}">
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
                 </p:dataTable>
