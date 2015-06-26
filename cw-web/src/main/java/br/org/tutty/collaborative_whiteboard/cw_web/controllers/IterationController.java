@@ -25,6 +25,8 @@ import java.util.List;
 @ViewScoped
 public class IterationController extends GenericController implements Serializable {
 
+    private static String DEFAULT_MESSAGE_TO_EMPTY_ITERATION = "Sem iteração Definida";
+
     @Inject
     private BacklogManagerService backlogManagerService;
 
@@ -49,7 +51,7 @@ public class IterationController extends GenericController implements Serializab
         try {
             return getCurrentIteration().getName();
         } catch (DataNotFoundException e) {
-            return "";
+            return DEFAULT_MESSAGE_TO_EMPTY_ITERATION;
         }
     }
 
