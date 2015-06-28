@@ -40,7 +40,7 @@
             <h:form id="iterationInitForm" prependId="false">
                 <p:toolbar>
                     <f:facet name="left">
-                        <p:commandButton icon="ui-icon-check" value="Criar"
+                        <p:commandButton icon="ui-icon-check" value="#{iteration_creation['iteration.create.button']}"
                                          action="#{iterationController.create()}"
                                          process="iterationInitForm" update=":iterationInitForm,:toolbarForm"/>
 
@@ -62,7 +62,7 @@
                         </p:calendar>
 
                         <p:spacer width="5"/>
-                        <h:outputText value="-"/>
+                        <h:outputText value="#{iteration_creation['separator.between.dates']}"/>
                         <p:spacer width="5"/>
 
                         <p:watermark value="#{iteration_creation['iteration.end']}" for="endDate"/>
