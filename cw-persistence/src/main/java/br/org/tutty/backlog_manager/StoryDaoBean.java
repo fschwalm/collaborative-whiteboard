@@ -12,6 +12,8 @@ import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,7 +21,8 @@ import java.util.function.Consumer;
 /**
  * Created by drferreira on 11/03/15.
  */
-
+@Stateless
+@Local(StoryDao.class)
 public class StoryDaoBean extends GenericDao implements StoryDao {
 
     @Override

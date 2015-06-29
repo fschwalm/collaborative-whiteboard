@@ -55,6 +55,11 @@ public class EditionStoryController extends GenericController implements Seriali
         return defaultStreamedContent;
     }
 
+    public void remove(UploadedFile uploadedFile) throws IOException {
+        backlogManagerService.removeFile(uploadedFile);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.upload_file_remove");
+    }
+
     public List<UploadedFile> fetchFiles(){
         try{
             return backlogManagerService.fetchFiles(storyEdition.selectedStory);

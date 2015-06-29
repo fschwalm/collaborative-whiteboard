@@ -57,4 +57,6 @@ public interface BacklogManagerService {
     void uploadFile(Story story, InputStream inputStream, String fileName) throws IOException;
 
     List<UploadedFile> fetchFiles(Story selectedStory) throws DataNotFoundException;
+
+    void removeFile(UploadedFile uploadedFile);
 }

@@ -17,8 +17,6 @@ import java.util.*;
 @Local(IterationDao.class)
 public class IterationDaoBean extends GenericDao implements IterationDao {
 
-
-
     @Override
     public List<Story> fetchStories(Iteration iteration) throws DataNotFoundException {
         Criteria criteria = createCriteria(Story.class);

@@ -23,8 +23,8 @@ import java.util.function.Consumer;
 /**
  * Created by drferreira on 11/03/15.
  */
-@Local(BacklogManagerService.class)
 @Stateless
+@Local(BacklogManagerService.class)
 public class BacklogManagerServiceBean implements BacklogManagerService {
     private static Integer INITIAL_PRIORITY = 0;
 
@@ -234,7 +234,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         User user = sessionContext.getLoggedUser().getUser();
         UploadedFile uploadedFile = new UploadedFile(user, story, inputStream, fileName);
         storyDao.persist(uploadedFile);
+    }
 
+    @Override
+    public void removeFile(UploadedFile uploadedFile) {
+        storyDao.remove(uploadedFile);
     }
 
     @Override

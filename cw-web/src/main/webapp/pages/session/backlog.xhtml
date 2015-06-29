@@ -266,7 +266,8 @@
                                     <p:column>
                                         <h:outputText value="#{file.fileName}"/>
                                     </p:column>
-                                    <p:column width="35">
+                                    <p:column width="90" style="text-align: center">
+                                        <p:commandButton icon="ui-icon-trash" immediate="true" action="#{editionStoryController.remove(file)}" process="@this" update="files" />
                                         <p:commandButton icon="ui-icon-arrowthickstop-1-s" immediate="true" ajax="false">
                                             <p:fileDownload value="#{editionStoryController.download(file)}"/>
                                         </p:commandButton>
