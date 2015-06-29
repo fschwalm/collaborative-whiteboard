@@ -250,7 +250,7 @@
                             </h:panelGrid>
 
                             <p:message for="description"/>
-                            <p:inputTextarea id="description"
+                            <p:editor id="description"
                                              value="#{editionStoryController.storyEdition.descriptionChanges}"
                                              cols="110"
                                              rows="10" requiredMessage="#{messages['mandatory.field']}"/>
@@ -304,7 +304,7 @@
 
                     <p:watermark value="#{backlog['label.story.creation.description']}"
                                  for="descriptionNewStory"/>
-                    <p:inputTextarea id="descriptionNewStory"
+                    <p:editor id="descriptionNewStory"
                                      value="#{creationStoryController.storyCreation.description}"
                                      cols="63" rows="20" required="true"
                                      requiredMessage="#{messages['mandatory.field']}"/>
