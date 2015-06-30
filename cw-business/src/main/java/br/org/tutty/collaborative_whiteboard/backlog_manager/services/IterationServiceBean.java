@@ -32,12 +32,21 @@ public class IterationServiceBean implements IterationService {
     private BacklogManagerService backlogManagerService;
 
     @Override
+    public List<Iteration> fetchIterations() {
+        try{
+            return iterationDao.fetchIterations();
+        }catch (DataNotFoundException e){
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     public Iteration getCurrentIteration() throws DataNotFoundException {
         return iterationDao.getCurrentIteration();
     }
 
     @Override
-    public List<Story> fetchStoriesForIteration(){
+    public List<Story> fetchStoriesAvailableForIteration(){
         try{
             List<Story> analyzedStories = backlogManagerService.fetchAnalyzedStories();
 
@@ -45,6 +54,11 @@ public class IterationServiceBean implements IterationService {
         }catch (DataNotFoundException e){
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public List<Story> fetchStories(Iteration iteration) throws DataNotFoundException {
+        return iterationDao.fetchStories(iteration);
     }
 
     @Override

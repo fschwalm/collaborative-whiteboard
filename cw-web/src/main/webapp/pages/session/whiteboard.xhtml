@@ -19,7 +19,7 @@
                                          oncomplete="PF('iterationCreate').show()"
                                          update=":iterationCreate" process="@this"/>
 
-                        <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}"/>
+                        <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}" action="#{iterationController.openIterationSettings()}"/>
 
                         <p:progressBar ajax="true" value="#{iterationController.progressIteration()}"
                                        labelTemplate="{value}%" styleClass="animated" global="false" style="margin-top: 20%">

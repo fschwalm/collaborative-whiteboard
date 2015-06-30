@@ -1,0 +1,24 @@
+<ui:composition template="../../templates/generic.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="pageContent">
+        <h:form prependId="false">
+            <p:spacer width="10"/>
+            <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}" style="min-width: 150px" required="true">
+                <f:selectItem itemLabel="== Selecione ==" itemValue="" />
+                <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
+                               itemLabel="#{iteration}"/>
+
+                <p:ajax event="change" update="pickList"
+                        listener="#{iterationSettingsController.mountStoriesInsideIteration()}" />
+
+            </p:selectOneMenu>
+
+            <p:pickList id="pickList" converter="storyConverterToPickList" value="#{iterationSettingsController.stories}"
+                        var="story" itemLabel="#{story.code}" itemValue="#{story}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

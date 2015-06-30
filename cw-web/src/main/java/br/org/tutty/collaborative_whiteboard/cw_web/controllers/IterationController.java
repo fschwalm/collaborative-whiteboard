@@ -78,8 +78,12 @@ public class IterationController extends GenericController implements Serializab
         }
     }
 
+    public String openIterationSettings(){
+        return GO_TO_ITERATION_SETTINGS;
+    }
+
     public List<Story> fetchAvailables() throws IOException {
-        return iterationService.fetchStoriesForIteration();
+        return iterationService.fetchStoriesAvailableForIteration();
     }
 
     public Iteration getCurrentIteration() throws IOException, DataNotFoundException {

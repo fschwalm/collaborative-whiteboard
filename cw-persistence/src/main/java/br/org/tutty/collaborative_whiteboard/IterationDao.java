@@ -16,4 +16,6 @@ public interface IterationDao extends Dao{
     Boolean existIterationInRange(Date init, Date end);
 
     Iteration getCurrentIteration() throws DataNotFoundException;
+
+    List<Iteration> fetchIterations() throws DataNotFoundException;
 }

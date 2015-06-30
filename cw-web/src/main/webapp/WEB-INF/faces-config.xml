@@ -87,5 +87,10 @@
             <to-view-id>/pages/session/tasks.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>ITERATION_SETTINGS_PAGE</from-outcome>
+            <to-view-id>/pages/session/iteration.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

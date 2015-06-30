@@ -13,9 +13,13 @@ import java.util.List;
  */
 public interface IterationService {
 
+    List<Iteration> fetchIterations();
+
     Iteration getCurrentIteration() throws DataNotFoundException;
 
-    List<Story> fetchStoriesForIteration();
+    List<Story> fetchStoriesAvailableForIteration();
+
+    List<Story> fetchStories(Iteration iteration) throws DataNotFoundException;
 
     void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySet;
 

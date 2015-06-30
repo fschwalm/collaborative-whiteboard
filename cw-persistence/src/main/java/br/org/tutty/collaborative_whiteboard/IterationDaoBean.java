@@ -51,6 +51,12 @@ public class IterationDaoBean extends GenericDao implements IterationDao {
       return fetchIterationBy(new Date());
     }
 
+    @Override
+    public List<Iteration> fetchIterations() throws DataNotFoundException {
+        Criteria criteria = createCriteria(Iteration.class);
+        return listNotWaitingEmpty(criteria);
+    }
+
     private List<Date> getDaysBetweenDates(Date init, Date end)
     {
         List<Date> dates = new ArrayList<Date>();
