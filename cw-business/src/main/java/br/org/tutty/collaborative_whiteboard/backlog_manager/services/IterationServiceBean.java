@@ -4,7 +4,8 @@ import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.enums.StoryStatus;
-import backlog_manager.exceptions.IterationAlreadySet;
+import backlog_manager.exceptions.IterationAlreadySetException;
+import backlog_manager.exceptions.IterationNotFoundException;
 import br.org.tutty.collaborative_whiteboard.IterationDao;
 import cw.exceptions.DataNotFoundException;
 
@@ -32,10 +33,26 @@ public class IterationServiceBean implements IterationService {
     private BacklogManagerService backlogManagerService;
 
     @Override
+    public void addStory(Story story, Iteration iteration) throws IterationNotFoundException {
+        if (iteration != null) {
+            story.setIteration(iteration);
+            iterationDao.update(story);
+        }else {
+            throw new IterationNotFoundException();
+        }
+    }
+
+    @Override
+    public void removeStory(Story story) {
+        story.setIteration(null);
+        iterationDao.update(story);
+    }
+
+    @Override
     public List<Iteration> fetchIterations() {
-        try{
+        try {
             return iterationDao.fetchIterations();
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return new ArrayList<>();
         }
     }
@@ -46,12 +63,12 @@ public class IterationServiceBean implements IterationService {
     }
 
     @Override
-    public List<Story> fetchStoriesAvailableForIteration(){
-        try{
+    public List<Story> fetchStoriesAvailableForIteration() {
+        try {
             List<Story> analyzedStories = backlogManagerService.fetchAnalyzedStories();
 
             return analyzedStories.stream().filter(story -> story.getIteration() == null).collect(Collectors.toList());
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return new ArrayList<>();
         }
     }
@@ -62,8 +79,8 @@ public class IterationServiceBean implements IterationService {
     }
 
     @Override
-    public void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySet {
-        if(!iterationDao.existIterationInRange(init, end)){
+    public void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySetException {
+        if (!iterationDao.existIterationInRange(init, end)) {
             Iteration iteration = new Iteration(name, init, end);
 
             iterationDao.persist(iteration);
@@ -76,32 +93,33 @@ public class IterationServiceBean implements IterationService {
                     iterationDao.update(story);
                 }
             });
-        }else {
-            throw new IterationAlreadySet();
+        } else {
+            throw new IterationAlreadySetException();
         }
     }
 
     @Override
     public Float getProgressIteration(Iteration iteration) {
-        try{
+        try {
             List<Story> stories = iterationDao.fetchStories(iteration);
 
             Integer total = stories.size();
             Integer numberOfFinalized = 0;
 
-            for(Story story : stories){
-                try{
+            for (Story story : stories) {
+                try {
                     StoryStatusLog storyStatus = backlogManagerService.getStoryStatus(story);
 
-                    if(StoryStatus.FINALIZED.equals(storyStatus.getStoryStatus())){
+                    if (StoryStatus.FINALIZED.equals(storyStatus.getStoryStatus())) {
                         numberOfFinalized++;
                     }
 
-                }catch (DataNotFoundException e){}
+                } catch (DataNotFoundException e) {
+                }
             }
 
-            return new Float ((numberOfFinalized * 100) / total);
-        }catch (DataNotFoundException e){
+            return new Float((numberOfFinalized * 100) / total);
+        } catch (DataNotFoundException e) {
             return 0f;
         }
     }

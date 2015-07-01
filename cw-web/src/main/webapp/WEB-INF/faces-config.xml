@@ -46,8 +46,12 @@
             <var>tasks_bundle</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>properties/iteration_creation</base-name>
+            <base-name>properties/iteration-creation</base-name>
             <var>iteration_creation</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/iteration-settings</base-name>
+            <var>iteration_settings</var>
         </resource-bundle>
         <resource-bundle>
             <base-name>properties/exit</base-name>

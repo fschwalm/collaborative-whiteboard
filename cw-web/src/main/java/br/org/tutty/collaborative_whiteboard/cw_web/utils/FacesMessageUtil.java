@@ -18,16 +18,24 @@ public class FacesMessageUtil implements Serializable{
         this.resourceFullName = resourceFullName;
     }
 
-    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage, String keyPropertyMessageDetail) throws IOException {
+    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage, String keyPropertyMessageDetail){
+        try{
         String message = readPropertyMessage(keyPropertyMessage);
         String messageDetail = readPropertyMessage(keyPropertyMessageDetail);
 
         showMessage(null, severity, message, messageDetail);
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
-    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage) throws IOException {
-        String message = readPropertyMessage(keyPropertyMessage);
-        showMessage(null, severity, message, null);
+    public void showGlobalMessage(FacesMessage.Severity severity, String keyPropertyMessage){
+        try{
+            String message = readPropertyMessage(keyPropertyMessage);
+            showMessage(null, severity, message, null);
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public void showMessage(String target, FacesMessage.Severity severity, String message, String messageDetail) throws IOException {

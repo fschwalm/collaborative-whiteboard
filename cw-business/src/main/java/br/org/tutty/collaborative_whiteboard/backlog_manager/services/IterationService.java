@@ -2,7 +2,8 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
-import backlog_manager.exceptions.IterationAlreadySet;
+import backlog_manager.exceptions.IterationAlreadySetException;
+import backlog_manager.exceptions.IterationNotFoundException;
 import cw.exceptions.DataNotFoundException;
 
 import java.util.Date;
@@ -13,6 +14,10 @@ import java.util.List;
  */
 public interface IterationService {
 
+    void addStory(Story story, Iteration iteration) throws IterationNotFoundException;
+
+    void removeStory(Story story);
+
     List<Iteration> fetchIterations();
 
     Iteration getCurrentIteration() throws DataNotFoundException;
@@ -21,7 +26,7 @@ public interface IterationService {
 
     List<Story> fetchStories(Iteration iteration) throws DataNotFoundException;
 
-    void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySet;
+    void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySetException;
 
     Float getProgressIteration(Iteration iteration);
 }

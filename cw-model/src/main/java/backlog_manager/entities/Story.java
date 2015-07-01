@@ -62,11 +62,11 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
     @ManyToOne
     private Stage stage;
 
-    @Transient
-    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
-
     @Column(name = "wiki_page")
     private String wikiPage;
+
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
     public Story() {
     }

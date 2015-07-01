@@ -6,19 +6,40 @@
 
     <ui:define name="pageContent">
         <h:form prependId="false">
-            <p:spacer width="10"/>
-            <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}" style="min-width: 150px" required="true">
-                <f:selectItem itemLabel="== Selecione ==" itemValue="" />
-                <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
-                               itemLabel="#{iteration}"/>
+            <p:toolbar>
+                <f:facet name="left">
+                <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
+                                 style="min-width: 150px" required="true" requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
+                    <f:selectItem itemLabel="#{iteration_settings['iteration.default.value.dropdown']}" itemValue=""/>
+                    <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
+                                   itemLabel="#{iteration}"/>
 
-                <p:ajax event="change" update="pickList"
-                        listener="#{iterationSettingsController.mountStoriesInsideIteration()}" />
+                    <p:ajax event="change" update="pickList"
+                            listener="#{iterationSettingsController.mountStoriesInsideIteration()}"/>
+                </p:selectOneMenu>
+                </f:facet>
+            </p:toolbar>
 
-            </p:selectOneMenu>
 
-            <p:pickList id="pickList" converter="storyConverterToPickList" value="#{iterationSettingsController.stories}"
-                        var="story" itemLabel="#{story.code}" itemValue="#{story}"/>
+            <p:pickList id="pickList" converter="storyConverterToPickList"
+                        value="#{iterationSettingsController.stories}"
+                        var="story" itemLabel="#{iterationSettingsController.mountStoryName(story)}"
+                        itemValue="#{story}">
+
+                <f:facet name="sourceCaption">#{iteration_settings['iteration.available.header']}</f:facet>
+                <f:facet name="targetCaption">#{iteration_settings['iteration.iteration.header']}</f:facet>
+
+                <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}" update=":messageForm:messages"/>
+
+                <p:column style="background-color:#b6fcd5; width: 20%; height: 30px; text-align: center;">
+                    <h:outputText value="#{story.code}" />
+                </p:column>
+
+                <p:column style="background-color: #f2f2f2; width: 70%; height: 30px; text-align: center;">
+                    <h:outputText value="#{story.subject}"/>
+                </p:column>
+
+            </p:pickList>
         </h:form>
     </ui:define>
 </ui:composition>

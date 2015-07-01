@@ -2,19 +2,22 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
+import backlog_manager.exceptions.IterationNotFoundException;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.IterationService;
 import cw.exceptions.DataNotFoundException;
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +36,6 @@ public class IterationSettingsController extends GenericController implements Se
     private BacklogManagerService backlogManagerService;
 
     private List<Iteration> iterations;
-
     private DualListModel<Story> stories = new DualListModel<>();
     private List<Story> allStories;
     private List<Story> target;
@@ -42,6 +44,35 @@ public class IterationSettingsController extends GenericController implements Se
     @PostConstruct
     public void setUp(){
         iterations = iterationService.fetchIterations();
+    }
+
+    public void onTransfer(TransferEvent transfer){
+        transfer.getItems().forEach(new Consumer() {
+            @Override
+            public void accept(Object o) {
+                if(transfer.isAdd()){
+                    try {
+                        iterationService.addStory(((Story)o), iterationSelected);
+                        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "iteration.change", "iteration.add.story.success.detail");
+                    } catch (IterationNotFoundException e) {
+                        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "iteration.change", "iteration.not_select.error.detail");
+                    }
+                }else {
+                    iterationService.removeStory(((Story)o));
+                    facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "iteration.change", "iteration.remove.story.success.detail");
+                }
+            }
+        });
+    }
+
+    public String mountStoryName(Story story){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        stringBuilder.append(story.getCode());
+        stringBuilder.append(")");
+        stringBuilder.append("  ");
+        stringBuilder.append(story.getSubject());
+        return stringBuilder.toString();
     }
 
     public void mountStoriesInsideIteration() {

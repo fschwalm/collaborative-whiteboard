@@ -2,7 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
-import backlog_manager.exceptions.IterationAlreadySet;
+import backlog_manager.exceptions.IterationAlreadySetException;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.IterationService;
 import cw.exceptions.DataNotFoundException;
@@ -73,7 +73,7 @@ public class IterationController extends GenericController implements Serializab
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.iteration.success");
             setUp();
 
-        } catch (IterationAlreadySet iterationAlreadySet) {
+        } catch (IterationAlreadySetException iterationAlreadySetException) {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "backlog.iteration.already_set");
         }
     }

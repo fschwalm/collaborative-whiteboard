@@ -304,6 +304,11 @@
     display: block;
 }
 
+.ui-picklist .ui-picklist-list{
+    height: 647px !important;
+    width: 774px !important;
+}
+
 
 
 
