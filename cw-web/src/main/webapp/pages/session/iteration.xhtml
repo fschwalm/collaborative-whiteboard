@@ -9,7 +9,7 @@
             <p:toolbar>
                 <f:facet name="left">
                 <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
-                                 style="min-width: 150px" required="true" requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
+                                 style="min-width: 210px" required="true" requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
                     <f:selectItem itemLabel="#{iteration_settings['iteration.default.value.dropdown']}" itemValue=""/>
                     <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
                                    itemLabel="#{iteration}"/>
