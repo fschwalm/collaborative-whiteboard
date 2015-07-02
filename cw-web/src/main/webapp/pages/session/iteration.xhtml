@@ -5,7 +5,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="pageContent">
-        <h:form prependId="false">
+        <h:form id="iterationForm" prependId="false">
             <p:toolbar>
                 <f:facet name="left">
                 <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
@@ -24,19 +24,27 @@
             <p:pickList id="pickList" converter="storyConverterToPickList"
                         value="#{iterationSettingsController.stories}"
                         var="story" itemLabel="#{iterationSettingsController.mountStoryName(story)}"
-                        itemValue="#{story}">
+                        itemValue="#{story}" itemDisabled="#{iterationSettingsController.disabled(story)}">
 
                 <f:facet name="sourceCaption">#{iteration_settings['iteration.available.header']}</f:facet>
                 <f:facet name="targetCaption">#{iteration_settings['iteration.iteration.header']}</f:facet>
 
-                <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}" update=":messageForm:messages"/>
+                <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}" update=":messageForm:messages,:iterationForm:pickList"/>
 
-                <p:column style="background-color:#b6fcd5; width: 20%; height: 30px; text-align: center;">
+                <p:column style="text-align: center">
+                    <div style="height: 37px; margin-left: -4px; margin-top: -18px;" class="color_#{iterationSettingsController.getStatus(story)} column_status" />
+                </p:column>
+
+                <p:column style="width: 15%;height: 35px; text-align: center; background-color: #f6f7fa;">
                     <h:outputText value="#{story.code}" />
                 </p:column>
 
-                <p:column style="background-color: #f2f2f2; width: 70%; height: 30px; text-align: center;">
+                <p:column style="width: 80%;height: 35px; text-align: center; background-color: #f6f7fa;">
                     <h:outputText value="#{story.subject}"/>
+                </p:column>
+
+                <p:column style="width: 5%;height: 35px; text-align: right; background-color: #f6f7fa;">
+                    <h:outputText value="#{story.iteration.name}" style="font-style: italic; color: #6fa3ff;"/>
                 </p:column>
 
             </p:pickList>

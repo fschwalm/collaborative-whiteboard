@@ -108,7 +108,7 @@ public class IterationServiceBean implements IterationService {
 
             for (Story story : stories) {
                 try {
-                    StoryStatusLog storyStatus = backlogManagerService.getStoryStatus(story);
+                    StoryStatusLog storyStatus = backlogManagerService.getCurrentStoryStatusLog(story);
 
                     if (StoryStatus.FINALIZED.equals(storyStatus.getStoryStatus())) {
                         numberOfFinalized++;

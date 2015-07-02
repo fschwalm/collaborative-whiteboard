@@ -118,121 +118,47 @@
     text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
 }
 
-.story_REMOVED {
-    background-color: #e0eee0;
-    color: black;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
-}
-
-.story_WAITING {
+.color_WAITING {
     background-color: #fbae34;
-    color: black;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
 }
 
-.story_AVAILABLE {
-    background-color: #97ffff;
-    color: black;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
-}
-
-.story_ANALYZED {
-    background-color: #6cdc97;
-    color: black;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
-}
-
-.story_IN_ANALYSIS {
-    background-color: #98e6b6;
-    color: black;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
-}
-
-.story_FINALIZED {
-    background-color: #4a4a4a;
-    color: white;
-    height: 35px;
-    moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-    text-align: center;
-    display: block;
-    font-size: 32px;
-}
-
-.status_collum_AVAILABLE {
-    background-color: #97ffff;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
-    margin-left: -10px;
-}
-
-.status_collum_IN_ANALYSIS {
-    background-color: #98e6b6;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
-    margin-left: -10px;
-}
-
-.status_collum_ANALYZED {
-    background-color: #6cdc97;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
-    margin-left: -10px;
-}
-
-.status_collum_FINALIZED {
-    background-color: #4a4a4a;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
-}
-
-.status_collum_WAITING {
-    background-color: #fbae34;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
-}
-
-.status_collum_REMOVED {
+.color_REMOVED {
     background-color: #e0eee0;
-    width: 20px;
-    height: 50px;
-    display: inline-block;
+}
+
+.color_AVAILABLE {
+    background-color: #97ffff;
+}
+
+.color_ANALYZED {
+    background-color: #6cdc97;
+}
+
+.color_IN_ANALYSIS {
+    background-color: #98e6b6;
+}
+
+.color_FINALIZED {
+    background-color: #4a4a4a;
+}
+
+.column_status{
+    height: 42px;
+    width: 5px;
+    position: absolute;
+    margin-left: -10px;
+    margin-top: -21px;
+}
+
+.story_backlog {
+    color: black;
+    height: 35px;
+    moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    text-align: center;
+    display: block;
+    font-size: 32px;
 }
 
 .ui-widget, .ui-widget * {

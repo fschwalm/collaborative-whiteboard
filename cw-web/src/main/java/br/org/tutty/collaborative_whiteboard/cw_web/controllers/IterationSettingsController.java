@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Iteration;
 import backlog_manager.entities.Story;
+import backlog_manager.enums.StoryStatus;
 import backlog_manager.exceptions.IterationNotFoundException;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.IterationService;
@@ -65,6 +66,10 @@ public class IterationSettingsController extends GenericController implements Se
         });
     }
 
+    public boolean disabled(Story story){
+        return getStatus(story).equals(StoryStatus.FINALIZED);
+    }
+
     public String mountStoryName(Story story){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("(");
@@ -73,6 +78,14 @@ public class IterationSettingsController extends GenericController implements Se
         stringBuilder.append("  ");
         stringBuilder.append(story.getSubject());
         return stringBuilder.toString();
+    }
+
+    public StoryStatus getStatus(Story story){
+        try {
+            return backlogManagerService.getCurrentStatus(story);
+        } catch (DataNotFoundException e) {
+            return null;
+        }
     }
 
     public void mountStoriesInsideIteration() {

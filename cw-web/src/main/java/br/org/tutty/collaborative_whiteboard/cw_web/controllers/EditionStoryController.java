@@ -8,7 +8,6 @@ import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogMan
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.exceptions.DataNotFoundException;
-import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -155,7 +154,7 @@ public class EditionStoryController extends GenericController implements Seriali
     public StoryStatus getStatus() {
         StoryStatusLog storyStatusLog;
         try {
-            storyStatusLog = backlogManagerService.getStoryStatus(storyEdition.selectedStory);
+            storyStatusLog = backlogManagerService.getCurrentStoryStatusLog(storyEdition.selectedStory);
             return storyStatusLog.getStoryStatus();
 
         } catch (DataNotFoundException e) {

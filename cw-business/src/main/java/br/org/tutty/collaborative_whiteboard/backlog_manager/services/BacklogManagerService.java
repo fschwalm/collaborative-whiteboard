@@ -40,7 +40,9 @@ public interface BacklogManagerService {
 
     void finalizeStory(Story story);
 
-    StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException;
+    StoryStatusLog getCurrentStoryStatusLog(Story story) throws DataNotFoundException;
+
+    StoryStatus getCurrentStatus(Story story) throws DataNotFoundException;
 
     void changeStoryStatus(Story story, StoryStatus storyStatus);
 

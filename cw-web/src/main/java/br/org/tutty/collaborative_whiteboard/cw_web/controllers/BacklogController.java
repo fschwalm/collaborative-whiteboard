@@ -67,11 +67,8 @@ public class BacklogController extends GenericController implements Serializable
     }
 
     public StoryStatus getStatus(Story story) {
-        StoryStatusLog storyStatusLog;
         try {
-            storyStatusLog = backlogManagerService.getStoryStatus(story);
-            return storyStatusLog.getStoryStatus();
-
+            return  backlogManagerService.getCurrentStatus(story);
         } catch (DataNotFoundException e) {
             return  null;
         }

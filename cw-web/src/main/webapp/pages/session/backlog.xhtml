@@ -20,35 +20,37 @@
                     <p:ajax event="rowSelect" update="openButton,removeButton"/>
                     <p:ajax event="rowUnselect" update="openButton,removeButton"/>
 
-                    <p:column style="padding: 0px; width: 4px;">
-                        <span class="status_collum_#{backlogController.getStatus(story)}"/>
+                    <p:column style="text-align: center">
+                        <div class="color_#{backlogController.getStatus(story)} column_status"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.project']}"
-                              style="width: 50px; text-align: center">
+                              style="width: 5%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.project.nameProject}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.subject']}"
-                              style="width: 300px; text-align: left">
+                              style="width: 60%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.code']}" style="width: 100px; text-align: center">
+                    <p:column headerText="#{backlog['header.table.code']}"
+                              style="width: 10%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.branch']}"
-                              style="width: 100px; text-align: center">
+                              style="width: 10%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.branch}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.area']}" style="width: 50px; text-align: center">
+                    <p:column headerText="#{backlog['header.table.area']}"
+                              style="width: 15%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.projectArea.name}"/>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.author']}"
-                              style="width: 100px; text-align: center">
+                              style="width: 15%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.author.firstName}"/>
                     </p:column>
                     <f:facet name="header">
@@ -83,7 +85,7 @@
                 <h:form id="storyDetailForm" prependId="false" enctype="multipart/form-data">
 
 
-                    <div class="story_#{editionStoryController.status}">
+                    <div class="story_backlog color_#{editionStoryController.status}">
                         <h:outputText value="#{backlog['story.status.'.concat(editionStoryController.status)]}"
                                       style="text-align: center; font-size: 30px !important;"/>
                     </div>

@@ -198,8 +198,15 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     }
 
     @Override
-    public StoryStatusLog getStoryStatus(Story story) throws DataNotFoundException {
+    public StoryStatusLog getCurrentStoryStatusLog(Story story) throws DataNotFoundException {
         return storyDao.getStoryStatusLog(story);
+    }
+
+    @Override
+    public StoryStatus getCurrentStatus(Story story) throws DataNotFoundException {
+        StoryStatusLog storyStatusLog;
+        storyStatusLog = getCurrentStoryStatusLog(story);
+        return storyStatusLog.getStoryStatus();
     }
 
     @Override
