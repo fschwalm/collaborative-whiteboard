@@ -6,6 +6,9 @@
 
     <ui:define name="pageContent">
         <h:form id="backlogForm" prependId="false">
+            <p:contextMenu for="backlogTable">
+                <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open" oncomplete="PF('storyDetail').show()" update=":storyDetail"/>
+            </p:contextMenu>
 
             <div id="backlogDiv">
                 <p:dataTable id="backlogTable" var="story"
@@ -17,8 +20,6 @@
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
                              selectionMode="single">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
-                    <p:ajax event="rowSelect" update="openButton,removeButton"/>
-                    <p:ajax event="rowUnselect" update="openButton,removeButton"/>
 
                     <p:column style="text-align: center">
                         <div class="color_#{backlogController.getStatus(story)} column_status"/>
@@ -26,20 +27,20 @@
 
                     <p:column headerText="#{backlog['header.table.project']}"
                               style="width: 5%;height: 35px; text-align: center;">
-                        <h:outputText value="#{story.project.nameProject}"/>
+                        <h:outputText value="#{story.project.nameProject}" />
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.subject']}"
+                    <p:column filterBy="#{story.subject}" filterMatchMode="contains" headerText="#{backlog['header.table.subject']}"
                               style="width: 60%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.code']}"
+                    <p:column filterBy="#{story.code}" filterMatchMode="contains" headerText="#{backlog['header.table.code']}"
                               style="width: 10%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.branch']}"
+                    <p:column filterBy="#{story.subject}" filterMatchMode="contains" headerText="#{backlog['header.table.branch']}"
                               style="width: 10%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.branch}"/>
                     </p:column>
@@ -67,12 +68,14 @@
 
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                                  oncomplete="PF('storyCreation').show();"/>
-
-                                <p:commandButton id="openButton" icon="ui-icon-folder-open"
-                                                 value="#{backlog['btn.open']}"
-                                                 oncomplete="PF('storyDetail').show()"
-                                                 disabled="#{!editionStoryController.isSelected()}"
-                                                 update=":storyDetail"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                 <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <p:selectManyButton onchange="PF('backlogTbl').filter()" style="font-size: 20%">
+                                    <f:selectItems value="#{backlogController.fetchStatus()}" var="status" itemLabel="#{backlog['story.status.'.concat(status)]}"/>
+                                </p:selectManyButton>
                             </f:facet>
                         </p:toolbar>
                     </f:facet>

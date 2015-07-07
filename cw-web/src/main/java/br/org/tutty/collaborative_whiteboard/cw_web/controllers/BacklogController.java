@@ -16,6 +16,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +61,10 @@ public class BacklogController extends GenericController implements Serializable
             stories = new ArrayList();
             return stories;
         }
+    }
+
+    public List<StoryStatus> fetchStatus(){
+        return Arrays.asList(StoryStatus.values());
     }
 
     public Boolean isRemoved(Story story) throws DataNotFoundException {
