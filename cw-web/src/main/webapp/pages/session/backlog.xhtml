@@ -7,7 +7,9 @@
     <ui:define name="pageContent">
         <h:form id="backlogForm" prependId="false">
             <p:contextMenu for="backlogTable">
-                <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open" oncomplete="PF('storyDetail').show()" update=":storyDetail"/>
+                <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
+                            oncomplete="PF('storyDetail').show()" update=":storyDetail"/>
+                <p:menuitem value="Remove" onclick="PF('confirmationRemoveDialog').show()"/>
             </p:contextMenu>
 
             <div id="backlogDiv">
@@ -18,34 +20,43 @@
                              rowIndexVar="index" selection="#{editionStoryController.selectedStory}"
                              rowKey="#{story.id}"
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
-                             selectionMode="single">
+                             selectionMode="single" filteredValue="#{backlogController.filteredStories}">
                     <p:ajax event="rowReorder" listener="#{backlogController.onRowReorder}"/>
 
-                    <p:column style="text-align: center">
+                    <p:column style="text-align: center; width: 8%" filterBy="#{story}" filterMatchMode="in" filterFunction="#{backlogController.filterByStatus}">
                         <div class="color_#{backlogController.getStatus(story)} column_status"/>
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="Status" onchange="PF('backlogTbl').filter()" filter="false">
+                                <p:ajax event="toggleSelect" oncomplete="PF('backlogTbl').filter()"/>
+                                <f:selectItems value="#{backlogController.fetchStatus()}" var="status" itemLabel="#{backlog['story.status.'.concat(status)]}"/>
+                            </p:selectCheckboxMenu>
+                        </f:facet>
                     </p:column>
 
                     <p:column headerText="#{backlog['header.table.project']}"
-                              style="width: 5%;height: 35px; text-align: center;">
-                        <h:outputText value="#{story.project.nameProject}" />
+                              style="width: 6%;height: 35px; text-align: center;">
+                        <h:outputText value="#{story.project.nameProject}"/>
                     </p:column>
 
-                    <p:column filterBy="#{story.subject}" filterMatchMode="contains" headerText="#{backlog['header.table.subject']}"
-                              style="width: 60%;height: 35px; text-align: center;">
+                    <p:column filterBy="#{story.subject}" filterMatchMode="contains"
+                              headerText="#{backlog['header.table.subject']}"
+                              style="width: 60%;height: 35px; text-align: center;" filterStyle="width: 95%;">
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
 
-                    <p:column filterBy="#{story.code}" filterMatchMode="contains" headerText="#{backlog['header.table.code']}"
-                              style="width: 10%;height: 35px; text-align: center;">
+                    <p:column filterBy="#{story.code}" filterMatchMode="contains"
+                              headerText="#{backlog['header.table.code']}"
+                              style="width: 15%;height: 35px; text-align: center;" filterStyle="width: 92%;">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 
-                    <p:column filterBy="#{story.subject}" filterMatchMode="contains" headerText="#{backlog['header.table.branch']}"
-                              style="width: 10%;height: 35px; text-align: center;">
+                    <p:column filterBy="#{story.subject}" filterMatchMode="contains"
+                              headerText="#{backlog['header.table.branch']}"
+                              style="width: 15%;height: 35px; text-align: center;" filterStyle="width: 92%;">
                         <h:outputText value="#{story.branch}"/>
                     </p:column>
 
-                    <p:column headerText="#{backlog['header.table.area']}"
+                    <p:column filterMatchMode="exact" headerText="#{backlog['header.table.area']}"
                               style="width: 15%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.projectArea.name}"/>
                     </p:column>
@@ -57,25 +68,8 @@
                     <f:facet name="header">
                         <p:toolbar>
                             <f:facet name="left">
-                                <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
-                                                 value="#{backlog['btn.remove']}"
-                                                 update=":backlogForm:backlogTable"
-                                                 disabled="#{!editionStoryController.isSelected()}"
-                                                 action="#{backlogController.removeStory()}">
-                                    <p:confirm message="#{backlog['confirmation.remove.text']}"
-                                               icon="ui-icon-alert"/>
-                                </p:commandButton>
-
                                 <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
                                                  oncomplete="PF('storyCreation').show();"/>
-                            </f:facet>
-                            <f:facet name="right">
-                                 <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-                                <p:selectManyButton onchange="PF('backlogTbl').filter()" style="font-size: 20%">
-                                    <f:selectItems value="#{backlogController.fetchStatus()}" var="status" itemLabel="#{backlog['story.status.'.concat(status)]}"/>
-                                </p:selectManyButton>
                             </f:facet>
                         </p:toolbar>
                     </f:facet>
@@ -114,10 +108,6 @@
                                              disabled="#{!editionStoryController.isPossibleRestore()}">
 
                                 <f:param name="required_validation" value="true"/>
-
-                                <p:confirm message="#{backlog['confirmation.remove.text']}"
-                                           icon="ui-icon-alert">
-                                </p:confirm>
                             </p:commandButton>
 
                              <span class="ui-separator">
@@ -256,9 +246,9 @@
 
                             <p:message for="description"/>
                             <p:editor id="description"
-                                             value="#{editionStoryController.storyEdition.descriptionChanges}"
-                                             cols="110"
-                                             rows="10" requiredMessage="#{messages['mandatory.field']}"/>
+                                      value="#{editionStoryController.storyEdition.descriptionChanges}"
+                                      cols="110"
+                                      rows="10" requiredMessage="#{messages['mandatory.field']}"/>
                         </p:tab>
                         <p:tab title="#{backlog['tab.file.title']}">
                             <p:fileUpload fileUploadListener="#{editionStoryController.uploadFile}" mode="advanced"
@@ -267,13 +257,17 @@
                             <p:spacer height="10px"/>
 
                             <p:outputPanel>
-                                <p:dataTable id="files" rows="8" paginator="true" var="file" value="#{editionStoryController.fetchFiles()}">
+                                <p:dataTable id="files" rows="8" paginator="true" var="file"
+                                             value="#{editionStoryController.fetchFiles()}">
                                     <p:column>
                                         <h:outputText value="#{file.fileName}"/>
                                     </p:column>
                                     <p:column width="90" style="text-align: center">
-                                        <p:commandButton icon="ui-icon-trash" immediate="true" action="#{editionStoryController.remove(file)}" process="@this" update="files" />
-                                        <p:commandButton icon="ui-icon-arrowthickstop-1-s" immediate="true" ajax="false">
+                                        <p:commandButton icon="ui-icon-trash" immediate="true"
+                                                         action="#{editionStoryController.remove(file)}" process="@this"
+                                                         update="files"/>
+                                        <p:commandButton icon="ui-icon-arrowthickstop-1-s" immediate="true"
+                                                         ajax="false">
                                             <p:fileDownload value="#{editionStoryController.download(file)}"/>
                                         </p:commandButton>
                                     </p:column>
@@ -311,9 +305,9 @@
                     <p:watermark value="#{backlog['label.story.creation.description']}"
                                  for="descriptionNewStory"/>
                     <p:editor id="descriptionNewStory"
-                                     value="#{creationStoryController.storyCreation.description}"
-                                     cols="63" rows="20" required="true"
-                                     requiredMessage="#{messages['mandatory.field']}"/>
+                              value="#{creationStoryController.storyCreation.description}"
+                              cols="63" rows="20" required="true"
+                              requiredMessage="#{messages['mandatory.field']}"/>
                     <p:message for="descriptionNewStory"/>
                 </h:panelGrid>
 
@@ -333,19 +327,32 @@
             </h:form>
         </p:dialog>
 
-        <p:confirmDialog global="true" widgetVar="confirmationDialog" modal="true" resizable="false">
+        <p:dialog id="confirmationRemove" widgetVar="confirmationRemoveDialog" modal="true" resizable="false">
             <p:outputPanel>
                 <h:panelGrid columns="2">
                     <h:form>
-                        <p:commandButton value="#{backlog['btn.save']}" update=":backlogForm:backlogTable"
-                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-                        <p:commandButton value="#{backlog['btn.cancel']}"
-                                         type="button"
-                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                        <h:outputText value="#{backlog['confirmation.remove.text']}"/>
+
+                        <br/>
+                        <p:spacer width="20"/>
+                        <br/>
+
+                        <h:panelGrid columns="2">
+                            <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
+                                             value="#{backlog['btn.remove']}"
+                                             update=":backlogForm:backlogTable"
+                                             action="#{backlogController.removeStory()}"
+                                             onsuccess="PF('confirmationRemoveDialog').hide(); PF('backlogTbl').filter()">
+                            </p:commandButton>
+
+                            <p:commandButton value="#{backlog['btn.cancel']}"
+                                             styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+                                             onclick="PF('confirmationRemove').hide()"/>
+                        </h:panelGrid>
                     </h:form>
                 </h:panelGrid>
             </p:outputPanel>
-        </p:confirmDialog>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

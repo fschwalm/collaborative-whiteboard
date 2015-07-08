@@ -143,11 +143,12 @@
 }
 
 .column_status{
-    height: 42px;
-    width: 5px;
+    height: 25px;
+    width: 25px;
     position: absolute;
-    margin-left: -10px;
-    margin-top: -21px;
+    align-content: center;
+    margin-top: -12px;
+    margin-left: 30px;
 }
 
 .story_backlog {

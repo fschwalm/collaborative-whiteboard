@@ -15,10 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -39,6 +37,7 @@ public class BacklogController extends GenericController implements Serializable
     private EditionStoryController editionStoryController;
 
     private List<Story> stories;
+    private List<Story> filteredStories;
 
     public void onRowReorder(ReorderEvent event) throws IOException {
         Collections.swap(stories, event.getFromIndex(), event.getToIndex());
@@ -63,6 +62,21 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
+    public boolean filterByStatus(Object value, Object filter, Locale locale){
+        List<String> filters = Arrays.asList((String[]) filter);
+
+        if(filters.isEmpty()) {
+            return true;
+        }
+
+        if(value == null) {
+            return false;
+        }
+
+        StoryStatus storyStatus = getStatus(((Story) value));
+        return filters.contains(storyStatus.name());
+    }
+
     public List<StoryStatus> fetchStatus(){
         return Arrays.asList(StoryStatus.values());
     }
@@ -79,4 +93,11 @@ public class BacklogController extends GenericController implements Serializable
         }
     }
 
+    public List<Story> getFilteredStories() {
+        return filteredStories;
+    }
+
+    public void setFilteredStories(List<Story> filteredStories) {
+        this.filteredStories = filteredStories;
+    }
 }
