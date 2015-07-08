@@ -54,8 +54,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Override
     public void updateBacklog(List<Story> stories) {
-        List<Story> prioritizedStories = reformulatePriorities(stories);
-        updateStories(prioritizedStories);
+        updateStories(stories);
     }
 
     @Override
@@ -67,15 +66,6 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         } catch (DataNotFoundException e) {
             return Boolean.FALSE;
         }
-    }
-
-    public List<Story> reformulatePriorities(List<Story> stories) {
-        for (Story story : stories) {
-            int indexOf = stories.indexOf(story);
-            story.setPriority(indexOf);
-        }
-
-        return stories;
     }
 
     public Story populateStoryCode(Story story) {
@@ -118,9 +108,8 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     public void createStory(Story story) {
         Story storyWithNewCode = populateStoryCode(story);
         Story storyWithBranch = populateBranchCode(storyWithNewCode);
-        Story storyWithPriority = populatePriority(storyWithBranch);
 
-        storyDao.persist(storyWithPriority);
+        storyDao.persist(storyWithBranch);
         storyDao.persist(new StoryStatusLog(StoryStatus.WAITING, story.getAuthor(), story));
     }
 
@@ -164,18 +153,6 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
         storyDao.update(task);
     }
 
-    public Story populatePriority(Story story) {
-        try {
-            List<Story> stories = fetchAllStories();
-            stories.add(story);
-            reformulatePriorities(stories);
-            return story;
-
-        } catch (DataNotFoundException e) {
-            story.setPriority(INITIAL_PRIORITY);
-            return story;
-        }
-    }
 
     @Override
     public void restoreStory(Story story) {

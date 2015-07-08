@@ -22,6 +22,8 @@ import java.util.List;
 @SequenceGenerator(name = "StorySequence", sequenceName = "story_seq", initialValue = 1, allocationSize = 1)
 public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
 
+    private static Integer INITIAL_PRIORITY = 1;
+
     @Id
     @GeneratedValue(generator = "StorySequence", strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -78,6 +80,7 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         this.subject = subject;
         this.description = description;
         this.creationDate = new Date();
+        this.priority = INITIAL_PRIORITY;
     }
 
     public String getCode() {
@@ -156,6 +159,10 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         this.priority = priority;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("priority", oldValue, priority);
+    }
+
+    public Integer getPriority() {
+        return priority;
     }
 
     public ProjectArea getProjectArea() {

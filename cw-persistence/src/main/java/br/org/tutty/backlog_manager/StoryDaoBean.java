@@ -28,7 +28,7 @@ public class StoryDaoBean extends GenericDao implements StoryDao {
     @Override
     public List<Story> fetchAllStories() throws DataNotFoundException {
         Criteria criteria = createCriteria(Story.class);
-        criteria.addOrder(Order.asc("priority"));
+        criteria.addOrder(Order.desc("priority"));
 
         return listNotWaitingEmpty(criteria);
     }

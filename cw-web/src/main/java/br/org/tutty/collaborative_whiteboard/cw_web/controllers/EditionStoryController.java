@@ -9,6 +9,7 @@ import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.exceptions.DataNotFoundException;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RateEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by drferreira on 07/05/15.
@@ -52,6 +54,12 @@ public class EditionStoryController extends GenericController implements Seriali
         defaultStreamedContent.setName(uploadedFile.getFileName());
 
         return defaultStreamedContent;
+    }
+
+    public void removeStory() throws IOException {
+        Story selectedStory = storyEdition.selectedStory;
+        backlogManagerService.removeStory(selectedStory);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.removed_story");
     }
 
     public void remove(UploadedFile uploadedFile) throws IOException {

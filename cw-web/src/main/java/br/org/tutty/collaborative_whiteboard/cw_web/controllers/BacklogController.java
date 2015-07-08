@@ -1,13 +1,11 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
-import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
 import cw.exceptions.DataNotFoundException;
-import org.primefaces.event.ReorderEvent;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -16,7 +14,6 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -36,29 +33,17 @@ public class BacklogController extends GenericController implements Serializable
     @Inject
     private EditionStoryController editionStoryController;
 
-    private List<Story> stories;
-    private List<Story> filteredStories;
-
-    public void onRowReorder(ReorderEvent event) throws IOException {
-        Collections.swap(stories, event.getFromIndex(), event.getToIndex());
-        backlogManagerService.updateBacklog(stories);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.change_priority");
-    }
-
-    public void removeStory() throws IOException {
-        Story selectedStory = editionStoryController.getSelectedStory();
-        backlogManagerService.removeStory(selectedStory);
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "backlog.removed_story");
-    }
+    private List<Story> allStories;
 
     public List<Story> fetchStories() {
         try {
-            this.stories = backlogManagerService.fetchAllStories();
-            return stories;
+            this.allStories = backlogManagerService.fetchAllStories();
+
+            return allStories;
 
         } catch (Exception e) {
-            stories = new ArrayList();
-            return stories;
+            allStories = new ArrayList();
+            return allStories;
         }
     }
 
@@ -91,13 +76,5 @@ public class BacklogController extends GenericController implements Serializable
         } catch (DataNotFoundException e) {
             return  null;
         }
-    }
-
-    public List<Story> getFilteredStories() {
-        return filteredStories;
-    }
-
-    public void setFilteredStories(List<Story> filteredStories) {
-        this.filteredStories = filteredStories;
     }
 }
