@@ -8,46 +8,52 @@
         <h:form id="iterationForm" prependId="false">
             <p:toolbar>
                 <f:facet name="left">
-                <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
-                                 style="min-width: 210px" required="true" requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
-                    <f:selectItem itemLabel="#{iteration_settings['iteration.default.value.dropdown']}" itemValue=""/>
-                    <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
-                                   itemLabel="#{iteration}"/>
+                    <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
+                                     style="min-width: 210px" required="true"
+                                     requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
+                        <f:selectItem itemLabel="#{iteration_settings['iteration.default.value.dropdown']}"
+                                      itemValue=""/>
+                        <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
+                                       itemLabel="#{iteration}"/>
 
-                    <p:ajax event="change" update="pickList"
-                            listener="#{iterationSettingsController.mountStoriesInsideIteration()}"/>
-                </p:selectOneMenu>
+                        <p:ajax event="change" update="pickList"
+                                listener="#{iterationSettingsController.mountStoriesInsideIteration()}"/>
+                    </p:selectOneMenu>
                 </f:facet>
             </p:toolbar>
 
+            <div class="pickListArea">
+                <p:pickList id="pickList" converter="storyConverterToPickList"
+                            value="#{iterationSettingsController.stories}"
+                            var="story" itemLabel="#{iterationSettingsController.mountStoryName(story)}"
+                            itemValue="#{story}" itemDisabled="#{iterationSettingsController.disabled(story)}">
 
-            <p:pickList id="pickList" converter="storyConverterToPickList"
-                        value="#{iterationSettingsController.stories}"
-                        var="story" itemLabel="#{iterationSettingsController.mountStoryName(story)}"
-                        itemValue="#{story}" itemDisabled="#{iterationSettingsController.disabled(story)}">
+                    <f:facet name="sourceCaption">#{iteration_settings['iteration.available.header']}</f:facet>
+                    <f:facet name="targetCaption">#{iteration_settings['iteration.iteration.header']}</f:facet>
 
-                <f:facet name="sourceCaption">#{iteration_settings['iteration.available.header']}</f:facet>
-                <f:facet name="targetCaption">#{iteration_settings['iteration.iteration.header']}</f:facet>
+                    <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}"
+                            update=":messageForm:messages,:iterationForm:pickList"/>
 
-                <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}" update=":messageForm:messages,:iterationForm:pickList"/>
+                    <p:column>
+                        <div style="height: 20px; width: 20px; margin-left: 1px;"
+                             class="color_#{iterationSettingsController.getStatus(story)}"/>
+                    </p:column>
 
-                <p:column style="text-align: center">
-                    <div style="height: 37px; margin-left: -4px; margin-top: -18px;" class="color_#{iterationSettingsController.getStatus(story)} column_status" />
-                </p:column>
+                    <p:column style="min-width: 100px;height: 35px; text-align: center; background-color: #f6f7fa;">
+                        <h:outputText value="#{story.code}"/>
+                    </p:column>
 
-                <p:column style="width: 15%;height: 35px; text-align: center; background-color: #f6f7fa;">
-                    <h:outputText value="#{story.code}" />
-                </p:column>
+                    <p:column style="min-width: 480px;height: 35px; text-align: center; background-color: #f6f7fa;">
+                        <h:outputText value="#{story.subject}"/>
+                    </p:column>
 
-                <p:column style="width: 80%;height: 35px; text-align: center; background-color: #f6f7fa;">
-                    <h:outputText value="#{story.subject}"/>
-                </p:column>
+                    <p:column style="min-width: 70px;;height: 35px; text-align: right; background-color: #f6f7fa;text-align: center;">
+                        <h:outputText value="#{empty story.iteration.name ? 'Livre' : story.iteration.name}"
+                                      style="font-style: italic; #{empty story.iteration.name ? 'color: #6cdc97' : 'color: #6fa3ff;'}"/>
+                    </p:column>
 
-                <p:column style="width: 5%;height: 35px; text-align: right; background-color: #f6f7fa;">
-                    <h:outputText value="#{story.iteration.name}" style="font-style: italic; color: #6fa3ff;"/>
-                </p:column>
-
-            </p:pickList>
+                </p:pickList>
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>

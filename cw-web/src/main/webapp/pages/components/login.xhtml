@@ -10,39 +10,43 @@
         <h:graphicImage url="../../cw/images/icon.png" styleClass="initialLogo"/>
 
         <h:outputText value="Collaborative Whiteboard" styleClass="initialName"/>
+
+        <div style="margin-left: 25%; width: 345px;">
+            <h:form id="loginForm" prependId="false">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <p:inputText id="email" size="42" value="#{loginController.email}" required="true"
+                                 requiredMessage="#{login['mandatory.email']}"/>
+                    <p:watermark value="#{login['watermark.email']}" for="email"/>
+                    <p:password id="password" size="42" value="#{loginController.password}" required="true"
+                                requiredMessage="#{login['mandatory.password']}"/>
+                    <p:watermark value="#{login['watermark.password']}" for="password"/>
+                </h:panelGrid>
+
+                <br/>
+
+                <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
+                                 ajax="false"/>
+
+                <p:spacer width="10px" />
+
+                <p:commandButton id="createBtn" value="#{login['button.create_account']}"
+                                 immediate="true">
+                    <p:ajax update=":loginForm,:creationForm" resetValues="true"
+                            oncomplete="PF('creationDialog').show()"/>
+                </p:commandButton>
+
+                <p:spacer width="10px" />
+
+                <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
+                               action="#{loginController.recovery()}" ajax="false"/>
+            </h:form>
+        </div>
     </div>
-
-    <p:panel id="loginPanel" header="#{login['header.login_panel']}" footer="#{login['footer.login_panel']}"
-             styleClass="loginPanel">
-        <h:form id="loginForm" prependId="false">
-            <p:messages />
-            <h:panelGrid columns="2">
-                <p:inputText id="email" size="42" value="#{loginController.email}" required="true" requiredMessage="#{login['mandatory.email']}"/>
-                <p:watermark value="#{login['watermark.email']}" for="email"/>
-                <p:password id="password" size="42" value="#{loginController.password}" required="true" requiredMessage="#{login['mandatory.password']}"/>
-                <p:watermark value="#{login['watermark.password']}" for="password"/>
-            </h:panelGrid>
-
-            <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
-                             ajax="false"/>
-
-            <p:spacer height="10px"/>
-
-            <p:commandButton id="createBtn" value="#{login['button.create_account']}"
-                             immediate="true">
-                <p:ajax update=":loginForm,:creationForm" resetValues="true" oncomplete="PF('creationDialog').show()"/>
-            </p:commandButton>
-
-            <p:spacer height="25px"/>
-
-            <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
-                           action="#{loginController.recovery()}" ajax="false"/>
-        </h:form>
-    </p:panel>
-
-    <p:dialog id="creationDialog" widgetVar="creationDialog" modal="true" resizable="false" header="#{accountCreation['welcome']}">
+    <p:dialog id="creationDialog" widgetVar="creationDialog" modal="true" resizable="false"
+              header="#{accountCreation['welcome']}">
         <h:form id="creationForm">
-            <p:messages />
+            <p:messages/>
             <h:panelGrid>
                 <p:watermark value="#{accountCreation['email']}" for="emailCreation"/>
                 <p:inputText id="emailCreation" required="true" requiredMessage="#{accountCreation['required.email']}"

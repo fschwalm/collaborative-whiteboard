@@ -66,10 +66,8 @@
 }
 
 #actionArea {
-    margin-top: -1%;
-    margin-left: 1%;
-    width: 98%;
-    height: 30px;
+    margin-top: -2%;
+    height: 10px;
 }
 
 .actionButton {
@@ -111,7 +109,6 @@
 }
 
 .project_name {
-    position: absolute;
     margin-top: 5%;
     font-size: 70px;
     color: #edd021;
@@ -166,21 +163,14 @@
     font-size: 15px !important;
 }
 
-.loginPanel {
-    width: 370px;
-    position: absolute;
-    top: 40%;
-    left: 40%;
-}
-
 .initialLogoArea{
-    position: absolute;
-    top: 25%;
-    left: 40%;
+    margin-top: 13%;
+    margin-left: 31%;
+    height: 500px;
+    width: 670px;
 }
 
 .initialName{
-    position: absolute;
     margin-top: 5%;
     font-size: 50px;
     color: #edd021;
@@ -231,9 +221,15 @@
     display: block;
 }
 
-.ui-picklist .ui-picklist-list{
-    height: 647px !important;
-    width: 774px !important;
+.pickListArea{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.ui-picklist-list {
+    height:600px !important;
+    width:750px !important;
 }
 
 
