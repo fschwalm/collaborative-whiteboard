@@ -27,9 +27,11 @@ function initWhiteboardRegisters(websocketWhiteboard){
 }
 
 function whiteboardWriter(evt){
-    var messageData = JSON.parse(evt.data);
-    var jsonStages = messageData['jSonStages'];
-    stageWriter(jsonStages);
+    messageData = JSON.parse(evt.data);
+    console.log(messageData);
+    //var messageData = JSON.parse(evt.data);
+    //var jsonStages = messageData['jSonStages'];
+    //stageWriter(jsonStages);
 }
 
 function stageWriter(jsonStages){

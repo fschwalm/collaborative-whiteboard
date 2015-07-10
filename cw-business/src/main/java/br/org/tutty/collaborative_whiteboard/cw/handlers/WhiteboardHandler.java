@@ -1,8 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw.handlers;
 
-import cw.dtos.json.JSonStage;
-import cw.dtos.json.JSonStory;
-import cw.dtos.json.Whiteboard;
+import backlog_manager.entities.Task;
+import dtos.WhiteboardMailable;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.EncodeException;
@@ -10,8 +9,8 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Created by drferreira on 20/05/15.
@@ -43,25 +42,35 @@ public class WhiteboardHandler implements Serializable {
         }
     }
 
-    public Whiteboard builderWhiteboard(Set<JSonStage> stages, Set<JSonStory> preparedStories) {
-        Whiteboard whiteboard = new Whiteboard();
+   public WhiteboardMailable builderMailableWhiteboard(List<Task> tasks){
+       WhiteboardMailable whiteboardMailable = new WhiteboardMailable();
 
-        stages.stream().forEach(new Consumer<JSonStage>() {
-            @Override
-            public void accept(JSonStage jSonStage) {
-                whiteboard.addStage(jSonStage);
+     // TODO Mecanismo para contruir Whiteboard que sera enviado.
 
-                preparedStories.stream().forEach(new Consumer<JSonStory>() {
-                    @Override
-                    public void accept(JSonStory story) {
-                        if (story.getStage().equals(jSonStage)) {
-                            jSonStage.addStory(story);
-                        }
-                    }
-                });
-            }
-        });
+       return new WhiteboardMailable();
+   }
 
-        return whiteboard;
-    }
+
+
+//    public Whiteboard builderWhiteboard(Set<JSonStage> stages, Set<JSonStory> preparedStories) {
+//        Whiteboard whiteboard = new Whiteboard();
+//
+//        stages.stream().forEach(new Consumer<JSonStage>() {
+//            @Override
+//            public void accept(JSonStage jSonStage) {
+//                whiteboard.addStage(jSonStage);
+//
+//                preparedStories.stream().forEach(new Consumer<JSonStory>() {
+//                    @Override
+//                    public void accept(JSonStory story) {
+//                        if (story.getStage().equals(jSonStage)) {
+//                            jSonStage.addStory(story);
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//
+//        return whiteboard;
+//    }
 }

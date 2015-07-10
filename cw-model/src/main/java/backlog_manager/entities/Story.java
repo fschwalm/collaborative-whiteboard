@@ -2,17 +2,14 @@ package backlog_manager.entities;
 
 
 import br.org.tutty.util.PropertyMonitor;
-import cw.dtos.json.JSonStory;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
 import cw.entities.Stage;
 import cw.entities.User;
-import cw.interfaces.ConvertibleToJSon;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by drferreira on 11/03/15.
@@ -20,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "story", catalog = "cw")
 @SequenceGenerator(name = "StorySequence", sequenceName = "story_seq", initialValue = 1, allocationSize = 1)
-public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
+public class Story implements Serializable{
 
     private static Integer INITIAL_PRIORITY = 1;
 
@@ -215,18 +212,6 @@ public class Story implements Serializable, ConvertibleToJSon<JSonStory>{
         this.iteration = iteration;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("iteration", oldValue, iteration);
-    }
-
-    @Override
-    public JSonStory toJson(){
-        JSonStory jSonStory = new JSonStory();
-        jSonStory.setCode(code);
-        jSonStory.setSubject(subject);
-        jSonStory.setBranch(branch);
-        jSonStory.setAuthor(author.toJson());
-        jSonStory.setStage(stage.toJson());
-
-        return jSonStory;
     }
 
     @Override

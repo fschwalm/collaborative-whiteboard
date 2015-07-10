@@ -1,6 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.websockets;
 
-import br.org.tutty.collaborative_whiteboard.transmition.services.TransmitionsService;
+import br.org.tutty.collaborative_whiteboard.chat.services.TransmitionsService;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,7 +1,7 @@
-package br.org.tutty.collaborative_whiteboard.transmition.services;
+package br.org.tutty.collaborative_whiteboard.chat.services;
 
 import br.org.tutty.collaborative_whiteboard.cw.context.UserGlobalContext;
-import br.org.tutty.collaborative_whiteboard.transmition.context.TransmitionContext;
+import br.org.tutty.collaborative_whiteboard.chat.context.TransmitionContext;
 import br.org.tutty.transmition.TransmitionDao;
 import cw.dtos.LoggedUser;
 import cw.entities.User;

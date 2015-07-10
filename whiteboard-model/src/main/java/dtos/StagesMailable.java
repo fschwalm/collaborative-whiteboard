@@ -1,33 +1,26 @@
-package cw.entities;
+package dtos;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
- * Created by drferreira on 19/05/15.
+ * Created by drferreira on 10/07/15.
  */
-@Entity
-@Table(name = "stage", catalog = "cw")
-public class Stage implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
-    @Column(nullable = false)
+public class StagesMailable implements Serializable{
+    private Set<StoryMailable> stories;
     private String name;
-
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long position;
 
-    public Stage() {
+    public StagesMailable(Set<StoryMailable> stories) {
+        this.stories = stories;
     }
 
-    public Stage(String name) {
-        this.name = name;
+    public Set<StoryMailable> getStories() {
+        return stories;
     }
 
-    public Long getId() {
-        return id;
+    public void setStories(Set<StoryMailable> stories) {
+        this.stories = stories;
     }
 
     public String getName() {
@@ -51,9 +44,9 @@ public class Stage implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Stage stage = (Stage) o;
+        StagesMailable that = (StagesMailable) o;
 
-        if (name != null ? !name.equals(stage.name) : stage.name != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }

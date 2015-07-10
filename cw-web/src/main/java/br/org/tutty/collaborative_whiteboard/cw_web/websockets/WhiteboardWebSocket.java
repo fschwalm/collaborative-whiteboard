@@ -25,6 +25,7 @@ public class WhiteboardWebSocket extends WebSocket {
 
     @OnMessage
     public void send(String dataMessage, Session senderSession){
+        // TODO Aguardando implementação para modificações no quadro.
         System.out.println("ENVIADA MENSAGEM");
     }
 

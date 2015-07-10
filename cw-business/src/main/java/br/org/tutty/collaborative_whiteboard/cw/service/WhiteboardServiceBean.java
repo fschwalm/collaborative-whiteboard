@@ -1,19 +1,21 @@
 package br.org.tutty.collaborative_whiteboard.cw.service;
 
+import backlog_manager.entities.Task;
+import br.org.tutty.backlog_manager.StoryDao;
+import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import com.google.gson.Gson;
-import cw.dtos.json.JSonStage;
-import cw.dtos.json.JSonStory;
-import cw.dtos.json.Whiteboard;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
+import dtos.WhiteboardMailable;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.websocket.Session;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,13 +23,19 @@ import java.util.Set;
  */
 @Stateless
 @Local(WhiteboardService.class)
-public class WhiteboardServiceServiceBean implements WhiteboardService, Serializable {
+public class WhiteboardServiceBean implements WhiteboardService, Serializable {
 
     @Inject
     private WhiteboardHandler whiteboardHandler;
 
     @Inject
     public WhiteboardDao whiteboardDao;
+
+    @Inject
+    public TaskDao taskDao;
+
+    @Inject
+    public StoryDao storyDao;
 
     @Override
     public Set<Stage> fetchStages() throws DataNotFoundException {
@@ -48,24 +56,27 @@ public class WhiteboardServiceServiceBean implements WhiteboardService, Serializ
         whiteboardDao.remove(stage);
     }
 
-    public Whiteboard mountWhiteboard() {
-        Set<JSonStage> stages = whiteboardDao.mountJsonStages();
-        Set<JSonStory> stories = whiteboardDao.mountJsonStories();
-
-        return whiteboardHandler.builderWhiteboard(stages, stories);
-    }
-
     @Override
     public void refreshAllWhiteboards() {
-        Whiteboard whiteboard = mountWhiteboard();
-        whiteboardHandler.broadcast(new Gson().toJson(whiteboard));
+        try{
+            List<Task> tasks = taskDao.fetchAll();
+            WhiteboardMailable whiteboardMailable = whiteboardHandler.builderMailableWhiteboard(tasks);
+            whiteboardHandler.broadcast(new Gson().toJson(whiteboardMailable));
+
+        }catch (DataNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void refreshWhiteboard(Session target) {
-        Whiteboard whiteboard = mountWhiteboard();
-        whiteboardHandler.send(new Gson().toJson(whiteboard), target);
+        try{
+            List<Task> tasks = taskDao.fetchAll();
+            WhiteboardMailable whiteboardMailable = whiteboardHandler.builderMailableWhiteboard(tasks);
+            whiteboardHandler.send(new Gson().toJson(whiteboardMailable), target);
+
+        }catch (DataNotFoundException e){
+            e.printStackTrace();
+        }
     }
-
-
 }

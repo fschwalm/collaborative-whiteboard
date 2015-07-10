@@ -1,4 +1,4 @@
-package br.org.tutty.collaborative_whiteboard.transmition.services;
+package br.org.tutty.collaborative_whiteboard.chat.services;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;

@@ -35,4 +35,14 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
         return (List<Task>) listNotWaitingEmpty(criteria);
     }
 
+    @Override
+    public List<Task> fetchAll() throws DataNotFoundException {
+        Criteria criteria = createCriteria(Task.class);
+        criteria.addOrder(Order.asc("id"));
+
+        return (List<Task>) listNotWaitingEmpty(criteria);
+    }
+
+
+
 }

@@ -1,4 +1,4 @@
-package br.org.tutty.collaborative_whiteboard.transmition.context;
+package br.org.tutty.collaborative_whiteboard.chat.context;
 
 
 import cw.dtos.LoggedUser;

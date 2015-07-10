@@ -1,4 +1,4 @@
-package br.org.tutty.collaborative_whiteboard.transmition.services;
+package br.org.tutty.collaborative_whiteboard.chat.services;
 
 /**
  * Created by drferreira on 06/02/15.
