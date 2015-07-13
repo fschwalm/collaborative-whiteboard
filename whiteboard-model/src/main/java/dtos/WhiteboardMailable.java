@@ -21,16 +21,8 @@ public class WhiteboardMailable implements Serializable {
         stages.add(stagesMailable);
     }
 
-    public Boolean existStage(String name){
-        return stages.stream().anyMatch(stage -> stage.getName().equals(name));
-    }
-
     public StagesMailable getStageByName(String name){
         return stages.stream().filter(stage -> stage.getName().equals(name)).findAny().get();
-    }
-
-    public Set<StagesMailable> getStages() {
-        return stages;
     }
 
     public Date getUpdateDate() {
