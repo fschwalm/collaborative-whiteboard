@@ -4,6 +4,7 @@ import backlog_manager.entities.Task;
 import br.org.tutty.backlog_manager.StoryDao;
 import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.factories.WhiteboardFactory;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import com.google.gson.Gson;
 import cw.entities.Stage;
@@ -15,6 +16,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.websocket.Session;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +45,16 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
         return whiteboardDao.fetchAllStages();
     }
 
+    public WhiteboardMailable fetchWhiteboardMailable(){
+        List<Task> tasks = new ArrayList<>();
+        Set<Stage> stages = new HashSet<>();
+
+        stages.addAll(whiteboardDao.fetchAllStages());
+        tasks.addAll(taskDao.fetchAll());
+
+        return WhiteboardFactory.builderMailableWhiteboard(tasks, stages);
+    }
+
     @Override
     public void createStage(Stage stage) throws DataNotFoundException {
         Long count = whiteboardDao.count(Stage.class);
@@ -58,25 +71,13 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
 
     @Override
     public void refreshAllWhiteboards() {
-        try{
-            List<Task> tasks = taskDao.fetchAll();
-            WhiteboardMailable whiteboardMailable = whiteboardHandler.builderMailableWhiteboard(tasks);
-            whiteboardHandler.broadcast(new Gson().toJson(whiteboardMailable));
-
-        }catch (DataNotFoundException e){
-            e.printStackTrace();
-        }
+        WhiteboardMailable whiteboardMailable = fetchWhiteboardMailable();
+        whiteboardHandler.broadcast(whiteboardMailable);
     }
 
     @Override
     public void refreshWhiteboard(Session target) {
-        try{
-            List<Task> tasks = taskDao.fetchAll();
-            WhiteboardMailable whiteboardMailable = whiteboardHandler.builderMailableWhiteboard(tasks);
-            whiteboardHandler.send(new Gson().toJson(whiteboardMailable), target);
-
-        }catch (DataNotFoundException e){
-            e.printStackTrace();
-        }
+        WhiteboardMailable whiteboardMailable = fetchWhiteboardMailable();
+        whiteboardHandler.send(whiteboardMailable, target);
     }
 }

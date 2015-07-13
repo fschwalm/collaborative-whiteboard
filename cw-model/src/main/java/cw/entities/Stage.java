@@ -1,5 +1,7 @@
 package cw.entities;
 
+import br.org.tutty.Equalization;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,9 +15,11 @@ public class Stage implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Equalization(name = "stage_name")
     @Column(nullable = false)
     private String name;
 
+    @Equalization(name = "stage_position")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long position;
 

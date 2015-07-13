@@ -1,5 +1,7 @@
 package dtos;
 
+import br.org.tutty.Equalization;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,9 +9,16 @@ import java.util.Date;
  * Created by drferreira on 10/07/15.
  */
 public class TaskMailable implements Serializable{
+    @Equalization(name = "taks_code")
     private String code;
+
+    @Equalization(name = "taks_estimated_time")
     private Date estimatedTime;
+
+    @Equalization(name = "taks_subject")
     private String subject;
+
+    @Equalization(name = "taks_description")
     private String description;
 
     public String getCode() {

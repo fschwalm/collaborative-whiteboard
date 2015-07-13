@@ -1,7 +1,10 @@
 package dtos;
 
+import br.org.tutty.Equalization;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -10,17 +13,44 @@ import java.util.Set;
 public class StoryMailable implements Serializable {
     private Set<TaskMailable> tasks;
 
+    @Equalization(name = "story_code")
     private String code;
+
+    @Equalization(name = "story_branch")
     private String branch;
+
+    @Equalization(name = "story_points")
     private Integer storyPoints;
+
+    @Equalization(name = "story_priority")
     private Integer priority;
+
+    @Equalization(name = "story_creation_date")
     private Date creationDate;
+
+    @Equalization(name = "story_subject")
     private String subject;
+
+    @Equalization(name = "story_description")
     private String description;
+
+    @Equalization(name = "story_wiki")
     private String wikiPage;
 
-    public StoryMailable(Set<TaskMailable> tasks) {
-        this.tasks = tasks;
+    public StoryMailable() {
+        tasks = new HashSet<>();
+    }
+
+    public void addTask(TaskMailable taskMailable){
+        tasks.add(taskMailable);
+    }
+
+    public Boolean existTask(String taskCode){
+        return tasks.stream().anyMatch(task -> task.getCode().equals(taskCode));
+    }
+
+    public TaskMailable getTaskByCode(String taskCode){
+        return tasks.stream().filter(task -> task.getCode().equals(taskCode)).findAny().get();
     }
 
     public String getCode() {

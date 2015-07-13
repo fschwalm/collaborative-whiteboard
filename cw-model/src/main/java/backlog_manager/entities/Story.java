@@ -1,10 +1,10 @@
 package backlog_manager.entities;
 
 
+import br.org.tutty.Equalization;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
-import cw.entities.Stage;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -25,18 +25,23 @@ public class Story implements Serializable{
     @GeneratedValue(generator = "StorySequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Equalization(name = "story_code")
     @Column(nullable = false, unique = true)
     private String code;
 
+    @Equalization(name = "story_branch")
     @Column(nullable = false)
     private String branch;
 
+    @Equalization(name = "story_points")
     @Column(name = "story_points")
     private Integer storyPoints;
 
+    @Equalization(name = "story_priority")
     @Column(nullable = false)
     private Integer priority;
 
+    @Equalization(name = "story_creation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
@@ -52,15 +57,15 @@ public class Story implements Serializable{
     @ManyToOne
     private Iteration iteration;
 
+    @Equalization(name = "story_subject")
     @Column(nullable = false)
     private String subject;
 
+    @Equalization(name = "story_description")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
-    private Stage stage;
-
+    @Equalization(name = "story_wiki")
     @Column(name = "wiki_page")
     private String wikiPage;
 
@@ -179,17 +184,6 @@ public class Story implements Serializable{
 
     public void setProjectArea(ProjectArea projectArea) {
         this.projectArea = projectArea;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        Stage oldValue = this.stage;
-        this.stage = stage;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
     }
 
     public Integer getStoryPoints() {

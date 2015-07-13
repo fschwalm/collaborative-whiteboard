@@ -9,11 +9,15 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import java.util.List;
 
 /**
  * Created by drferreira on 25/05/15.
  */
+@Stateless
+@Local(TaskDao.class)
 public class TaskDaoBean extends GenericDao implements TaskDao{
 
     @Override
@@ -36,11 +40,11 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
     }
 
     @Override
-    public List<Task> fetchAll() throws DataNotFoundException {
+    public List<Task> fetchAll(){
         Criteria criteria = createCriteria(Task.class);
         criteria.addOrder(Order.asc("id"));
 
-        return (List<Task>) listNotWaitingEmpty(criteria);
+        return (List<Task>) list(criteria);
     }
 
 

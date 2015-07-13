@@ -15,15 +15,12 @@ public class TaskEdition implements Serializable {
     private String description;
     private Task selectedTask;
 
-    public void init(Task selectedTask) throws DataNotFoundException {
+    public void init(Task selectedTask) {
         if(selectedTask != null) {
             this.selectedTask = selectedTask;
             this.time = selectedTask.getEstimatedTime();
             this.subject = selectedTask.getSubject();
             this.description = selectedTask.getDescription();
-
-        }else {
-            throw new DataNotFoundException();
         }
     }
 

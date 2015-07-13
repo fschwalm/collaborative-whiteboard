@@ -23,5 +23,8 @@
         <module>
             ../cw-model
         </module>
+        <module>
+            ../whiteboard-model
+        </module>
     </modules>
 </project>

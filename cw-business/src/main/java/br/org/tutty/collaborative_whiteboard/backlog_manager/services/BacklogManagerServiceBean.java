@@ -5,10 +5,12 @@ import backlog_manager.enums.StoryStatus;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.backlog_manager.StoryDao;
 import br.org.tutty.backlog_manager.TaskDao;
+import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.factories.CodeFactory;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.Project;
 import cw.entities.ProjectArea;
+import cw.entities.Stage;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 
@@ -26,10 +28,11 @@ import java.util.function.Consumer;
 @Stateless
 @Local(BacklogManagerService.class)
 public class BacklogManagerServiceBean implements BacklogManagerService {
-    private static Integer INITIAL_PRIORITY = 0;
-
     @Inject
     private SessionContext sessionContext;
+
+    @Inject
+    private WhiteboardDao whiteboardDao;
 
     @Inject
     private StoryDao storyDao;
@@ -116,9 +119,11 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     @Override
     public void createTask(Task task) {
         User author = sessionContext.getLoggedUser().getUser();
+        Stage stage = whiteboardDao.fetchInitialStage();
         String code = CodeFactory.task(taskDao, task.getStory());
 
         task.setTaskStatus(TaskStatus.OPEN);
+        task.setStage(stage);
         task.setCode(code);
         task.setAuthor(author);
 

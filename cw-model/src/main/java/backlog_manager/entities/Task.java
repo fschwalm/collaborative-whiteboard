@@ -1,7 +1,9 @@
 package backlog_manager.entities;
 
 import backlog_manager.enums.TaskStatus;
+import br.org.tutty.Equalization;
 import br.org.tutty.util.PropertyMonitor;
+import cw.entities.Stage;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -21,6 +23,7 @@ public class Task implements Serializable {
     @GeneratedValue(generator = "TaskSequence", strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Equalization(name = "taks_code")
     private String code;
 
     @ManyToOne
@@ -32,15 +35,21 @@ public class Task implements Serializable {
     @ManyToOne
     private User author;
 
+    @ManyToOne
+    private Stage stage;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TaskStatus taskStatus;
 
+    @Equalization(name = "taks_estimated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date estimatedTime;
 
+    @Equalization(name = "taks_subject")
     private String subject;
 
+    @Equalization(name = "taks_description")
     private String description;
 
     @Transient
@@ -132,5 +141,16 @@ public class Task implements Serializable {
         this.author = author;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("author", oldValue, author);
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        Stage oldValue = this.stage;
+        this.stage = stage;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("stage", oldValue, stage);
     }
 }

@@ -1,6 +1,9 @@
 package dtos;
 
+import br.org.tutty.Equalization;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,19 +11,27 @@ import java.util.Set;
  */
 public class StagesMailable implements Serializable{
     private Set<StoryMailable> stories;
+
+    @Equalization(name = "stage_name")
     private String name;
+
+    @Equalization(name = "stage_position")
     private Long position;
 
-    public StagesMailable(Set<StoryMailable> stories) {
-        this.stories = stories;
+    public StagesMailable() {
+        stories = new HashSet<>();
     }
 
-    public Set<StoryMailable> getStories() {
-        return stories;
+    public void addStory(StoryMailable storyMailable){
+        stories.add(storyMailable);
     }
 
-    public void setStories(Set<StoryMailable> stories) {
-        this.stories = stories;
+    public Boolean existStory(String storyCode){
+        return stories.stream().anyMatch(story -> story.getCode().equals(storyCode));
+    }
+
+    public StoryMailable getStoryByCode(String code){
+        return stories.stream().filter(story -> story.getCode().equals(code)).findAny().get();
     }
 
     public String getName() {
@@ -29,14 +40,6 @@ public class StagesMailable implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getPosition() {
-        return position;
-    }
-
-    public void setPosition(Long position) {
-        this.position = position;
     }
 
     @Override

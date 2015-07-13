@@ -77,6 +77,10 @@ public abstract class GenericDao implements Dao, Serializable{
         }
     }
 
+    public Object uniqueResult(Criteria criteria){
+        return criteria.uniqueResult();
+    }
+
     public void remove(Object entity){
         entityManager.remove(entityManager.merge(entity));
     }

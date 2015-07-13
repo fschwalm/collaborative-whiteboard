@@ -4,7 +4,6 @@ import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
-import br.org.tutty.collaborative_whiteboard.cw_web.dtos.TaskEdition;
 import cw.exceptions.DataNotFoundException;
 
 import javax.faces.application.FacesMessage;

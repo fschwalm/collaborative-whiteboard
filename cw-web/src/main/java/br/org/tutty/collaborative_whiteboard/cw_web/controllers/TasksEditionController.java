@@ -41,7 +41,7 @@ public class TasksEditionController extends GenericController implements Seriali
         return taskEdition.getSelectedTask();
     }
 
-    public void setSelectedTask(Task selectedTask) throws DataNotFoundException {
+    public void setSelectedTask(Task selectedTask){
         taskEdition.init(selectedTask);
     }
 

@@ -1,6 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw.handlers;
 
-import backlog_manager.entities.Task;
+import com.google.gson.Gson;
 import dtos.WhiteboardMailable;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -9,7 +9,6 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,46 +30,14 @@ public class WhiteboardHandler implements Serializable {
         return sessions;
     }
 
-    public void broadcast(String whiteboard) {
+    public void broadcast(WhiteboardMailable whiteboard) {
         getSessions().stream().forEach(session -> send(whiteboard, session));
     }
 
-    public void send(String whiteboard, Session target) {
+    public void send(WhiteboardMailable whiteboard, Session target) {
         try {
-            target.getBasicRemote().sendObject(whiteboard);
+            target.getBasicRemote().sendObject(new Gson().toJson(whiteboard));
         } catch (IOException | EncodeException e) {
         }
     }
-
-   public WhiteboardMailable builderMailableWhiteboard(List<Task> tasks){
-       WhiteboardMailable whiteboardMailable = new WhiteboardMailable();
-
-     // TODO Mecanismo para contruir Whiteboard que sera enviado.
-
-       return new WhiteboardMailable();
-   }
-
-
-
-//    public Whiteboard builderWhiteboard(Set<JSonStage> stages, Set<JSonStory> preparedStories) {
-//        Whiteboard whiteboard = new Whiteboard();
-//
-//        stages.stream().forEach(new Consumer<JSonStage>() {
-//            @Override
-//            public void accept(JSonStage jSonStage) {
-//                whiteboard.addStage(jSonStage);
-//
-//                preparedStories.stream().forEach(new Consumer<JSonStory>() {
-//                    @Override
-//                    public void accept(JSonStory story) {
-//                        if (story.getStage().equals(jSonStage)) {
-//                            jSonStage.addStory(story);
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//
-//        return whiteboard;
-//    }
 }

@@ -15,5 +15,5 @@ public interface TaskDao extends Dao{
 
     List<Task> fetchByStory(Story selectedStory) throws DataNotFoundException;
 
-    List<Task> fetchAll() throws DataNotFoundException;
+    List<Task> fetchAll();
 }
