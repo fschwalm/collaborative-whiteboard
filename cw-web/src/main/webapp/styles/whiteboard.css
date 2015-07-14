@@ -1,11 +1,3 @@
-.whiteboard{
-    background: white;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1600px !important;
-    height: 930px !important;
-}
-
 .stage{
     background-color: #cccccc;
     float: left;
@@ -13,6 +5,7 @@
     margin: 6px;
     border-radius: 10px;
     border: 1px solid #8AC007;
+    display: table-cell;
 }
 
 .stage_header{
@@ -33,6 +26,14 @@
     min-width: 100%;
 }
 
+.whiteboard{
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .emptyMessage span{
     display: table-cell;
     vertical-align: middle;
@@ -46,4 +47,28 @@
     text-transform: uppercase;
     color: #675c5c;
     background-color: white;
+}
+
+.ticket{
+    background-color: #bcf9cb;
+    width: 350px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.task_estimated{
+    top: 80px;
+    right: 110px;
+    position: relative;
+}
+
+.task_code{
+    left: 235px;
+    position: relative;
+}
+
+.task_subject{
+    top: 40px;
+    right: 110px;
+    position: relative;
 }

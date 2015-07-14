@@ -24,8 +24,4 @@ public class WhiteboardMailable implements Serializable {
     public StagesMailable getStageByName(String name){
         return stages.stream().filter(stage -> stage.getName().equals(name)).findAny().get();
     }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
 }
