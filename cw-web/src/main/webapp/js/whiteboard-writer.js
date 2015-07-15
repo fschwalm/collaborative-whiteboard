@@ -23,14 +23,12 @@ function write_all_stages(target, stages) {
 function write_stage(target, stage) {
     var stage_name = stage.name;
 
-    var collumn = $(document.createElement('column'));
     var div_stage = $(document.createElement('div'));
     div_stage.attr('id', stage_name);
     div_stage.attr('class', 'stage');
 
     write_stage_header(stage_name, div_stage);
-    collumn.append(div_stage);
-    target.append(collumn);
+    target.append(div_stage);
 }
 
 function write_stage_header(label, stage) {
@@ -71,23 +69,58 @@ function write_task(stage_target, taskJson) {
     task.attr('id', taskJson.code);
     task.attr('class', 'ticket');
 
-    var taks_code = $(document.createElement('span'));
-    taks_code.attr('class', 'task_code');
-    taks_code.text(taskJson.code);
-
-    var estimated_time = $(document.createElement('span'));
-    estimated_time.attr('class', 'task_estimated');
-    estimated_time.text(taskJson.estimatedTime);
-
-    var subject = $(document.createElement('span'));
-    subject.attr('class', 'task_subject');
-    subject.text(taskJson.subject);
-
-    task.append(taks_code);
-    task.append(estimated_time);
-    task.append(subject);
+    task.append(write_task_code(taskJson.code));
+    task.append(write_task_estimated(taskJson.estimatedTime));
+    task.append(write_task_subject(taskJson.subject));
+    task.append(write_image_user());
 
     $('#'+stage_target.name).append(task);
+}
+
+function write_image_user(){
+    var image_div = $(document.createElement('div'));
+    image_div.attr('class', 'image_user');
+
+    return image_div;
+}
+
+function write_task_code(code){
+    var task_div = $(document.createElement('div'));
+    var task_code = $(document.createElement('span'));
+
+    task_div.attr('class', 'task_code');
+    task_code.text(code);
+
+    task_div.append(task_code);
+
+    return task_div;
+}
+
+function write_task_estimated(estimated){
+    var task_estimated_time_div = $(document.createElement('div'));
+    var estimated_time = $(document.createElement('span'));
+
+    task_estimated_time_div.attr('class', 'task_estimated');
+
+    var formated_estimated_time = moment(estimated).format('hh:mm');
+    estimated_time.text('Estimativa : '+formated_estimated_time);
+
+    task_estimated_time_div.append(estimated_time);
+
+    return task_estimated_time_div;
+}
+
+function write_task_subject(subject_value){
+    var task_subject_div = $(document.createElement('div'));
+    var subject = $(document.createElement('span'));
+
+    task_subject_div.attr('class', 'task_subject');
+
+    subject.text(subject_value);
+
+    task_subject_div.append(subject);
+
+    return task_subject_div;
 }
 
 function write_whiteboard_message(whiteboard, messageText) {

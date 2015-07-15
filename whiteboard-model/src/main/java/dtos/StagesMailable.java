@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by drferreira on 10/07/15.
  */
-public class StagesMailable implements Serializable{
+public class StagesMailable implements Serializable {
     private Set<StoryMailable> stories;
 
     @Equalization(name = "stage_name")
@@ -22,15 +22,15 @@ public class StagesMailable implements Serializable{
         stories = new HashSet<>();
     }
 
-    public void addStory(StoryMailable storyMailable){
+    public void addStory(StoryMailable storyMailable) {
         stories.add(storyMailable);
     }
 
-    public Boolean existStory(String storyCode){
+    public Boolean existStory(String storyCode) {
         return stories.stream().anyMatch(story -> story.getCode().equals(storyCode));
     }
 
-    public StoryMailable getStoryByCode(String code){
+    public StoryMailable getStoryByCode(String code) {
         return stories.stream().filter(story -> story.getCode().equals(code)).findAny().get();
     }
 

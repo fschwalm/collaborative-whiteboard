@@ -1,16 +1,15 @@
 .stage{
-    background-color: #cccccc;
-    float: left;
-    min-height: 100%;
-    margin: 6px;
-    border-radius: 10px;
-    border: 1px solid #8AC007;
-    display: table-cell;
+    min-height: 800px;
+    width: 500px;
+    border-left: 5px solid #5d8aa8;
+    margin-left: 10px;
+}
+
+.stage:last-child {
+    border-right: 5px solid #5d8aa8;;
 }
 
 .stage_header{
-    background-color: #ebfde7;
-    border-radius: 10px 10px 0px 0px;
     min-height: 30px;
     text-align: center;
     font-family: 'Raleway',sans-serif;
@@ -27,11 +26,13 @@
 }
 
 .whiteboard{
-    background: white;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100% !important;
+    background-color: #e0f3f1;
     height: 100% !important;
+    white-space: nowrap;
+}
+
+.whiteboard > div{
+    display: inline-block;
 }
 
 .emptyMessage span{
@@ -50,25 +51,69 @@
 }
 
 .ticket{
-    background-color: #bcf9cb;
     width: 350px;
     height: 100px;
     margin-top: 10px;
+    margin-left: 80px;
+    background-image: url(../images/post_it.png);
+    background-size: 350px 100px;
+    float: left;
 }
 
 .task_estimated{
-    top: 80px;
-    right: 110px;
+    top: 60px;
+    margin-left: 5px;
     position: relative;
+    text-align: left;
+    border-top: 1px solid #318ce7;
+    width: 260px;
+}
+
+.task_estimated span{
+    margin-left: 5px;
 }
 
 .task_code{
-    left: 235px;
+    left: 65px;
     position: relative;
+    width: 285px;
+    text-align: center;
+    border-bottom: 1px solid #318ce7;
+    top: 10px;
+    text-align: left;
+}
+
+.task_code span{
+    font-weight: bold;
+    color: #318ce7;
+    top: 5px;
+    text-align: left;
 }
 
 .task_subject{
-    top: 40px;
-    right: 110px;
+    top: -14px;
+    width: 290px;
+    height: 50px;
+    left: 55px;
     position: relative;
+    text-align: center;
+    display: table;
+}
+
+.task_subject span{
+    font-size: 13px;
+    word-break: break-all;
+}
+
+.image_user{
+    width: 46px;
+    height: 46px;
+    margin-top: -80px;
+    margin-left: 5px;
+    background-image: url(../images/photo.jpg);
+}
+
+.task_subject span{
+    display: table-cell;
+    vertical-align: middle;
 }
