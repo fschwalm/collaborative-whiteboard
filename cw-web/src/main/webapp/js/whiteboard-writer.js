@@ -1,11 +1,7 @@
 function write_last_upadate(target, date) {
-    var div_date = $(document.createElement('div'));
     var span_date = $(document.createElement('span'));
-
     span_date.text(date);
-
-    div_date.append(span_date);
-    target.append(div_date);
+    target.append(span_date);
 }
 
 function write_all_stages(target, stages) {
@@ -129,7 +125,7 @@ function write_whiteboard_message(whiteboard, messageText) {
 
     message.textContent = messageText;
 
-    messageDiv.attr('class', 'emptyMessage');
+    messageDiv.attr('class', 'message');
 
     $(messageDiv).append(message);
     $(whiteboard).append(messageDiv);

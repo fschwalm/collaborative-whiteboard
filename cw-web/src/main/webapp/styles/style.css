@@ -5,6 +5,7 @@
 
 #bodyPage {
     background-color: whitesmoke;
+    overflow-x: hidden;
 }
 
 .backlogDiv {
@@ -40,7 +41,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 1600px !important;
-    height: 930px !important;
+    min-height: 935px !important;
     background-color: white !important;
 }
 

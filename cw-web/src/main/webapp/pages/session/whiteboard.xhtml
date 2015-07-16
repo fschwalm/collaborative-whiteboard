@@ -19,10 +19,12 @@
                                          oncomplete="PF('iterationCreate').show()"
                                          update=":iterationCreate" process="@this"/>
 
-                        <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}" action="#{iterationController.openIterationSettings()}"/>
+                        <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}"
+                                         action="#{iterationController.openIterationSettings()}"/>
 
                         <p:progressBar ajax="true" value="#{iterationController.progressIteration()}"
-                                       labelTemplate="{value}%" styleClass="animated" global="false" style="margin-top: 20%">
+                                       labelTemplate="{value}%" styleClass="animated" global="false"
+                                       style="margin-top: 20%">
                             <p:ajax event="complete" listener="#{iterationController.progressIterationComplete()}"/>
                         </p:progressBar>
                     </p:ribbonGroup>
@@ -34,7 +36,9 @@
             </p:ribbon>
         </h:form>
 
-    <div id="whiteboard" class="whiteboard" />
+        <h:graphicImage id="center_arrow" url="../../images/arrow.png" styleClass="center_arrow" onclick="center_whiteboard();"/>
+
+        <div id="whiteboard" class="whiteboard"/>
 
         <p:dialog id="iterationCreate" widgetVar="iterationCreate" modal="true" resizable="false" appendToBody="false"
                   width="1000">
@@ -59,7 +63,7 @@
                         <p:calendar id="initDate" value="#{iterationController.init}" pattern="dd-MM-yyyy" mask="true"
                                     size="8" required="true"
                                     requiredMessage="#{whiteboard['iteration.init.required']}">
-                        <p:ajax event="dateSelect" update="endDate" />
+                            <p:ajax event="dateSelect" update="endDate"/>
                         </p:calendar>
 
                         <p:spacer width="5"/>
@@ -70,8 +74,8 @@
                         <p:calendar id="endDate" value="#{iterationController.end}" pattern="dd-MM-yyyy" mask="true"
                                     size="8" required="true" requiredMessage="#{whiteboard['iteration.end.required']}">
 
-                            <f:attribute name="startDate" value="#{iterationController.init}" />
-                            <f:validator validatorId="startDateGreaterThanEndValidator" />
+                            <f:attribute name="startDate" value="#{iterationController.init}"/>
+                            <f:validator validatorId="startDateGreaterThanEndValidator"/>
                         </p:calendar>
                     </f:facet>
                 </p:toolbar>
@@ -81,15 +85,18 @@
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-                    <p:column headerText="#{iteration_creation['iteration.story.points']}" style="width:90px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.points']}"
+                              style="width:90px;text-align:center">
                         <h:outputText value="#{story.storyPoints}"/>
                     </p:column>
 
-                    <p:column headerText="#{iteration_creation['iteration.story.project']}" style="width:80px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.project']}"
+                              style="width:80px;text-align:center">
                         <h:outputText value="#{story.project.nameProject}"/>
                     </p:column>
 
-                    <p:column headerText="#{iteration_creation['iteration.story.code']}" style="width:150px;text-align:center">
+                    <p:column headerText="#{iteration_creation['iteration.story.code']}"
+                              style="width:150px;text-align:center">
                         <h:outputText value="#{story.code}"/>
                     </p:column>
 

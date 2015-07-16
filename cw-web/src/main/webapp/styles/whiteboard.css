@@ -1,12 +1,14 @@
 .stage{
-    min-height: 800px;
     width: 500px;
     border-left: 5px solid #5d8aa8;
     margin-left: 10px;
+    height: 530px !important;
+    width: 390px;
+    min-width: 390px;
 }
 
 .stage:last-child {
-    border-right: 5px solid #5d8aa8;;
+    border-right: 5px solid #5d8aa8;
 }
 
 .stage_header{
@@ -19,23 +21,26 @@
     color: black;
 }
 
-.emptyMessage{
-    display: table;
-    min-height: 65%;
-    min-width: 100%;
-}
+
 
 .whiteboard{
-    background-color: #e0f3f1;
-    height: 100% !important;
+    background-color: #e0f3f1 !important;
     white-space: nowrap;
+    position: absolute;
+    margin-top: 10px;
+    min-height: 530px;
 }
 
 .whiteboard > div{
-    display: inline-block;
+    display: table-cell;
 }
 
-.emptyMessage span{
+.message{
+    position: relative;
+    top: 170px;
+}
+
+.message span{
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -54,7 +59,7 @@
     width: 350px;
     height: 100px;
     margin-top: 10px;
-    margin-left: 80px;
+    margin-left: 20px;
     background-image: url(../images/post_it.png);
     background-size: 350px 100px;
     float: left;
@@ -116,4 +121,17 @@
 .task_subject span{
     display: table-cell;
     vertical-align: middle;
+}
+
+#whiteboard_update{
+    float: right;
+    margin-right: 5px;
+}
+
+.center_arrow{
+    position: absolute;
+    height: 46px;
+    transform: rotate(90deg);
+    top: 380px;
+    z-index: 99999;
 }
