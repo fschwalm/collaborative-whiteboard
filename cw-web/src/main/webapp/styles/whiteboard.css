@@ -1,14 +1,15 @@
 .stage{
     width: 500px;
-    border-left: 5px solid #5d8aa8;
-    margin-left: 10px;
+    border-left: 1px solid #5d8aa8;
+    margin-left: 5px;
     height: 530px !important;
     width: 390px;
     min-width: 390px;
 }
 
 .stage:last-child {
-    border-right: 5px solid #5d8aa8;
+    border-right: 1px solid #5d8aa8;
+    margin-right: 5px;
 }
 
 .stage_header{
@@ -19,9 +20,8 @@
     font-size: 25px;
     font-weight: 100;
     color: black;
+    background-color: rgb(173, 198, 237);
 }
-
-
 
 .whiteboard{
     background-color: #e0f3f1 !important;
@@ -29,6 +29,7 @@
     position: absolute;
     margin-top: 10px;
     min-height: 530px;
+    border: 1px solid #c5e3db;
 }
 
 .whiteboard > div{
@@ -36,23 +37,24 @@
 }
 
 .message{
-    position: relative;
-    top: 170px;
+    position: relative !important;
+    top: 170px !important;
+    white-space: normal !important;
+    min-width: 1580px;
+    min-height: 500px;
+    text-align: center;
 }
 
 .message span{
-    display: table-cell;
     vertical-align: middle;
-    text-align: center;
     font-family: 'Raleway',sans-serif;
     font-size: 62px;
     font-weight: 800;
     line-height: 72px;
     margin: 0 0 24px;
-    text-align: center;
     text-transform: uppercase;
     color: #675c5c;
-    background-color: white;
+    background-color: #e0f3f1;
 }
 
 .ticket{
@@ -133,5 +135,5 @@
     height: 46px;
     transform: rotate(90deg);
     top: 380px;
-    z-index: 99999;
+    z-index: 5;
 }

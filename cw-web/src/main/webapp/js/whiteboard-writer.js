@@ -1,4 +1,5 @@
 function write_last_upadate(target, date) {
+    target.empty();
     var span_date = $(document.createElement('span'));
     span_date.text(date);
     target.append(span_date);
@@ -7,13 +8,9 @@ function write_last_upadate(target, date) {
 function write_all_stages(target, stages) {
     stages.sort(sortByProperty('position'));
 
-    if (stages.length != 0) {
-        $.each(stages, function (key, value) {
-            write_stage(target, value);
-        });
-    } else {
-        write_whiteboard_message(target, 'Quadro não inicializado. Crie novas etapas para inicializa-lo!');
-    }
+    $.each(stages, function (key, value) {
+        write_stage(target, value);
+    });
 }
 
 function write_stage(target, stage) {
@@ -70,17 +67,17 @@ function write_task(stage_target, taskJson) {
     task.append(write_task_subject(taskJson.subject));
     task.append(write_image_user());
 
-    $('#'+stage_target.name).append(task);
+    $('#' + stage_target.name).append(task);
 }
 
-function write_image_user(){
+function write_image_user() {
     var image_div = $(document.createElement('div'));
     image_div.attr('class', 'image_user');
 
     return image_div;
 }
 
-function write_task_code(code){
+function write_task_code(code) {
     var task_div = $(document.createElement('div'));
     var task_code = $(document.createElement('span'));
 
@@ -92,21 +89,21 @@ function write_task_code(code){
     return task_div;
 }
 
-function write_task_estimated(estimated){
+function write_task_estimated(estimated) {
     var task_estimated_time_div = $(document.createElement('div'));
     var estimated_time = $(document.createElement('span'));
 
     task_estimated_time_div.attr('class', 'task_estimated');
 
     var formated_estimated_time = moment(estimated).format('hh:mm');
-    estimated_time.text('Estimativa : '+formated_estimated_time);
+    estimated_time.text('Estimativa : ' + formated_estimated_time);
 
     task_estimated_time_div.append(estimated_time);
 
     return task_estimated_time_div;
 }
 
-function write_task_subject(subject_value){
+function write_task_subject(subject_value) {
     var task_subject_div = $(document.createElement('div'));
     var subject = $(document.createElement('span'));
 
@@ -129,6 +126,8 @@ function write_whiteboard_message(whiteboard, messageText) {
 
     $(messageDiv).append(message);
     $(whiteboard).append(messageDiv);
+    center_whiteboard();
+    remove_motion(whiteboard);
 }
 
 function sortByProperty(property) {
