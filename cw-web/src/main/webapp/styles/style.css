@@ -7,9 +7,9 @@
     overflow-x: hidden;
 }
 
-.backlogDiv {
-    margin-left: 10px;
-    margin-right: 10px;
+#backlogDiv {
+    position: relative;
+    top: 40px;
 }
 
 .projectArea {
@@ -42,6 +42,8 @@
     width: 1600px !important;
     min-height: 935px !important;
     background-color: white !important;
+    box-shadow: 0px 10px 35px 14px #ccc;
+    border: 1px solid #C0C3C5;
 }
 
 .removed_area {

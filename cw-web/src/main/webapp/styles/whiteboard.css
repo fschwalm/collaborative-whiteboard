@@ -1,9 +1,5 @@
 .stage{
-    width: 500px;
     border-left: 1px solid #5d8aa8;
-    margin-left: 5px;
-    height: 530px !important;
-    width: 390px;
     min-width: 390px;
 }
 
@@ -27,11 +23,9 @@
 
 .whiteboard{
     background-color: #e0f3f1 !important;
-    white-space: nowrap;
-    position: absolute;
-    margin-top: 5px;
-    min-height: 530px;
+    position: relative;
     border: 1px solid #c5e3db;
+    overflow-x: auto;
 }
 
 .whiteboard > div{
@@ -69,6 +63,7 @@
     width: 350px;
     height: 100px;
     margin-top: 20px;
+    margin-bottom: 5px;
     margin-left: 20px;
     background-size: 350px 100px;
     float: left;

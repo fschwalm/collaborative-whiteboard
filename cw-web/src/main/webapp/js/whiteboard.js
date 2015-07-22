@@ -37,11 +37,9 @@ function whiteboardWriter(evt) {
         write_last_upadate(update_date_area, whiteboardJson.updateDate);
         write_all_stages(whiteboard, stages);
         write_tasks(whiteboardJson);
-        center_whiteboard();
         add_motion(whiteboard);
     } else {
         write_whiteboard_message(whiteboard, 'Quadro não inicializado!');
-        center_whiteboard();
     }
 }
 
@@ -56,8 +54,8 @@ function init_whiteboard(stages) {
 function add_motion(elemente) {
     elemente.draggable({
         axis: "x",
-        distance: 50,
-        delay: 300
+        delay: 300,
+        scroll: true
     });
 }
 
