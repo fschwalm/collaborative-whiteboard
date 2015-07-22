@@ -47,6 +47,15 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
         return (List<Task>) list(criteria);
     }
 
+    @Override
+    public List<Task> fetchForWhiteboard(){
+        Criteria criteria = createCriteria(Task.class);
+        criteria.addOrder(Order.asc("id"));
+        criteria.add(Restrictions.isNotNull("stage"));
+
+        return (List<Task>) list(criteria);
+    }
+
 
 
 }

@@ -105,7 +105,7 @@ function write_task_estimated(estimated) {
 
 function write_task_subject(subject_value) {
     var task_subject_div = $(document.createElement('div'));
-    var subject = $(document.createElement('span'));
+    var subject = $(document.createElement('p'));
 
     task_subject_div.attr('class', 'task_subject');
 

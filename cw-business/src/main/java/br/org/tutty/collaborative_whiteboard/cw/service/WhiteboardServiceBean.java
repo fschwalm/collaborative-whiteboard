@@ -50,7 +50,7 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
         Set<Stage> stages = new HashSet<>();
 
         stages.addAll(whiteboardDao.fetchAllStages());
-        tasks.addAll(taskDao.fetchAll());
+        tasks.addAll(taskDao.fetchForWhiteboard());
 
         return WhiteboardFactory.builderMailableWhiteboard(tasks, stages);
     }
