@@ -32,12 +32,17 @@ function whiteboardWriter(evt) {
     var stages = whiteboardJson['stages'];
     var update_date_area = $('#whiteboard_update');
 
+    whiteboard.empty();
+
     if (init_whiteboard(stages)) {
-        whiteboard.empty();
+        var stages_area = $(document.createElement('div'));
+        stages_area.attr('class','stages');
+        whiteboard.append(stages_area);
+
         write_last_upadate(update_date_area, whiteboardJson.updateDate);
-        write_all_stages(whiteboard, stages);
+        write_all_stages(stages_area, stages);
         write_tasks(whiteboardJson);
-        add_motion(whiteboard);
+        add_motion_whiteboard(stages_area);
     } else {
         write_whiteboard_message(whiteboard, 'Quadro não inicializado!');
     }
@@ -51,9 +56,17 @@ function init_whiteboard(stages) {
     }
 }
 
-function add_motion(elemente) {
+function add_motion_whiteboard(elemente) {
     elemente.draggable({
         axis: "x",
+        delay: 300,
+        scroll: true
+    });
+}
+
+function add_motion_stage(elemente) {
+    elemente.draggable({
+        axis: "y",
         delay: 300,
         scroll: true
     });

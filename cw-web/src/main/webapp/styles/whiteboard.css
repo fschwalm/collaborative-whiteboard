@@ -1,6 +1,12 @@
+.whiteboard{
+    overflow-x: hidden;
+    background-color: #e0f3f1;
+}
+
 .stage{
     border-left: 1px solid #5d8aa8;
     min-width: 390px;
+    display: table-cell;
 }
 
 .stage:last-child {
@@ -21,23 +27,13 @@
     line-height: 32px;
 }
 
-.whiteboard{
-    background-color: #e0f3f1 !important;
+.stages{
     position: relative;
-    border: 1px solid #c5e3db;
-    overflow-x: auto;
-}
-
-.whiteboard > div{
-    display: table-cell;
 }
 
 .message{
-    position: relative !important;
-    top: 170px !important;
     white-space: normal !important;
-    min-width: 1580px !important;
-    min-height: 500px !important;
+    min-height: 623px !important;
     text-align: center !important;
     color: #5E5E5E !important;
     font-family: 'Helvetica Neue', sans-serif !important;
@@ -48,7 +44,6 @@
 }
 
 .message span{
-    vertical-align: middle;
     font-family: 'Raleway',sans-serif;
     font-size: 62px;
     font-weight: 800;
@@ -57,6 +52,8 @@
     text-transform: uppercase;
     color: #675c5c;
     background-color: #e0f3f1;
+    top: 240px;
+    position: relative;
 }
 
 .ticket{
