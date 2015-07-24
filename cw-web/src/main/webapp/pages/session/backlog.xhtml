@@ -5,13 +5,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <h:form id="backlogForm" prependId="false">
-            <p:contextMenu for="backlogTable">
-                <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
-                            oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
-            </p:contextMenu>
+        <div>
+            <h:form id="backlogForm" prependId="false">
+                <p:contextMenu for="backlogTable">
+                    <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
+                                oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
+                </p:contextMenu>
 
-            <div id="backlogDiv">
                 <p:dataTable id="backlogTable" var="story"
                              value="#{backlogController.fetchStories()}"
                              widgetVar="backlogTbl"
@@ -19,6 +19,15 @@
                              rowKey="#{story.id}"
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
                              selectionMode="single">
+
+                    <f:facet name="header">
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
+                                                 oncomplete="PF('storyCreation').show();"/>
+                            </f:facet>
+                        </p:toolbar>
+                    </f:facet>
 
                     <p:column style="text-align: center; width: 8%" filterBy="#{story}" filterMatchMode="in"
                               filterFunction="#{backlogController.filterByStatus}">
@@ -64,19 +73,9 @@
                               style="width: 15%;height: 35px; text-align: center;">
                         <h:outputText value="#{story.projectArea.name}"/>
                     </p:column>
-
-                    <f:facet name="header">
-                        <p:toolbar>
-                            <f:facet name="left">
-                                <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                                 oncomplete="PF('storyCreation').show();"/>
-                            </f:facet>
-                        </p:toolbar>
-                    </f:facet>
                 </p:dataTable>
-            </div>
-        </h:form>
-
+            </h:form>
+        </div>
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false" enctype="multipart/form-data">
@@ -194,7 +193,8 @@
                                 </h:column>
 
                                 <h:column>
-                                    <p:rating id="priority" value="#{editionStoryController.storyEdition.priority}" stars="10" cancel="false"/>
+                                    <p:rating id="priority" value="#{editionStoryController.storyEdition.priority}"
+                                              stars="10" cancel="false"/>
                                 </h:column>
 
                                 <h:column>

@@ -24,18 +24,25 @@
 
 
     <h:body id="bodyPage">
-        <div id="sheet">
-            <div id="whiteboard_update"/>
+        <h:form id="messageForm" prependId="false">
+            <p:growl id="messages" showDetail="true" autoUpdate="true" closable="true" escape="false"
+                     sticky="true"/>
+        </h:form>
 
+        <div id="sheet">
             <div id="headerPage">
-                <h:form prependId="false">
+                <div id="whiteboard_update"/>
+
+                <h:form>
                     <p:commandLink action="HOME_PAGE">
                         <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
                     </p:commandLink>
+                </h:form>
 
-                    <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
+                <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
 
-                    <div id="actionArea">
+                <div id="actionArea">
+                    <h:form prependId="false">
                         <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
                             <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
                         </p:commandLink>
@@ -56,19 +63,15 @@
                                        action="#{toolsController.goToBacklog()}" ajax="false">
                             <h:graphicImage url="../../images/backlog_icon.png" styleClass="actionImage"/>
                         </p:commandLink>
-                    </div>
-                </h:form>
+                    </h:form>
+                </div>
             </div>
+
+            <ui:insert name="pageContent"/>
 
             <ui:include src="../pages/components/chat.xhtml"/>
             <ui:include src="../pages/components/projects.xhtml"/>
             <ui:include src="../pages/components/exit.xhtml"/>
-
-            <h:form id="messageForm" prependId="false">
-                <p:growl id="messages" showDetail="true" autoUpdate="true" closable="true" escape="false" sticky="true"/>
-            </h:form>
-
-            <ui:insert name="pageContent"/>
         </div>
     </h:body>
 </f:view>

@@ -1,12 +1,14 @@
 .whiteboard{
     overflow-x: hidden;
-    background-color: #e0f3f1;
+    background-color: #F5F5F5;
 }
 
 .stage{
     border-left: 1px solid #5d8aa8;
     min-width: 390px;
     display: table-cell;
+    background-color: #e0f3f1;
+    height: 595px;
 }
 
 .stage:last-child {
@@ -33,7 +35,6 @@
 
 .message{
     white-space: normal !important;
-    min-height: 623px !important;
     text-align: center !important;
     color: #5E5E5E !important;
     font-family: 'Helvetica Neue', sans-serif !important;
@@ -41,6 +42,7 @@
     font-weight: bold !important;
     letter-spacing: -1px !important;
     line-height: 1 !important;
+    min-height: 593px !important;
 }
 
 .message span{
@@ -51,7 +53,7 @@
     margin: 0 0 24px;
     text-transform: uppercase;
     color: #675c5c;
-    background-color: #e0f3f1;
+    background-color: #F5F5F5;
     top: 240px;
     position: relative;
 }
@@ -160,3 +162,4 @@
     top: 380px;
     z-index: 5;
 }
+
