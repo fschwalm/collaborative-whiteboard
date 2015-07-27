@@ -120,30 +120,6 @@
     left: 140px;
 }
 
-.color_WAITING {
-    background-color: #fbae34;
-}
-
-.color_REMOVED {
-    background-color: #e0eee0;
-}
-
-.color_AVAILABLE {
-    background-color: #97ffff;
-}
-
-.color_ANALYZED {
-    background-color: #6cdc97;
-}
-
-.color_IN_ANALYSIS {
-    background-color: #98e6b6;
-}
-
-.color_FINALIZED {
-    background-color: #4a4a4a;
-}
-
 .column_status{
     height: 25px;
     width: 25px;

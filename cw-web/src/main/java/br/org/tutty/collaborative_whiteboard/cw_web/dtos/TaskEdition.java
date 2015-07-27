@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
 import backlog_manager.entities.Task;
+import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
 
 import java.io.Serializable;
@@ -14,6 +15,8 @@ public class TaskEdition implements Serializable {
     private String subject;
     private String description;
     private Task selectedTask;
+    private Stage stage;
+    private Boolean initFlag;
 
     public void init(Task selectedTask) {
         if(selectedTask != null) {
@@ -21,6 +24,8 @@ public class TaskEdition implements Serializable {
             this.time = selectedTask.getEstimatedTime();
             this.subject = selectedTask.getSubject();
             this.description = selectedTask.getDescription();
+            this.stage = selectedTask.getStage();
+            this.initFlag = readInitFlag(selectedTask.getStage());
         }
     }
 
@@ -28,6 +33,7 @@ public class TaskEdition implements Serializable {
         this.selectedTask.setEstimatedTime(time);
         this.selectedTask.setSubject(subject);
         this.selectedTask.setDescription(description);
+        this.selectedTask.setStage(stage);
 
         return selectedTask;
     }
@@ -62,5 +68,25 @@ public class TaskEdition implements Serializable {
 
     public Task getSelectedTask() {
         return selectedTask;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    private Boolean readInitFlag(Stage stage){
+       return stage == null ? Boolean.FALSE : Boolean.TRUE;
+    }
+
+    public Boolean getInitFlag() {
+        return initFlag;
+    }
+
+    public void setInitFlag(Boolean initFlag) {
+        this.initFlag = initFlag;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

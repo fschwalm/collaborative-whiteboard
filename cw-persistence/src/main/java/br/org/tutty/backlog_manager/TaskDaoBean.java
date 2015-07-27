@@ -1,7 +1,9 @@
 package br.org.tutty.backlog_manager;
 
 import backlog_manager.entities.Story;
+import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
+import backlog_manager.entities.TaskStatusLog;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
@@ -56,6 +58,16 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
         return (List<Task>) list(criteria);
     }
 
+    @Override
+    public TaskStatusLog fetchTaskStatusLog(Task task) throws DataNotFoundException {
+        Criteria criteria = createCriteria(TaskStatusLog.class);
+        criteria.add(Restrictions.eq("task", task));
+        criteria.addOrder(Order.desc("date"));
+        criteria.setFirstResult(0);
+        criteria.setMaxResults(1);
+
+        return (TaskStatusLog) uniqueResultNotWaitingEmpty(criteria);
+    }
 
 
 }

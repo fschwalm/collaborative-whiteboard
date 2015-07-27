@@ -6,7 +6,8 @@ package backlog_manager.enums;
 public enum TaskStatus {
     OPEN,
     IN_PROGRESS,
+    FINALIZED,
     CLOSE,
-    DISABLED,
+    FROZEN,
 
 }

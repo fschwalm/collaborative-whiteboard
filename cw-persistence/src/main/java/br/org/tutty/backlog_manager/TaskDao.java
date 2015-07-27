@@ -2,6 +2,7 @@ package br.org.tutty.backlog_manager;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
+import backlog_manager.entities.TaskStatusLog;
 import br.org.tutty.collaborative_whiteboard.Dao;
 import cw.exceptions.DataNotFoundException;
 
@@ -18,4 +19,6 @@ public interface TaskDao extends Dao{
     List<Task> fetchAll();
 
     List<Task> fetchForWhiteboard();
+
+    TaskStatusLog fetchTaskStatusLog(Task task) throws DataNotFoundException;
 }

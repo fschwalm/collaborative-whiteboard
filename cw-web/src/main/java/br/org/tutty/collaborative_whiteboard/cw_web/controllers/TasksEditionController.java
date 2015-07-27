@@ -2,8 +2,9 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Task;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.TaskEdition;
-import cw.exceptions.DataNotFoundException;
+import cw.exceptions.WhiteboardUninitializedException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -22,7 +23,29 @@ public class TasksEditionController extends GenericController implements Seriali
     private BacklogManagerService backlogManagerService;
 
     @Inject
+    private TaskManagerService taskManagerService;
+
+    @Inject
     private TaskEdition taskEdition;
+
+
+    public void changeInitFlag(){
+        try{
+            if(taskEdition.getInitFlag()){
+                taskManagerService.enableWhiteboardTask(taskEdition.getSelectedTask());
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_enable");
+            }else {
+                taskManagerService.disableWhiteboardTask(taskEdition.getSelectedTask());
+                facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_disable");
+            }
+        }catch (WhiteboardUninitializedException e){
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.uninitialized");
+        }
+
+        taskEdition.init(taskEdition.getSelectedTask());
+    }
+
+
 
     public void save() throws IOException {
         backlogManagerService.updateTask(taskEdition.toEntity());

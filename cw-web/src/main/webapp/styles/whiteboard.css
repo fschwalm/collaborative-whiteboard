@@ -6,6 +6,7 @@
 .stage{
     border-left: 1px solid #5d8aa8;
     min-width: 390px;
+    max-width: 390px;
     display: table-cell;
     background-color: #e0f3f1;
     height: 595px;

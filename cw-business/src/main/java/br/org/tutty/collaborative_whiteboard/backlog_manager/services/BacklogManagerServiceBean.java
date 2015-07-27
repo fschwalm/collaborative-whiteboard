@@ -118,16 +118,23 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     @Override
     public void createTask(Task task) {
+        Task populatedTask = populateTask(task);
+        TaskStatusLog taskStatusLog = new TaskStatusLog(TaskStatus.OPEN, sessionContext.getLoggedUser().getUser(), populatedTask);
+
+        taskDao.persist(populatedTask);
+        taskDao.persist(taskStatusLog);
+    }
+
+    private Task populateTask(Task task){
         User author = sessionContext.getLoggedUser().getUser();
         Stage stage = whiteboardDao.fetchInitialStage();
         String code = CodeFactory.task(taskDao, task.getStory());
 
-        task.setTaskStatus(TaskStatus.OPEN);
         task.setStage(stage);
         task.setCode(code);
         task.setAuthor(author);
 
-        taskDao.persist(task);
+        return task;
     }
 
     @Override

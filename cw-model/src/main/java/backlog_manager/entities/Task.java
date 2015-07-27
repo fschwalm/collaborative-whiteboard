@@ -1,6 +1,5 @@
 package backlog_manager.entities;
 
-import backlog_manager.enums.TaskStatus;
 import br.org.tutty.Equalization;
 import br.org.tutty.util.PropertyMonitor;
 import cw.entities.Stage;
@@ -27,9 +26,6 @@ public class Task implements Serializable {
     private String code;
 
     @ManyToOne
-    private User responsible;
-
-    @ManyToOne
     private Story story;
 
     @ManyToOne
@@ -37,10 +33,6 @@ public class Task implements Serializable {
 
     @ManyToOne
     private Stage stage;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TaskStatus taskStatus;
 
     @Equalization(name = "taks_estimated_time")
     @Temporal(TemporalType.TIMESTAMP)
@@ -66,17 +58,6 @@ public class Task implements Serializable {
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("code", oldValue, code);
     }
 
-    public User getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(User responsible) {
-        User oldValue = this.responsible;
-        this.responsible = responsible;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("responsible", oldValue, responsible);
-    }
-
     public Story getStory() {
         return story;
     }
@@ -86,17 +67,6 @@ public class Task implements Serializable {
         this.story = story;
 
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("story", oldValue, story);
-    }
-
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatus taskStatus) {
-        TaskStatus oldValue = this.taskStatus;
-        this.taskStatus = taskStatus;
-
-        propertyMonitor.getPropertyChangeSupport().firePropertyChange("taskStatus", oldValue, taskStatus);
     }
 
     public void setEstimatedTime(Date estimatedTime) {
