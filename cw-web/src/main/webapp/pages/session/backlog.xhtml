@@ -5,13 +5,15 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <div>
-            <h:form id="backlogForm" prependId="false">
-                <p:contextMenu for="backlogTable">
-                    <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
-                                oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
-                </p:contextMenu>
+        <h:form id="backlogForm" prependId="false">
+            <p:toolbar styleClass="toolbar">
+                <f:facet name="left">
+                    <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
+                                     oncomplete="PF('storyCreation').show();"/>
+                </f:facet>
+            </p:toolbar>
 
+            <div>
                 <p:dataTable id="backlogTable" var="story"
                              value="#{backlogController.fetchStories()}"
                              widgetVar="backlogTbl"
@@ -19,15 +21,6 @@
                              rowKey="#{story.id}"
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
                              selectionMode="single">
-
-                    <f:facet name="header">
-                        <p:toolbar>
-                            <f:facet name="left">
-                                <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                                 oncomplete="PF('storyCreation').show();"/>
-                            </f:facet>
-                        </p:toolbar>
-                    </f:facet>
 
                     <p:column style="text-align: center; width: 8%" filterBy="#{story}" filterMatchMode="in"
                               filterFunction="#{backlogController.filterByStatus}">
@@ -74,8 +67,14 @@
                         <h:outputText value="#{story.projectArea.name}"/>
                     </p:column>
                 </p:dataTable>
-            </h:form>
-        </div>
+
+                <p:contextMenu for=":backlogForm:backlogTable">
+                    <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
+                                oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
+                </p:contextMenu>
+            </div>
+        </h:form>
+
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false" enctype="multipart/form-data">
@@ -297,6 +296,20 @@
 
         <p:dialog id="storyCreation" widgetVar="storyCreation" modal="true" resizable="false" appendToBody="false">
             <h:form id="createStoryForm" prependId="false">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="save" value="#{backlog['btn.save']}"
+                                         update="@form,:backlogForm:backlogTable"
+                                         action="#{creationStoryController.create()}" icon="ui-icon-disk"/>
+                        <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
+                                         action="#{creationStoryController.cancel()}"
+                                         oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
+                                         immediate="true">
+                            <p:ajax update="createStoryForm" resetValues="true"/>
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
+
                 <h:panelGrid columns="1">
                     <p:selectOneMenu id="projectNewStory" value="#{creationStoryController.project}"
                                      required="true" requiredMessage="#{messages['mandatory.field']}">
@@ -326,20 +339,6 @@
                               requiredMessage="#{messages['mandatory.field']}"/>
                     <p:message for="descriptionNewStory"/>
                 </h:panelGrid>
-
-                <p:toolbar>
-                    <f:facet name="left">
-                        <p:commandButton id="save" value="#{backlog['btn.save']}"
-                                         update="@form,:backlogForm:backlogTable"
-                                         action="#{creationStoryController.create()}" icon="ui-icon-disk"/>
-                        <p:commandButton id="cancel" value="#{backlog['btn.cancel']}"
-                                         action="#{creationStoryController.cancel()}"
-                                         oncomplete="PF('storyCreation').hide()" icon="ui-icon-arrowreturnthick-1-w"
-                                         immediate="true">
-                            <p:ajax update="createStoryForm" resetValues="true"/>
-                        </p:commandButton>
-                    </f:facet>
-                </p:toolbar>
             </h:form>
         </p:dialog>
 

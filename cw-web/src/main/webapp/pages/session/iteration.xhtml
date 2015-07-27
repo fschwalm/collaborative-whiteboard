@@ -6,10 +6,10 @@
 
     <ui:define name="pageContent">
         <h:form id="iterationForm" prependId="false">
-            <p:toolbar>
+            <p:toolbar styleClass="toolbar">
                 <f:facet name="left">
                     <p:selectOneMenu id="console" value="#{iterationSettingsController.iterationSelected}"
-                                     style="min-width: 210px" required="true"
+                                     style="min-width: 210px; top: 3px;" required="true"
                                      requiredMessage="#{iteration_settings['iteration.mandatory.iteration']}">
                         <f:selectItem itemLabel="#{iteration_settings['iteration.default.value.dropdown']}"
                                       itemValue=""/>

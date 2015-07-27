@@ -67,7 +67,7 @@
     float: right;
     position: relative;
     width: 100%;
-    top: -65px;
+    top: -64px;
     background-color: rgb(255, 253, 253);
 }
 
@@ -242,22 +242,29 @@
     top: 45px;
 }
 
-#toolbarForm{
+.toolbar_whiteboard_form{
     position: relative;
     height: 155px;
 }
 
-.toolbar{
+.toolbar_whiteboard{
     position: relative;
     height: 65px;
     top: -65px;
+}
+
+.toolbar{
+    height: 32px;
+    position: absolute;
+    top: 242px;
+    width: 1593px;
 }
 
 #headerTasks{
     position: relative;
     height: 100px;
     border: 1px solid #ECECEC;
-    top: 5px;
+    top: 57px;
 }
 
 #headerTasks form{
@@ -269,5 +276,5 @@
 
 .tasksArea{
     position: relative;
-    top: 10px;
+    top: 15px;
 }

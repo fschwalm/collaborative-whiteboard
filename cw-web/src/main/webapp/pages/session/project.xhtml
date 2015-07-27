@@ -5,22 +5,22 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageContent">
-        <h:form>
-            <p:toolbar>
+        <h:form id="projectDataForm" prependId="false">
+            <p:toolbar styleClass="toolbar">
                 <f:facet name="left">
                     <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false"
                                      styleClass="warning_button" action="#{projectDataController.removeProject}"
                                      process="@this"/>
                 </f:facet>
             </p:toolbar>
-        </h:form>
 
-        <div class="project">
-            <p:panel id="projectPanel" styleClass="project">
-                <h:form id="projectDataForm" prependId="false">
+            <div class="project">
+                <p:panel id="projectPanel" styleClass="project">
+
                     <h:panelGrid columns="2">
                         <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
-                        <p:calendar id="projectCreationDate" value="#{projectDataController.projectData.getCreationDate()}"
+                        <p:calendar id="projectCreationDate"
+                                    value="#{projectDataController.projectData.getCreationDate()}"
                                     disabled="true" pattern="dd/MM/yyyy HH:mm"/>
 
                         <p:spacer height="5px"/> <p:spacer height="5px"/>
@@ -36,7 +36,8 @@
                         <p:spacer height="5px"/> <p:spacer height="5px"/>
 
                         <h:outputLabel for="owner" value="#{project_bundle['project_owner.label']}"/>
-                        <p:inputText id="owner" value="#{projectDataController.projectData.getOwnerName()}" readonly="true"/>
+                        <p:inputText id="owner" value="#{projectDataController.projectData.getOwnerName()}"
+                                     readonly="true"/>
 
                         <p:spacer height="5px"/> <p:spacer height="5px"/>
 
@@ -55,9 +56,10 @@
 
                     <p:commandButton value="#{project_bundle['btn.save']}"
                                      action="#{projectDataController.save()}" process="@form"/>
-                </h:form>
-            </p:panel>
-        </div>
+
+                </p:panel>
+            </div>
+        </h:form>
 
         <div class="areas">
             <p:panel styleClass="areas">
@@ -68,13 +70,15 @@
                             <p:watermark value="#{project_bundle['btn.new_area_abbreviation']}"
                                          for="projectAreaAbbreviation"/>
                             <p:inputText id="projectAreaAbbreviation" styleClass="projectAreaAbbreviation"
-                                         value="#{projectAreaController.projectAreaCreation.projectAreaAbbreviation}" size="4" required="true"/>
+                                         value="#{projectAreaController.projectAreaCreation.projectAreaAbbreviation}"
+                                         size="4" required="true"/>
 
                             <p:spacer width="5"/>
 
                             <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
                             <p:inputText id="projectArea" styleClass="projectArea"
-                                         value="#{projectAreaController.projectAreaCreation.projectAreaName}" required="true"/>
+                                         value="#{projectAreaController.projectAreaCreation.projectAreaName}"
+                                         required="true"/>
 
 
                             <p:spacer width="10"/>
@@ -90,15 +94,18 @@
                         </h:column>
 
                         <h:column>
-                            <p:dataTable id="foundedAreas" value="#{projectAreaController.fetchProjectAreas()}" var="area"
+                            <p:dataTable id="foundedAreas" value="#{projectAreaController.fetchProjectAreas()}"
+                                         var="area"
                                          scrollHeight="455" style="width: auto ;"
                                          scrollable="true">
 
-                                <p:column headerText="#{project_bundle['area.collum.prefix']}" style="text-align: center; height: auto">
+                                <p:column headerText="#{project_bundle['area.collum.prefix']}"
+                                          style="text-align: center; height: auto">
                                     <h:outputText value="#{area.prefix}"/>
                                 </p:column>
 
-                                <p:column headerText="#{project_bundle['area.collum.name']}" style="text-align: center; height: auto">
+                                <p:column headerText="#{project_bundle['area.collum.name']}"
+                                          style="text-align: center; height: auto">
                                     <h:outputText value="#{area.name}"/>
                                 </p:column>
 
