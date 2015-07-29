@@ -19,4 +19,8 @@ public interface WhiteboardService {
     void refreshWhiteboard(Session target);
 
     void removeStage(Stage stage);
+
+    Stage fetchPreviousStage(Stage stageReference) throws DataNotFoundException;
+
+    Stage fetchNextStage(Stage stageReference) throws DataNotFoundException;
 }

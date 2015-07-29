@@ -119,7 +119,7 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
     @Override
     public void createTask(Task task) {
         Task populatedTask = populateTask(task);
-        TaskStatusLog taskStatusLog = new TaskStatusLog(TaskStatus.OPEN, sessionContext.getLoggedUser().getUser(), populatedTask);
+        TaskStatusLog taskStatusLog = new TaskStatusLog(TaskStatus.AVAILABLE, sessionContext.getLoggedUser().getUser(), populatedTask);
 
         taskDao.persist(populatedTask);
         taskDao.persist(taskStatusLog);

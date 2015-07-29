@@ -2,10 +2,16 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
+import backlog_manager.enums.TaskStatus;
 import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
+import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.entities.Stage;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
+import cw.exceptions.TaskInUseException;
+import cw.exceptions.TaskNotInitializedException;
 import cw.exceptions.WhiteboardUninitializedException;
 
 import javax.ejb.Local;
@@ -24,6 +30,26 @@ public class TaskManagerServiceBean implements TaskManagerService{
 
     @Inject
     private WhiteboardDao whiteboardDao;
+
+    @Inject
+    private WhiteboardService whiteboardService;
+
+    @Inject
+    private SessionContext sessionContext;
+
+    @Override
+    public void init(Task task) throws TaskInUseException, TaskNotInitializedException {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+            if (TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus())){
+                changeStatusTask(task, TaskStatus.BUSY);
+            }else {
+                throw new TaskInUseException();
+            }
+        } catch (DataNotFoundException e) {
+            throw new TaskNotInitializedException();
+        }
+    }
 
     @Override
     public TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException {
@@ -45,5 +71,42 @@ public class TaskManagerServiceBean implements TaskManagerService{
     public void disableWhiteboardTask(Task task) {
         task.setStage(null);
         taskDao.update(task);
+    }
+
+    @Override
+    public void forward(Task task) {
+        try {
+            Stage stageFounded = whiteboardService.fetchNextStage(task.getStage());
+            task.setStage(stageFounded);
+
+            openTask(task);
+
+            taskDao.update(task);
+
+        } catch (DataNotFoundException e ) {}
+    }
+
+    @Override
+    public void backward(Task task) {
+        try {
+            Stage stageFounded = whiteboardService.fetchPreviousStage(task.getStage());
+            task.setStage(stageFounded);
+
+            openTask(task);
+
+            taskDao.update(task);
+
+        } catch (DataNotFoundException e) {}
+    }
+
+    public void openTask(Task task){
+        changeStatusTask(task, TaskStatus.AVAILABLE);
+    }
+
+    private void changeStatusTask(Task task, TaskStatus taskStatus){
+        User user = sessionContext.getLoggedUser().getUser();
+        TaskStatusLog taskStatusLog = new TaskStatusLog(taskStatus, user, task);
+
+        taskDao.update(taskStatusLog);
     }
 }

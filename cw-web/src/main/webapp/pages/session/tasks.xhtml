@@ -66,21 +66,35 @@
                                          update="@form,:tasksForm:taskTable"
                                          action="#{tasksEditionController.save()}"/>
 
-                        <p:commandButton value="#{tasks_bundle['edition.btn.cancel']}" immediate="true"
-                                         onclick="PF('editionTask').hide()"/>
+                        <p:commandButton icon="ui-icon-play" value="#{tasks_bundle['edition.btn.assign']}" action="#{tasksEditionController.init()}" update=":editionForm :tasksForm"/>
 
                         <span class="ui-separator">
                             <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                         </span>
 
-                        <p:commandButton icon="ui-icon-seek-prev" value="#{tasks_bundle['edition.stages.previous']}"/>
-                        <p:spacer width="5"/>
+                        <p:commandButton icon="ui-icon-seek-prev"
+                                         value="Voltar"
+                                         action="#{tasksEditionController.previousStage()}"
+                                         disabled="#{tasksEditionController.previousStageName() eq tasksEditionController.EMPTY_STAGE_PREVIOUS ? true : false }"
+                                         update=":editionForm">
+                            <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
 
-                        <p:inputText id="stage" readonly="true"
-                                     value="#{tasksEditionController.taskEdition.stage.name}"/>
-                        <p:spacer width="5"/>
+                        <p:spacer width="10"/>
 
-                        <p:commandButton icon="ui-icon-seek-next" value="#{tasks_bundle['edition.stages.next']}"/>
+                        <p:outputLabel id="stage" value="#{tasksEditionController.taskEdition.stage.name}"/>
+
+                        <p:spacer width="10"/>
+
+                        <p:commandButton icon="ui-icon-seek-next"
+                                         value="Avancar"
+                                         action="#{tasksEditionController.nextStage()}"
+                                         disabled="#{tasksEditionController.nextStageName() eq tasksEditionController.EMPTY_STAGE_NEXT ? true : false}"
+                                         update=":editionForm">
+                            <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
                     </f:facet>
 
                     <f:facet name="right">
@@ -91,6 +105,7 @@
                             <p:confirm message="#{backlog['confirmation.remove.text']}"
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
+
                     </f:facet>
                 </p:toolbar>
 
@@ -115,15 +130,15 @@
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="#{tasks_bundle['edition.tab.control']}">
-                        <p:outputLabel value="#{tasks_bundle['edition.stages.init_flag']}"/>
+                        <p:outputLabel value="#{tasks_bundle['edition.stages.init_flag']}" escape="false"/>
 
                         <br/>
                         <br/>
 
                         <p:inputSwitch id="init_flag" value="#{tasksEditionController.taskEdition.initFlag}">
-                            <p:ajax listener="#{tasksEditionController.changeInitFlag()}" update="@this :editionForm:stage"/>
+                            <p:ajax listener="#{tasksEditionController.changeInitFlag()}"
+                                    update="@this :editionForm"/>
                         </p:inputSwitch>
-
                     </p:tab>
                 </p:tabView>
             </h:form>
@@ -172,8 +187,7 @@
                 <h:panelGrid columns="2">
                     <h:form>
                         <p:commandButton value="#{backlog['btn.save']}"
-                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-                                         onsuccess="PF('editionTask').hide()"/>
+                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="#{backlog['btn.cancel']}"
                                          type="button"
                                          styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>

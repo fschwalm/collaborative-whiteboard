@@ -5,8 +5,8 @@ import br.org.tutty.backlog_manager.StoryDao;
 import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.factories.WhiteboardFactory;
+import br.org.tutty.collaborative_whiteboard.cw.filters.StageFilters;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
-import com.google.gson.Gson;
 import cw.entities.Stage;
 import cw.exceptions.DataNotFoundException;
 import dtos.WhiteboardMailable;
@@ -67,6 +67,18 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
     @Override
     public void removeStage(Stage stage) {
         whiteboardDao.remove(stage);
+    }
+
+    @Override
+    public Stage fetchPreviousStage(Stage stageReference) throws DataNotFoundException {
+        Set<Stage> stages = fetchStages();
+        return  StageFilters.fetchLastBefore(stageReference, stages);
+    }
+
+    @Override
+    public Stage fetchNextStage(Stage stageReference) throws DataNotFoundException {
+        Set<Stage> stages = fetchStages();
+        return  StageFilters.fetchFirstAfter(stageReference, stages);
     }
 
     @Override
