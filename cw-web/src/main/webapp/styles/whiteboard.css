@@ -6,7 +6,6 @@
 .stage{
     border-left: 1px solid #5d8aa8;
     min-width: 390px;
-    max-width: 390px;
     display: table-cell;
     background-color: #e0f3f1;
     height: 595px;
@@ -59,6 +58,12 @@
     position: relative;
 }
 
+.stopwatch{
+    width: 25px;
+    float: left;
+    padding: 0px;
+}
+
 .ticket{
     width: 350px;
     height: 100px;
@@ -72,18 +77,20 @@
 }
 
 .task_estimated{
-    top: 60px;
-    margin-left: 5px;
+    top: 56px;
     position: relative;
     text-align: left;
     border-top: 1px solid #318ce7;
     width: 340px;
+    height: 24px;
 }
 
 .task_estimated span{
     color: #685206;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 13px;
+    top: 5px;
+    position: relative;
 }
 
 .task_code{
@@ -134,8 +141,15 @@
     height: 46px;
     margin-top: -95px;
     margin-left: -10px;
-    background-image: url(../images/photo.jpg);
     border-radius: 22px;
+}
+
+.empty_user{
+    background-image: url(../images/icons/user_task_free.png);
+}
+
+.user{
+    background-image: url(../images/icons/photo.jpg);
 }
 
 .task_subject span{
@@ -148,12 +162,12 @@
     margin-right: 5px;
     top: 10px;
     position: relative;
-    color: #111;
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: 300;
     line-height: 32px;
     margin-right: 10px;
+    color: #949494;
 }
 
 .center_arrow{

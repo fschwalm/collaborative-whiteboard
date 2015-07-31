@@ -64,14 +64,6 @@ function add_motion_whiteboard(elemente) {
     });
 }
 
-function add_motion_stage(elemente) {
-    elemente.draggable({
-        axis: "y",
-        delay: 300,
-        scroll: true
-    });
-}
-
 function remove_motion(element){
     element.draggable( "disable" );
 }

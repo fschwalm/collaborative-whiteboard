@@ -46,13 +46,14 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
     }
 
     public WhiteboardMailable fetchWhiteboardMailable(){
+        WhiteboardFactory whiteboardFactory = new WhiteboardFactory(whiteboardDao, taskDao);
         List<Task> tasks = new ArrayList<>();
         Set<Stage> stages = new HashSet<>();
 
         stages.addAll(whiteboardDao.fetchAllStages());
         tasks.addAll(taskDao.fetchForWhiteboard());
 
-        return WhiteboardFactory.builderMailableWhiteboard(tasks, stages);
+        return whiteboardFactory.builderMailableWhiteboard();
     }
 
     @Override
@@ -79,6 +80,11 @@ public class WhiteboardServiceBean implements WhiteboardService, Serializable {
     public Stage fetchNextStage(Stage stageReference) throws DataNotFoundException {
         Set<Stage> stages = fetchStages();
         return  StageFilters.fetchFirstAfter(stageReference, stages);
+    }
+
+    @Override
+    public Stage fetchLastStage() throws DataNotFoundException {
+        return whiteboardDao.fetchLastStage();
     }
 
     @Override

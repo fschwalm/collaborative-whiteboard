@@ -2,14 +2,14 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.factories;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
+import backlog_manager.entities.TaskStatusLog;
 import br.org.tutty.Equalizer;
+import br.org.tutty.backlog_manager.TaskDao;
+import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
 import cw.entities.Stage;
-import dtos.StagesMailable;
-import dtos.StoryMailable;
-import dtos.TaskMailable;
-import dtos.WhiteboardMailable;
+import cw.exceptions.DataNotFoundException;
+import dtos.*;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -18,11 +18,20 @@ import java.util.function.Consumer;
  */
 public class WhiteboardFactory {
 
-    public static WhiteboardMailable builderMailableWhiteboard(List<Task> tasks, Set<Stage> stages) {
-        WhiteboardMailable whiteboardMailable = new WhiteboardMailable();
-        builderAllStages(whiteboardMailable, stages);
+    private WhiteboardDao whiteboardDao;
+    private TaskDao taskDao;
 
-        for (Task task : tasks) {
+    public WhiteboardFactory(WhiteboardDao whiteboardDao, TaskDao taskDao) {
+
+        this.whiteboardDao = whiteboardDao;
+        this.taskDao = taskDao;
+    }
+
+    public WhiteboardMailable builderMailableWhiteboard() {
+        WhiteboardMailable whiteboardMailable = new WhiteboardMailable();
+        builderAllStages(whiteboardMailable, whiteboardDao.fetchAllStages());
+
+        for (Task task : taskDao.fetchForWhiteboard()) {
             Story story = task.getStory();
             Stage stage = task.getStage();
 
@@ -40,7 +49,7 @@ public class WhiteboardFactory {
         return whiteboardMailable;
     }
 
-    private static void builderAllStages(WhiteboardMailable whiteboardMailable, Set<Stage> stages) {
+    private void builderAllStages(WhiteboardMailable whiteboardMailable, Set<Stage> stages) {
         stages.forEach(new Consumer<Stage>() {
             @Override
             public void accept(Stage stage) {
@@ -54,7 +63,7 @@ public class WhiteboardFactory {
 
     }
 
-    private static StagesMailable builderStage(WhiteboardMailable whiteboardMailable, Stage stage) throws NoSuchFieldException, IllegalAccessException {
+    private StagesMailable builderStage(WhiteboardMailable whiteboardMailable, Stage stage) throws NoSuchFieldException, IllegalAccessException {
         StagesMailable stagesMailable;
 
         stagesMailable = new StagesMailable();
@@ -64,7 +73,7 @@ public class WhiteboardFactory {
         return stagesMailable;
     }
 
-    private static StoryMailable builderStory(StagesMailable stagesMailable, Story story) throws NoSuchFieldException, IllegalAccessException {
+    private StoryMailable builderStory(StagesMailable stagesMailable, Story story) throws NoSuchFieldException, IllegalAccessException {
         StoryMailable storyMailable;
         if (!stagesMailable.existStory(story.getCode())) {
             storyMailable = new StoryMailable();
@@ -77,13 +86,32 @@ public class WhiteboardFactory {
         return storyMailable;
     }
 
-    private static void builderTask(StoryMailable storyMailable, Task task) throws NoSuchFieldException, IllegalAccessException {
+    private void builderTask(StoryMailable storyMailable, Task task) throws NoSuchFieldException, IllegalAccessException {
         TaskMailable taskMailable;
 
         if (!storyMailable.existTask(task.getCode())) {
             taskMailable = new TaskMailable();
+            TaskStatusMailable taskStatusMailable = builderTaskStatus(task);
+
+            taskMailable.setTaskStatus(taskStatusMailable);
+
             Equalizer.equalize(task, taskMailable);
             storyMailable.addTask(taskMailable);
         }
     }
+
+    private TaskStatusMailable builderTaskStatus(Task task) throws NoSuchFieldException, IllegalAccessException {
+        try {
+            TaskStatusMailable taskStatusMailable = new TaskStatusMailable();
+
+            TaskStatusLog taskStatusLog = taskDao.fetchTaskStatusLog(task);
+            Equalizer.equalize(taskStatusLog, taskStatusMailable);
+
+            taskStatusMailable.setValue(taskStatusLog.getTaskStatus().name());
+            taskStatusMailable.setUsername(taskStatusLog.getUser().getFullName());
+
+            return taskStatusMailable;
+        } catch (DataNotFoundException e) {return null;}
+    }
+
 }

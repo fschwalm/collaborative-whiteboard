@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard;
 
 import cw.entities.Stage;
+import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -30,5 +31,16 @@ public class WhiteboardDaoBean extends GenericDao implements WhiteboardDao {
         criteria.add(Restrictions.eq("position", 0l));
         return (Stage) uniqueResult(criteria);
     }
+
+    @Override
+    public Stage fetchLastStage() throws DataNotFoundException {
+        Criteria criteria = createCriteria(Stage.class);
+        criteria.addOrder(Order.desc("position"));
+        criteria.setFirstResult(0);
+        criteria.setMaxResults(1);
+        return (Stage) uniqueResultNotWaitingEmpty(criteria);
+    }
+
+
 
 }

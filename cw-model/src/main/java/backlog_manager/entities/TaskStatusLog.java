@@ -1,6 +1,7 @@
 package backlog_manager.entities;
 
 import backlog_manager.enums.TaskStatus;
+import br.org.tutty.Equalization;
 import cw.entities.User;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class TaskStatusLog implements Serializable{
     private TaskStatus taskStatus;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Equalization(name = "date")
     private Date date;
 
     @ManyToOne

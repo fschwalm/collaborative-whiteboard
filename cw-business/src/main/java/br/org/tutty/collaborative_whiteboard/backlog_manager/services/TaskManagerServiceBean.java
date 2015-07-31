@@ -9,10 +9,7 @@ import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.entities.Stage;
 import cw.entities.User;
-import cw.exceptions.DataNotFoundException;
-import cw.exceptions.TaskInUseException;
-import cw.exceptions.TaskNotInitializedException;
-import cw.exceptions.WhiteboardUninitializedException;
+import cw.exceptions.*;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -38,12 +35,36 @@ public class TaskManagerServiceBean implements TaskManagerService {
     private SessionContext sessionContext;
 
     @Override
-    public void stop(Task task) throws TaskNotInitializedException {
+    public Boolean isPossibleEndTask(Task task) {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+            Stage lastStage = whiteboardService.fetchLastStage();
+
+            Boolean inUse = TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
+            Boolean inLastStage = lastStage.getName().equals(task.getStage().getName());
+
+            return (inUse && inLastStage);
+
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public void end(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException {
+        // TODO Adicionar regras para poder finalizar
+        changeStatusTask(task, TaskStatus.FINALIZED);
+    }
+
+    @Override
+    public void stop(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException {
         try {
             TaskStatusLog taskStatusLog = fetchStatusLog(task);
 
-            if(TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus())){
+            if (TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus())) {
                 changeStatusTask(task, TaskStatus.AVAILABLE);
+            } else {
+                throw new TaskAlreadyStoppedException();
             }
         } catch (DataNotFoundException e) {
             throw new TaskNotInitializedException();

@@ -71,6 +71,7 @@
                 <p:contextMenu for=":backlogForm:backlogTable">
                     <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
                                 oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
+                    <p:menuitem value="#{backlog['btn.voting']}" icon="ui-icon-note" action="#{editionStoryController.voting()}" />
                 </p:contextMenu>
             </div>
         </h:form>

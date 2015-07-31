@@ -14,6 +14,8 @@ public interface WhiteboardService {
 
     void createStage(Stage stage) throws DataNotFoundException;
 
+    Stage fetchLastStage() throws DataNotFoundException;
+
     void refreshAllWhiteboards();
 
     void refreshWhiteboard(Session target);

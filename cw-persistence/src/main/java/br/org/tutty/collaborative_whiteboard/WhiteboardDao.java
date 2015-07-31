@@ -1,6 +1,7 @@
 package br.org.tutty.collaborative_whiteboard;
 
 import cw.entities.Stage;
+import cw.exceptions.DataNotFoundException;
 
 import java.util.Set;
 
@@ -11,4 +12,6 @@ public interface WhiteboardDao extends Dao {
     Set<Stage> fetchAllStages();
 
     Stage fetchInitialStage();
+
+    Stage fetchLastStage() throws DataNotFoundException;
 }

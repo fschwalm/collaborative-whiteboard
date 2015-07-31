@@ -4,15 +4,19 @@ import backlog_manager.entities.Story;
 import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
+import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +25,8 @@ import java.util.List;
 @Stateless
 @Local(TaskDao.class)
 public class TaskDaoBean extends GenericDao implements TaskDao{
+    @Inject
+    private StoryDao storyDao;
 
     @Override
     public Long getNextSequenceTask(Story project){
@@ -51,11 +57,26 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
 
     @Override
     public List<Task> fetchForWhiteboard(){
-        Criteria criteria = createCriteria(Task.class);
-        criteria.addOrder(Order.asc("id"));
-        criteria.add(Restrictions.isNotNull("stage"));
+        List<Story> stories = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
+        try {
+            stories.addAll(storyDao.fetchStories(StoryStatus.ANALYZED));
 
-        return (List<Task>) list(criteria);
+            if(!stories.isEmpty()){
+                Criteria criteria = createCriteria(Task.class);
+                criteria.addOrder(Order.asc("id"));
+                criteria.add(Restrictions.in("story", stories));
+                criteria.add(Restrictions.isNotNull("stage"));
+                tasks.addAll(((List<Task>)list(criteria))) ;
+
+                return tasks;
+            }else {
+                return tasks;
+            }
+
+        } catch (DataNotFoundException e) {
+            return tasks;
+        }
     }
 
     @Override
@@ -68,6 +89,4 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
 
         return (TaskStatusLog) uniqueResultNotWaitingEmpty(criteria);
     }
-
-
 }

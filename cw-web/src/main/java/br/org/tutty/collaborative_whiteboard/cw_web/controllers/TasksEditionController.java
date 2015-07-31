@@ -8,10 +8,7 @@ import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManage
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.TaskEdition;
 import cw.entities.Stage;
-import cw.exceptions.DataNotFoundException;
-import cw.exceptions.TaskInUseException;
-import cw.exceptions.TaskNotInitializedException;
-import cw.exceptions.WhiteboardUninitializedException;
+import cw.exceptions.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -25,7 +22,7 @@ import java.io.Serializable;
  */
 @Named
 @ViewScoped
-public class TasksEditionController extends GenericController implements Serializable{
+public class TasksEditionController extends GenericController implements Serializable {
     private String EMPTY_STAGE_PREVIOUS = "EMPTY_STAGE_PREVIOUS";
     private String EMPTY_STAGE_NEXT = "EMPTY_STAGE_NEXT";
 
@@ -41,7 +38,7 @@ public class TasksEditionController extends GenericController implements Seriali
     @Inject
     private WhiteboardService whiteboardService;
 
-    public Boolean isAvaliableStop(){
+    public Boolean isAvaliableStop() {
         try {
             Task selectedTask = taskEdition.getSelectedTask();
             TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
@@ -52,7 +49,12 @@ public class TasksEditionController extends GenericController implements Seriali
         }
     }
 
-    public Boolean isAvaliableInit(){
+    public Boolean isAvaliableEnd() {
+        Task selectedTask = taskEdition.getSelectedTask();
+        return taskManagerService.isPossibleEndTask(selectedTask);
+    }
+
+    public Boolean isAvaliableInit() {
         try {
             Task selectedTask = taskEdition.getSelectedTask();
             TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
@@ -63,7 +65,19 @@ public class TasksEditionController extends GenericController implements Seriali
         }
     }
 
-    public void stop(){
+    public void end(){
+        try{
+            Task selectedTask = taskEdition.getSelectedTask();
+            taskManagerService.end(selectedTask);
+        } catch (TaskAlreadyStoppedException e) {
+            e.printStackTrace();
+        } catch (TaskNotInitializedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void stop() {
         try {
             Task selectedTask = taskEdition.getSelectedTask();
             taskManagerService.stop(selectedTask);
@@ -71,10 +85,12 @@ public class TasksEditionController extends GenericController implements Seriali
 
         } catch (TaskNotInitializedException e) {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.error", "task.edition.in_not_initialized");
+        } catch (TaskAlreadyStoppedException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.error", "task.edition.not_in_use");
         }
     }
 
-    public void init(){
+    public void init() {
         try {
             Task selectedTask = taskEdition.getSelectedTask();
             taskManagerService.init(selectedTask);
@@ -88,7 +104,7 @@ public class TasksEditionController extends GenericController implements Seriali
         }
     }
 
-    public String previousStageName(){
+    public String previousStageName() {
         Stage stage = taskEdition.getStage();
         try {
             return whiteboardService.fetchPreviousStage(stage).getName();
@@ -97,7 +113,7 @@ public class TasksEditionController extends GenericController implements Seriali
         }
     }
 
-    public String nextStageName(){
+    public String nextStageName() {
         Stage stage = taskEdition.getStage();
         try {
             return whiteboardService.fetchNextStage(stage).getName();
@@ -106,28 +122,28 @@ public class TasksEditionController extends GenericController implements Seriali
         }
     }
 
-    public void nextStage(){
+    public void nextStage() {
         taskManagerService.forward(taskEdition.getSelectedTask());
         taskEdition.init(taskEdition.getSelectedTask());
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO,"task.edition.stages.changed", "task.edition.stages.next.confirmation.detail");
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.next.confirmation.detail");
     }
 
-    public void previousStage(){
+    public void previousStage() {
         taskManagerService.backward(taskEdition.getSelectedTask());
         taskEdition.init(taskEdition.getSelectedTask());
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.previous.confirmation.detail");
     }
 
-    public void changeInitFlag(){
-        try{
-            if(taskEdition.getInitFlag()){
+    public void changeInitFlag() {
+        try {
+            if (taskEdition.getInitFlag()) {
                 taskManagerService.enableWhiteboardTask(taskEdition.getSelectedTask());
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_enable");
-            }else {
+            } else {
                 taskManagerService.disableWhiteboardTask(taskEdition.getSelectedTask());
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_disable");
             }
-        }catch (WhiteboardUninitializedException e){
+        } catch (WhiteboardUninitializedException e) {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.uninitialized");
         }
 
@@ -151,15 +167,15 @@ public class TasksEditionController extends GenericController implements Seriali
         return taskEdition.getSelectedTask();
     }
 
-    public void setSelectedTask(Task selectedTask){
+    public void setSelectedTask(Task selectedTask) {
         taskEdition.init(selectedTask);
     }
 
-    public void clearSelectedTask(){
+    public void clearSelectedTask() {
         taskEdition = new TaskEdition();
     }
 
-    public Boolean isNotSelected(){
+    public Boolean isNotSelected() {
         return taskEdition.isNotSelected();
     }
 

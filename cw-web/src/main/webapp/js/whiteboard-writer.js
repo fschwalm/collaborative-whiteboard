@@ -8,17 +8,25 @@ function write_last_upadate(target, date) {
 function write_all_stages(target, stages) {
     stages.sort(sortByProperty('position'));
 
+    var stageWidth = calcSizeStage(stages.length,target);
+
     $.each(stages, function (key, value) {
-        write_stage(target, value);
+        write_stage(target, value, stageWidth);
     });
 }
 
-function write_stage(target, stage) {
+function calcSizeStage(countStages, target){
+    var targetWidth = $(target).width();
+    return targetWidth / countStages;
+}
+
+function write_stage(target, stage, width) {
     var stage_name = stage.name;
 
     var div_stage = $(document.createElement('div'));
     div_stage.attr('id', stage_name);
     div_stage.attr('class', 'stage');
+    div_stage.css('width', width);
 
     write_stage_header(stage_name, div_stage);
     target.append(div_stage);
@@ -65,14 +73,20 @@ function write_task(stage_target, taskJson) {
     task.append(write_task_code(taskJson.code));
     task.append(write_task_estimated(taskJson.estimatedTime));
     task.append(write_task_subject(taskJson.subject));
-    task.append(write_image_user());
+    task.append(write_image_user(taskJson.taskStatus));
 
     $('#' + stage_target.name).append(task);
 }
 
-function write_image_user() {
+function write_image_user(taskStatus) {
     var image_div = $(document.createElement('div'));
-    image_div.attr('class', 'image_user');
+    image_div.addClass('image_user');
+
+    if(taskStatus.value == 'AVAILABLE'){
+        image_div.addClass('empty_user');
+    }else{
+        image_div.addClass('user');
+    }
 
     return image_div;
 }
@@ -91,13 +105,17 @@ function write_task_code(code) {
 
 function write_task_estimated(estimated) {
     var task_estimated_time_div = $(document.createElement('div'));
+    var stopwatch = $(document.createElement('img'));
     var estimated_time = $(document.createElement('span'));
 
+    stopwatch.attr('class', 'stopwatch');
+    stopwatch.attr('src', '../../images/icons/stopwatch.png');
     task_estimated_time_div.attr('class', 'task_estimated');
 
     var formated_estimated_time = moment(estimated).format('hh:mm');
     estimated_time.text(formated_estimated_time);
 
+    task_estimated_time_div.append(stopwatch);
     task_estimated_time_div.append(estimated_time);
 
     return task_estimated_time_div;

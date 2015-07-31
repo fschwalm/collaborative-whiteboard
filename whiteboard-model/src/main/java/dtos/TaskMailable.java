@@ -21,6 +21,8 @@ public class TaskMailable implements Serializable{
     @Equalization(name = "taks_description")
     private String description;
 
+    private TaskStatusMailable taskStatus;
+
     public String getCode() {
         return code;
     }
@@ -51,5 +53,13 @@ public class TaskMailable implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public TaskStatusMailable getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatusMailable taskStatus) {
+        this.taskStatus = taskStatus;
     }
 }

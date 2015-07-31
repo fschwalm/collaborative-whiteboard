@@ -52,6 +52,11 @@
     color: black !important;
 }
 
+.green_button {
+    background: #3fe694 !important;
+    color: #111111 !important;
+}
+
 #backlogArea {
     position: absolute;
     top: 30%;
