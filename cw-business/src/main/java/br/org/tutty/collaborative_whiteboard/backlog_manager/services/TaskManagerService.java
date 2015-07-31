@@ -12,6 +12,8 @@ import cw.exceptions.WhiteboardUninitializedException;
  */
 public interface TaskManagerService {
 
+    void stop(Task task) throws TaskNotInitializedException;
+
     void init(Task task) throws TaskInUseException, TaskNotInitializedException;
 
     TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException;

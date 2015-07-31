@@ -2,10 +2,12 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
+import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
+import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 
 import javax.faces.application.FacesMessage;
@@ -37,6 +39,15 @@ public class TasksController extends GenericController implements Serializable {
     private TasksEditionController tasksEditionController;
 
     private List<Task> tasks;
+
+    public String getResponsible(Task task){
+        try {
+            TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(task);
+            return taskStatusLog.getUser().getFullName();
+        } catch (DataNotFoundException e) {
+            return null;
+        }
+    }
 
     public TaskStatus getStatus(Task task) throws DataNotFoundException {
         return taskManagerService.fetchStatusLog(task).getTaskStatus();

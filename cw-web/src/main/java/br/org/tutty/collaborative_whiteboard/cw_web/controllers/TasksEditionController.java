@@ -1,6 +1,8 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import backlog_manager.entities.Task;
+import backlog_manager.entities.TaskStatusLog;
+import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
@@ -39,6 +41,39 @@ public class TasksEditionController extends GenericController implements Seriali
     @Inject
     private WhiteboardService whiteboardService;
 
+    public Boolean isAvaliableStop(){
+        try {
+            Task selectedTask = taskEdition.getSelectedTask();
+            TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
+
+            return TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public Boolean isAvaliableInit(){
+        try {
+            Task selectedTask = taskEdition.getSelectedTask();
+            TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
+            return TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus());
+
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public void stop(){
+        try {
+            Task selectedTask = taskEdition.getSelectedTask();
+            taskManagerService.stop(selectedTask);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop", "task.edition.stop.success");
+
+        } catch (TaskNotInitializedException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.error", "task.edition.in_not_initialized");
+        }
+    }
+
     public void init(){
         try {
             Task selectedTask = taskEdition.getSelectedTask();
@@ -49,7 +84,7 @@ public class TasksEditionController extends GenericController implements Seriali
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.in_use.detail");
 
         } catch (TaskNotInitializedException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.error", "task.edition.in_not_initialized");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.in_not_initialized");
         }
     }
 

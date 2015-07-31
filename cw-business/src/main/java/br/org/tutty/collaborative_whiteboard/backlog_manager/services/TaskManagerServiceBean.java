@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @Stateless
 @Local(TaskManagerService.class)
-public class TaskManagerServiceBean implements TaskManagerService{
+public class TaskManagerServiceBean implements TaskManagerService {
 
     @Inject
     private TaskDao taskDao;
@@ -38,12 +38,25 @@ public class TaskManagerServiceBean implements TaskManagerService{
     private SessionContext sessionContext;
 
     @Override
+    public void stop(Task task) throws TaskNotInitializedException {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+
+            if(TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus())){
+                changeStatusTask(task, TaskStatus.AVAILABLE);
+            }
+        } catch (DataNotFoundException e) {
+            throw new TaskNotInitializedException();
+        }
+    }
+
+    @Override
     public void init(Task task) throws TaskInUseException, TaskNotInitializedException {
         try {
             TaskStatusLog taskStatusLog = fetchStatusLog(task);
-            if (TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus())){
+            if (TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus())) {
                 changeStatusTask(task, TaskStatus.BUSY);
-            }else {
+            } else {
                 throw new TaskInUseException();
             }
         } catch (DataNotFoundException e) {
@@ -59,10 +72,10 @@ public class TaskManagerServiceBean implements TaskManagerService{
     @Override
     public void enableWhiteboardTask(Task task) throws WhiteboardUninitializedException {
         Stage stage = whiteboardDao.fetchInitialStage();
-        if(stage != null){
+        if (stage != null) {
             task.setStage(stage);
             taskDao.update(task);
-        }else {
+        } else {
             throw new WhiteboardUninitializedException();
         }
     }
@@ -83,7 +96,8 @@ public class TaskManagerServiceBean implements TaskManagerService{
 
             taskDao.update(task);
 
-        } catch (DataNotFoundException e ) {}
+        } catch (DataNotFoundException e) {
+        }
     }
 
     @Override
@@ -96,14 +110,15 @@ public class TaskManagerServiceBean implements TaskManagerService{
 
             taskDao.update(task);
 
-        } catch (DataNotFoundException e) {}
+        } catch (DataNotFoundException e) {
+        }
     }
 
-    public void openTask(Task task){
+    public void openTask(Task task) {
         changeStatusTask(task, TaskStatus.AVAILABLE);
     }
 
-    private void changeStatusTask(Task task, TaskStatus taskStatus){
+    private void changeStatusTask(Task task, TaskStatus taskStatus) {
         User user = sessionContext.getLoggedUser().getUser();
         TaskStatusLog taskStatusLog = new TaskStatusLog(taskStatus, user, task);
 

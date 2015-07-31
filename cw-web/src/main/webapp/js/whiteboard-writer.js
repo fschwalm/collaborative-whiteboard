@@ -96,7 +96,7 @@ function write_task_estimated(estimated) {
     task_estimated_time_div.attr('class', 'task_estimated');
 
     var formated_estimated_time = moment(estimated).format('hh:mm');
-    estimated_time.text('Estimativa : ' + formated_estimated_time);
+    estimated_time.text(formated_estimated_time);
 
     task_estimated_time_div.append(estimated_time);
 

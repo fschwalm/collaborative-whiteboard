@@ -48,6 +48,10 @@
                     <p:column headerText="#{tasks_bundle['task.subject']}">
                         <h:outputText value="#{task.subject}"/>
                     </p:column>
+
+                    <p:column headerText="#{tasks_bundle['task.responsible']}">
+                        <h:outputText value="#{tasksController.getResponsible(task)}"/>
+                    </p:column>
                 </p:dataTable>
             </div>
 
@@ -66,8 +70,8 @@
                                          update="@form,:tasksForm:taskTable"
                                          action="#{tasksEditionController.save()}"/>
 
-                        <p:commandButton icon="ui-icon-play" value="#{tasks_bundle['edition.btn.assign']}" action="#{tasksEditionController.init()}" update=":editionForm :tasksForm"/>
-
+                        <p:commandButton icon="ui-icon-play" disabled="#{!tasksEditionController.isAvaliableInit()}" value="#{tasks_bundle['edition.btn.assign']}" action="#{tasksEditionController.init()}" update=":editionForm :tasksForm"/>
+                        <p:commandButton icon="ui-icon-stop" disabled="#{!tasksEditionController.isAvaliableStop()}" value="#{tasks_bundle['edition.btn.stop']}" action="#{tasksEditionController.stop()}" update=":editionForm :tasksForm"/>
                         <span class="ui-separator">
                             <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                         </span>
@@ -76,7 +80,7 @@
                                          value="Voltar"
                                          action="#{tasksEditionController.previousStage()}"
                                          disabled="#{tasksEditionController.previousStageName() eq tasksEditionController.EMPTY_STAGE_PREVIOUS ? true : false }"
-                                         update=":editionForm">
+                                         update=":editionForm,:tasksForm:taskTable">
                             <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
@@ -91,7 +95,7 @@
                                          value="Avancar"
                                          action="#{tasksEditionController.nextStage()}"
                                          disabled="#{tasksEditionController.nextStageName() eq tasksEditionController.EMPTY_STAGE_NEXT ? true : false}"
-                                         update=":editionForm">
+                                         update=":editionForm,:tasksForm:taskTable">
                             <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
