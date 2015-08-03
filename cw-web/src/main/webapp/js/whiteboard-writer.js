@@ -82,9 +82,9 @@ function write_image_user(taskStatus) {
     var image_div = $(document.createElement('div'));
     image_div.addClass('image_user');
 
-    if(taskStatus.value == 'AVAILABLE'){
-        image_div.addClass('empty_user');
-    }else{
+    image_div.addClass('color_'+taskStatus.value);
+
+    if(taskStatus.value == 'BUSY'){
         image_div.addClass('user');
     }
 

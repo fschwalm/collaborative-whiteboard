@@ -144,13 +144,16 @@
     border-radius: 22px;
 }
 
-.empty_user{
-    background-image: url(../images/icons/user_task_free.png);
-}
-
 .user{
     background-image: url(../images/icons/photo.jpg);
+    border: none !important;
 }
+
+.finalized_task{
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
 
 .task_subject span{
     display: table-cell;

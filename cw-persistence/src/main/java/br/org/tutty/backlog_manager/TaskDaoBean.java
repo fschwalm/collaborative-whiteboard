@@ -5,6 +5,7 @@ import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.StoryStatus;
+import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;

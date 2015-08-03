@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
+import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import cw.exceptions.*;
@@ -11,11 +12,17 @@ public interface TaskManagerService {
 
     Boolean isPossibleEndTask(Task task);
 
-    void end(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException;
+    Boolean isPossibleStopTask(Task task);
 
-    void stop(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException;
+    Boolean isPossibleInitTask(Task task);
 
-    void init(Task task) throws TaskInUseException, TaskNotInitializedException;
+    void end(Task task);
+
+    Boolean hasNotFinalizedTask(Story story);
+
+    void stop(Task task);
+
+    void init(Task task);
 
     TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException;
 

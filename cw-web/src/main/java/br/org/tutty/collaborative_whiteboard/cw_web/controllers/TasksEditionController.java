@@ -39,14 +39,8 @@ public class TasksEditionController extends GenericController implements Seriali
     private WhiteboardService whiteboardService;
 
     public Boolean isAvaliableStop() {
-        try {
-            Task selectedTask = taskEdition.getSelectedTask();
-            TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
-
-            return TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
-        } catch (DataNotFoundException e) {
-            return Boolean.FALSE;
-        }
+        Task selectedTask = taskEdition.getSelectedTask();
+        return taskManagerService.isPossibleStopTask(selectedTask);
     }
 
     public Boolean isAvaliableEnd() {
@@ -55,53 +49,25 @@ public class TasksEditionController extends GenericController implements Seriali
     }
 
     public Boolean isAvaliableInit() {
-        try {
-            Task selectedTask = taskEdition.getSelectedTask();
-            TaskStatusLog taskStatusLog = taskManagerService.fetchStatusLog(selectedTask);
-            return TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus());
-
-        } catch (DataNotFoundException e) {
-            return Boolean.FALSE;
-        }
+        Task selectedTask = taskEdition.getSelectedTask();
+        return taskManagerService.isPossibleInitTask(selectedTask);
     }
 
-    public void end(){
-        try{
-            Task selectedTask = taskEdition.getSelectedTask();
-            taskManagerService.end(selectedTask);
-        } catch (TaskAlreadyStoppedException e) {
-            e.printStackTrace();
-        } catch (TaskNotInitializedException e) {
-            e.printStackTrace();
-        }
-
+    public void end() {
+        Task selectedTask = taskEdition.getSelectedTask();
+        taskManagerService.end(selectedTask);
     }
 
     public void stop() {
-        try {
-            Task selectedTask = taskEdition.getSelectedTask();
-            taskManagerService.stop(selectedTask);
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop", "task.edition.stop.success");
-
-        } catch (TaskNotInitializedException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.error", "task.edition.in_not_initialized");
-        } catch (TaskAlreadyStoppedException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.error", "task.edition.not_in_use");
-        }
+        Task selectedTask = taskEdition.getSelectedTask();
+        taskManagerService.stop(selectedTask);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop", "task.edition.stop.success");
     }
 
     public void init() {
-        try {
-            Task selectedTask = taskEdition.getSelectedTask();
-            taskManagerService.init(selectedTask);
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.success", "task.edition.init");
-
-        } catch (TaskInUseException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.in_use.detail");
-
-        } catch (TaskNotInitializedException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.in_not_initialized");
-        }
+        Task selectedTask = taskEdition.getSelectedTask();
+        taskManagerService.init(selectedTask);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.success", "task.edition.init");
     }
 
     public String previousStageName() {

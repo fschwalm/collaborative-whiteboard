@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.backlog_manager.services;
 
+import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.TaskStatus;
@@ -14,6 +15,7 @@ import cw.exceptions.*;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by drferreira on 27/07/15.
@@ -32,6 +34,9 @@ public class TaskManagerServiceBean implements TaskManagerService {
     private WhiteboardService whiteboardService;
 
     @Inject
+    private BacklogManagerService backlogManagerService;
+
+    @Inject
     private SessionContext sessionContext;
 
     @Override
@@ -41,7 +46,7 @@ public class TaskManagerServiceBean implements TaskManagerService {
             Stage lastStage = whiteboardService.fetchLastStage();
 
             Boolean inUse = TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
-            Boolean inLastStage = lastStage.getName().equals(task.getStage().getName());
+            Boolean inLastStage = lastStage.equals(task.getStage());
 
             return (inUse && inLastStage);
 
@@ -51,38 +56,66 @@ public class TaskManagerServiceBean implements TaskManagerService {
     }
 
     @Override
-    public void end(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException {
-        // TODO Adicionar regras para poder finalizar
+    public Boolean isPossibleStopTask(Task task) {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+
+            return TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public Boolean isPossibleInitTask(Task task) {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+            return TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus());
+
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public void end(Task task) {
         changeStatusTask(task, TaskStatus.FINALIZED);
-    }
+        Story story = task.getStory();
 
-    @Override
-    public void stop(Task task) throws TaskNotInitializedException, TaskAlreadyStoppedException {
-        try {
-            TaskStatusLog taskStatusLog = fetchStatusLog(task);
-
-            if (TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus())) {
-                changeStatusTask(task, TaskStatus.AVAILABLE);
-            } else {
-                throw new TaskAlreadyStoppedException();
-            }
-        } catch (DataNotFoundException e) {
-            throw new TaskNotInitializedException();
+        if (!hasNotFinalizedTask(story)) {
+            backlogManagerService.finalizeStory(story);
         }
     }
 
     @Override
-    public void init(Task task) throws TaskInUseException, TaskNotInitializedException {
+    public Boolean hasNotFinalizedTask(Story story) {
         try {
-            TaskStatusLog taskStatusLog = fetchStatusLog(task);
-            if (TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus())) {
-                changeStatusTask(task, TaskStatus.BUSY);
-            } else {
-                throw new TaskInUseException();
+            List<Task> tasks = taskDao.fetchByStory(story);
+            for (Task task : tasks) {
+                try {
+                    TaskStatusLog taskStatusLog = fetchStatusLog(task);
+                    if (!TaskStatus.FINALIZED.equals(taskStatusLog.getTaskStatus())) {
+                        return Boolean.TRUE;
+                    }
+                } catch (DataNotFoundException e) {
+                    return Boolean.TRUE;
+                }
             }
+            return Boolean.FALSE;
+
         } catch (DataNotFoundException e) {
-            throw new TaskNotInitializedException();
+            return Boolean.FALSE;
         }
+    }
+
+    @Override
+    public void stop(Task task) {
+        changeStatusTask(task, TaskStatus.AVAILABLE);
+    }
+
+    @Override
+    public void init(Task task) {
+        changeStatusTask(task, TaskStatus.BUSY);
     }
 
     @Override
