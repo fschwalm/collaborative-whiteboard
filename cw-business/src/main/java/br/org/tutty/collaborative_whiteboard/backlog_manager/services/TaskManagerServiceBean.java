@@ -126,6 +126,7 @@ public class TaskManagerServiceBean implements TaskManagerService {
     @Override
     public void enableWhiteboardTask(Task task) throws WhiteboardUninitializedException {
         Stage stage = whiteboardDao.fetchInitialStage();
+
         if (stage != null) {
             task.setStage(stage);
             taskDao.update(task);

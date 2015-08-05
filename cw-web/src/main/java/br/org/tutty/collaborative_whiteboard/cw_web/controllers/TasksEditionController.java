@@ -56,6 +56,7 @@ public class TasksEditionController extends GenericController implements Seriali
     public void end() {
         Task selectedTask = taskEdition.getSelectedTask();
         taskManagerService.end(selectedTask);
+        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.end", "task.edition.end.success");
     }
 
     public void stop() {
