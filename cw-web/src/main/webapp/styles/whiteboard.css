@@ -71,7 +71,6 @@
     margin-bottom: 5px;
     margin-left: 20px;
     background-size: 350px 100px;
-    float: left;
     box-shadow: 3px 3px 5px 2px #ccc;
     background: rgba(253, 253, 115, 0.97);
 }
@@ -112,9 +111,9 @@
 
 .task_subject{
     top: -14px;
-    width: 290px;
+    width: 305px;
     height: 50px;
-    left: 55px;
+    left: 15px;
     position: relative;
     text-align: center;
     display: table;
@@ -127,7 +126,6 @@
     max-width: 310px;
     max-height: 48px;
     top: -10px;
-    left: -20px;
     color: #685206;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 12px;
