@@ -9,6 +9,7 @@
     display: table-cell;
     background-color: #e0f3f1;
     height: 595px;
+    overflow: hidden;
 }
 
 .stage:last-child {
