@@ -67,12 +67,12 @@
 .ticket{
     width: 350px;
     height: 100px;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    margin-left: 20px;
+    margin-top: 2%;
+    margin-left: 25px;
     background-size: 350px 100px;
     box-shadow: 3px 3px 5px 2px #ccc;
     background: rgba(253, 253, 115, 0.97);
+    float: left;
 }
 
 .task_estimated{
