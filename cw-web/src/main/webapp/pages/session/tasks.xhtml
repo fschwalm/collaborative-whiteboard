@@ -114,7 +114,7 @@
                     <f:facet name="right">
                         <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
                                          value="#{tasks_bundle['task.btn.remove']}"
-                                         update="@form,:tasksForm:taskTable"
+                                         update="@form,:tasksForm:taskTable" disabled="true"
                                          action="#{tasksController.removeTask()}" immediate="true">
                             <p:confirm message="#{backlog['confirmation.remove.text']}"
                                        icon="ui-icon-alert"/>
