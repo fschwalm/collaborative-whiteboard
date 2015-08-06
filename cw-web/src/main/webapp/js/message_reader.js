@@ -33,9 +33,9 @@ function printUserMessage(jsonObject, flag) {
     $outputList.append(
         '<div class="myMessages">' +
         '<div class="headerMessage">' +
-        '<span class="user">' + user + '</span></div><br>' +
+        '<span class="chat_user">' + user + '</span></div><br>' +
         '<br><span class="hour"> ' + date + ' </span><br>' +
-        '<span class="message">' + messageValue + '</span><br><br>' +
+        '<span>' + messageValue + '</span><br><br>' +
         '</div>' +
         '<hr class="gray">');
 
@@ -63,9 +63,9 @@ function printServerMessage(jsonObject) {
     $outputList.append(
         '<div class="myMessages">' +
         '<div class="headerMessage">' +
-        '<span class="user">Eu</span><br>' +
+        '<span class="chat_user">Eu</span><br>' +
         '<br><span class="hour"> ' + formattedDate + ' </span><div><br>' +
-        '<span class="message">' + messageValue + '</span><br><br>' +
+        '<span>' + messageValue + '</span><br><br>' +
         '</div>' +
         '<hr class="gray">');
 
