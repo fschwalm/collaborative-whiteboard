@@ -85,7 +85,10 @@ public class BacklogManagerServiceBean implements BacklogManagerService {
 
     public Story populateBranchCode(Story story) {
         if (story.getBranch() == null || story.getBranch().isEmpty()) {
-            story.setBranch(story.getCode());
+            String code = story.getCode();
+            Project project = story.getProject();
+
+            story.setBranch(CodeFactory.branch(project, code));
             return story;
         }
 
