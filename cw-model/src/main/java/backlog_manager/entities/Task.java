@@ -42,6 +42,7 @@ public class Task implements Serializable {
     private String subject;
 
     @Equalization(name = "taks_description")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Transient
