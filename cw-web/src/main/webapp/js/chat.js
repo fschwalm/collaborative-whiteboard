@@ -90,7 +90,7 @@ function clearMessage(inputTextId) {
 };
 
 function scrollChat() {
-    // TODO Implementar regra para realizar scrool da barra lateral
+    $('.chatPanel').scrollTop($('.chatPanel')[0].scrollHeight)
 }
 
 

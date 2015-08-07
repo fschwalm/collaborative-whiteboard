@@ -79,7 +79,3 @@ function addFlagReceipt() {
         $('#chatBtn').append("<span id='receivedMessageFlag'>" + valueFlag + "</span>");
     }
 }
-
-function scrollChat() {
-    $("#chatPanel").get(0).scrollHeight;
-}
