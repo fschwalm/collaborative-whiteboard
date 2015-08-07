@@ -63,6 +63,7 @@
     width: 25px;
     float: left;
     padding: 0px;
+    position: relative;
 }
 
 .ticket{
@@ -77,70 +78,66 @@
 }
 
 .task_estimated{
-    top: 56px;
+    top: -50px;
     position: relative;
     text-align: left;
     border-top: 1px solid #318ce7;
-    width: 340px;
+    width: 350px;
     height: 24px;
 }
 
 .task_estimated span{
     color: #685206;
     font-family: 'Helvetica Neue', sans-serif;
-    font-size: 13px;
-    top: 5px;
+    font-size: 14px;
+    top: 4px;
     position: relative;
 }
 
 .task_code{
-    left: 40px;
+    left: 35px;
     position: relative;
-    width: 305px;
+    width: 315px;
     text-align: center;
     border-bottom: 1px solid #318ce7;
-    top: 10px;
-    text-align: left;
+    top: 8px;
+    text-align: center;
 }
 
 .task_code span{
     font-weight: bold;
     color: #318ce7;
-    top: 5px;
-    text-align: left;
 }
 
 .task_subject{
-    top: -14px;
-    width: 305px;
-    height: 50px;
-    left: 15px;
+    top: -45px;
+    width: 345px;
+    height: 45px;
+    left: 2px;
     position: relative;
     text-align: center;
-    display: table;
 }
 
 .task_subject p{
     word-break: break-all;
     white-space: normal;
-    position: absolute;
+    position: relative;
     max-width: 310px;
     max-height: 48px;
-    top: -10px;
     color: #685206;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 12px;
     line-height: 10px;
     text-align: center;
-    margin-top: 23px;
 }
 
 .image_user{
-    width: 46px;
-    height: 46px;
-    margin-top: -95px;
-    margin-left: -10px;
+    width: 45px;
+    height: 45px;
+    top: -33px;
+    left: -5px;
     border-radius: 22px;
+    position: relative;
 }
 
 .user{
@@ -179,4 +176,20 @@
     top: 380px;
     z-index: 5;
 }
+
+.task_command{
+    width: 22px;
+    float: left;
+    padding: 0px;
+    margin-left: 5px;
+    position: relative;
+}
+
+.task_commands_area{
+    top: -72px;
+    position: relative;
+    float: right;
+    margin-right: 4px;
+}
+
 

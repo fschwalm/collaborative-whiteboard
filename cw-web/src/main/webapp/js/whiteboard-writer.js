@@ -71,9 +71,11 @@ function write_task(stage_target, taskJson) {
     task.attr('class', 'ticket');
 
     task.append(write_task_code(taskJson.code));
-    task.append(write_task_estimated(taskJson.estimatedTime));
-    task.append(write_task_subject(taskJson.subject));
     task.append(write_image_user(taskJson.taskStatus));
+    task.append(write_task_subject(taskJson.subject));
+    task.append(write_task_estimated(taskJson.estimatedTime))
+    task.append(write_task_commands());
+
 
     $('#' + stage_target.name).append(task);
 }
@@ -119,6 +121,42 @@ function write_task_estimated(estimated) {
     task_estimated_time_div.append(estimated_time);
 
     return task_estimated_time_div;
+}
+
+function write_task_commands() {
+    var task_commands_div = $(document.createElement('div'));
+    task_commands_div.attr('class', 'task_commands_area');
+
+    var backwards = $(document.createElement('img'));
+    backwards.attr('class', 'backwards_command');
+    backwards.attr('onclick', 'task_prev();');
+    backwards.attr('src', '../../images/icons/previous.png');
+    backwards.addClass('task_command');
+
+    var stop = $(document.createElement('img'));
+    stop.attr('class', 'stop_command');
+    stop.attr('onclick', 'task_stop();');
+    stop.attr('src', '../../images/icons/stop.png');
+    stop.addClass('task_command');
+
+    var play = $(document.createElement('img'));
+    play.attr('class', 'play_command');
+    play.attr('onclick', 'task_play();');
+    play.attr('src', '../../images/icons/play.png');
+    play.addClass('task_command');
+
+    var forward = $(document.createElement('img'));
+    forward.attr('class', 'forward_command');
+    forward.attr('onclick', 'task_next();');
+    forward.attr('src', '../../images/icons/next.png');
+    forward.addClass('task_command');
+
+    task_commands_div.append(backwards);
+    task_commands_div.append(stop);
+    task_commands_div.append(play);
+    task_commands_div.append(forward);
+
+    return task_commands_div;
 }
 
 function write_task_subject(subject_value) {
