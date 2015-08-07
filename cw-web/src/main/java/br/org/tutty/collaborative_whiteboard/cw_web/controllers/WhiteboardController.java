@@ -4,9 +4,10 @@ import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManage
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.entities.Stage;
-import cw.exceptions.DataNotFoundException;
+import cw.exceptions.*;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,19 +38,54 @@ public class WhiteboardController extends GenericController implements Serializa
     }
 
     public void taskNext(){
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "feature.not_implemented", "feature.not_implemented.detail");
+        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+        try {
+            taskManagerService.forward(task_code);
+        } catch (DataNotFoundException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.code_not_found");
+        } catch (LastStageException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.next.error", "task.edition.next.error.last_stage");
+        }
     }
 
     public void taskPlay(){
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "feature.not_implemented", "feature.not_implemented.detail");
+        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+
+        try {
+            taskManagerService.init(task_code);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.success", "task.edition.init");
+
+        } catch (DataNotFoundException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.code_not_found");
+        } catch (InitTaskException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.init.error", "task.edition.in_use.detail");
+        }
     }
 
     public void taskStop(){
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "feature.not_implemented", "feature.not_implemented.detail");
+        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+
+        try {
+            taskManagerService.stop(task_code);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop.success", "task.edition.stop");
+
+        } catch (DataNotFoundException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.code_not_found");
+        } catch (StopTaskException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.not_in_use");
+        }
     }
 
     public void taskPrev(){
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "feature.not_implemented", "feature.not_implemented.detail");
+        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+
+        try {
+            taskManagerService.backward(task_code);
+        } catch (DataNotFoundException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.code_not_found");
+        } catch (FirstStageException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.last.error", "task.edition.last.error.first_stage");
+        }
     }
 
     public void cancel(){

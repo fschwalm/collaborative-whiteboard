@@ -20,7 +20,11 @@ public interface TaskManagerService {
 
     Boolean hasNotFinalizedTask(Story story);
 
+    void stop(String taskcode) throws DataNotFoundException, StopTaskException;
+
     void stop(Task task);
+
+    void init(String taskcode) throws DataNotFoundException, InitTaskException;
 
     void init(Task task);
 
@@ -30,7 +34,11 @@ public interface TaskManagerService {
 
     void disableWhiteboardTask(Task task);
 
-    void forward(Task selectedTask);
+    void forward(String taskcode) throws DataNotFoundException, LastStageException;
 
-    void backward(Task selectedTask);
+    void forward(Task selectedTask) throws LastStageException;
+
+    void backward(String taskcode) throws DataNotFoundException, FirstStageException;
+
+    void backward(Task selectedTask) throws FirstStageException;
 }

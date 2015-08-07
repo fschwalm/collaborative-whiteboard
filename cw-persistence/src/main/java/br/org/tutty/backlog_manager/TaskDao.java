@@ -21,4 +21,6 @@ public interface TaskDao extends Dao{
     List<Task> fetchForWhiteboard();
 
     TaskStatusLog fetchTaskStatusLog(Task task) throws DataNotFoundException;
+
+    Task fetchByCode(String taskcode) throws DataNotFoundException;
 }

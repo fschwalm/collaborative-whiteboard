@@ -50,9 +50,13 @@ function write_tasks(whiteboardJson) {
         $.each(stages, function (key, stage) {
             var stories = stage.stories;
 
+            stories.sort(sortByProperty('storyPoints'));
+
             if (stories.length != 0) {
                 $.each(stories, function (key, story) {
                     var tasks = story.tasks;
+
+                    tasks.sort(sortByProperty('code'));
 
                     if (tasks.length != 0) {
                         $.each(tasks, function (key, task) {
@@ -129,25 +133,25 @@ function write_task_commands() {
 
     var backwards = $(document.createElement('img'));
     backwards.attr('class', 'backwards_command');
-    backwards.attr('onclick', 'task_prev();');
+    backwards.attr('onclick', "action_task('PREV', this);");
     backwards.attr('src', '../../images/icons/previous.png');
     backwards.addClass('task_command');
 
     var stop = $(document.createElement('img'));
     stop.attr('class', 'stop_command');
-    stop.attr('onclick', 'task_stop();');
+    stop.attr('onclick', "action_task('STOP', this);");
     stop.attr('src', '../../images/icons/stop.png');
     stop.addClass('task_command');
 
     var play = $(document.createElement('img'));
     play.attr('class', 'play_command');
-    play.attr('onclick', 'task_play();');
+    play.attr('onclick', "action_task('PLAY', this);");
     play.attr('src', '../../images/icons/play.png');
     play.addClass('task_command');
 
     var forward = $(document.createElement('img'));
     forward.attr('class', 'forward_command');
-    forward.attr('onclick', 'task_next();');
+    forward.attr('onclick', "action_task('NEXT', this);");
     forward.attr('src', '../../images/icons/next.png');
     forward.addClass('task_command');
 

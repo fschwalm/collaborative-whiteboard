@@ -90,4 +90,12 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
 
         return (TaskStatusLog) uniqueResultNotWaitingEmpty(criteria);
     }
+
+    @Override
+    public Task fetchByCode(String taskcode) throws DataNotFoundException {
+        Criteria criteria = createCriteria(Task.class);
+        criteria.add(Restrictions.eq("code", taskcode));
+
+        return (Task) uniqueResultNotWaitingEmpty(criteria);
+    }
 }

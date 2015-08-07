@@ -90,15 +90,25 @@ public class TasksEditionController extends GenericController implements Seriali
     }
 
     public void nextStage() {
-        taskManagerService.forward(taskEdition.getSelectedTask());
-        taskEdition.init(taskEdition.getSelectedTask());
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.next.confirmation.detail");
+        try {
+            taskManagerService.forward(taskEdition.getSelectedTask());
+            taskEdition.init(taskEdition.getSelectedTask());
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.next.confirmation.detail");
+
+        } catch (LastStageException e) {
+            e.printStackTrace();
+        }
     }
 
     public void previousStage() {
-        taskManagerService.backward(taskEdition.getSelectedTask());
-        taskEdition.init(taskEdition.getSelectedTask());
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.previous.confirmation.detail");
+        try {
+            taskManagerService.backward(taskEdition.getSelectedTask());
+            taskEdition.init(taskEdition.getSelectedTask());
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.previous.confirmation.detail");
+
+        } catch (FirstStageException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changeInitFlag() {

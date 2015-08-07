@@ -109,8 +109,32 @@ public class TaskManagerServiceBean implements TaskManagerService {
     }
 
     @Override
+    public void stop(String taskcode) throws DataNotFoundException, StopTaskException {
+        Task task = taskDao.fetchByCode(taskcode);
+
+        if(isPossibleStopTask(task)){
+            stop(task);
+            whiteboardService.refreshAllWhiteboards();
+        }else {
+            throw new StopTaskException();
+        }
+    }
+
+    @Override
     public void stop(Task task) {
         changeStatusTask(task, TaskStatus.AVAILABLE);
+    }
+
+    @Override
+    public void init(String taskcode) throws DataNotFoundException, InitTaskException {
+        Task task = taskDao.fetchByCode(taskcode);
+
+        if(isPossibleInitTask(task)){
+            init(task);
+            whiteboardService.refreshAllWhiteboards();
+        }else {
+            throw new InitTaskException();
+        }
     }
 
     @Override
@@ -142,30 +166,57 @@ public class TaskManagerServiceBean implements TaskManagerService {
     }
 
     @Override
-    public void forward(Task task) {
+    public void forward(String taskcode) throws DataNotFoundException, LastStageException {
+        Task task = taskDao.fetchByCode(taskcode);
+
+        try {
+            forward(task);
+            whiteboardService.refreshAllWhiteboards();
+
+        } catch (LastStageException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void forward(Task task) throws LastStageException {
         try {
             Stage stageFounded = whiteboardService.fetchNextStage(task.getStage());
             task.setStage(stageFounded);
 
             openTask(task);
-
             taskDao.update(task);
+            whiteboardService.refreshAllWhiteboards();
 
         } catch (DataNotFoundException e) {
+            throw new LastStageException();
         }
     }
 
     @Override
-    public void backward(Task task) {
+    public void backward(String taskcode) throws DataNotFoundException, FirstStageException {
+        Task task = taskDao.fetchByCode(taskcode);
+        try {
+            backward(task);
+            whiteboardService.refreshAllWhiteboards();
+
+        } catch (FirstStageException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void backward(Task task) throws FirstStageException {
         try {
             Stage stageFounded = whiteboardService.fetchPreviousStage(task.getStage());
             task.setStage(stageFounded);
 
             openTask(task);
-
             taskDao.update(task);
+            whiteboardService.refreshAllWhiteboards();
 
         } catch (DataNotFoundException e) {
+            throw new FirstStageException();
         }
     }
 
