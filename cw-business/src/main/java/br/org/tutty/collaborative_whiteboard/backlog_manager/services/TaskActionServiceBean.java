@@ -158,4 +158,14 @@ public class TaskActionServiceBean implements TaskActionService{
         taskDao.update(task);
         whiteboardService.refreshAllWhiteboards();
     }
+
+    @Override
+    public void remove(Task task) throws RemoveTaskException{
+        if(taskManagerService.isPossibleRemoveTask(task)){
+            changeStatusTask(task, TaskStatus.REMOVED);
+        }else {
+            throw new RemoveTaskException();
+        }
+    }
+
 }

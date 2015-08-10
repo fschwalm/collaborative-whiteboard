@@ -30,4 +30,6 @@ public interface TaskActionService {
     void enableWhiteboardTask(Task task) throws WhiteboardUninitializedException;
 
     void disableWhiteboardTask(Task task);
+
+    void remove(Task selectedTask) throws RemoveTaskException;
 }

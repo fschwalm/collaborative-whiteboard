@@ -14,6 +14,8 @@ public interface TaskManagerService {
 
     Boolean isPossibleStopTask(Task task);
 
+    Boolean isPossibleRemoveTask(Task task);
+
     Boolean isPossibleInitTask(Task task);
 
     Boolean hasNotFinalizedTask(Story story);

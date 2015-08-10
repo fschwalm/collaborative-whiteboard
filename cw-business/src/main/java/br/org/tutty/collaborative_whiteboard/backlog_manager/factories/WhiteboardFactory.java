@@ -3,6 +3,7 @@ package br.org.tutty.collaborative_whiteboard.backlog_manager.factories;
 import backlog_manager.entities.Story;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
+import backlog_manager.enums.TaskStatus;
 import br.org.tutty.Equalizer;
 import br.org.tutty.backlog_manager.TaskDao;
 import br.org.tutty.collaborative_whiteboard.WhiteboardDao;
@@ -88,14 +89,14 @@ public class WhiteboardFactory {
 
     private void builderTask(StoryMailable storyMailable, Task task) throws NoSuchFieldException, IllegalAccessException {
         TaskMailable taskMailable;
+        TaskStatusMailable taskStatusMailable = builderTaskStatus(task);
 
         if (!storyMailable.existTask(task.getCode())) {
             taskMailable = new TaskMailable();
-            TaskStatusMailable taskStatusMailable = builderTaskStatus(task);
 
             taskMailable.setTaskStatus(taskStatusMailable);
-
             Equalizer.equalize(task, taskMailable);
+
             storyMailable.addTask(taskMailable);
         }
     }
@@ -111,7 +112,9 @@ public class WhiteboardFactory {
             taskStatusMailable.setUsername(taskStatusLog.getUser().getFullName());
 
             return taskStatusMailable;
-        } catch (DataNotFoundException e) {return null;}
+        } catch (DataNotFoundException e) {
+            return null;
+        }
     }
 
 }

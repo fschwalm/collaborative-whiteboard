@@ -5,10 +5,12 @@ import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskActionService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
+import cw.exceptions.RemoveTaskException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -38,6 +40,9 @@ public class TasksController extends GenericController implements Serializable {
     @Inject
     private TasksEditionController tasksEditionController;
 
+    @Inject
+    private TaskActionService taskActionService;
+
     private List<Task> tasks;
 
     public String getResponsible(Task task){
@@ -62,10 +67,14 @@ public class TasksController extends GenericController implements Serializable {
         }
     }
 
-    public void removeTask() throws IOException {
-        backlogManagerService.removeTask(tasksEditionController.getSelectedTask());
-        facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "tasks.removed_task");
-        tasksEditionController.clearSelectedTask();
+    public Boolean isRemoved(Task task){
+        try {
+            TaskStatus taskStatus = taskManagerService.fetchStatusLog(task).getTaskStatus();
+            return TaskStatus.REMOVED.equals(taskStatus);
+
+        } catch (DataNotFoundException e) {
+            return false;
+        }
     }
 
     public Story getSelectedStory() {

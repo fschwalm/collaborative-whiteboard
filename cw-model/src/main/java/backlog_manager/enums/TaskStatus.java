@@ -7,5 +7,6 @@ public enum TaskStatus {
     AVAILABLE,
     BUSY,
     FINALIZED,
+    REMOVED,
     FROZEN,
 }

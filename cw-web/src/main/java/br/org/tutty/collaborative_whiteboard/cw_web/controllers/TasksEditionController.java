@@ -57,6 +57,11 @@ public class TasksEditionController extends GenericController implements Seriali
         return taskManagerService.isPossibleInitTask(selectedTask);
     }
 
+    public Boolean isAvailableRemove(){
+        Task selectedTask = taskEdition.getSelectedTask();
+        return taskManagerService.isPossibleRemoveTask(selectedTask);
+    }
+
     public void end() throws EndTaskException {
         Task selectedTask = taskEdition.getSelectedTask();
         taskActionService.end(selectedTask);
@@ -112,6 +117,17 @@ public class TasksEditionController extends GenericController implements Seriali
 
         } catch (FirstStageException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void removeTask() throws IOException {
+        try {
+            Task selectedTask = taskEdition.getSelectedTask();
+            taskActionService.remove(selectedTask);
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "tasks.removed_task");
+
+        } catch (RemoveTaskException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "tasks.removed_task");
         }
     }
 

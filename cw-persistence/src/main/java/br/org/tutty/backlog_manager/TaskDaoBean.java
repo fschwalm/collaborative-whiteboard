@@ -1,7 +1,6 @@
 package br.org.tutty.backlog_manager;
 
 import backlog_manager.entities.Story;
-import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.StoryStatus;
@@ -9,7 +8,6 @@ import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.GenericDao;
 import cw.exceptions.DataNotFoundException;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -18,6 +16,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +25,9 @@ import java.util.List;
 @Stateless
 @Local(TaskDao.class)
 public class TaskDaoBean extends GenericDao implements TaskDao{
+
+    private List<TaskStatus> statusRemovedOfWhiteboard = Arrays.asList(TaskStatus.REMOVED);
+
     @Inject
     private StoryDao storyDao;
 
@@ -68,7 +70,14 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
                 criteria.addOrder(Order.asc("id"));
                 criteria.add(Restrictions.in("story", stories));
                 criteria.add(Restrictions.isNotNull("stage"));
-                tasks.addAll(((List<Task>)list(criteria))) ;
+
+                for (Task task : (List<Task>)list(criteria)){
+                    TaskStatusLog taskStatusLog = fetchTaskStatusLog(task);
+
+                    if(!statusRemovedOfWhiteboard.contains(taskStatusLog.getTaskStatus())){
+                        tasks.add(task);
+                    }
+                }
 
                 return tasks;
             }else {

@@ -14,6 +14,7 @@ import cw.exceptions.DataNotFoundException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,6 +23,12 @@ import java.util.List;
 @Stateless
 @Local(TaskManagerService.class)
 public class TaskManagerServiceBean implements TaskManagerService {
+
+    private List<TaskStatus> statusAvailablesForInit = Arrays.asList(TaskStatus.AVAILABLE, TaskStatus.FINALIZED, TaskStatus.FROZEN);
+    private List<TaskStatus> statusAvailablesForEnd = Arrays.asList(TaskStatus.BUSY);
+    private List<TaskStatus> statusAvailablesForStop = Arrays.asList(TaskStatus.BUSY);
+    private List<TaskStatus> statusAvailablesForRemove = Arrays.asList(TaskStatus.AVAILABLE, TaskStatus.FINALIZED, TaskStatus.FROZEN);
+    private List<TaskStatus> taskStatusAvailablesForFinalizeStory = Arrays.asList(TaskStatus.FINALIZED, TaskStatus.REMOVED);
 
     @Inject
     private TaskDao taskDao;
@@ -44,7 +51,7 @@ public class TaskManagerServiceBean implements TaskManagerService {
             TaskStatusLog taskStatusLog = fetchStatusLog(task);
             Stage lastStage = whiteboardService.fetchLastStage();
 
-            Boolean inUse = TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
+            Boolean inUse = statusAvailablesForEnd.contains(taskStatusLog.getTaskStatus());
             Boolean inLastStage = lastStage.equals(task.getStage());
 
             return (inUse && inLastStage);
@@ -59,7 +66,18 @@ public class TaskManagerServiceBean implements TaskManagerService {
         try {
             TaskStatusLog taskStatusLog = fetchStatusLog(task);
 
-            return TaskStatus.BUSY.equals(taskStatusLog.getTaskStatus());
+            return statusAvailablesForStop.contains(taskStatusLog.getTaskStatus());
+        } catch (DataNotFoundException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public Boolean isPossibleRemoveTask(Task task) {
+        try {
+            TaskStatusLog taskStatusLog = fetchStatusLog(task);
+            return statusAvailablesForRemove.contains(taskStatusLog.getTaskStatus());
+
         } catch (DataNotFoundException e) {
             return Boolean.FALSE;
         }
@@ -69,7 +87,7 @@ public class TaskManagerServiceBean implements TaskManagerService {
     public Boolean isPossibleInitTask(Task task) {
         try {
             TaskStatusLog taskStatusLog = fetchStatusLog(task);
-            return TaskStatus.AVAILABLE.equals(taskStatusLog.getTaskStatus());
+            return statusAvailablesForInit.contains(taskStatusLog.getTaskStatus());
 
         } catch (DataNotFoundException e) {
             return Boolean.FALSE;
@@ -83,7 +101,7 @@ public class TaskManagerServiceBean implements TaskManagerService {
             for (Task task : tasks) {
                 try {
                     TaskStatusLog taskStatusLog = fetchStatusLog(task);
-                    if (!TaskStatus.FINALIZED.equals(taskStatusLog.getTaskStatus())) {
+                    if (!taskStatusAvailablesForFinalizeStory.contains(taskStatusLog.getTaskStatus())) {
                         return Boolean.TRUE;
                     }
                 } catch (DataNotFoundException e) {

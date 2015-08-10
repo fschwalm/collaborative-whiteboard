@@ -30,7 +30,8 @@
                 <p:dataTable id="taskTable" value="#{tasksController.tasks}" var="task" selectionMode="single"
                              rowKey="#{task.id}"
                              selection="#{tasksEditionController.selectedTask}"
-                             style="text-align: center;">
+                             style="text-align: center;"
+                             rowStyleClass="#{tasksController.isRemoved(task) ? 'storyRemoved' : null}">
 
                     <p:column style="width: 22px;">
                         <div style="height: 20px; width: 20px; margin-left: 1px;"
@@ -114,8 +115,9 @@
                     <f:facet name="right">
                         <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
                                          value="#{tasks_bundle['task.btn.remove']}"
-                                         update="@form,:tasksForm:taskTable" disabled="true"
-                                         action="#{tasksController.removeTask()}" immediate="true">
+                                         update=":editionForm,:tasksForm:taskTable"
+                                         action="#{tasksEditionController.removeTask()}"
+                                         disabled="#{!tasksEditionController.isAvailableRemove()}">
                             <p:confirm message="#{backlog['confirmation.remove.text']}"
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
