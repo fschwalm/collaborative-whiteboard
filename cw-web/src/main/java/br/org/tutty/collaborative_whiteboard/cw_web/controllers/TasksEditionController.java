@@ -4,6 +4,7 @@ import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import backlog_manager.enums.TaskStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskActionService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.TaskEdition;
@@ -33,6 +34,9 @@ public class TasksEditionController extends GenericController implements Seriali
     private TaskManagerService taskManagerService;
 
     @Inject
+    private TaskActionService taskActionService;
+
+    @Inject
     private TaskEdition taskEdition;
 
     @Inject
@@ -53,21 +57,21 @@ public class TasksEditionController extends GenericController implements Seriali
         return taskManagerService.isPossibleInitTask(selectedTask);
     }
 
-    public void end() {
+    public void end() throws EndTaskException {
         Task selectedTask = taskEdition.getSelectedTask();
-        taskManagerService.end(selectedTask);
+        taskActionService.end(selectedTask);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.end", "task.edition.end.success");
     }
 
-    public void stop() {
+    public void stop() throws StopTaskException, DataNotFoundException {
         Task selectedTask = taskEdition.getSelectedTask();
-        taskManagerService.stop(selectedTask);
+        taskActionService.stop(selectedTask);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop", "task.edition.stop.success");
     }
 
-    public void init() {
+    public void init() throws InitTaskException, DataNotFoundException {
         Task selectedTask = taskEdition.getSelectedTask();
-        taskManagerService.init(selectedTask);
+        taskActionService.init(selectedTask);
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.success", "task.edition.init");
     }
 
@@ -91,7 +95,7 @@ public class TasksEditionController extends GenericController implements Seriali
 
     public void nextStage() {
         try {
-            taskManagerService.forward(taskEdition.getSelectedTask());
+            taskActionService.forward(taskEdition.getSelectedTask());
             taskEdition.init(taskEdition.getSelectedTask());
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.next.confirmation.detail");
 
@@ -102,7 +106,7 @@ public class TasksEditionController extends GenericController implements Seriali
 
     public void previousStage() {
         try {
-            taskManagerService.backward(taskEdition.getSelectedTask());
+            taskActionService.backward(taskEdition.getSelectedTask());
             taskEdition.init(taskEdition.getSelectedTask());
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stages.changed", "task.edition.stages.previous.confirmation.detail");
 
@@ -114,10 +118,10 @@ public class TasksEditionController extends GenericController implements Seriali
     public void changeInitFlag() {
         try {
             if (taskEdition.getInitFlag()) {
-                taskManagerService.enableWhiteboardTask(taskEdition.getSelectedTask());
+                taskActionService.enableWhiteboardTask(taskEdition.getSelectedTask());
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_enable");
             } else {
-                taskManagerService.disableWhiteboardTask(taskEdition.getSelectedTask());
+                taskActionService.disableWhiteboardTask(taskEdition.getSelectedTask());
                 facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.whiteboard_disable");
             }
         } catch (WhiteboardUninitializedException e) {

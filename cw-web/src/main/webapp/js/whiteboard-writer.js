@@ -80,7 +80,6 @@ function write_task(stage_target, taskJson) {
     task.append(write_task_estimated(taskJson.estimatedTime))
     task.append(write_task_commands());
 
-
     $('#' + stage_target.name).append(task);
 }
 
@@ -155,10 +154,17 @@ function write_task_commands() {
     forward.attr('src', '../../images/icons/next.png');
     forward.addClass('task_command');
 
+    var finalize = $(document.createElement('img'));
+    finalize.attr('class', 'finalize_command');
+    finalize.attr('onclick', "action_task('FINALIZE', this);");
+    finalize.attr('src', '../../images/icons/finalize.png');
+    finalize.addClass('task_command');
+
     task_commands_div.append(backwards);
     task_commands_div.append(stop);
     task_commands_div.append(play);
     task_commands_div.append(forward);
+    task_commands_div.append(finalize);
 
     return task_commands_div;
 }

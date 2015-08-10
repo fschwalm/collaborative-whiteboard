@@ -1,5 +1,6 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskActionService;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
@@ -26,7 +27,7 @@ public class WhiteboardController extends GenericController implements Serializa
     private WhiteboardHandler whiteboardHandler;
 
     @Inject
-    private TaskManagerService taskManagerService;
+    private TaskActionService taskActionService;
 
     private String stageNameForCreation;
 
@@ -37,22 +38,22 @@ public class WhiteboardController extends GenericController implements Serializa
         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "whiteboard.stage.created.sucess", "whiteboard.stage.created.detail");
     }
 
-    public void taskNext(){
-        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+    public void taskNext() {
+        String task_code = getTaskCode();
         try {
-            taskManagerService.forward(task_code);
+            taskActionService.forward(task_code);
         } catch (DataNotFoundException e) {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.code_not_found");
         } catch (LastStageException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.next.error", "task.edition.next.error.last_stage");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.next.error", "task.edition.next.error.last_stage");
         }
     }
 
-    public void taskPlay(){
-        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+    public void taskPlay() {
+        String task_code = getTaskCode();
 
         try {
-            taskManagerService.init(task_code);
+            taskActionService.init(task_code);
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.init.success", "task.edition.init");
 
         } catch (DataNotFoundException e) {
@@ -62,11 +63,11 @@ public class WhiteboardController extends GenericController implements Serializa
         }
     }
 
-    public void taskStop(){
-        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+    public void taskStop() {
+        String task_code = getTaskCode();
 
         try {
-            taskManagerService.stop(task_code);
+            taskActionService.stop(task_code);
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "task.edition.stop.success", "task.edition.stop");
 
         } catch (DataNotFoundException e) {
@@ -76,19 +77,35 @@ public class WhiteboardController extends GenericController implements Serializa
         }
     }
 
-    public void taskPrev(){
-        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+    public void taskPrev() {
+        String task_code = getTaskCode();
 
         try {
-            taskManagerService.backward(task_code);
+            taskActionService.backward(task_code);
         } catch (DataNotFoundException e) {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.stop.error", "task.edition.code_not_found");
         } catch (FirstStageException e) {
-            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "task.edition.last.error", "task.edition.last.error.first_stage");
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.last.error", "task.edition.last.error.first_stage");
         }
     }
 
-    public void cancel(){
+    public void taskFinalize() {
+        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+
+        try {
+            taskActionService.end(task_code);
+        } catch (DataNotFoundException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.end.error", "task.edition.code_not_found");
+        } catch (EndTaskException e) {
+            facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "task.edition.end.error", "task.edition.end.error.detail");
+        }
+    }
+
+    private String getTaskCode() {
+        return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+    }
+
+    public void cancel() {
         stageNameForCreation = null;
     }
 

@@ -16,29 +16,7 @@ public interface TaskManagerService {
 
     Boolean isPossibleInitTask(Task task);
 
-    void end(Task task);
-
     Boolean hasNotFinalizedTask(Story story);
 
-    void stop(String taskcode) throws DataNotFoundException, StopTaskException;
-
-    void stop(Task task);
-
-    void init(String taskcode) throws DataNotFoundException, InitTaskException;
-
-    void init(Task task);
-
     TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException;
-
-    void enableWhiteboardTask(Task task) throws WhiteboardUninitializedException;
-
-    void disableWhiteboardTask(Task task);
-
-    void forward(String taskcode) throws DataNotFoundException, LastStageException;
-
-    void forward(Task selectedTask) throws LastStageException;
-
-    void backward(String taskcode) throws DataNotFoundException, FirstStageException;
-
-    void backward(Task selectedTask) throws FirstStageException;
 }
