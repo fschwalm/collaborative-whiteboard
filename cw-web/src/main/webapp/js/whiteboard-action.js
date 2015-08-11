@@ -15,5 +15,9 @@ function action_task(action, element_event){
 
     }else if(action == 'FINALIZE'){
         task_finalize([{name:'task_code', value:task_code}])
+
+    }else if(action == 'LOAD_DETAIL'){
+        var task_code = $(element_event).children('.task_code').children().text();
+        load_task([{name:'task_code', value:task_code}])
     }
 }

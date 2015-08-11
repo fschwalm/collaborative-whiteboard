@@ -119,4 +119,15 @@ public class TaskManagerServiceBean implements TaskManagerService {
     public TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException {
         return taskDao.fetchTaskStatusLog(task);
     }
+
+    @Override
+    public Task fetchTaskByCode(String taskCode) throws DataNotFoundException {
+        return taskDao.fetchByCode(taskCode);
+    }
+
+    @Override
+    public List<TaskStatusLog> fetchAllStatusLog(Task task) throws DataNotFoundException {
+        return taskDao.fetchAllTaskStatusLog(task);
+    }
+
 }

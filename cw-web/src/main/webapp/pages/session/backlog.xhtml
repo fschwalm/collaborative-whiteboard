@@ -80,7 +80,7 @@
             <p:outputPanel id="storyDetailPanel">
                 <h:form id="storyDetailForm" prependId="false" enctype="multipart/form-data">
                     <div class="story_backlog color_#{editionStoryController.status}">
-                        <h:outputText value="#{backlog['story.status.'.concat(editionStoryController.status)]}"
+                        <h:outputText value="#{status_bundle['story.status.'.concat(editionStoryController.status)]}"
                                       style="text-align: center; font-size: 30px !important;"/>
                     </div>
 

@@ -5,6 +5,8 @@ import backlog_manager.entities.Task;
 import backlog_manager.entities.TaskStatusLog;
 import cw.exceptions.*;
 
+import java.util.List;
+
 /**
  * Created by drferreira on 27/07/15.
  */
@@ -21,4 +23,8 @@ public interface TaskManagerService {
     Boolean hasNotFinalizedTask(Story story);
 
     TaskStatusLog fetchStatusLog(Task task) throws DataNotFoundException;
+
+    Task fetchTaskByCode(String taskCode) throws DataNotFoundException;
+
+    List<TaskStatusLog> fetchAllStatusLog(Task task) throws DataNotFoundException;
 }

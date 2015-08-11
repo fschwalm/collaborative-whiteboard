@@ -37,6 +37,8 @@
         </h:form>
 
         <h:form prependId="false">
+            <ui:include src="../components/overlay_task.xhtml" />
+
             <p:remoteCommand name="task_next" action="#{whiteboardController.taskNext()}"/>
             <p:remoteCommand name="task_play" action="#{whiteboardController.taskPlay()}"/>
             <p:remoteCommand name="task_stop" action="#{whiteboardController.taskStop()}"/>

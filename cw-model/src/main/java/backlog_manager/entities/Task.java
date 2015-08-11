@@ -114,6 +114,10 @@ public class Task implements Serializable {
         propertyMonitor.getPropertyChangeSupport().firePropertyChange("author", oldValue, author);
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
     public Stage getStage() {
         return stage;
     }

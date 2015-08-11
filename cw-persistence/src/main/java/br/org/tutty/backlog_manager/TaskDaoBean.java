@@ -101,6 +101,15 @@ public class TaskDaoBean extends GenericDao implements TaskDao{
     }
 
     @Override
+    public List<TaskStatusLog> fetchAllTaskStatusLog(Task task) throws DataNotFoundException {
+        Criteria criteria = createCriteria(TaskStatusLog.class);
+        criteria.add(Restrictions.eq("task", task));
+        criteria.addOrder(Order.desc("date"));
+
+        return (List<TaskStatusLog>) listNotWaitingEmpty(criteria);
+    }
+
+    @Override
     public Task fetchByCode(String taskcode) throws DataNotFoundException {
         Criteria criteria = createCriteria(Task.class);
         criteria.add(Restrictions.eq("code", taskcode));

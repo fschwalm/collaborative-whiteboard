@@ -80,6 +80,8 @@ function write_task(stage_target, taskJson) {
     task.append(write_task_estimated(taskJson.estimatedTime))
     task.append(write_task_commands());
 
+    task.dblclick(function() {action_task('LOAD_DETAIL', task);});
+
     $('#' + stage_target.name).append(task);
 }
 

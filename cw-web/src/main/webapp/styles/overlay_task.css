@@ -1,0 +1,22 @@
+.task_values{
+}
+
+.task_status{
+}
+
+.description_area{
+    margin-top: 1%;
+    border: solid 1px rgb(240, 234, 234);
+    width: 100%;
+    margin-bottom: 1%;
+    height: 100px;
+}
+
+.column_task_status{
+    text-align: center;
+    width: 120px;
+}
+
+.story_table td{
+    padding-right: 15px;
+}

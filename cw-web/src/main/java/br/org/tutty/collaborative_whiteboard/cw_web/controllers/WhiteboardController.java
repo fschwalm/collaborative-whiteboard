@@ -6,6 +6,7 @@ import br.org.tutty.collaborative_whiteboard.cw.handlers.WhiteboardHandler;
 import br.org.tutty.collaborative_whiteboard.cw.service.WhiteboardService;
 import cw.entities.Stage;
 import cw.exceptions.*;
+import org.primefaces.context.RequestContext;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -90,7 +91,7 @@ public class WhiteboardController extends GenericController implements Serializa
     }
 
     public void taskFinalize() {
-        String task_code = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("task_code");
+        String task_code = getTaskCode();
 
         try {
             taskActionService.end(task_code);

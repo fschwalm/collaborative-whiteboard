@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <link type="text/css" rel="stylesheet" href="../../styles/overlay_task.css"/>
+    <link type="text/css" rel="stylesheet" href="../../styles/style.css"/>
+
+    <p:remoteCommand name="load_task" actionListener="#{taskDetailController.initByJS()}" update="task_overlay"
+                     oncomplete="PF('task_overlay').show();"/>
+
+    <p:dialog id="task_overlay" widgetVar="task_overlay" header="#{overlay_task['header']}" resizable="false"
+              width="635">
+        <h:form id="task_overlay_form" prependId="false">
+
+            <div class="task_data">
+                <div class="task_values">
+                    <h:panelGrid columns="2" styleClass="story_table">
+                        <h:outputLabel value="#{overlay_task['code']}" for="story" escape="false"/>
+                        <h:outputText id="story" value="#{taskDetailController.getStoryCode()}"/>
+
+                        <h:outputLabel value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
+                        <h:outputText id="story_subject" value="#{taskDetailController.getStorySubject()}"/>
+                    </h:panelGrid>
+
+                    <hr class="separator"/>
+
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="#{overlay_task['code']}" for="code" escape="false"/>
+                        <h:outputText id="code" value="#{taskDetailController.getCode()}"/>
+
+                        <h:outputLabel value="#{overlay_task['owner']}" for="owner" escape="false"/>
+                        <h:outputText id="owner" value="#{taskDetailController.getAuthor()}"/>
+
+                        <h:outputLabel value="#{overlay_task['stage']}" for="stage" escape="false"/>
+                        <h:outputText id="stage" value="#{taskDetailController.getStage()}"/>
+
+                        <h:outputLabel value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
+                        <p:calendar id="estimated" value="#{taskDetailController.getEstimatedTime()}" pattern="HH:mm"
+                                    disabled="true"/>
+
+                        <h:outputLabel value="#{overlay_task['subject']}" for="subject" escape="false"/>
+                        <h:outputText id="subject" value="#{taskDetailController.getSubject()}" escape="false"/>
+                    </h:panelGrid>
+
+                    <div class="description_area">
+                        <h:outputText id="description" value="#{taskDetailController.getDescription()}" escape="false"/>
+                    </div>
+                </div>
+
+                <div class="task_status">
+                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status">
+                        <f:facet name="header">
+                            #{overlay_task['status.dialog.header']}
+                        </f:facet>
+
+                        <p:column style="width: 13px;">
+                            <div style="height: 20px; width: 20px; margin-left: 1px;"
+                                 class="color_#{status.taskStatus}"/>
+                        </p:column>
+
+                        <p:column headerText="#{overlay_task['status.header']}" styleClass="column_task_status">
+                            <h:outputText value="#{status_bundle['task.status.'.concat(status.taskStatus)]}"/>
+                        </p:column>
+
+                        <p:column headerText="#{overlay_task['name.header']}" styleClass="column_task_status">
+                            <h:outputText value="#{status.user.getFullName()}"/>
+                        </p:column>
+
+                        <p:column headerText="#{overlay_task['date.header']}" styleClass="column_task_status">
+                            <p:calendar value="#{status.date}" pattern="dd/MM/yyyy HH:mm" disabled="true"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+
+
+
