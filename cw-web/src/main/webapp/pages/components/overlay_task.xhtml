@@ -11,7 +11,7 @@
                      oncomplete="PF('task_overlay').show();"/>
 
     <p:dialog id="task_overlay" widgetVar="task_overlay" header="#{overlay_task['header']}" resizable="false"
-              width="635">
+              width="635" height="500">
         <h:form id="task_overlay_form" prependId="false">
 
             <div class="task_data">
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="task_status">
-                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status">
+                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status" scrollable="true">
                         <f:facet name="header">
                             #{overlay_task['status.dialog.header']}
                         </f:facet>

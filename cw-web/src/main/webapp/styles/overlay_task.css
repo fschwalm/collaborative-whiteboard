@@ -1,7 +1,12 @@
 .task_values{
+    margin-right: 1%;
+    margin-left: 1%;
 }
 
 .task_status{
+    margin-right: 1%;
+    margin-left: 1%;
+    max-width: 595px;
 }
 
 .description_area{
