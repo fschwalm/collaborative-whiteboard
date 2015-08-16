@@ -22,9 +22,9 @@
                              rowStyleClass="#{backlogController.isRemoved(story) ? 'storyRemoved' : null}"
                              selectionMode="single">
 
-                    <p:column style="text-align: center; width: 8%" filterBy="#{story}" filterMatchMode="in"
+                    <p:column styleClass="color_column_standart" filterBy="#{story}" filterMatchMode="in"
                               filterFunction="#{backlogController.filterByStatus}">
-                        <div class="color_#{backlogController.getStatus(story)} column_status"/>
+                        <div class="color_#{backlogController.getStatus(story)} color_flag_standart"/>
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Status" onchange="PF('backlogTbl').filter()" filter="false">
                                 <p:ajax event="toggleSelect" oncomplete="PF('backlogTbl').filter()"/>

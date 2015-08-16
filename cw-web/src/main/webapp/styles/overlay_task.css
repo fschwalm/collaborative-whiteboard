@@ -6,22 +6,25 @@
 .task_status{
     margin-right: 1%;
     margin-left: 1%;
-    max-width: 595px;
 }
 
 .description_area{
     margin-top: 1%;
     border: solid 1px rgb(240, 234, 234);
-    width: 100%;
+    width: 101%;
     margin-bottom: 1%;
-    height: 100px;
+    word-break: break-all;
+    min-height: 100px;
 }
 
 .column_task_status{
     text-align: center;
-    width: 120px;
 }
 
 .story_table td{
     padding-right: 15px;
+}
+
+#subject{
+    word-break: break-all !important;
 }

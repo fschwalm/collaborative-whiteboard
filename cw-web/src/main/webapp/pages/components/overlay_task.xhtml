@@ -11,37 +11,41 @@
                      oncomplete="PF('task_overlay').show();"/>
 
     <p:dialog id="task_overlay" widgetVar="task_overlay" header="#{overlay_task['header']}" resizable="false"
-              width="635" height="500">
+              width="635" minHeight="360">
         <h:form id="task_overlay_form" prependId="false">
 
             <div class="task_data">
                 <div class="task_values">
                     <h:panelGrid columns="2" styleClass="story_table">
-                        <h:outputLabel value="#{overlay_task['code']}" for="story" escape="false"/>
-                        <h:outputText id="story" value="#{taskDetailController.getStoryCode()}"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['code']}" for="story"
+                                       escape="false"/>
+                        <h:outputText id="story" styleClass="minimal_font"
+                                      value="#{taskDetailController.getStoryCode()}"/>
 
-                        <h:outputLabel value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
-                        <h:outputText id="story_subject" value="#{taskDetailController.getStorySubject()}"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
+                        <h:outputText id="story_subject" styleClass="minimal_font"
+                                      value="#{taskDetailController.getStorySubject()}"/>
                     </h:panelGrid>
 
                     <hr class="separator"/>
 
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="#{overlay_task['code']}" for="code" escape="false"/>
-                        <h:outputText id="code" value="#{taskDetailController.getCode()}"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['code']}" for="code" escape="false"/>
+                        <h:outputText id="code" styleClass="minimal_font" value="#{taskDetailController.getCode()}"/>
 
-                        <h:outputLabel value="#{overlay_task['owner']}" for="owner" escape="false"/>
-                        <h:outputText id="owner" value="#{taskDetailController.getAuthor()}"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['owner']}" for="owner" escape="false"/>
+                        <h:outputText id="owner" styleClass="minimal_font" value="#{taskDetailController.getAuthor()}"/>
 
-                        <h:outputLabel value="#{overlay_task['stage']}" for="stage" escape="false"/>
-                        <h:outputText id="stage" value="#{taskDetailController.getStage()}"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['stage']}" for="stage" escape="false"/>
+                        <h:outputText id="stage" styleClass="minimal_font" value="#{taskDetailController.getStage()}"/>
 
-                        <h:outputLabel value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
                         <p:calendar id="estimated" value="#{taskDetailController.getEstimatedTime()}" pattern="HH:mm"
                                     disabled="true"/>
 
-                        <h:outputLabel value="#{overlay_task['subject']}" for="subject" escape="false"/>
-                        <h:outputText id="subject" value="#{taskDetailController.getSubject()}" escape="false"/>
+                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['subject']}" for="subject" escape="false"/>
+                        <h:outputText id="subject" styleClass="minimal_font"
+                                      value="#{taskDetailController.getSubject()}" escape="false"/>
                     </h:panelGrid>
 
                     <div class="description_area">
@@ -50,14 +54,13 @@
                 </div>
 
                 <div class="task_status">
-                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status" scrollable="true">
+                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status" scrollable="true" scrollHeight="200" style="width: 600px">
                         <f:facet name="header">
                             #{overlay_task['status.dialog.header']}
                         </f:facet>
 
-                        <p:column style="width: 13px;">
-                            <div style="height: 20px; width: 20px; margin-left: 1px;"
-                                 class="color_#{status.taskStatus}"/>
+                        <p:column styleClass="color_column_minimal">
+                            <div class="color_#{status.taskStatus} color_flag_minimal"/>
                         </p:column>
 
                         <p:column headerText="#{overlay_task['status.header']}" styleClass="column_task_status">

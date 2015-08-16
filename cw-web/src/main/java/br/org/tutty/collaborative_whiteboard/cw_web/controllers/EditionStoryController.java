@@ -5,6 +5,7 @@ import backlog_manager.entities.StoryStatusLog;
 import backlog_manager.entities.UploadedFile;
 import backlog_manager.enums.StoryStatus;
 import br.org.tutty.collaborative_whiteboard.backlog_manager.services.BacklogManagerService;
+import br.org.tutty.collaborative_whiteboard.backlog_manager.services.TaskManagerService;
 import br.org.tutty.collaborative_whiteboard.cw.context.SessionContext;
 import br.org.tutty.collaborative_whiteboard.cw_web.dtos.StoryEdition;
 import cw.exceptions.DataNotFoundException;
@@ -41,6 +42,9 @@ public class EditionStoryController extends GenericController implements Seriali
 
     @Inject
     private SessionContext sessionContext;
+
+    @Inject
+    private TaskManagerService taskManagerService;
 
     public void save() throws IOException {
         Story story = storyEdition.toEntity();

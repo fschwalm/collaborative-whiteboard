@@ -260,9 +260,46 @@
     top: 15px;
 }
 
+
+/* ------------------- Refatoração ----------------------- */
+
+/* Primefaces Reset */
+.ui-widget, .ui-widget * {
+    font-size: 13px !important;
+}
+
+.standart_font{
+    font-size: 13px !important;
+}
+
+.minimal_font{
+    font-size: 11px !important;
+}
+
 .separator{
     border: 0;
     height: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+.color_column_standart{
+    width: 70px;
+}
+
+.color_column_minimal{
+    width: 25px
+}
+
+.color_flag_minimal{
+    height: 25px;
+    width: 25px;
+    margin: 0 auto;
+}
+
+.color_flag_standart{
+    height: 30px;
+    width: 30px;
+    margin: 0 auto;
+}
+
