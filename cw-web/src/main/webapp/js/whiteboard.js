@@ -57,12 +57,20 @@ function init_whiteboard(stages) {
     }
 }
 
-function add_motion_whiteboard(elemente) {
-    elemente.draggable({
-        axis: "x",
-        delay: 300,
-        scroll: true
+function add_motion_whiteboard(element) {
+    var totalHeight = 0;
+
+    $(".stages").children().each(function(){
+        totalHeight = totalHeight + $(this).width();
     });
+
+    if(totalHeight > $('#sheet').width()){
+        element.draggable({
+            axis: "x",
+            delay: 300,
+            scroll: true
+        });
+    }
 }
 
 function remove_motion(element){

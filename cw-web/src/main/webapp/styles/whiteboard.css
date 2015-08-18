@@ -4,17 +4,21 @@
 }
 
 .stage{
-    border-left: 1px solid #5d8aa8;
+    border-left: 1px solid #C6CFD5;
     min-width: 390px;
     display: table-cell;
     background-color: #e0f3f1;
     height: 575px;
     overflow: hidden;
+    cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .stage:last-child {
-    border-right: 1px solid #5d8aa8;
-    margin-right: 5px;
+    border-right: 1px solid #C6CFD5;
 }
 
 .stage_header{
