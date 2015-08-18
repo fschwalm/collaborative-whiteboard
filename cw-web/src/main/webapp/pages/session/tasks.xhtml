@@ -16,32 +16,31 @@
             </div>
 
             <div class="headerDataArea">
-                <h:form id="dataHeaderForm" prependId="false">
-                    <h:outputLabel for="storyCode" styleClass="highlighted_font spaced_text"
-                                   value="#{tasks_bundle['task.header.code']}"/>
 
-                    <h:outputText id="storyCode" styleClass="standart_font spaced_text"
-                                  value="#{tasksController.getSelectedStory().code}"/>
+                <h:outputLabel for="storyCode" styleClass="highlighted_font spaced_text"
+                               value="#{tasks_bundle['task.header.code']}"/>
 
-                    <h:outputLabel styleClass="vertical_separator"
-                                   value="#{iteration_settings['iteration.vertical.separator']}"/>
+                <h:outputText id="storyCode" styleClass="standart_font spaced_text"
+                              value="#{tasksController.getSelectedStory().code}"/>
 
-                    <h:outputLabel for="storyBranch" styleClass="highlighted_font spaced_text"
-                                   value="#{tasks_bundle['task.header.branch']}"
-                                   escape="false"/>
+                <h:outputLabel styleClass="vertical_separator"
+                               value="#{iteration_settings['iteration.vertical.separator']}"/>
 
-                    <h:outputText id="storyBranch" styleClass="standart_font spaced_text"
-                                  value="#{tasksController.getSelectedStory().branch}"/>
+                <h:outputLabel for="storyBranch" styleClass="highlighted_font spaced_text"
+                               value="#{tasks_bundle['task.header.branch']}"
+                               escape="false"/>
 
-                    <h:outputLabel styleClass="vertical_separator"
-                                   value="#{iteration_settings['iteration.vertical.separator']}"/>
+                <h:outputText id="storyBranch" styleClass="standart_font spaced_text"
+                              value="#{tasksController.getSelectedStory().branch}"/>
 
-                    <h:outputLabel for="storySubject" styleClass="highlighted_font spaced_text"
-                                   value="#{tasks_bundle['task.header.subject']}" />
+                <h:outputLabel styleClass="vertical_separator"
+                               value="#{iteration_settings['iteration.vertical.separator']}"/>
 
-                    <h:outputText id="storySubject" styleClass="standart_font spaced_text"
-                                  value="#{tasksController.getSelectedStory().subject}"/>
-                </h:form>
+                <h:outputLabel for="storySubject" styleClass="highlighted_font spaced_text"
+                               value="#{tasks_bundle['task.header.subject']}"/>
+
+                <h:outputText id="storySubject" styleClass="standart_font spaced_text"
+                              value="#{tasksController.getSelectedStory().subject}"/>
             </div>
 
             <div class="tasksArea">
@@ -79,104 +78,108 @@
                 <p:menuitem value="#{tasks_bundle['task.btn.open']}" icon="ui-icon-folder-open"
                             oncomplete="PF('editionTask').show()" update=":tasksForm:taskTable :editionTask"/>
             </p:contextMenu>
+
         </h:form>
 
-        <p:dialog id="editionTask" widgetVar="editionTask" modal="true" resizable="false">
-            <h:form id="editionForm" prependId="false">
+        <p:dialog id="editionTask" widgetVar="editionTask" modal="true" resizable="false" appendToBody="false">
+            <p:outputPanel id="taskDetailPanel">
+                <h:form id="editionForm" prependId="false">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
+                                             update="@form,:tasksForm:taskTable"
+                                             action="#{tasksEditionController.save()}"/>
 
-                <p:toolbar>
-                    <f:facet name="left">
-                        <p:commandButton value="#{tasks_bundle['edition.btn.save']}"
-                                         update="@form,:tasksForm:taskTable"
-                                         action="#{tasksEditionController.save()}"/>
+                            <p:commandButton icon="ui-icon-play" disabled="#{!tasksEditionController.isAvaliableInit()}"
+                                             value="#{tasks_bundle['edition.btn.assign']}"
+                                             action="#{tasksEditionController.init()}"
+                                             update=":editionForm :tasksForm"/>
 
-                        <p:commandButton icon="ui-icon-play" disabled="#{!tasksEditionController.isAvaliableInit()}"
-                                         value="#{tasks_bundle['edition.btn.assign']}"
-                                         action="#{tasksEditionController.init()}" update=":editionForm :tasksForm"/>
+                            <p:commandButton icon="ui-icon-stop" disabled="#{!tasksEditionController.isAvaliableStop()}"
+                                             value="#{tasks_bundle['edition.btn.stop']}"
+                                             action="#{tasksEditionController.stop()}"
+                                             update=":editionForm :tasksForm"/>
 
-                        <p:commandButton icon="ui-icon-stop" disabled="#{!tasksEditionController.isAvaliableStop()}"
-                                         value="#{tasks_bundle['edition.btn.stop']}"
-                                         action="#{tasksEditionController.stop()}" update=":editionForm :tasksForm"/>
-
-                        <p:commandButton icon="ui-icon-star" value="#{tasks_bundle['edition.btn.end']}"
-                                         disabled="#{!tasksEditionController.isAvaliableEnd()}"
-                                         action="#{tasksEditionController.end()}"
-                                         update=":editionForm :tasksForm" styleClass="green_button"/>
+                            <p:commandButton icon="ui-icon-star" value="#{tasks_bundle['edition.btn.end']}"
+                                             disabled="#{!tasksEditionController.isAvaliableEnd()}"
+                                             action="#{tasksEditionController.end()}"
+                                             update=":editionForm :tasksForm" styleClass="green_button"/>
                         <span class="ui-separator">
                             <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                         </span>
 
-                        <p:commandButton icon="ui-icon-seek-prev"
-                                         value="Voltar"
-                                         action="#{tasksEditionController.previousStage()}"
-                                         disabled="#{tasksEditionController.previousStageName() eq tasksEditionController.EMPTY_STAGE_PREVIOUS ? true : false }"
-                                         update=":editionForm,:tasksForm:taskTable">
-                            <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
+                            <p:commandButton icon="ui-icon-seek-prev"
+                                             value="Voltar"
+                                             action="#{tasksEditionController.previousStage()}"
+                                             disabled="#{tasksEditionController.previousStageName() eq tasksEditionController.EMPTY_STAGE_PREVIOUS ? true : false }"
+                                             update=":editionForm,:tasksForm:taskTable">
+                                <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
 
-                        <p:spacer width="10"/>
+                            <p:spacer width="10"/>
 
-                        <p:outputLabel id="stage" value="#{tasksEditionController.taskEdition.stage.name}"/>
+                            <p:outputLabel id="stage" value="#{tasksEditionController.taskEdition.stage.name}"/>
 
-                        <p:spacer width="10"/>
+                            <p:spacer width="10"/>
 
-                        <p:commandButton icon="ui-icon-seek-next"
-                                         value="Avancar"
-                                         action="#{tasksEditionController.nextStage()}"
-                                         disabled="#{tasksEditionController.nextStageName() eq tasksEditionController.EMPTY_STAGE_NEXT ? true : false}"
-                                         update=":editionForm,:tasksForm:taskTable">
-                            <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
-                    </f:facet>
+                            <p:commandButton icon="ui-icon-seek-next"
+                                             value="Avancar"
+                                             action="#{tasksEditionController.nextStage()}"
+                                             disabled="#{tasksEditionController.nextStageName() eq tasksEditionController.EMPTY_STAGE_NEXT ? true : false}"
+                                             update=":editionForm,:tasksForm:taskTable">
+                                <p:confirm message="#{tasks_bundle['edition.stages.next.confirmation']}"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
+                        </f:facet>
 
-                    <f:facet name="right">
-                        <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
-                                         value="#{tasks_bundle['task.btn.remove']}"
-                                         update=":editionForm,:tasksForm:taskTable"
-                                         action="#{tasksEditionController.removeTask()}"
-                                         disabled="#{!tasksEditionController.isAvailableRemove()}">
-                            <p:confirm message="#{backlog['confirmation.remove.text']}"
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
+                        <f:facet name="right">
+                            <p:commandButton id="removeButton" styleClass="warning_button" icon="ui-icon-trash"
+                                             value="#{tasks_bundle['task.btn.remove']}"
+                                             update=":editionForm,:tasksForm:taskTable"
+                                             action="#{tasksEditionController.removeTask()}"
+                                             disabled="#{!tasksEditionController.isAvailableRemove()}">
+                                <p:confirm message="#{backlog['confirmation.remove.text']}"
+                                           icon="ui-icon-alert"/>
+                            </p:commandButton>
 
-                    </f:facet>
-                </p:toolbar>
+                        </f:facet>
+                    </p:toolbar>
 
-                <p:tabView style="width: 830px; height: 380px;">
-                    <p:tab title="#{tasks_bundle['edition.tab.description']}">
-                        <h:panelGrid columns="1">
-                            <p:calendar id="timeEdition" pattern="HH:mm" timeOnly="true" required="true"
-                                        value="#{tasksEditionController.taskEdition.time}"
-                                        style="width: 40px"
-                                        requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
+                    <p:tabView style="width: 830px; height: 380px;">
+                        <p:tab title="#{tasks_bundle['edition.tab.description']}">
+                            <h:panelGrid columns="1">
+                                <p:calendar id="timeEdition" pattern="HH:mm" timeOnly="true" required="true"
+                                            value="#{tasksEditionController.taskEdition.time}"
+                                            style="width: 40px"
+                                            requiredMessage="#{tasks_bundle['mandatory_message.time']}"/>
 
 
-                            <p:inputText id="taskSubjectEdition" required="true"
-                                         value="#{tasksEditionController.taskEdition.subject}"
-                                         size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
+                                <p:inputText id="taskSubjectEdition" required="true"
+                                             value="#{tasksEditionController.taskEdition.subject}"
+                                             size="67" requiredMessage="#{tasks_bundle['mandatory_message.subject']}"/>
 
-                            <p:focus for="descriptionEdition"/>
+                                <p:focus for="descriptionEdition"/>
 
-                            <p:editor id="descriptionEdition" rows="20" cols="70"
-                                      value="#{tasksEditionController.taskEdition.description}"/>
+                                <p:editor id="descriptionEdition" rows="20" cols="70"
+                                          value="#{tasksEditionController.taskEdition.description}"/>
 
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="#{tasks_bundle['edition.tab.control']}">
-                        <p:outputLabel value="#{tasks_bundle['edition.stages.init_flag']}" escape="false"/>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="#{tasks_bundle['edition.tab.control']}">
+                            <p:outputLabel value="#{tasks_bundle['edition.stages.init_flag']}" escape="false"/>
 
-                        <br/>
-                        <br/>
+                            <br/>
+                            <br/>
 
-                        <p:inputSwitch id="init_flag" value="#{tasksEditionController.taskEdition.initFlag}">
-                            <p:ajax listener="#{tasksEditionController.changeInitFlag()}"
-                                    update=":editionForm :tasksForm"/>
-                        </p:inputSwitch>
-                    </p:tab>
-                </p:tabView>
-            </h:form>
+                            <p:inputSwitch id="init_flag" value="#{tasksEditionController.taskEdition.initFlag}">
+                                <p:ajax listener="#{tasksEditionController.changeInitFlag()}"
+                                        update=":editionForm :tasksForm"/>
+                            </p:inputSwitch>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </p:outputPanel>
         </p:dialog>
 
         <p:dialog widgetVar="creationTask" modal="true" resizable="false">
