@@ -16,13 +16,45 @@
                         <f:selectItems value="#{iterationSettingsController.iterations}" var="iteration"
                                        itemLabel="#{iteration}"/>
 
-                        <p:ajax event="change" update="pickList"
+                        <p:ajax event="change" process="@this"
+                                update=":listForm:pickList,:dataHeaderForm"
                                 listener="#{iterationSettingsController.mountStoriesInsideIteration()}"/>
                     </p:selectOneMenu>
                 </f:facet>
             </p:toolbar>
+        </h:form>
 
-            <div class="pickListArea">
+        <div class="headerDataArea">
+            <h:form id="dataHeaderForm" prependId="false">
+                <h:outputLabel for="iterationInit" styleClass="highlighted_font"
+                               value="#{iteration_settings['iteration.period']}"/>
+
+                <h:outputText id="iterationInit" styleClass="standart_font spaced_text"
+                              value="#{iterationSettingsController.getIterationInit()}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+
+                <h:outputLabel for="iterationEnd" styleClass="standart_font spaced_text"
+                               value="#{iteration_settings['iteration.separator']}"/>
+
+                <h:outputText id="iterationEnd" styleClass="standart_font spaced_text"
+                              value="#{iterationSettingsController.iterationEnd}">
+                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                </h:outputText>
+
+                <h:outputLabel styleClass="vertical_separator"
+                               value="#{iteration_settings['iteration.vertical.separator']}"/>
+
+                <h:outputLabel for="iterationPoints" styleClass="highlighted_font spaced_text"
+                               value="#{iteration_settings['iteration.story.points']}"/>
+
+                <h:outputText id="iterationPoints" styleClass="standart_font spaced_text"
+                              value="#{iterationSettingsController.iterationPoints}"/>
+            </h:form>
+        </div>
+
+        <div class="pickListArea">
+            <h:form id="listForm" prependId="false">
                 <p:pickList id="pickList" converter="storyConverterToPickList"
                             value="#{iterationSettingsController.stories}"
                             var="story" itemLabel="#{iterationSettingsController.mountStoryName(story)}"
@@ -32,7 +64,7 @@
                     <f:facet name="targetCaption">#{iteration_settings['iteration.iteration.header']}</f:facet>
 
                     <p:ajax event="transfer" listener="#{iterationSettingsController.onTransfer}"
-                            update=":messageForm:messages,:iterationForm:pickList"/>
+                            update=":messageForm:messages,:listForm:pickList,:dataHeaderForm"/>
 
                     <p:column>
                         <div style="height: 20px; width: 20px; margin-left: 1px;"
@@ -47,13 +79,14 @@
                         <h:outputText value="#{story.subject}"/>
                     </p:column>
 
-                    <p:column style="min-width: 70px;;height: 35px; text-align: right; background-color: #f6f7fa;text-align: center;">
+                    <p:column
+                            style="min-width: 70px;;height: 35px; text-align: right; background-color: #f6f7fa;text-align: center;">
                         <h:outputText value="#{empty story.iteration.name ? 'Livre' : story.iteration.name}"
                                       style="font-style: italic; #{empty story.iteration.name ? 'color: #6cdc97' : 'color: #6fa3ff;'}"/>
                     </p:column>
 
                 </p:pickList>
-            </div>
-        </h:form>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

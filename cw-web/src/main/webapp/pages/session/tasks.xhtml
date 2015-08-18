@@ -16,22 +16,37 @@
             </div>
 
             <div class="headerDataArea">
-                <h:panelGrid columns="2">
-                    <h:outputLabel for="storyCode" styleClass="highlighted_font" value="#{tasks_bundle['task.header.code']}" escape="false"/>
-                    <h:outputText id="storyCode" styleClass="standart_font" value="#{tasksController.getSelectedStory().code}"/>
+                <h:form id="dataHeaderForm" prependId="false">
+                    <h:outputLabel for="storyCode" styleClass="highlighted_font spaced_text"
+                                   value="#{tasks_bundle['task.header.code']}"/>
 
-                    <h:outputLabel for="storyBranch" styleClass="highlighted_font" value="#{tasks_bundle['task.header.branch']}"
-                                   escape="false"/>
-                    <h:outputText id="storyBranch" styleClass="standart_font" value="#{tasksController.getSelectedStory().branch}"/>
+                    <h:outputText id="storyCode" styleClass="standart_font spaced_text"
+                                  value="#{tasksController.getSelectedStory().code}"/>
 
-                    <h:outputLabel for="storySubject" styleClass="highlighted_font" value="#{tasks_bundle['task.header.subject']}"
+                    <h:outputLabel styleClass="vertical_separator"
+                                   value="#{iteration_settings['iteration.vertical.separator']}"/>
+
+                    <h:outputLabel for="storyBranch" styleClass="highlighted_font spaced_text"
+                                   value="#{tasks_bundle['task.header.branch']}"
                                    escape="false"/>
-                    <h:outputText id="storySubject" styleClass="standart_font" value="#{tasksController.getSelectedStory().subject}"/>
-                </h:panelGrid>
+
+                    <h:outputText id="storyBranch" styleClass="standart_font spaced_text"
+                                  value="#{tasksController.getSelectedStory().branch}"/>
+
+                    <h:outputLabel styleClass="vertical_separator"
+                                   value="#{iteration_settings['iteration.vertical.separator']}"/>
+
+                    <h:outputLabel for="storySubject" styleClass="highlighted_font spaced_text"
+                                   value="#{tasks_bundle['task.header.subject']}" />
+
+                    <h:outputText id="storySubject" styleClass="standart_font spaced_text"
+                                  value="#{tasksController.getSelectedStory().subject}"/>
+                </h:form>
             </div>
 
             <div class="tasksArea">
-                <p:dataTable id="taskTable" styleClass="taskTable" value="#{tasksController.tasks}" var="task" selectionMode="single"
+                <p:dataTable id="taskTable" styleClass="taskTable" value="#{tasksController.tasks}" var="task"
+                             selectionMode="single"
                              rowKey="#{task.id}"
                              selection="#{tasksEditionController.selectedTask}"
                              style="text-align: center;"

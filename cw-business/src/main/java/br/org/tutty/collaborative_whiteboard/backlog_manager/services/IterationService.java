@@ -29,4 +29,6 @@ public interface IterationService {
     void create(List<Story> stories, String name, Date init, Date end) throws IterationAlreadySetException;
 
     Float getProgressIteration(Iteration iteration);
+
+    Long fetchIterationPoints(Iteration iteration);
 }

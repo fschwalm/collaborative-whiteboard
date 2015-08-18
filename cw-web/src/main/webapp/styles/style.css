@@ -215,7 +215,7 @@ form{
 }
 
 .highlighted_font{
-    font-size: 13px !important;
+    font-size: 14px !important;
     letter-spacing: 1px;
     font-weight: bold;
 }
@@ -256,8 +256,21 @@ form{
 }
 
 .headerDataArea{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.spaced_text{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.vertical_separator{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: rgba(0, 0, 0, 0.1);
 }
 
 

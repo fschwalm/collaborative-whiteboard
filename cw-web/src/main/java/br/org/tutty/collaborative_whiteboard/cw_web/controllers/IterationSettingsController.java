@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -43,34 +44,34 @@ public class IterationSettingsController extends GenericController implements Se
     private List<Story> source;
 
     @PostConstruct
-    public void setUp(){
+    public void setUp() {
         iterations = iterationService.fetchIterations();
     }
 
-    public void onTransfer(TransferEvent transfer){
+    public void onTransfer(TransferEvent transfer) {
         transfer.getItems().forEach(new Consumer() {
             @Override
             public void accept(Object o) {
-                if(transfer.isAdd()){
+                if (transfer.isAdd()) {
                     try {
-                        iterationService.addStory(((Story)o), iterationSelected);
+                        iterationService.addStory(((Story) o), iterationSelected);
                         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "iteration.change", "iteration.add.story.success.detail");
                     } catch (IterationNotFoundException e) {
                         facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, "iteration.change", "iteration.not_select.error.detail");
                     }
-                }else {
-                    iterationService.removeStory(((Story)o));
+                } else {
+                    iterationService.removeStory(((Story) o));
                     facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO, "iteration.change", "iteration.remove.story.success.detail");
                 }
             }
         });
     }
 
-    public boolean disabled(Story story){
+    public boolean disabled(Story story) {
         return getStatus(story).equals(StoryStatus.FINALIZED);
     }
 
-    public String mountStoryName(Story story){
+    public String mountStoryName(Story story) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("(");
         stringBuilder.append(story.getCode());
@@ -80,7 +81,7 @@ public class IterationSettingsController extends GenericController implements Se
         return stringBuilder.toString();
     }
 
-    public StoryStatus getStatus(Story story){
+    public StoryStatus getStatus(Story story) {
         try {
             return backlogManagerService.getCurrentStatus(story);
         } catch (DataNotFoundException e) {
@@ -114,11 +115,23 @@ public class IterationSettingsController extends GenericController implements Se
     }
 
     public String getIterationSelected() {
-        if(iterationSelected != null){
+        if (iterationSelected != null) {
             return iterationSelected.getName();
-        }else {
+        } else {
             return null;
         }
+    }
+
+    public Date getIterationInit() {
+        return iterationSelected != null ? iterationSelected.getInitDate() : null;
+    }
+
+    public Date getIterationEnd() {
+        return iterationSelected != null ? iterationSelected.getEndDate() : null;
+    }
+
+    public Long getIterationPoints(){
+        return iterationService.fetchIterationPoints(iterationSelected);
     }
 
     public void setIterationSelected(String iterationSelectedName) {

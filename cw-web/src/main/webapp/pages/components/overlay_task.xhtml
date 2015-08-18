@@ -22,7 +22,8 @@
                         <h:outputText id="story" styleClass="standart_font"
                                       value="#{taskDetailController.getStoryCode()}"/>
 
-                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['subject']}"
+                                       for="story_subject" escape="false"/>
                         <h:outputText id="story_subject" styleClass="standart_font"
                                       value="#{taskDetailController.getStorySubject()}"/>
                     </h:panelGrid>
@@ -30,20 +31,28 @@
                     <hr class="separator"/>
 
                     <h:panelGrid columns="2">
-                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['code']}" for="code" escape="false"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['code']}" for="code"
+                                       escape="false"/>
                         <h:outputText id="code" styleClass="standart_font" value="#{taskDetailController.getCode()}"/>
 
-                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['owner']}" for="owner" escape="false"/>
-                        <h:outputText id="owner" styleClass="standart_font" value="#{taskDetailController.getAuthor()}"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['owner']}" for="owner"
+                                       escape="false"/>
+                        <h:outputText id="owner" styleClass="standart_font"
+                                      value="#{taskDetailController.getAuthor()}"/>
 
-                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['stage']}" for="stage" escape="false"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['stage']}" for="stage"
+                                       escape="false"/>
                         <h:outputText id="stage" styleClass="standart_font" value="#{taskDetailController.getStage()}"/>
 
-                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
-                        <p:calendar id="estimated" value="#{taskDetailController.getEstimatedTime()}" pattern="HH:mm"
-                                    disabled="true"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['estimated']}"
+                                       for="estimated" escape="false"/>
+                        <h:outputText id="estimated" value="#{taskDetailController.getEstimatedTime()}"
+                                      disabled="true">
+                            <f:convertDateTime type="date" pattern="HH:mm"/>
+                        </h:outputText>
 
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['subject']}" for="subject" escape="false"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['subject']}" for="subject"
+                                       escape="false"/>
                         <h:outputText id="subject" styleClass="standart_font"
                                       value="#{taskDetailController.getSubject()}" escape="false"/>
                     </h:panelGrid>
@@ -54,7 +63,8 @@
                 </div>
 
                 <div class="task_status">
-                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status" scrollable="true" scrollHeight="200" style="width: 600px">
+                    <p:dataTable value="#{taskDetailController.fetchStatus()}" var="status" scrollable="true"
+                                 scrollHeight="200" style="width: 600px">
                         <f:facet name="header">
                             #{overlay_task['status.dialog.header']}
                         </f:facet>

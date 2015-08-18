@@ -123,4 +123,14 @@ public class IterationServiceBean implements IterationService {
             return 0f;
         }
     }
+
+    @Override
+    public Long fetchIterationPoints(Iteration iteration) {
+        try {
+            return fetchStories(iteration).stream().mapToLong(Story::getStoryPoints).sum();
+
+        } catch (DataNotFoundException e) {
+            return 0l;
+        }
+    }
 }
