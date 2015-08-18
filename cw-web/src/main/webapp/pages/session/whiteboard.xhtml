@@ -5,39 +5,40 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="pageContent">
-        <h:form id="toolbarForm" styleClass="toolbar_whiteboard_form" prependId="false">
-            <p:ribbon styleClass="toolbar_whiteboard">
-                <p:tab title="#{whiteboard['menu.header']}">
-                    <p:ribbonGroup label="#{whiteboard['menu.stage']}">
-                        <p:commandButton value="#{whiteboard['menu.stage.new']}"
-                                         oncomplete="PF('stageCreation').show()"
-                                         update=":iterationInitForm:availablesStories"/>
-                    </p:ribbonGroup>
+        <div id="whiteboardHeaderArea">
+            <h:form id="toolbarForm" styleClass="toolbar_whiteboard_form" prependId="false">
+                <p:ribbon>
+                    <p:tab title="#{whiteboard['menu.header']}">
+                        <p:ribbonGroup label="#{whiteboard['menu.stage']}">
+                            <p:commandButton value="#{whiteboard['menu.stage.new']}"
+                                             oncomplete="PF('stageCreation').show()"
+                                             update=":iterationInitForm:availablesStories"/>
+                        </p:ribbonGroup>
 
-                    <p:ribbonGroup label="#{iterationController.iterationName()}">
-                        <p:commandButton icon="ui-icon-plus" value="#{whiteboard['menu.iteration.create']}"
-                                         oncomplete="PF('iterationCreate').show()"
-                                         update=":iterationCreate" process="@this"/>
+                        <p:ribbonGroup label="#{iterationController.iterationName()}">
+                            <p:commandButton icon="ui-icon-plus" value="#{whiteboard['menu.iteration.create']}"
+                                             oncomplete="PF('iterationCreate').show()"
+                                             update=":iterationCreate" process="@this"/>
 
-                        <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}"
-                                         action="#{iterationController.openIterationSettings()}"/>
+                            <p:commandButton icon="ui-icon-gear" value="#{whiteboard['menu.iteration.settings']}"
+                                             action="#{iterationController.openIterationSettings()}"/>
 
-                        <p:progressBar ajax="true" value="#{iterationController.progressIteration()}"
-                                       labelTemplate="{value}%" styleClass="animated" global="false"
-                                       style="margin-top: 20%">
-                            <p:ajax event="complete" listener="#{iterationController.progressIterationComplete()}"/>
-                        </p:progressBar>
-                    </p:ribbonGroup>
+                            <p:progressBar ajax="true" value="#{iterationController.progressIteration()}"
+                                           labelTemplate="{value}%" styleClass="animated" global="false"
+                                           style="margin-top: 20%">
+                                <p:ajax event="complete" listener="#{iterationController.progressIterationComplete()}"/>
+                            </p:progressBar>
+                        </p:ribbonGroup>
 
-                    <p:ribbonGroup label="#{whiteboard['menu.story']}">
-                        <p:commandButton value="#{whiteboard['menu.story.create']}"/>
-                    </p:ribbonGroup>
-                </p:tab>
-            </p:ribbon>
-        </h:form>
+                        <p:ribbonGroup label="#{whiteboard['menu.story']}">
+                            <p:commandButton value="#{whiteboard['menu.story.create']}"/>
+                        </p:ribbonGroup>
+                    </p:tab>
+                </p:ribbon>
+            </h:form>
+        </div>
 
         <h:form prependId="false">
-
             <div id="whiteboard" class="whiteboard"/>
 
             <p:remoteCommand name="task_next" action="#{whiteboardController.taskNext()}"/>
@@ -46,7 +47,7 @@
             <p:remoteCommand name="task_prev" action="#{whiteboardController.taskPrev()}"/>
             <p:remoteCommand name="task_init" action="#{whiteboardController.taskInit()}"/>
             <p:remoteCommand name="task_finalize" action="#{whiteboardController.taskFinalize()}"/>
-            <ui:include src="../components/overlay_task.xhtml" />
+            <ui:include src="../components/overlay_task.xhtml"/>
         </h:form>
 
         <p:dialog id="iterationCreate" widgetVar="iterationCreate" modal="true" resizable="false" appendToBody="false"

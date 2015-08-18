@@ -1,7 +1,6 @@
 #headerPage {
     position: relative;
-    height: 220px;
-    z-index: 10;
+    height: 225px;
 }
 
 #bodyPage {
@@ -66,7 +65,7 @@
     float: right;
     position: relative;
     width: 100%;
-    top: -64px;
+    top: 0px;
     background-color: rgb(255, 253, 253);
 }
 
@@ -115,8 +114,8 @@
     color: #edd021;
     text-shadow: 1px 1px 1px #B8B8B8, 3px 3px 5px white;
     position: relative;
-    top: -70px;
-    left: 140px;
+    top: 0px;
+    left: 0px;
 }
 
 .column_status{
@@ -193,14 +192,6 @@
     word-break:break-all;
 }
 
-.iteration_tool_name{
-    text-align: left;
-    width: 250px;
-    height: 20px;
-    margin-top: -3%;
-    display: block;
-}
-
 .pickListArea{
     margin-left: 20px;
     margin-right: 20px;
@@ -210,30 +201,6 @@
 .ui-picklist-list {
     height:600px !important;
     width:750px !important;
-}
-
-#taskTable{
-    position: relative;
-    top: 45px;
-}
-
-#headerTasks{
-    position: relative;
-    height: 100px;
-    border: 1px solid #ECECEC;
-    top: 57px;
-}
-
-#headerTasks form{
-    position: relative;
-    height: 100px;
-    top: -50px;
-    left: 50px;
-}
-
-.tasksArea{
-    position: relative;
-    top: 15px;
 }
 
 
@@ -247,12 +214,18 @@ form{
     font-size: 13px !important;
 }
 
-.standart_font{
+.highlighted_font{
     font-size: 13px !important;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.standart_font{
+    font-size: 12px !important;
 }
 
 .minimal_font{
-    font-size: 11px !important;
+    font-size: 10px !important;
 }
 
 .separator{
@@ -280,6 +253,11 @@ form{
     height: 30px;
     width: 30px;
     margin: 0 auto;
+}
+
+.headerDataArea{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 

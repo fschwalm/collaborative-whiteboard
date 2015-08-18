@@ -17,34 +17,34 @@
             <div class="task_data">
                 <div class="task_values">
                     <h:panelGrid columns="2" styleClass="story_table">
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['code']}" for="story"
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['code']}" for="story"
                                        escape="false"/>
-                        <h:outputText id="story" styleClass="minimal_font"
+                        <h:outputText id="story" styleClass="standart_font"
                                       value="#{taskDetailController.getStoryCode()}"/>
 
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
-                        <h:outputText id="story_subject" styleClass="minimal_font"
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['subject']}" for="story_subject" escape="false"/>
+                        <h:outputText id="story_subject" styleClass="standart_font"
                                       value="#{taskDetailController.getStorySubject()}"/>
                     </h:panelGrid>
 
                     <hr class="separator"/>
 
                     <h:panelGrid columns="2">
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['code']}" for="code" escape="false"/>
-                        <h:outputText id="code" styleClass="minimal_font" value="#{taskDetailController.getCode()}"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['code']}" for="code" escape="false"/>
+                        <h:outputText id="code" styleClass="standart_font" value="#{taskDetailController.getCode()}"/>
 
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['owner']}" for="owner" escape="false"/>
-                        <h:outputText id="owner" styleClass="minimal_font" value="#{taskDetailController.getAuthor()}"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['owner']}" for="owner" escape="false"/>
+                        <h:outputText id="owner" styleClass="standart_font" value="#{taskDetailController.getAuthor()}"/>
 
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['stage']}" for="stage" escape="false"/>
-                        <h:outputText id="stage" styleClass="minimal_font" value="#{taskDetailController.getStage()}"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['stage']}" for="stage" escape="false"/>
+                        <h:outputText id="stage" styleClass="standart_font" value="#{taskDetailController.getStage()}"/>
 
-                        <h:outputLabel styleClass="standart_font" value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
+                        <h:outputLabel styleClass="highlighted_font" value="#{overlay_task['estimated']}" for="estimated" escape="false"/>
                         <p:calendar id="estimated" value="#{taskDetailController.getEstimatedTime()}" pattern="HH:mm"
                                     disabled="true"/>
 
                         <h:outputLabel styleClass="standart_font" value="#{overlay_task['subject']}" for="subject" escape="false"/>
-                        <h:outputText id="subject" styleClass="minimal_font"
+                        <h:outputText id="subject" styleClass="standart_font"
                                       value="#{taskDetailController.getSubject()}" escape="false"/>
                     </h:panelGrid>
 

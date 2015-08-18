@@ -27,23 +27,22 @@
 
     <h:body id="bodyPage">
         <h:form id="messageForm" prependId="false">
-            <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false" />
+            <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
         </h:form>
 
         <div id="sheet">
             <div id="headerPage">
-                <div id="whiteboard_update"/>
+                <h:form prependId="false">
 
-                <h:form>
                     <p:commandLink action="HOME_PAGE">
                         <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
                     </p:commandLink>
-                </h:form>
 
-                <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
+                    <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
 
-                <div id="actionArea">
-                    <h:form prependId="false">
+                    <div id="whiteboard_update"/>
+
+                    <div id="actionArea">
                         <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
                             <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
                         </p:commandLink>
@@ -64,9 +63,10 @@
                                        action="#{toolsController.goToBacklog()}" ajax="false">
                             <h:graphicImage url="../../images/backlog_icon.png" styleClass="actionImage"/>
                         </p:commandLink>
-                    </h:form>
-                </div>
+                    </div>
+                </h:form>
             </div>
+
 
             <ui:insert name="pageContent"/>
 

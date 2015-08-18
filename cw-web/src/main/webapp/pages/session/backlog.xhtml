@@ -9,21 +9,12 @@
     <ui:define name="pageContent">
         <h:form id="backlogForm" prependId="false">
             <div id="backlogHeaderArea">
-                <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                 oncomplete="PF('storyCreation').show();"/>
-
-                <h:panelGrid columns="2">
-                    <h:outputLabel for="storyCode" value="VAZIO" escape="false"/>
-                    <h:outputText id="storyCode" value="VAZIO"/>
-
-                    <h:outputLabel for="storyBranch" value="VAZIO"
-                                   escape="false"/>
-                    <h:outputText id="storyBranch" value="VAZIO"/>
-
-                    <h:outputLabel for="storySubject" value="VAZIO"
-                                   escape="false"/>
-                    <h:outputText id="storySubject" value="VAZIO"/>
-                </h:panelGrid>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
+                                         oncomplete="PF('storyCreation').show();"/>
+                    </f:facet>
+                </p:toolbar>
             </div>
 
             <div id="backlogArea">
