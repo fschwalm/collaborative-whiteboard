@@ -37,7 +37,8 @@
         </h:form>
 
         <h:form prependId="false">
-            <ui:include src="../components/overlay_task.xhtml" />
+
+            <div id="whiteboard" class="whiteboard"/>
 
             <p:remoteCommand name="task_next" action="#{whiteboardController.taskNext()}"/>
             <p:remoteCommand name="task_play" action="#{whiteboardController.taskPlay()}"/>
@@ -45,8 +46,7 @@
             <p:remoteCommand name="task_prev" action="#{whiteboardController.taskPrev()}"/>
             <p:remoteCommand name="task_init" action="#{whiteboardController.taskInit()}"/>
             <p:remoteCommand name="task_finalize" action="#{whiteboardController.taskFinalize()}"/>
-
-            <div id="whiteboard" class="whiteboard"/>
+            <ui:include src="../components/overlay_task.xhtml" />
         </h:form>
 
         <p:dialog id="iterationCreate" widgetVar="iterationCreate" modal="true" resizable="false" appendToBody="false"
@@ -145,7 +145,5 @@
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-
-
     </ui:define>
 </ui:composition>

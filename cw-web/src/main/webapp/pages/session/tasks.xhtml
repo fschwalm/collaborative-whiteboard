@@ -6,25 +6,23 @@
 
     <ui:define name="pageContent">
         <h:form id="tasksForm">
-            <p:toolbar styleClass="toolbar">
-                <f:facet name="left">
-                    <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
-                                     onclick="PF('creationTask').show();" update=":creationTaskForm"/>
-                </f:facet>
-            </p:toolbar>
+            <div class="tasksHeaderArea">
+                <p:commandButton value="#{tasks_bundle['task.btn.create']}" icon="ui-icon-plus"
+                                 onclick="PF('creationTask').show();" update=":creationTaskForm"/>
 
-            <h:panelGrid columns="2">
-                <h:outputLabel for="storyCode" value="#{tasks_bundle['task.header.code']}" escape="false"/>
-                <h:outputText id="storyCode" value="#{tasksController.getSelectedStory().code}"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="storyCode" value="#{tasks_bundle['task.header.code']}" escape="false"/>
+                    <h:outputText id="storyCode" value="#{tasksController.getSelectedStory().code}"/>
 
-                <h:outputLabel for="storyBranch" value="#{tasks_bundle['task.header.branch']}"
-                               escape="false"/>
-                <h:outputText id="storyBranch" value="#{tasksController.getSelectedStory().branch}"/>
+                    <h:outputLabel for="storyBranch" value="#{tasks_bundle['task.header.branch']}"
+                                   escape="false"/>
+                    <h:outputText id="storyBranch" value="#{tasksController.getSelectedStory().branch}"/>
 
-                <h:outputLabel for="storySubject" value="#{tasks_bundle['task.header.subject']}"
-                               escape="false"/>
-                <h:outputText id="storySubject" value="#{tasksController.getSelectedStory().subject}"/>
-            </h:panelGrid>
+                    <h:outputLabel for="storySubject" value="#{tasks_bundle['task.header.subject']}"
+                                   escape="false"/>
+                    <h:outputText id="storySubject" value="#{tasksController.getSelectedStory().subject}"/>
+                </h:panelGrid>
+            </div>
 
             <div class="tasksArea">
                 <p:dataTable id="taskTable" value="#{tasksController.tasks}" var="task" selectionMode="single"

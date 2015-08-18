@@ -4,16 +4,29 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <link type="text/css" rel="stylesheet" href="../../styles/backlog.css"/>
+
     <ui:define name="pageContent">
         <h:form id="backlogForm" prependId="false">
-            <p:toolbar styleClass="toolbar">
-                <f:facet name="left">
-                    <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
-                                     oncomplete="PF('storyCreation').show();"/>
-                </f:facet>
-            </p:toolbar>
+            <div id="backlogHeaderArea">
+                <p:commandButton icon="ui-icon-plus" value="#{backlog['btn.add']}"
+                                 oncomplete="PF('storyCreation').show();"/>
 
-            <div>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="storyCode" value="VAZIO" escape="false"/>
+                    <h:outputText id="storyCode" value="VAZIO"/>
+
+                    <h:outputLabel for="storyBranch" value="VAZIO"
+                                   escape="false"/>
+                    <h:outputText id="storyBranch" value="VAZIO"/>
+
+                    <h:outputLabel for="storySubject" value="VAZIO"
+                                   escape="false"/>
+                    <h:outputText id="storySubject" value="VAZIO"/>
+                </h:panelGrid>
+            </div>
+
+            <div id="backlogArea">
                 <p:dataTable id="backlogTable" var="story"
                              value="#{backlogController.fetchStories()}"
                              widgetVar="backlogTbl"
@@ -67,13 +80,14 @@
                         <h:outputText value="#{story.projectArea.name}"/>
                     </p:column>
                 </p:dataTable>
-
-                <p:contextMenu for=":backlogForm:backlogTable">
-                    <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
-                                oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
-                    <p:menuitem value="#{backlog['btn.voting']}" icon="ui-icon-note" action="#{editionStoryController.voting()}" />
-                </p:contextMenu>
             </div>
+
+            <p:contextMenu for=":backlogForm:backlogTable">
+                <p:menuitem value="#{backlog['btn.open']}" icon="ui-icon-folder-open"
+                            oncomplete="PF('storyDetail').show()" update=":backlogForm:backlogTable :storyDetail"/>
+                <p:menuitem value="#{backlog['btn.voting']}" icon="ui-icon-note"
+                            action="#{editionStoryController.voting()}"/>
+            </p:contextMenu>
         </h:form>
 
         <p:dialog id="storyDetail" widgetVar="storyDetail" modal="true" resizable="false" appendToBody="false">
@@ -311,7 +325,7 @@
                     </f:facet>
                 </p:toolbar>
 
-                <p:spacer height="10" />
+                <p:spacer height="10"/>
 
                 <h:panelGrid columns="1">
                     <p:selectOneMenu id="projectNewStory" value="#{creationStoryController.project}"
