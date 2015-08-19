@@ -40,7 +40,7 @@ public class IterationController extends GenericController implements Serializab
     private List<Story> selected;
 
     @PostConstruct
-    public void setUp() throws IOException {
+    public void setUp(){
         name = null;
         init = null;
         end = null;

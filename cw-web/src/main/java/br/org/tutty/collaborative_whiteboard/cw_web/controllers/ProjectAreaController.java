@@ -31,7 +31,7 @@ public class ProjectAreaController extends GenericController implements Serializ
     private ProjectAreaCreation projectAreaCreation;
 
     @PostConstruct
-    public void setUp() throws CloneNotSupportedException {
+    public void setUp(){
         Project selectedProject = sessionContext.getSelectedProject();
         projectAreaCreation = new ProjectAreaCreation(selectedProject);
     }

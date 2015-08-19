@@ -35,7 +35,7 @@ public class ProjectDataController extends GenericController implements Serializ
 
 
     @PostConstruct
-    public void setUp() throws CloneNotSupportedException {
+    public void setUp() {
         Project selectedProject = sessionContext.getSelectedProject();
         projectData = new ProjectData(selectedProject);
     }

@@ -42,7 +42,7 @@ public class CreationStoryController extends GenericController implements Serial
     private List<Project> projects;
 
     @PostConstruct
-    public void setUp() throws IOException {
+    public void setUp(){
         try {
             projects = projectService.fetchProjects();
         } catch (DataNotFoundException e) {
