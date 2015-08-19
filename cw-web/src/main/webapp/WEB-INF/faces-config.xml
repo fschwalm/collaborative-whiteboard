@@ -65,6 +65,10 @@
             <base-name>properties/status</base-name>
             <var>status_bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/generic</base-name>
+            <var>generic</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>

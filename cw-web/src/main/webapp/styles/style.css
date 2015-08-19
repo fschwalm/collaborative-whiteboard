@@ -273,6 +273,21 @@ form{
     color: rgba(0, 0, 0, 0.1);
 }
 
+.top_menu{
+    float: right;
+    position: relative;
+    padding: 15px;
+}
+
+.inline_element{
+    float: right;
+    position: relative;
+}
+
+.remove_link_decoration{
+    color: inherit;
+    text-decoration: none;
+}
 
 
 

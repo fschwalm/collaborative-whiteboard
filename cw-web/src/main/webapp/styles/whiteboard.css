@@ -160,19 +160,6 @@
     vertical-align: middle;
 }
 
-#whiteboard_update{
-    float: right;
-    margin-right: 5px;
-    top: 10px;
-    position: relative;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 32px;
-    margin-right: 10px;
-    color: #949494;
-}
-
 .center_arrow{
     position: absolute;
     height: 46px;

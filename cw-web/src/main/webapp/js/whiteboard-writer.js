@@ -1,21 +1,25 @@
 function write_last_upadate(target, date) {
     target.empty();
     var span_date = $(document.createElement('span'));
-    span_date.text(date);
+
+    var date_object = new Date(date);
+    var date_formated = (date_object.getDate() + " / " + (date_object.getMonth() + 1) + " / " + date_object.getFullYear() + "   " + date_object.getHours() + ":" + date_object.getMinutes());
+
+    span_date.text(date_formated);
     target.append(span_date);
 }
 
 function write_all_stages(target, stages) {
     stages.sort(sortByProperty('position'));
 
-    var stageWidth = calcSizeStage(stages.length,target);
+    var stageWidth = calcSizeStage(stages.length, target);
 
     $.each(stages, function (key, value) {
         write_stage(target, value, stageWidth);
     });
 }
 
-function calcSizeStage(countStages, target){
+function calcSizeStage(countStages, target) {
     var targetWidth = $(target).width();
     return targetWidth / countStages;
 }
@@ -80,7 +84,9 @@ function write_task(stage_target, taskJson) {
     task.append(write_task_estimated(taskJson.estimatedTime))
     task.append(write_task_commands());
 
-    task.dblclick(function() {action_task('LOAD_DETAIL', task);});
+    task.dblclick(function () {
+        action_task('LOAD_DETAIL', task);
+    });
 
     $('#' + stage_target.name).append(task);
 }
@@ -89,9 +95,9 @@ function write_image_user(taskStatus) {
     var image_div = $(document.createElement('div'));
     image_div.addClass('image_user');
 
-    image_div.addClass('color_'+taskStatus.value);
+    image_div.addClass('color_' + taskStatus.value);
 
-    if(taskStatus.value == 'BUSY'){
+    if (taskStatus.value == 'BUSY') {
         image_div.addClass('user');
     }
 

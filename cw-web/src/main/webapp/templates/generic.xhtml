@@ -40,7 +40,15 @@
 
                     <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
 
-                    <div id="whiteboard_update" class="standart_font"/>
+                    <div class="top_menu">
+
+                        <p:commandLink value="Diogo" styleClass="highlighted_font spaced_text inline_element remove_link_decoration" action="#"/>
+
+                        <h:outputLabel styleClass="vertical_separator inline_element"
+                                       value="#{generic['vertical.separator']}"/>
+
+                        <div id="whiteboard_update" class="standart_font spaced_text inline_element"/>
+                    </div>
 
                     <div id="actionArea">
                         <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
