@@ -3,79 +3,77 @@ var STATUS_MESSAGE = 'STATUS_MESSAGE';
 var SERVER_MESSAGE = 'SERVER_MESSAGE';
 
 function messageWriter(jsonData) {
-
+    var outputList = $('#chat_panel_content');
     var typeMessage = jsonData['TYPE_MESSAGE'];
 
     switch (typeMessage) {
 
         case USER_MESSAGE:
-            printUserMessage(jsonData);
-            scrollChat();
+            printUserMessage(jsonData, outputList);
             break;
         case STATUS_MESSAGE:
-            printStatusMessage(jsonData);
-            scrollChat();
+            printStatusMessage(jsonData, outputList);
             break;
         case SERVER_MESSAGE:
             printServerMessage(jsonData);
-            scrollChat();
             break;
     }
+
+    scroll_chat();
 }
 
-function printUserMessage(jsonObject, flag) {
-    var $outputList = $('#chatPanel_content');
-
+function printUserMessage(jsonObject, outputList) {
     var date = jsonObject['DATE'];
-    var messageValue = jsonObject['MESSAGE'];
-    var user = jsonObject['USERNAME'];
+    var message_value = jsonObject['MESSAGE'];
+    var user_value = jsonObject['USERNAME'];
+    var formatted_date = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
-    $outputList.append(
-        '<div class="myMessages">' +
-        '<div class="headerMessage">' +
-        '<span class="chat_user">' + user + '</span></div><br>' +
-        '<br><span class="hour"> ' + date + ' </span><br>' +
-        '<span>' + messageValue + '</span><br><br>' +
-        '</div>' +
-        '<hr class="gray">');
-
-    if(flag){
-        addFlagReceipt();
-    }
+    outputList.prepend(mount_message(user_value, formatted_date, message_value));
 }
 
-function printStatusMessage(jsonObject) {
+function printStatusMessage(jsonObject, outputList) {
     var jsonLastMessages = jsonObject['LAST_MESSAGES'];
 
     $.each(jsonLastMessages, function (index, value) {
-        printUserMessage(value, false);
+        printUserMessage(value, outputList);
     });
 }
 
-function printServerMessage(jsonObject) {
-    var $outputList = $('#chatPanel_content');
-
+function printServerMessage(jsonObject, outputList) {
     var date = jsonObject['date'];
-    var messageValue = jsonObject['MESSAGE'];
-    var user = jsonObject['USERNAME'];
-    var formattedDate = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
+    var message_value = jsonObject['MESSAGE'];
+    var user_value = jsonObject['USERNAME'];
+    var formatted_date = moment(date).locale("pt-br").format('HH:mm - DD/MM/YYYY');
 
-    $outputList.append(
-        '<div class="myMessages">' +
-        '<div class="headerMessage">' +
-        '<span class="chat_user">Eu</span><br>' +
-        '<br><span class="hour"> ' + formattedDate + ' </span><div><br>' +
-        '<span>' + messageValue + '</span><br><br>' +
-        '</div>' +
-        '<hr class="gray">');
-
-    addFlagReceipt();
+    outputList.prepend(mount_message(user_value, formatted_date, message_value));
 }
 
-function addFlagReceipt() {
-    var valueFlag = '⁺';
+function mount_message(user_value, date_value, message_value){
+    var message = $(document.createElement('div'));
+    message.addClass('chat_message');
 
-    if ($('#receivedMessageFlag').length <= 0 && (!$("#chatField").is(':visible'))) {
-        $('#chatBtn').append("<span id='receivedMessageFlag'>" + valueFlag + "</span>");
-    }
+    var header = $(document.createElement('div'));
+    header.addClass('header_message');
+
+    var user = $(document.createElement('div'));
+    user.addClass('chat_user');
+    user.addClass('standart_font');
+    user.text(user_value);
+    header.append(user);
+
+    var hour = $(document.createElement('div'));
+    hour.addClass('date');
+    hour.addClass('standart_font');
+    hour.text(date_value);
+    header.append(hour);
+
+    var text_area = $(document.createElement('div'));
+    text_area.text(message_value);
+    text_area.addClass('text');
+    text_area.addClass('highlight_font');
+
+    message.append(header);
+    message.append(text_area);
+
+    return message;
 }

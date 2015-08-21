@@ -1,10 +1,10 @@
 var whiteboardService = 'whiteboard';
 var websocketWhiteboard = {};
 
-window.onload = function () {
+$(document).ready(function () {
     websocketWhiteboard = connect(whiteboardService);
     initWhiteboardRegisters(websocketWhiteboard);
-};
+});
 
 function initWhiteboardRegisters(websocketWhiteboard) {
     websocketWhiteboard.onclose = function (evt) {

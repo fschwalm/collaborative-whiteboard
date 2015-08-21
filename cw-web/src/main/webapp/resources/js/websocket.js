@@ -1,6 +1,5 @@
 function connect(service) {
     return new WebSocket('ws://'+ document.location.host + '/cw/' + service);
-
 }
 
 function sendMessage(message, websocket) {

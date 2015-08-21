@@ -1,37 +1,30 @@
-var chatIsOpen;
 var chatService = 'chat';
 var websocket;
 
-$(document).ready(function () {
+window.onload = function () {
     initChat();
-});
+};
 
 function initChat() {
     try {
         if (isConnect(websocket) == false) {
             websocket = connect(chatService);
-            registerClickChatButton();
             registerCloseConnection();
             registerReceiptsMessages();
             registerErrorHandling();
-            registerRemovalReceivingFlag();
-            enableChat();
         }
 
     } catch (exception) {
-        disableChat();
     }
 }
 
 function registerCloseConnection() {
     websocket.onclose = function (evt) {
-        disableChat();
     }
 }
 
 function registerErrorHandling() {
     websocket.onerror = function (evt) {
-        disableChat();
     }
 }
 
@@ -41,91 +34,45 @@ function registerReceiptsMessages() {
     }
 }
 
-function registerRemovalReceivingFlag() {
-    $('#chatBtn').click(function () {
-        $("span[id=receivedMessageFlag]").remove();
-    });
-}
+function commit(input_element) {
+    var input_element = $(input_element);
 
-function commit(inputTextId) {
-    if (isValidMessage(inputTextId)) {
-        var $messageData = createMessage(inputTextId)
-        var jsonObject = JSON.stringify($messageData)
+    if (isValidMessage(input_element)) {
+        var messageData = createMessage(input_element)
+        var jsonObject = JSON.stringify(messageData)
 
         if (isConnect(websocket)) {
             sendMessage(jsonObject, websocket);
         } else {
-            disableChat();
         }
     }
-};
+}
 
-function createMessage(inputTextId) {
-    var $inputText = jQuery('#' + inputTextId);
-
-    var $messageData = {
-        'messageValue': $inputText.val(),
+function createMessage(input_element) {
+    var messageData = {
+        'messageValue': input_element.val(),
         'date': new Date()
     };
 
-    clearMessage(inputTextId);
+    clearMessage(input_element);
 
-    return $messageData;
+    return messageData;
+}
 
-};
-
-function isValidMessage(inputTextId) {
-    var $inputText = jQuery('#' + inputTextId);
-    if ($inputText.val().trim().length > 0) {
+function isValidMessage(input_element) {
+    if (input_element.val().trim().length > 0) {
         return true;
     } else {
         return false
-    }
-    ;
-};
-
-function clearMessage(inputTextId) {
-    var $inputText = jQuery('#' + inputTextId);
-    $inputText.val('');
-};
-
-function scrollChat() {
-    $('.chatPanel').scrollTop($('.chatPanel')[0].scrollHeight)
+    };
 }
 
-
-function disableChat() {
-    $('#chatBtn').children('img').attr('src','../../images/chat_button_disable.png')
-    $("#messageInput").prop('disabled', true);
+function clearMessage(input_element) {
+    input_element.val('');
 }
 
-function enableChat() {
-    $('#chatBtn').children('img').attr('src','../../images/chat_button_enable.png');
-    $("#messageInput").prop('disabled', false);
-}
-
-function registerClickChatButton() {
-    $("#chatBtn").click(function () {
-        if (!chatIsOpen) {
-            openChat();
-        }else{
-            closeChat();
-        }
-    });
-}
-
-function openChat() {
-    $('#exitBtn').animate({'margin-right': "10%"});
-    $("#chat").slideDown('fast');
-    scrollChat();
-    $("#messageInput").focus();
-    chatIsOpen = true;
-}
-
-function closeChat() {
-    $('#exitBtn').animate({'margin-right': "0%"});
-    $("#chat").slideUp('fast');
-    chatIsOpen = false;
+function scroll_chat() {
+    $('.chat_panel').scrollTop(0);
 }
 
 function disconect() {
