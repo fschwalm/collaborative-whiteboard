@@ -3,12 +3,21 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
+        <h:outputScript library="js" name="chat.js" />
+        <h:outputScript library="js" name="message_reader.js" />
+
+        <h:outputStylesheet library="styles" name="chat.css"/>
+
     <h:form prependId="false">
-        <div id="chat">
-            <p:panel id="chatPanel" header="#{chat['panel.header']}" styleClass="chatPanel">
-                <p:inputTextarea id="messageInput" autoResize="false"
-                                 onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>
-            </p:panel>
+        <div id="chat" class="side_menu">
+            <div class="chat_panel">
+
+            </div>
+
+            <!--<p:panel header="#{chat['panel.header']}" styleClass="chat_panel">-->
+                <!--<p:inputTextarea id="messageInput" autoResize="false" styleClass="message_input"-->
+                                 <!--onkeypress="if (event.keyCode == 13) {commit('messageInput'); scrollChat(); return false}"/>-->
+            <!--</p:panel>-->
         </div>
     </h:form>
 </ui:composition>

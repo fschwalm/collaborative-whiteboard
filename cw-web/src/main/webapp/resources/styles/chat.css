@@ -1,3 +1,5 @@
+
+
 .receivedMessages {
     background-image: url(../../images/background_message.png);
     background-size: cover !important;
@@ -46,8 +48,6 @@ hr.gray{
     margin-left: 5%;
     margin-bottom: 2%;
 }
-
-/* NOVO MODELO APARTIR DAQUI */
 
 #chat {
     max-height: 650px !important;
@@ -112,6 +112,21 @@ hr.gray{
 #chatPanel_header{
     background-color: #2ab1e0;
 }
+
+.chat_panel{
+    top: 30px;
+    height: 90%;
+    width: 100%;
+    background-color: gray;
+    position: relative;
+}
+
+.message_input{
+
+}
+
+
+
 
 
 

@@ -4,6 +4,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <ui:define name="scripts">
+        <h:outputScript library="js" name="whiteboard.js" />
+
+        <h:outputScript library="js" name="whiteboard-writer.js" />
+        <h:outputScript library="js" name="whiteboard-action.js" />
+        <h:outputScript library="js" name="moment-with-locales.js" />
+
+        <h:outputStylesheet library="styles" name="whiteboard.css"/>
+    </ui:define>
+
     <ui:define name="pageContent">
         <div id="whiteboardHeaderArea">
             <h:form id="toolbarForm" styleClass="toolbar_whiteboard_form" prependId="false">

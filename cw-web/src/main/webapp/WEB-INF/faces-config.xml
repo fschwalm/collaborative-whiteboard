@@ -69,6 +69,10 @@
             <base-name>properties/generic</base-name>
             <var>generic</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/toolbar</base-name>
+            <var>toolbar</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>
@@ -76,6 +80,11 @@
         <navigation-case>
             <from-outcome>HOME_PAGE</from-outcome>
             <to-view-id>/pages/session/whiteboard.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PROFILE</from-outcome>
+            <to-view-id>/pages/session/profile.xhtml</to-view-id>
             <redirect />
         </navigation-case>
         <navigation-case>

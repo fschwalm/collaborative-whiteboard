@@ -9,20 +9,14 @@
 <f:view>
     <h:head>
         <title>Collaborative-Whiteboard</title>
+
+        <h:outputScript library="js" name="websocket.js"/>
+
+        <h:outputStylesheet library="styles" name="style.css"/>
+        <h:outputStylesheet library="styles" name="color_reference.css"/>
+
+        <ui:insert name="scripts"/>
     </h:head>
-    <script type="text/javascript" src="../../js/chat.js"/>
-    <script type="text/javascript" src="../../js/whiteboard.js"/>
-    <script type="text/javascript" src="../../js/projects.js"/>
-    <script type="text/javascript" src="../../js/message_reader.js"/>
-    <script type="text/javascript" src="../../js/websocket.js"/>
-    <script type="text/javascript" src="../../js/whiteboard-writer.js"/>
-    <script type="text/javascript" src="../../js/whiteboard-action.js"/>
-    <script type="text/javascript" src="../../js/moment-with-locales.js"/>
-    <link type="text/css" rel="stylesheet" href="../../styles/chat.css"/>
-    <link type="text/css" rel="stylesheet" href="../../styles/style.css"/>
-    <link type="text/css" rel="stylesheet" href="../../styles/projects.css"/>
-    <link type="text/css" rel="stylesheet" href="../../styles/whiteboard.css"/>
-    <link type="text/css" rel="stylesheet" href="../../styles/color_reference.css"/>
 
 
     <h:body id="bodyPage">
@@ -35,46 +29,19 @@
                 <h:form prependId="false">
 
                     <p:commandLink action="HOME_PAGE">
-                        <h:graphicImage url="../../images/icon.png" styleClass="homeButton"/>
+                        <h:graphicImage url="../../images/icon.png" styleClass="home_button"/>
                     </p:commandLink>
 
                     <h:outputText value="Collaborative Whiteboard" styleClass="project_name"/>
 
-                    <div class="top_menu">
+                    <ui:include src="../pages/components/topMenu.xhtml"/>
 
-                        <p:commandLink value="Diogo" styleClass="highlighted_font spaced_text inline_element remove_link_decoration" action="#"/>
+                    <ui:include src="../pages/components/toolbar.xhtml"/>
 
-                        <h:outputLabel styleClass="vertical_separator inline_element"
-                                       value="#{generic['vertical.separator']}"/>
-
-                        <div id="whiteboard_update" class="standart_font spaced_text inline_element"/>
-                    </div>
-
-                    <div id="actionArea">
-                        <p:commandLink id="exitBtn" styleClass="actionButton" onclick="PF('confirmationExit').show()">
-                            <h:graphicImage url="../../images/exit_icon.png" styleClass="actionImage"/>
-                        </p:commandLink>
-
-                        <p:commandLink id="chatBtn" styleClass="actionButton">
-                            <h:graphicImage styleClass="actionImage"/>
-                        </p:commandLink>
-
-                        <p:commandLink id="projectsBtn" styleClass="actionButton">
-                            <h:graphicImage url="../../images/projects_icon.png" styleClass="actionImage"/>
-                        </p:commandLink>
-
-                        <p:commandLink id="statsBtn" styleClass="actionButton">
-                            <h:graphicImage url="../../images/stats_icon.png" styleClass="actionImage"/>
-                        </p:commandLink>
-
-                        <p:commandLink id="backlogBtn" styleClass="actionButton"
-                                       action="#{toolsController.goToBacklog()}" ajax="false">
-                            <h:graphicImage url="../../images/backlog_icon.png" styleClass="actionImage"/>
-                        </p:commandLink>
-                    </div>
                 </h:form>
             </div>
 
+            <div id="whiteboard_update" class="standart_font spaced_text inline_element whiteboard_update"/>
 
             <ui:insert name="pageContent"/>
 

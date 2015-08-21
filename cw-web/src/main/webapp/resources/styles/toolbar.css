@@ -1,0 +1,73 @@
+.toolbar {
+    width: 100%;
+    height: 55px;
+    display: inline-flex;
+    top: 50px;
+    position: relative;
+}
+
+.toolbar_element {
+    height: 100%;
+    width: 15%;
+    display: table;
+    margin: auto;
+    border-bottom: solid 1px #F5F4F4;
+}
+
+.toolbar_element:hover {
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.toolbar_element:hover > #whiteboard_button {
+    border-bottom: solid 2px #EDD021;
+    color: #EDD021;
+}
+
+.toolbar_element:hover > #chat_button {
+    border-bottom: solid 2px #2AB1E0;
+    color: #2AB1E0;
+}
+
+.toolbar_element:hover > #projects_button {
+    border-bottom: solid 2px #210808;
+    color: #210808;
+}
+
+.toolbar_element:hover > #stats_button {
+    border-bottom: solid 2px #FBB03B;
+    color: #FBB03B;
+}
+
+.toolbar_element:hover > #backlog_button {
+    border-bottom: solid 2px #F55C61;
+    color: #F55C61;
+}
+
+.toolbar_element a {
+    display: table-cell;
+    vertical-align: middle;
+    color: #797979;
+    font-size: 20px !important;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.slipped {
+    margin-right: 15%;
+}
+
+.home_button {
+    margin-left: 1% !important;
+    width: 70px;
+}
+
+.project_name {
+    font-size: 45px;
+    color: #edd021;
+    text-shadow: 1px 1px 1px #B8B8B8, 3px 3px 5px white;
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+

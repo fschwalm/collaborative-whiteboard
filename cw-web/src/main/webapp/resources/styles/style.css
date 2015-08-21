@@ -56,23 +56,6 @@
     color: #111111 !important;
 }
 
-
-.homeButton {
-    margin-left: 1% !important;
-}
-
-#actionArea {
-    float: right;
-    position: relative;
-    width: 100%;
-    top: 0px;
-    background-color: rgb(255, 253, 253);
-}
-
-.actionButton {
-    float: right;
-}
-
 .actionImage {
     margin-left: 20px;
     margin-right: 20px;
@@ -109,14 +92,6 @@
     top: 20px;
 }
 
-.project_name {
-    font-size: 70px;
-    color: #edd021;
-    text-shadow: 1px 1px 1px #B8B8B8, 3px 3px 5px white;
-    position: relative;
-    top: 0px;
-    left: 0px;
-}
 
 .column_status{
     height: 25px;
@@ -218,14 +193,17 @@ form{
     font-size: 14px !important;
     letter-spacing: 1px;
     font-weight: bold;
+    color: #676666;
 }
 
 .standart_font{
     font-size: 12px !important;
+    color: #797979;
 }
 
 .minimal_font{
     font-size: 10px !important;
+    color: #797979;
 }
 
 .separator{
@@ -285,8 +263,20 @@ form{
 }
 
 .remove_link_decoration{
-    color: inherit;
     text-decoration: none;
+}
+
+.side_menu{
+    width: 0px ;
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    background-color: red;
+}
+
+.side_menu_open {
+    width: 20% !important;
 }
 
 

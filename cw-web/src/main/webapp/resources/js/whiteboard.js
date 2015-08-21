@@ -4,7 +4,6 @@ var websocketWhiteboard = {};
 window.onload = function () {
     websocketWhiteboard = connect(whiteboardService);
     initWhiteboardRegisters(websocketWhiteboard);
-
 };
 
 function initWhiteboardRegisters(websocketWhiteboard) {

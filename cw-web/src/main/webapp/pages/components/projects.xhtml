@@ -3,8 +3,13 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <div id="myProjects">
-        <p:panel id="myProjectsPanel" header="#{whiteboard['text.project']}" styleClass="projectsPanel">
+    <ui:define name="scripts">
+        <h:outputScript library="js" name="projects.js" />
+        <h:outputStylesheet library="styles" name="projects.css" />
+    </ui:define>
+
+    <div id="projects" class="side_menu">
+        <p:panel header="#{whiteboard['text.project']}" >
             <h:form id="projectForm" prependId="false">
                 <h:panelGrid columns="1">
                     <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>

@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:outputScript library="js" name="toolbar.js"/>
+    <h:outputStylesheet library="styles" name="toolbar.css"/>
+
+    <h:form prependId="false">
+        <div class="toolbar">
+            <div class="toolbar_element">
+                <p:commandLink id="whiteboard_button" value="#{toolbar['toolbar.element.whiteboard']}" styleClass="remove_link_decoration standart_font"
+                               action="HOME_PAGE"/>
+            </div>
+
+            <div class="toolbar_element">
+                <p:commandLink id="chat_button" styleClass="remove_link_decoration standart_font" value="#{toolbar['toolbar.element.chat']}"/>
+            </div>
+
+            <div class="toolbar_element">
+                <p:commandLink id="projects_button" styleClass="remove_link_decoration standart_font"
+                               value="#{toolbar['toolbar.element.projects']}"/>
+            </div>
+
+            <div class="toolbar_element">
+                <p:commandLink id="stats_button" styleClass="remove_link_decoration standart_font"
+                               value="#{toolbar['toolbar.element.stats']}"/>
+            </div>
+
+            <div class="toolbar_element">
+                <p:commandLink id="backlog_button" styleClass="remove_link_decoration standart_font" value="#{toolbar['toolbar.element.backlog']}"
+                               action="BACKLOG_PAGE"/>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>
