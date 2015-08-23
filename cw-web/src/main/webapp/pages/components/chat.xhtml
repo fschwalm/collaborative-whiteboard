@@ -10,7 +10,7 @@
     <h:form prependId="false">
         <div id="chat" class="side_menu">
             <p:panel id="chat_panel" header="#{chat['panel.header']}" styleClass="chat_panel" />
-            <p:inputTextarea autoResize="false" styleClass="message_input" rows="5" onkeypress="if (event.keyCode == 13) {commit(this); return false}"/>
+            <p:inputTextarea autoResize="false" styleClass="message_input" onkeypress="if (event.keyCode == 13) {commit(this); return false}"/>
         </div>
     </h:form>
 </ui:composition>

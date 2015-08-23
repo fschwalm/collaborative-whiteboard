@@ -3,33 +3,29 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="scripts">
-        <h:outputScript library="js" name="projects.js" />
-        <h:outputStylesheet library="styles" name="projects.css" />
-    </ui:define>
+    <h:outputScript library="js" name="projects.js"/>
+    <h:outputStylesheet library="styles" name="projects.css"/>
 
     <div id="projects" class="side_menu">
-        <p:panel header="#{whiteboard['text.project']}" >
+        <p:panel styleClass="projects_panel" header="#{whiteboard['text.project']}">
             <h:form id="projectForm" prependId="false">
-                <h:panelGrid columns="1">
-                    <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>
-                    <p:inputText id="createProjectShortcut" value="#{projectsController.projectName}"
-                                 required="true" styleClass="addProjectInput"/>
+                <p:watermark value="#{whiteboard['project.name']}" for="createProjectShortcut"/>
+                <p:inputText id="createProjectShortcut" value="#{projectsController.projectName}"
+                             required="true" styleClass="add_project_input"/>
 
-                    <p:commandButton value="#{whiteboard['btn.new']}"
-                                     action="#{projectsController.createProject()}"
-                                     update=":projectForm" styleClass="addProjectBtn"/>
+                <p:commandButton value="#{whiteboard['btn.new']}"
+                                 action="#{projectsController.createProject()}"
+                                 update=":projectForm" styleClass="add_project_button"/>
 
-                    <p:column><p:spacer width="10px"/></p:column>
+                <p:spacer width="10px"/>
 
-                    <p:dataTable id="projectList" styleClass="projectList" value="#{projectsController.projects}"
-                                 var="project" scrollHeight="720" scrollable="true">
-                        <p:column>
-                            <p:commandLink value="#{project.nameProject}"
-                                           action="#{projectsController.openProject(project)}" process="@this"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:panelGrid>
+                <p:dataTable id="projectList" styleClass="project_list" value="#{projectsController.projects}"
+                             var="project" scrollable="true">
+                    <p:column>
+                        <p:commandLink value="#{project.nameProject}"
+                                       action="#{projectsController.openProject(project)}" process="@this"/>
+                    </p:column>
+                </p:dataTable>
             </h:form>
         </p:panel>
     </div>

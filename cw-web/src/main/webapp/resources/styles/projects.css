@@ -1,44 +1,30 @@
-#myProjects {
-    max-height: 650px !important;
-    height: 650px !important;
-    position: fixed;
-    overflow: hidden;
-    z-index: 10000;
-    width: 350px !important;
-    background: #f5f5dc;
-    display: none;
-    right: 0%;
-    top: 0%;
-    max-height: 100% !important;
+.projects_panel{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.project_list{
     height: 100% !important;
+    width: 103% !important;
 }
 
-.projectsPanel{
-    height: 100% !important;
-    width: 350px !important;
-    max-height: 100% !important;
+.add_project_input{
+    width: 100% !important;
 }
 
-.projectList{
-    height: 100% !important;
-    width: 300px !important;
-    max-height: 100% !important;
-}
-
-.addProjectInput{
-    width: 289px !important;
-}
-
-.addProjectBtn{
-    width: 300px !important;
+.add_project_button{
+    top: 5px;
+    width: 103%;
 }
 
 #myProjectsPanel_header{
     background-color: black;
 }
 
-#myProjectsPanel_header .ui-panel-title{
+.projects_panel .ui-panel-titlebar {
     color: white;
+    background-color: #210808;
 }
 
 
