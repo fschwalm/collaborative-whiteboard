@@ -1,0 +1,17 @@
+.project_left_area{
+    margin-top: 3%;
+    margin-left: 2%;
+    margin-right: 5%;
+    float: left;
+    width: 50%;
+}
+
+.project_right_area{
+    margin-top: 3%;
+    margin-right: 2%;
+    float: right;
+    width: 30%;
+}
+
+
+

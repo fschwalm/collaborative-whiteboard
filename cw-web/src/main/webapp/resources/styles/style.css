@@ -1,11 +1,18 @@
-#headerPage {
-    position: relative;
-    height: 225px;
+html, body{
+    background-color: whitesmoke;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-#bodyPage {
-    background-color: whitesmoke;
-    overflow-x: hidden;
+form{
+    padding: 0px;
+    margin: 0px;
+}
+
+.header_page {
+    height: 25%;
 }
 
 .projectArea {
@@ -16,30 +23,12 @@
     width: 300px;
 }
 
-.project {
-    width: 650px;
-    height: 600px;
-    float: left;
-    margin-top: 20px;
-    margin-left: 50px;
-}
 
-.areas {
-    width: 650px;
-    height: 600px;
-    float: right;
-    margin-top: 20px;
-    margin-right: 50px;
-}
-
-#sheet {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100% !important;
-    min-height: 940px !important;
+.sheet {
     background-color: white !important;
-    box-shadow: 0px 10px 35px 14px #ccc;
-    border: 1px solid #C0C3C5;
+    position: absolute;
+    height: 99% !important;
+    width: 100% !important;
 }
 
 .removed_area {
@@ -54,15 +43,6 @@
 .green_button {
     background: #3fe694 !important;
     color: #111111 !important;
-}
-
-.actionImage {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 70px;
-    height: 70px;
-    box-shadow: 4px 2px 10px 0px #7E7E7E;
-    border-radius: 40px;
 }
 
 .chatEnable {
@@ -180,9 +160,7 @@
 
 
 /* ------------------- Refatoração ----------------------- */
-form{
-    padding-top: 0;
-}
+
 
 /* Primefaces Reset */
 .ui-widget, .ui-widget * {
@@ -190,19 +168,19 @@ form{
 }
 
 .highlighted_font{
-    font-size: 14px !important;
+    font-size: 14px;
     letter-spacing: 1px;
     font-weight: bold;
     color: #676666;
 }
 
 .standart_font{
-    font-size: 12px !important;
+    font-size: 12px;
     color: #797979;
 }
 
 .minimal_font{
-    font-size: 10px !important;
+    font-size: 10px;
     color: #797979;
 }
 

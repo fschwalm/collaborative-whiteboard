@@ -37,13 +37,14 @@ function write_stage(target, stage, width) {
 }
 
 function write_stage_header(label, stage) {
-    var header = document.createElement('div');
+    var header = $(document.createElement('div'));
     var headerLabel = document.createElement('span');
 
     headerLabel.textContent = label;
-    header.setAttribute('class', 'stage_header');
+    header.addClass('stage_header');
+    header.addClass('highlighted_font');
 
-    $(header).append(headerLabel);
+    header.append(headerLabel);
     stage.append(header);
 }
 

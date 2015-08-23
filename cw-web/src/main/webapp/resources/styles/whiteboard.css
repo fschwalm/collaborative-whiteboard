@@ -1,6 +1,19 @@
 .whiteboard{
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: #F5F5F5;
+}
+
+.stage_header{
+    font-size: 20px !important;
+    min-height: 30px;
+    text-align: center;
+    /*font-family: 'Raleway',sans-serif;*/
+    vertical-align: middle;
+    background-color: rgb(211, 225, 245);
+    /*font-family: 'Open Sans', sans-serif;*/
+    line-height: 32px;
+    border-top: solid 1px rgb(208, 208, 208);
+    border-bottom: solid 1px rgb(103, 102, 102);
 }
 
 .stage{
@@ -19,19 +32,6 @@
 
 .stage:last-child {
     border-right: 1px solid #C6CFD5;
-}
-
-.stage_header{
-    min-height: 30px;
-    text-align: center;
-    font-family: 'Raleway',sans-serif;
-    vertical-align: middle;
-    background-color: rgb(173, 198, 237);
-    color: #111;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 32px;
 }
 
 .stages{
@@ -74,10 +74,10 @@
     width: 350px;
     height: 100px;
     margin-top: 5%;
-    margin-left: 25px;
+    margin-left: 5%;
     background-size: 350px 100px;
     box-shadow: 3px 3px 5px 2px #ccc;
-    background: rgba(253, 253, 115, 0.97);
+    background: rgba(255, 255, 173, 0.97);
     float: left;
 }
 

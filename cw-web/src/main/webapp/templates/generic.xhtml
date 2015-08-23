@@ -24,8 +24,8 @@
             <p:growl id="messages" showDetail="true" autoUpdate="true" escape="false"/>
         </h:form>
 
-        <div id="sheet">
-            <div id="headerPage">
+        <div id="sheet" class="sheet">
+            <div id="headerPage" class="header_page">
                 <h:form prependId="false">
 
                     <p:commandLink action="HOME_PAGE">
@@ -44,6 +44,7 @@
             <div id="whiteboard_update" class="standart_font spaced_text inline_element whiteboard_update"/>
 
             <ui:insert name="pageContent"/>
+
 
             <ui:include src="../pages/components/chat.xhtml"/>
             <ui:include src="../pages/components/projects.xhtml"/>

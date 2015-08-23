@@ -4,123 +4,121 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <ui:define name="scripts">
+        <h:outputStylesheet library="styles" name="project.css"/>
+    </ui:define>
 
     <ui:define name="pageContent">
         <h:form id="projectDataForm" prependId="false">
-            <p:toolbar styleClass="toolbar">
-                <f:facet name="left">
+            <p:toolbar>
+                <f:facet name="right">
                     <p:commandButton value="#{project_bundle['btn.remove_project']}" escape="false"
                                      styleClass="warning_button" action="#{projectDataController.removeProject}"
                                      process="@this"/>
                 </f:facet>
-            </p:toolbar>
-
-            <div class="project">
-                <p:panel id="projectPanel" styleClass="project">
-
-                    <h:panelGrid columns="2">
-                        <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
-                        <p:calendar id="projectCreationDate"
-                                    value="#{projectDataController.projectData.getCreationDate()}"
-                                    disabled="true" pattern="dd/MM/yyyy HH:mm"/>
-
-                        <p:spacer height="5px"/> <p:spacer height="5px"/>
-
-                        <h:outputLabel for="projectName" value="#{project_bundle['project_name.label']}"/>
-                        <p:inputText id="projectName" value="#{projectDataController.projectData.projectName}"/>
-
-                        <p:spacer height="5px"/> <p:spacer height="5px"/>
-
-                        <h:outputLabel for="projectColor" value="#{project_bundle['project_color.label']}"/>
-                        <p:colorPicker id="projectColor" value="#{projectDataController.projectData.color}"/>
-
-                        <p:spacer height="5px"/> <p:spacer height="5px"/>
-
-                        <h:outputLabel for="owner" value="#{project_bundle['project_owner.label']}"/>
-                        <p:inputText id="owner" value="#{projectDataController.projectData.getOwnerName()}"
-                                     readonly="true"/>
-
-                        <p:spacer height="5px"/> <p:spacer height="5px"/>
-
-                        <h:outputLabel for="prefix" value="#{project_bundle['project_prefix.label']}"/>
-                        <p:inputText id="prefix" value="#{projectDataController.projectData.prefix}"/>
-
-                    </h:panelGrid>
-
-                    <p:spacer height="8px"/>
-
-                    <p:editor id="descriptionProject" rows="20" width="600"
-                              value="#{projectDataController.projectData.description}"/>
-
-                    <br/>
-                    <br/>
-
+                <f:facet name="left">
                     <p:commandButton value="#{project_bundle['btn.save']}"
                                      action="#{projectDataController.save()}" process="@form"/>
+                </f:facet>
+            </p:toolbar>
 
-                </p:panel>
+            <div class="project_left_area">
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="projectCreationDate" value="#{project_bundle['creation_date.label']}"/>
+                    <p:calendar id="projectCreationDate"
+                                value="#{projectDataController.projectData.getCreationDate()}"
+                                disabled="true" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <p:spacer height="5px"/> <p:spacer height="5px"/>
+
+                    <h:outputLabel for="projectName" value="#{project_bundle['project_name.label']}"/>
+                    <p:inputText id="projectName" value="#{projectDataController.projectData.projectName}"/>
+
+                    <p:spacer height="5px"/> <p:spacer height="5px"/>
+
+                    <h:outputLabel for="projectColor" value="#{project_bundle['project_color.label']}"/>
+                    <p:colorPicker id="projectColor" value="#{projectDataController.projectData.color}"/>
+
+                    <p:spacer height="5px"/> <p:spacer height="5px"/>
+
+                    <h:outputLabel for="owner" value="#{project_bundle['project_owner.label']}"/>
+                    <p:inputText id="owner" value="#{projectDataController.projectData.getOwnerName()}"
+                                 readonly="true"/>
+
+                    <p:spacer height="5px"/> <p:spacer height="5px"/>
+
+                    <h:outputLabel for="prefix" value="#{project_bundle['project_prefix.label']}"/>
+                    <p:inputText id="prefix" value="#{projectDataController.projectData.prefix}"/>
+
+                </h:panelGrid>
+
+                <br/>
+                <br/>
+
+                <p:editor id="descriptionProject" rows="20"
+                          value="#{projectDataController.projectData.description}"/>
+
             </div>
         </h:form>
 
-        <div class="areas">
-            <p:panel styleClass="areas">
-                <h:form id="projectAreaDataForm" prependId="false">
-                    <h:panelGrid>
-                        <h:column>
+        <div class="project_right_area">
+            <h:form id="projectAreaDataForm" prependId="false">
+                <h:panelGrid>
+                    <h:column>
 
-                            <p:watermark value="#{project_bundle['btn.new_area_abbreviation']}"
-                                         for="projectAreaAbbreviation"/>
-                            <p:inputText id="projectAreaAbbreviation" styleClass="projectAreaAbbreviation"
-                                         value="#{projectAreaController.projectAreaCreation.projectAreaAbbreviation}"
-                                         size="4" required="true"/>
+                        <p:watermark value="#{project_bundle['btn.new_area_abbreviation']}"
+                                     for="projectAreaAbbreviation"/>
+                        <p:inputText id="projectAreaAbbreviation" styleClass="projectAreaAbbreviation"
+                                     value="#{projectAreaController.projectAreaCreation.projectAreaAbbreviation}"
+                                     size="4" required="true"/>
 
-                            <p:spacer width="5"/>
+                        <p:spacer width="5"/>
 
-                            <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
-                            <p:inputText id="projectArea" styleClass="projectArea"
-                                         value="#{projectAreaController.projectAreaCreation.projectAreaName}"
-                                         required="true"/>
+                        <p:watermark value="#{project_bundle['btn.new_area']}" for="projectArea"/>
+                        <p:inputText id="projectArea" styleClass="projectArea"
+                                     value="#{projectAreaController.projectAreaCreation.projectAreaName}"
+                                     required="true"/>
 
 
-                            <p:spacer width="10"/>
+                        <p:spacer width="10"/>
 
-                            <p:commandButton value="#{project_bundle['btn.add_area']}"
-                                             process="@this projectArea projectAreaAbbreviation"
-                                             update="@form:foundedAreas,@form:projectArea,@form:projectAreaAbbreviation"
-                                             action="#{projectAreaController.addProjectArea()}"/>
-                        </h:column>
+                        <p:commandButton value="#{project_bundle['btn.add_area']}"
+                                         process="@this projectArea projectAreaAbbreviation"
+                                         update="@form:foundedAreas,@form:projectArea,@form:projectAreaAbbreviation"
+                                         action="#{projectAreaController.addProjectArea()}"/>
+                    </h:column>
 
-                        <h:column>
-                            <p:spacer height="10"/>
-                        </h:column>
+                    <h:column>
+                        <p:spacer height="10"/>
+                    </h:column>
 
-                        <h:column>
-                            <p:dataTable id="foundedAreas" value="#{projectAreaController.fetchProjectAreas()}"
-                                         var="area"
-                                         scrollHeight="455" style="width: auto ;"
-                                         scrollable="true">
+                    <h:column>
+                        <p:dataTable id="foundedAreas" value="#{projectAreaController.fetchProjectAreas()}"
+                                     var="area"
+                                     scrollHeight="455" style="width: auto ;"
+                                     scrollable="true">
 
-                                <p:column headerText="#{project_bundle['area.collum.prefix']}"
-                                          style="text-align: center; height: auto">
-                                    <h:outputText value="#{area.prefix}"/>
-                                </p:column>
+                            <p:column headerText="#{project_bundle['area.collum.prefix']}"
+                                      style="text-align: center; height: auto">
+                                <h:outputText value="#{area.prefix}"/>
+                            </p:column>
 
-                                <p:column headerText="#{project_bundle['area.collum.name']}"
-                                          style="text-align: center; height: auto">
-                                    <h:outputText value="#{area.name}"/>
-                                </p:column>
+                            <p:column headerText="#{project_bundle['area.collum.name']}"
+                                      style="text-align: center; height: auto">
+                                <h:outputText value="#{area.name}"/>
+                            </p:column>
 
-                                <p:column style="text-align: center; height: auto">
-                                    <p:commandButton value="#{project_bundle['btn.remove_area']}"
-                                                     actionListener="#{projectAreaController.removeProjectArea(area)}"
-                                                     update="@form:foundedAreas," process="@this"/>
-                                </p:column>
+                            <p:column style="text-align: center; height: auto">
+                                <p:commandButton value="#{project_bundle['btn.remove_area']}"
+                                                 actionListener="#{projectAreaController.removeProjectArea(area)}"
+                                                 update="@form:foundedAreas," process="@this"/>
+                            </p:column>
 
-                            </p:dataTable>
-                        </h:column>
-                    </h:panelGrid>
-                </h:form>
-            </p:panel>
+                        </p:dataTable>
+                    </h:column>
+                </h:panelGrid>
+            </h:form>
         </div>
     </ui:define>
 </ui:composition>
