@@ -7,7 +7,6 @@ function messageWriter(jsonData) {
     var typeMessage = jsonData['TYPE_MESSAGE'];
 
     switch (typeMessage) {
-
         case USER_MESSAGE:
             printUserMessage(jsonData, outputList);
             break;

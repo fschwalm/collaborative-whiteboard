@@ -86,7 +86,6 @@ public class TransmitionsServiceBean implements TransmitionsService, Serializabl
         return transmitionDao.fetchLastMessages(DEFAULT_SIZE_LAST_MESSAGES);
     }
 
-
     private void broadcast(Message message, Session webSocketSessionSender) {
         webSocketSessionSender.getOpenSessions().stream()
                 .forEach(s -> sendMessage(message, s));

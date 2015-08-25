@@ -1,9 +1,10 @@
 var chatService = 'chat';
 var websocket;
 
-window.onload = function () {
+
+$(document).ready(function () {
     initChat();
-};
+});
 
 function initChat() {
     try {
