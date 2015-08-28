@@ -1,0 +1,27 @@
+.user_data{
+    position: relative;
+    left: 2%;
+}
+
+.user_data_grid{
+
+}
+
+.user_data_column{
+    padding: 15px;
+}
+
+.profile_image{
+    width: 100px;
+    height: 100px;
+}
+
+.picture_area{
+
+}
+
+.user_data_area{
+    position: relative;
+    margin-top: 2%;
+}
+

@@ -4,8 +4,40 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <ui:define name="scripts">
+        <h:outputStylesheet library="styles" name="profile.css"/>
+    </ui:define>
+
     <ui:define name="pageContent">
+        <div class="user_data">
+            <h:form id="dataForm" enctype="multipart/form-data" prependId="false">
+                <div class="picture_area">
+                    <h:graphicImage id="profile_image" url="#{profileController.getPictureUrl()}"
+                                    styleClass="profile_image" onclick="alert('Invocar widgetVar')"/>
+                    <br/>
 
+                    <p:fileUpload widgetVar="upload_button" fileUploadListener="#{profileController.uploadFile}"
+                                  allowTypes="/(\.|\/)(jpe?g|png)$/" />
 
+                </div>
+
+                <div class="user_data_area">
+                    <h:panelGrid columns="2" styleClass="user_data_grid" columnClasses="user_data_column">
+                        <p:outputLabel for="firstName" value="Nome" styleClass="standart_font"/>
+                        <p:inputText size="60" id="firstName"
+                                     value="#{profileController.profileEdition.firstUserName}"/>
+
+                        <p:outputLabel for="lastName" value="Sobrenome" styleClass="standart_font"/>
+                        <p:inputText size="60" id="lastName" value="#{profileController.profileEdition.lastUserName}"/>
+
+                        <p:outputLabel for="birthdate" value="Nascimento" styleClass="standart_font"/>
+                        <p:calendar size="10" id="birthdate"/>
+
+                        <p:outputLabel for="email" value="Email" styleClass="standart_font"/>
+                        <p:inputText size="60" id="email" value="#{profileController.profileEdition.email}"/>
+                    </h:panelGrid>
+                </div>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

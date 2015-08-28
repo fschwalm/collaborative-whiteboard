@@ -32,6 +32,9 @@ public class User implements Serializable{
     @Column(nullable = false)
     private String lastName;
 
+    @OneToOne
+    private Profile profile;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Project> projects;
 
