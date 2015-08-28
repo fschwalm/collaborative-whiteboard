@@ -8,35 +8,45 @@
     <h:outputStylesheet library="styles" name="login.css"/>
     <h:outputStylesheet library="styles" name="color_reference.css"/>
 
-    <div class="fixed_center">
+    <div class="margin_area top_area">
         <h:graphicImage url="../../cw/images/icon.png"/>
-        <h:outputText value="Collaborative Whiteboard" styleClass="project_name_large"/>
+        <h:outputText value="#{login['project_name']}" styleClass="black_area_font xx_large_font project_name default_font_color"/>
     </div>
 
     <div class="fixed_center">
-        <h:form id="loginForm" prependId="false">
-            <p:messages/>
-            <h:panelGrid columns="2">
-                <p:inputText id="email" size="42" value="#{loginController.email}" required="true"
-                             requiredMessage="#{login['mandatory.email']}"/>
-                <p:watermark value="#{login['watermark.email']}" for="email"/>
-                <p:password id="password" size="42" value="#{loginController.password}" required="true"
-                            requiredMessage="#{login['mandatory.password']}"/>
-                <p:watermark value="#{login['watermark.password']}" for="password"/>
-            </h:panelGrid>
+        <div>
+            <h:form id="loginForm" prependId="false">
+                <p:messages/>
+                <h:panelGrid columns="2">
+                    <p:inputText id="email" size="42" value="#{loginController.email}" required="true"
+                                 requiredMessage="#{login['mandatory.email']}"/>
+                    <p:watermark value="#{login['watermark.email']}" for="email"/>
+                    <p:password id="password" size="42" value="#{loginController.password}" required="true"
+                                requiredMessage="#{login['mandatory.password']}"/>
+                    <p:watermark value="#{login['watermark.password']}" for="password"/>
+                </h:panelGrid>
 
-            <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
-                             ajax="false"/>
+                <br />
 
-            <p:commandButton id="createBtn" value="#{login['button.create_account']}"
-                             immediate="true">
-                <p:ajax update=":loginForm,:creationForm" resetValues="true"
-                        oncomplete="PF('creationDialog').show()"/>
-            </p:commandButton>
+                <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
+                                 ajax="false"/>
 
-            <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
-                           action="#{loginController.recovery()}" ajax="false"/>
-        </h:form>
+                <p:commandButton id="createBtn" value="#{login['button.create_account']}"
+                                 immediate="true">
+                    <p:ajax update=":loginForm,:creationForm" resetValues="true"
+                            oncomplete="PF('creationDialog').show()"/>
+                </p:commandButton>
+
+                <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
+                               action="#{loginController.recovery()}" ajax="false" styleClass="recovery_link remove_link_decoration"/>
+            </h:form>
+        </div>
+    </div>
+
+    <div class="margin_area bottom_area">
+        <h:outputText value="#{login['footer.login_panel']}" styleClass="black_area_font large_font"/>
+        <br />
+        <h:outputText value="#{login['footer.login_panel.contact']}" styleClass="black_area_font large_font"/>
     </div>
 
     <p:dialog id="creationDialog" widgetVar="creationDialog" modal="true" resizable="false"

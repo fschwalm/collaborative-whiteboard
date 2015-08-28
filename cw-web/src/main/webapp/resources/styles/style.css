@@ -167,6 +167,18 @@ form{
     color: #676666;
 }
 
+.large_font{
+    font-size: 18px;
+}
+
+.x_large_font{
+    font-size: 30px;
+}
+
+.xx_large_font{
+    font-size: 45px;
+}
+
 .standart_font{
     font-size: 12px;
     color: #797979;
@@ -175,6 +187,10 @@ form{
 .minimal_font{
     font-size: 10px;
     color: #797979;
+}
+
+.black_area_font{
+    color: white !important;
 }
 
 .separator{
