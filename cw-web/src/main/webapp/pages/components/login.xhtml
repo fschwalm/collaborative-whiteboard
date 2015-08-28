@@ -4,45 +4,41 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <link type="text/css" rel="stylesheet" href="../../cw/styles/style.css"/>
+    <h:outputStylesheet library="styles" name="style.css"/>
+    <h:outputStylesheet library="styles" name="login.css"/>
+    <h:outputStylesheet library="styles" name="color_reference.css"/>
 
-    <div class="initialLogoArea">
-        <h:graphicImage url="../../cw/images/icon.png" styleClass="initialLogo"/>
-
-        <h:outputText value="Collaborative Whiteboard" styleClass="initialName"/>
-
-        <div style="margin-left: 25%; width: 345px;">
-            <h:form id="loginForm" prependId="false">
-                <p:messages/>
-                <h:panelGrid columns="2">
-                    <p:inputText id="email" size="42" value="#{loginController.email}" required="true"
-                                 requiredMessage="#{login['mandatory.email']}"/>
-                    <p:watermark value="#{login['watermark.email']}" for="email"/>
-                    <p:password id="password" size="42" value="#{loginController.password}" required="true"
-                                requiredMessage="#{login['mandatory.password']}"/>
-                    <p:watermark value="#{login['watermark.password']}" for="password"/>
-                </h:panelGrid>
-
-                <br/>
-
-                <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
-                                 ajax="false"/>
-
-                <p:spacer width="10px" />
-
-                <p:commandButton id="createBtn" value="#{login['button.create_account']}"
-                                 immediate="true">
-                    <p:ajax update=":loginForm,:creationForm" resetValues="true"
-                            oncomplete="PF('creationDialog').show()"/>
-                </p:commandButton>
-
-                <p:spacer width="10px" />
-
-                <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
-                               action="#{loginController.recovery()}" ajax="false"/>
-            </h:form>
-        </div>
+    <div class="fixed_center">
+        <h:graphicImage url="../../cw/images/icon.png"/>
+        <h:outputText value="Collaborative Whiteboard" styleClass="project_name_large"/>
     </div>
+
+    <div class="fixed_center">
+        <h:form id="loginForm" prependId="false">
+            <p:messages/>
+            <h:panelGrid columns="2">
+                <p:inputText id="email" size="42" value="#{loginController.email}" required="true"
+                             requiredMessage="#{login['mandatory.email']}"/>
+                <p:watermark value="#{login['watermark.email']}" for="email"/>
+                <p:password id="password" size="42" value="#{loginController.password}" required="true"
+                            requiredMessage="#{login['mandatory.password']}"/>
+                <p:watermark value="#{login['watermark.password']}" for="password"/>
+            </h:panelGrid>
+
+            <p:commandButton id="loginBtn" value="#{login['button.login']}" action="#{loginController.login}"
+                             ajax="false"/>
+
+            <p:commandButton id="createBtn" value="#{login['button.create_account']}"
+                             immediate="true">
+                <p:ajax update=":loginForm,:creationForm" resetValues="true"
+                        oncomplete="PF('creationDialog').show()"/>
+            </p:commandButton>
+
+            <p:commandLink id="recoveryAccount" value="#{login['button.recovery_account']}"
+                           action="#{loginController.recovery()}" ajax="false"/>
+        </h:form>
+    </div>
+
     <p:dialog id="creationDialog" widgetVar="creationDialog" modal="true" resizable="false"
               header="#{accountCreation['welcome']}">
         <h:form id="creationForm">

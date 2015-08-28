@@ -1,0 +1,16 @@
+.project_name_large {
+    font-size: 45px;
+    color: #edd021;
+    text-shadow: 1px 1px 1px #B8B8B8, 3px 3px 5px white;
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.fixed_center{
+    top: 30%;
+    margin: 0 auto;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+}
