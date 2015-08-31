@@ -6,21 +6,22 @@
 
     <ui:define name="scripts">
         <h:outputStylesheet library="styles" name="profile.css"/>
+        <h:outputScript library="js" name="profile.js"/>
     </ui:define>
 
     <ui:define name="pageContent">
         <div class="user_data">
-            <h:form id="dataForm" enctype="multipart/form-data" prependId="false">
-                <div class="picture_area">
+            <div class="picture_area">
+                <h:form id="dataForm" enctype="multipart/form-data" prependId="false">
+
                     <h:graphicImage id="profile_image" url="#{profileController.getPictureUrl()}"
-                                    styleClass="profile_image" onclick="alert('Invocar widgetVar')"/>
+                                    styleClass="profile_image"/>
                     <br/>
-
-                    <p:fileUpload widgetVar="upload_button" fileUploadListener="#{profileController.uploadFile}"
-                                  allowTypes="/(\.|\/)(jpe?g|png)$/" />
-
-                </div>
-
+                    <h:commandLink id="change_picture" value="Alterar" styleClass="remove_link_decoration standart_font"/>
+                    <h:inputFile id="input_file" styleClass="input_file"/>
+                </h:form>
+            </div>
+            <h:form prependId="false">
                 <div class="user_data_area">
                     <h:panelGrid columns="2" styleClass="user_data_grid" columnClasses="user_data_column">
                         <p:outputLabel for="firstName" value="Nome" styleClass="standart_font"/>

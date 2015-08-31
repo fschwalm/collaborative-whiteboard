@@ -16,12 +16,17 @@
     height: 100px;
 }
 
-.picture_area{
-
+.change_picture{
+    left: 1.5%;
+    position: relative;
 }
 
 .user_data_area{
     position: relative;
     margin-top: 2%;
+}
+
+.input_file{
+    display: none;
 }
 

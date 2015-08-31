@@ -45,10 +45,4 @@ public class ProfileController extends GenericController implements Serializable
     public String getPictureUrl(){
         return "../../images/user-male.png";
     }
-
-    public void uploadFile(FileUploadEvent event) throws IOException {
-        org.primefaces.model.UploadedFile file = event.getFile();
-        String fileName = file.getFileName();
-        InputStream stream = file.getInputstream();
-    }
 }
