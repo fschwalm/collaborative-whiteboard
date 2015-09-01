@@ -1,8 +1,5 @@
 $(document).ready(function () {
-    $('#change_picture').click(function() {
-        var input = $('#input_file');
-        //input.attr("type", "file");
-        input.trigger('click');
-        return false;
+    $('#change_picture').click(function () {
+        $('#input_file_input').trigger('click')
     });
 });

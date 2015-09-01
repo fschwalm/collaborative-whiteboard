@@ -10,32 +10,48 @@
     </ui:define>
 
     <ui:define name="pageContent">
-        <div class="user_data">
-            <div class="picture_area">
-                <h:form id="dataForm" enctype="multipart/form-data" prependId="false">
+        <h:form>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton id="save" value="#{profile['toolbar.button.save']}"
+                                     action="#{profileController.save()}" />
+                </f:facet>
+            </p:toolbar>
+        </h:form>
 
-                    <h:graphicImage id="profile_image" url="#{profileController.getPictureUrl()}"
-                                    styleClass="profile_image"/>
-                    <br/>
-                    <h:commandLink id="change_picture" value="Alterar" styleClass="remove_link_decoration standart_font"/>
-                    <h:inputFile id="input_file" styleClass="input_file"/>
-                </h:form>
-            </div>
+        <div class="user_data">
             <h:form prependId="false">
+                <div class="picture_area">
+                    <p:graphicImage id="profile_image" value="#{profileController.getPicture()}"
+                                    styleClass="profile_image" cache="false"/>
+                    <br/>
+
+                    <p:commandLink id="change_picture" value="Alterar"
+                                   styleClass="remove_link_decoration standart_font"/>
+
+                    <p:fileUpload widgetVar="input_file" id="input_file" styleClass="input_file" mode="advanced"
+                                  fileUploadListener="#{profileController.updatePicture}" auto="true"
+                                  update="profile_image"/>
+                </div>
+            </h:form>
+            <h:form id="user_data" prependId="false">
                 <div class="user_data_area">
                     <h:panelGrid columns="2" styleClass="user_data_grid" columnClasses="user_data_column">
-                        <p:outputLabel for="firstName" value="Nome" styleClass="standart_font"/>
+                        <p:outputLabel for="firstName" value="#{profile['profile.name']}" styleClass="standart_font"/>
                         <p:inputText size="60" id="firstName"
-                                     value="#{profileController.profileEdition.firstUserName}"/>
+                                     value="#{profileController.userEdition.firstUserName}"/>
 
-                        <p:outputLabel for="lastName" value="Sobrenome" styleClass="standart_font"/>
-                        <p:inputText size="60" id="lastName" value="#{profileController.profileEdition.lastUserName}"/>
+                        <p:outputLabel for="lastName" value="#{profile['profile.last_name']}"
+                                       styleClass="standart_font"/>
+                        <p:inputText size="60" id="lastName" value="#{profileController.userEdition.lastUserName}"/>
 
-                        <p:outputLabel for="birthdate" value="Nascimento" styleClass="standart_font"/>
-                        <p:calendar size="10" id="birthdate"/>
+                        <p:outputLabel for="birthdate" value="#{profile['profile.birthdate']}"
+                                       styleClass="standart_font"/>
+                        <p:calendar size="10" id="birthdate" pattern="dd-MM-yyyy" mask="true"
+                                    value="#{profileController.userEdition.birthdate}"/>
 
-                        <p:outputLabel for="email" value="Email" styleClass="standart_font"/>
-                        <p:inputText size="60" id="email" value="#{profileController.profileEdition.email}"/>
+                        <p:outputLabel for="email" value="#{profile['profile.email']}" styleClass="standart_font"/>
+                        <p:inputText size="60" id="email" value="#{profileController.userEdition.email}"/>
                     </h:panelGrid>
                 </div>
             </h:form>

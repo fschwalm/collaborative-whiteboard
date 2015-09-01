@@ -4,9 +4,13 @@ import br.org.tutty.util.PropertyMonitor;
 import cw.dtos.EncryptorResources;
 import cw.exceptions.DataNotFoundException;
 import cw.exceptions.EncryptedException;
+import org.apache.commons.io.IOUtils;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user", catalog = "cw")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,8 +36,10 @@ public class User implements Serializable{
     @Column(nullable = false)
     private String lastName;
 
-    @OneToOne
-    private Profile profile;
+    @Lob
+    private byte[] profilePicture;
+
+    private Date birthdate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Project> projects;
@@ -42,18 +48,20 @@ public class User implements Serializable{
     public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
 
-    public User(String email, String password, String firstName, String lastName) throws EncryptedException {
+    public User(String email, String password, String firstName, String lastName, Date birthdate, InputStream profilePicture) throws EncryptedException, IOException {
         this.lastName = lastName;
         this.email = email;
         this.password = EncryptorResources.encrypt(password);
         this.firstName = firstName;
+        this.birthdate = birthdate;
+        this.profilePicture = IOUtils.toByteArray(profilePicture);
     }
 
     protected User() {
     }
 
-    public String getFullName(){
-        return getFirstName()+" "+getLastName();
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
 
     public String getFirstName() {
@@ -68,27 +76,55 @@ public class User implements Serializable{
         return password;
     }
 
-    public void addProject(Project project){
+    public void addProject(Project project) {
         projects.add(project);
     }
 
     public List<Project> getProjects() throws DataNotFoundException {
-        if(hasSomeProject()){
+        if (hasSomeProject()) {
             return projects;
-        }else {
+        } else {
             throw new DataNotFoundException();
         }
     }
 
-    public Boolean hasSomeProject(){
-        if(projects != null && !projects.isEmpty()){
+    public Boolean hasSomeProject() {
+        if (projects != null && !projects.isEmpty()) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

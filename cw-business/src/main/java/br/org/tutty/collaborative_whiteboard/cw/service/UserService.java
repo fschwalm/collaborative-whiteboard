@@ -13,4 +13,6 @@ public interface UserService {
     Boolean hasSomeProject();
 
     void create(User user);
+
+    void update(User user);
 }

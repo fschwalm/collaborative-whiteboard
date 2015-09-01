@@ -2,6 +2,7 @@ package br.org.tutty.collaborative_whiteboard.cw_web.controllers;
 
 import br.org.tutty.collaborative_whiteboard.cw.service.SecurityService;
 import br.org.tutty.collaborative_whiteboard.cw.service.UserService;
+import br.org.tutty.collaborative_whiteboard.cw_web.utils.ResourcesReader;
 import cw.dtos.Security;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
@@ -13,7 +14,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,23 +26,24 @@ import java.util.Date;
 @Named
 @ViewScoped
 public class AccountCreationController extends GenericController implements Serializable {
+    private static String DEFAULT_IMAGE_URL = "images/user-male.png";
 
     @Inject
     private UserService userService;
-
     @Inject
     private SecurityService securityService;
+    @Inject
+    private ResourcesReader resourcesReader;
 
     private String email;
     private String firstName;
     private String lastName;
     private Date birthdate;
     private String password;
-
     private Date birthdateMax;
 
     @PostConstruct
-    public void setUp(){
+    public void setUp() {
         initCalendarValidation();
     }
 
@@ -48,13 +52,13 @@ public class AccountCreationController extends GenericController implements Seri
     }
 
     public String create() throws EncryptedException, LoginException, IOException {
-        if(!isAlreadyRegistered(email)){
-            User user = new User(email, password, firstName, lastName);
+        if (!isAlreadyRegistered(email)) {
+            User user = new User(email, password, firstName, lastName, birthdate, resourcesReader.fetchWebAppFile(DEFAULT_IMAGE_URL));
             userService.create(user);
-
             authenticateUser();
             return HOME_PAGE;
-        }else {
+
+        } else {
             facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "create_account.already_registered");
             return STAY_ON_PAGE;
         }
@@ -65,7 +69,7 @@ public class AccountCreationController extends GenericController implements Seri
         securityService.login(security);
     }
 
-    private Boolean isAlreadyRegistered(String email){
+    private Boolean isAlreadyRegistered(String email) {
         try {
             userService.fetch(email);
             return Boolean.TRUE;

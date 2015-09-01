@@ -28,7 +28,7 @@ public class UserServiceBean implements UserService, Serializable {
     }
 
     @Override
-    public Boolean hasSomeProject(){
+    public Boolean hasSomeProject() {
         User user = sessionContext.getLoggedUser().getUser();
         return user.hasSomeProject();
     }
@@ -36,5 +36,10 @@ public class UserServiceBean implements UserService, Serializable {
     @Override
     public void create(User user) {
         userDao.persist(user);
+    }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
     }
 }

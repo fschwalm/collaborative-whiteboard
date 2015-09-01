@@ -1,6 +1,7 @@
 .user_data{
     position: relative;
     left: 2%;
+    top:5%;
 }
 
 .user_data_grid{
@@ -9,11 +10,14 @@
 
 .user_data_column{
     padding: 15px;
+    padding-left: 0 !important;
 }
 
 .profile_image{
     width: 100px;
     height: 100px;
+    border: solid 1px #DCD2D2;
+    border-radius: 10px;
 }
 
 .change_picture{

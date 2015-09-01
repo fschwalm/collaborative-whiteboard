@@ -73,6 +73,10 @@
             <base-name>properties/toolbar</base-name>
             <var>toolbar</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>properties/profile</base-name>
+            <var>profile</var>
+        </resource-bundle>
     </application>
 
     <navigation-rule>
