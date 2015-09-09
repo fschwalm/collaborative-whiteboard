@@ -14,7 +14,7 @@
             <p:toolbar>
                 <f:facet name="left">
                     <p:commandButton id="save" value="#{profile['toolbar.button.save']}"
-                                     action="#{profileController.save()}" process="@this" />
+                                     action="#{profileController.save()}" ajax="false" />
                 </f:facet>
             </p:toolbar>
         </h:form>
@@ -55,8 +55,10 @@
                                        styleClass="standart_font"/>
         
 			<p:inplace editor="true">
-				<p:calendar size="10" id="birthdate" pattern="dd-MM-yyyy" mask="true"
-                                    value="#{profileController.userEdition.birthdate}"/>
+				<p:calendar size="10" id="birthdate" pattern="dd/MM/yyyy" mask="true"
+                                    value="#{profileController.userEdition.birthdate}">
+					<f:convertDateTime ppattern="#{component.pattern}" />
+				</p:calendar>
 			</p:inplace>
 
                         <p:outputLabel for="email" value="#{profile['profile.email']}" styleClass="standart_font"/>

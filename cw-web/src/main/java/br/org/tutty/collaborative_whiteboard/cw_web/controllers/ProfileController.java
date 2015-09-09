@@ -26,6 +26,8 @@ import java.io.Serializable;
 public class ProfileController extends GenericController implements Serializable {
 	private static String INVALID_TYPE_KEY = "invalid.type.picture";
 	private static String INVALID_TYPE_KEY_DETAIL = "invalid.type.picture.detail";
+	private static String SAVE_KEY = "profile.edition.save";
+	private static String SAVE_KEY_DETAIL = "profile.edition.save.detail";
 	private static String TYPE_FILE_JPG = "jpg";
 	private static String TYPE_FILE_PNG = "png";
 
@@ -47,8 +49,7 @@ public class ProfileController extends GenericController implements Serializable
 	public void save(){
 		User changedUser = userEdition.toEntity();
 		userService.update(changedUser);
-		// TODO : Corrigir Mensagem
-		facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_WARN, "project.add.exist_area");
+		facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_INFO,SAVE_KEY,SAVE_KEY_DETAIL);
 	}
 
 	public UserEdition getUserEdition() {
