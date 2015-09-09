@@ -14,7 +14,7 @@
             <p:toolbar>
                 <f:facet name="left">
                     <p:commandButton id="save" value="#{profile['toolbar.button.save']}"
-                                     action="#{profileController.save()}" />
+                                     action="#{profileController.save()}" process="@this" />
                 </f:facet>
             </p:toolbar>
         </h:form>
@@ -38,20 +38,32 @@
                 <div class="user_data_area">
                     <h:panelGrid columns="2" styleClass="user_data_grid" columnClasses="user_data_column">
                         <p:outputLabel for="firstName" value="#{profile['profile.name']}" styleClass="standart_font"/>
-                        <p:inputText size="60" id="firstName"
-                                     value="#{profileController.userEdition.firstUserName}"/>
+                        
+			<p:inplace editor="true">
+			<p:inputText size="60" id="firstName"
+			  value="#{profileController.userEdition.firstUserName}" />
+			</p:inplace>
 
                         <p:outputLabel for="lastName" value="#{profile['profile.last_name']}"
                                        styleClass="standart_font"/>
-                        <p:inputText size="60" id="lastName" value="#{profileController.userEdition.lastUserName}"/>
+                        
+			<p:inplace editor="true">
+			<p:inputText size="60" id="lastName" value="#{profileController.userEdition.lastUserName}"/>
+			</p:inplace>
 
                         <p:outputLabel for="birthdate" value="#{profile['profile.birthdate']}"
                                        styleClass="standart_font"/>
-                        <p:calendar size="10" id="birthdate" pattern="dd-MM-yyyy" mask="true"
+        
+			<p:inplace editor="true">
+				<p:calendar size="10" id="birthdate" pattern="dd-MM-yyyy" mask="true"
                                     value="#{profileController.userEdition.birthdate}"/>
+			</p:inplace>
 
                         <p:outputLabel for="email" value="#{profile['profile.email']}" styleClass="standart_font"/>
-                        <p:inputText size="60" id="email" value="#{profileController.userEdition.email}"/>
+                        
+			<p:inplace editor="true">
+				<p:inputText size="60" id="email" value="#{profileController.userEdition.email}"/>
+			</p:inplace>
                     </h:panelGrid>
                 </div>
             </h:form>

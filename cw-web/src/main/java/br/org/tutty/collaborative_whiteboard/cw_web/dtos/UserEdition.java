@@ -6,6 +6,8 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import javax.persistence.*;
+import br.org.tutty.util.PropertyMonitor;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,6 +25,9 @@ public class UserEdition implements Serializable {
     private String email;
     private byte[] profilePicture;
     private Date birthdate;
+
+    @Transient
+    public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
     public void init(User user) throws DataNotFoundException {
         if (user != null) {
@@ -51,7 +56,10 @@ public class UserEdition implements Serializable {
     }
 
     public void setFirstUserName(String firstUserName) {
+	String oldValue = this.firstUserName;
         this.firstUserName = firstUserName;
+
+        propertyMonitor.getPropertyChangeSupport().firePropertyChange("firstNmae", oldValue, firstUserName);
     }
 
     public String getLastUserName() {
@@ -59,7 +67,11 @@ public class UserEdition implements Serializable {
     }
 
     public void setLastUserName(String lastUserName) {
-        this.lastUserName = lastUserName;
+        String oldValue = this.lastUserName;
+	    this.lastUserName = lastUserName;
+        
+
+	propertyMonitor.getPropertyChangeSupport().firePropertyChange("lastUserName", oldValue, lastUserName);
     }
 
     public String getEmail() {
