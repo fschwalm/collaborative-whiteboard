@@ -1,16 +1,10 @@
 package br.org.tutty.collaborative_whiteboard.cw_web.dtos;
 
+import br.org.tutty.util.PropertyMonitor;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
-import org.apache.commons.io.IOUtils;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.UploadedFile;
 
-import javax.persistence.*;
-import br.org.tutty.util.PropertyMonitor;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,15 +12,14 @@ import java.util.Date;
  * Created by drferreira on 25/05/15.
  */
 public class UserEdition implements Serializable {
+	@Inject
+	private ProfilePicture profilePicture;
 
 	public User user;
 	private String firstUserName;
 	private String lastUserName;
 	private String email;
-	private byte[] profilePicture;
 	private Date birthdate;
-
-	@Transient
 	public PropertyMonitor propertyMonitor = new PropertyMonitor(this);
 
 	public void init(User user) throws DataNotFoundException {
@@ -36,7 +29,7 @@ public class UserEdition implements Serializable {
 			this.lastUserName = user.getLastName();
 			this.email = user.getEmail();
 			this.birthdate = user.getBirthdate();
-			this.profilePicture = user.getProfilePicture();
+			this.profilePicture.loadPicture();
 		} else {
 			throw new DataNotFoundException();
 		}
@@ -46,8 +39,8 @@ public class UserEdition implements Serializable {
 		this.user.setFirstName(firstUserName);
 		this.user.setLastName(lastUserName);
 		this.user.setEmail(email);
-		this.user.setProfilePicture(profilePicture);
 		this.user.setBirthdate(birthdate);
+		this.user.setProfilePicture(profilePicture.getProfilePicture());
 		
 		return user;
 	}
@@ -97,26 +90,7 @@ public class UserEdition implements Serializable {
 		propertyMonitor.getPropertyChangeSupport().firePropertyChange("birthdate", oldValue, birthdate);
 	}
 
-	public DefaultStreamedContent getProfilePicture() {
-		if(profilePicture != null){
-			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(profilePicture);
-			return new DefaultStreamedContent(new BufferedInputStream(byteArrayInputStream));
-		}else {
-			return new DefaultStreamedContent();
-		}
-	}
-
-	public void setProfilePicture(UploadedFile uploadedFile) {
-		try {
-			byte[] oldValue = this.profilePicture;
-
-			byte[] bytes = IOUtils.toByteArray(uploadedFile.getInputstream());
-			this.profilePicture = bytes;
-
-			propertyMonitor.getPropertyChangeSupport().firePropertyChange("bytes", oldValue, bytes);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ProfilePicture getProfilePicture(){
+		return profilePicture;
 	}
 }

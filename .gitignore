@@ -5,6 +5,7 @@
 *.jsfdia
 *.metadata
 **/.idea
+**.swp
 *.iml
 *.tern-project
 

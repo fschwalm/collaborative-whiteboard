@@ -7,7 +7,6 @@ import cw.dtos.LoggedUser;
 import cw.entities.User;
 import cw.exceptions.DataNotFoundException;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +14,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -28,7 +26,7 @@ public class ProfileController extends GenericController implements Serializable
 	private static String INVALID_TYPE_KEY_DETAIL = "invalid.type.picture.detail";
 	private static String SAVE_KEY = "profile.edition.save";
 	private static String SAVE_KEY_DETAIL = "profile.edition.save.detail";
-	private static String TYPE_FILE_JPG = "jpg";
+	private static String TYPE_FILE_JPG = "jpeg";
 	private static String TYPE_FILE_PNG = "png";
 
 	@Inject
@@ -60,15 +58,11 @@ public class ProfileController extends GenericController implements Serializable
 		this.userEdition = userEdition;
 	}
 
-	public StreamedContent getPicture() throws IOException {
-		return userEdition.getProfilePicture();
-	}
-
 	public void updatePicture(FileUploadEvent fileUploadEvent) {
 		UploadedFile file = fileUploadEvent.getFile();
 
 		if (isValidPictureType(file)) {
-			userEdition.setProfilePicture(file);
+			userEdition.getProfilePicture().setProfilePicture(file);
 
 		} else {
 			facesMessageUtil.showGlobalMessage(FacesMessage.SEVERITY_ERROR, INVALID_TYPE_KEY, INVALID_TYPE_KEY_DETAIL);
